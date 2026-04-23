@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  // ── Мобайл nav toggle ──
+  // Мобайл nav toggle
   const nav = document.querySelector('.nav');
   const navToggle = document.querySelector('.nav-toggle');
   if (nav && navToggle) {
@@ -14,7 +14,7 @@
     });
   }
 
-  // ── Идэвхтэй nav холбоос ──
+  // Идэвхтэй nav холбоос
   const path = window.location.pathname.replace(/\/$/, '') || '/';
   document.querySelectorAll('.nav-links a').forEach((a) => {
     const href = a.getAttribute('href');
@@ -22,14 +22,13 @@
     const target = href.replace(/\/$/, '') || '/';
     if (
       target === path ||
-      (target === '/' && (path === '' || path === '/index.html')) ||
-      (target !== '/' && path.endsWith(target))
+      (target === '/' && (path === '' || path === '/index.html'))
     ) {
       a.classList.add('active');
     }
   });
 
-  // ── Scroll reveal ──
+  // Scroll reveal
   if ('IntersectionObserver' in window) {
     const revealObs = new IntersectionObserver(
       (entries) => {
@@ -47,45 +46,81 @@
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
   }
 
-  // ── Зураг ачаалагдахгүй бол нуух ──
-  document.querySelectorAll('img').forEach((img) => {
-    img.addEventListener('error', () => {
-      img.style.display = 'none';
-    });
+  // Carousel
+  document.querySelectorAll('[data-carousel]').forEach((root) => {
+    const track = root.querySelector('.carousel-track');
+    const slides = root.querySelectorAll('.carousel-slide');
+    const dotsWrap = root.querySelector('.carousel-dots');
+    const prevBtn = root.querySelector('.carousel-arrow--prev');
+    const nextBtn = root.querySelector('.carousel-arrow--next');
+    if (!track || slides.length === 0) return;
+
+    const total = slides.length;
+    const autoplay = root.dataset.autoplay === 'true';
+    const interval = parseInt(root.dataset.interval, 10) || 4000;
+    let index = 0;
+    let timer = null;
+    let isHover = false;
+
+    // Build dots
+    if (dotsWrap) {
+      for (let i = 0; i < total; i++) {
+        const d = document.createElement('button');
+        d.type = 'button';
+        d.className = 'carousel-dot';
+        d.setAttribute('aria-label', 'Зураг ' + (i + 1));
+        d.addEventListener('click', () => go(i, true));
+        dotsWrap.appendChild(d);
+      }
+    }
+    const dots = dotsWrap ? dotsWrap.querySelectorAll('.carousel-dot') : [];
+
+    function render() {
+      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+    }
+    function go(n, userAction) {
+      index = (n + total) % total;
+      render();
+      if (userAction && autoplay) restart();
+    }
+    function next() { go(index + 1); }
+    function prev() { go(index - 1); }
+    function start() {
+      if (!autoplay || timer) return;
+      timer = setInterval(() => { if (!isHover) next(); }, interval);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); start(); }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => go(index - 1, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => go(index + 1, true));
+
+    root.addEventListener('mouseenter', () => { isHover = true; });
+    root.addEventListener('mouseleave', () => { isHover = false; });
+
+    // Touch swipe
+    let touchX = null;
+    let touchY = null;
+    root.addEventListener('touchstart', (e) => {
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
+    root.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) go(index + 1, true); else go(index - 1, true);
+      }
+      touchX = null; touchY = null;
+    }, { passive: true });
+
+    render();
+    start();
   });
 
-  // ── Багц: Өдрийн / Хоноглох toggle ──
-  const toggleBtns = document.querySelectorAll('.pkg-toggle button');
-  if (toggleBtns.length) {
-    toggleBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const mode = btn.dataset.mode;
-        toggleBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
-        document.querySelectorAll('[data-price-day]').forEach((el) => {
-          const v = mode === 'day' ? el.dataset.priceDay : el.dataset.priceNight;
-          if (v) el.textContent = v;
-        });
-      });
-    });
-  }
-
-  // ── Gallery шүүлтүүр ──
-  const filterBtns = document.querySelectorAll('.gallery-filter button');
-  if (filterBtns.length) {
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-        filterBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
-        document.querySelectorAll('.gallery-item').forEach((item) => {
-          const tags = (item.dataset.tags || '').split(' ');
-          const show = filter === 'all' || tags.includes(filter);
-          item.classList.toggle('is-hidden', !show);
-        });
-      });
-    });
-  }
-
-  // ── Холбоо барих маягт ──
+  // Холбоо барих маягт (AJAX Netlify Forms)
   const form = document.querySelector('form[data-netlify="true"]');
   const feedback = document.querySelector('.form-feedback');
   if (form && feedback) {
@@ -104,7 +139,7 @@
         });
         if (res.ok) {
           feedback.classList.add('is-success');
-          feedback.textContent = 'Таны захиалгыг хүлээн авлаа. 24 цагийн дотор холбогдох болно.';
+          feedback.textContent = 'Таны хүсэлтийг хүлээн авлаа. 24 цагийн дотор үнийн санал илгээх болно.';
           form.reset();
         } else {
           throw new Error('сүлжээний алдаа');
