@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  // ── Mobile nav toggle ──
+  // ── Мобайл nav toggle ──
   const nav = document.querySelector('.nav');
   const navToggle = document.querySelector('.nav-toggle');
   if (nav && navToggle) {
@@ -14,7 +14,7 @@
     });
   }
 
-  // ── Active nav link based on current page ──
+  // ── Идэвхтэй nav холбоос ──
   const path = window.location.pathname.replace(/\/$/, '') || '/';
   document.querySelectorAll('.nav-links a').forEach((a) => {
     const href = a.getAttribute('href');
@@ -47,14 +47,14 @@
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
   }
 
-  // ── Hide broken images so placeholder shows ──
+  // ── Зураг ачаалагдахгүй бол нуух ──
   document.querySelectorAll('img').forEach((img) => {
     img.addEventListener('error', () => {
       img.style.display = 'none';
     });
   });
 
-  // ── Packages: Day / Overnight toggle ──
+  // ── Багц: Өдрийн / Хоноглох toggle ──
   const toggleBtns = document.querySelectorAll('.pkg-toggle button');
   if (toggleBtns.length) {
     toggleBtns.forEach((btn) => {
@@ -69,7 +69,7 @@
     });
   }
 
-  // ── Gallery filter ──
+  // ── Gallery шүүлтүүр ──
   const filterBtns = document.querySelectorAll('.gallery-filter button');
   if (filterBtns.length) {
     filterBtns.forEach((btn) => {
@@ -85,7 +85,7 @@
     });
   }
 
-  // ── Contact form AJAX ──
+  // ── Холбоо барих маягт ──
   const form = document.querySelector('form[data-netlify="true"]');
   const feedback = document.querySelector('.form-feedback');
   if (form && feedback) {
@@ -107,7 +107,7 @@
           feedback.textContent = 'Таны захиалгыг хүлээн авлаа. 24 цагийн дотор холбогдох болно.';
           form.reset();
         } else {
-          throw new Error('network');
+          throw new Error('сүлжээний алдаа');
         }
       } catch (err) {
         feedback.classList.add('is-error');
