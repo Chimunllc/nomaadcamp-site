@@ -3,18 +3,570 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Холбоо барих — Үнийн санал авах · NOMAAD Camp</title>
-<meta name="description" content="Байгууллагын нэр, хүний тоо, огноо, имэйлээ үлдээгээрэй. 24 цагт үнийн санал илгээнэ.">
+<title>Үнийн санал авах · NOMAAD Camp</title>
+<meta name="description" content="Байгууллагын нэр, хүний тоо, огноо, имэйлээ үлдээгээрэй. Ажлын 24 цагт үнийн санал илгээнэ.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="theme-color" content="#0B0D0B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+
+<style>
+/* ─── Contact page overrides ─── */
+
+/* PAGE HEADER — improved */
+.page-header {
+  position: relative;
+  overflow: hidden;
+  background: #080c06;
+  padding: 5rem 0 4rem;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 80% 50%, rgba(45,80,22,0.35) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(200,169,106,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Decorative corner lines */
+.page-header::after {
+  content: '';
+  position: absolute;
+  top: 2rem; right: 2rem;
+  width: 80px; height: 80px;
+  border-top: 1px solid rgba(200,169,106,0.3);
+  border-right: 1px solid rgba(200,169,106,0.3);
+  pointer-events: none;
+}
+
+.ph-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C8A96A;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.ph-label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: #C8A96A;
+}
+
+.ph-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 400;
+  color: #F0EDE6;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.ph-title em {
+  font-style: italic;
+  color: #C8A96A;
+}
+
+.ph-sub {
+  color: #7A7A72;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 480px;
+  position: relative;
+}
+
+/* TRUST BAR */
+.trust-bar {
+  background: rgba(200,169,106,0.06);
+  border-top: 1px solid rgba(200,169,106,0.12);
+  border-bottom: 1px solid rgba(200,169,106,0.12);
+  padding: 1rem 0;
+}
+
+.trust-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #9A9A90;
+  white-space: nowrap;
+}
+
+.trust-item strong {
+  color: #C8A96A;
+  font-weight: 700;
+}
+
+.trust-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(200,169,106,0.15);
+  flex-shrink: 0;
+}
+
+/* MAIN CONTACT LAYOUT */
+.contact-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .contact-section { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* LEFT: Info panel */
+.c-info {
+  position: sticky;
+  top: 2rem;
+}
+
+.c-info-head {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C8A96A;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(200,169,106,0.15);
+}
+
+.c-info-block {
+  margin-bottom: 1.5rem;
+}
+
+.c-info-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5A5A52;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.c-info-value {
+  font-size: 0.88rem;
+  color: #C8C8BC;
+  line-height: 1.6;
+}
+
+.c-info-value a {
+  color: #C8A96A;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.c-info-value a:hover { opacity: 0.75; }
+
+/* Highlight phone */
+.phone-big {
+  display: block;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  color: #F0EDE6;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+  text-decoration: none;
+}
+
+.phone-big:hover { color: #C8A96A !important; }
+
+/* Social proof box */
+.proof-box {
+  margin-top: 2rem;
+  background: rgba(200,169,106,0.06);
+  border: 1px solid rgba(200,169,106,0.15);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.proof-box blockquote {
+  font-size: 0.85rem;
+  color: #9A9A90;
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  border: none;
+  padding: 0;
+}
+
+.proof-author {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #C8A96A;
+}
+
+/* RIGHT: Form panel */
+.c-form-wrap {
+  background: #0e110c;
+  border: 1px solid rgba(200,169,106,0.12);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.urgency-banner {
+  background: linear-gradient(90deg, rgba(200,169,106,0.12) 0%, rgba(200,169,106,0.06) 100%);
+  border-bottom: 1px solid rgba(200,169,106,0.15);
+  padding: 0.875rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.urgency-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #FF6A00;
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,106,0,0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(255,106,0,0); }
+}
+
+.urgency-text {
+  font-size: 0.82rem;
+  color: #C8C8BC;
+  line-height: 1.4;
+}
+
+.urgency-text strong { color: #FF8C40; }
+
+.c-form {
+  padding: 2rem 1.75rem;
+}
+
+.form-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5A5A52;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+
+.form-section-title:first-child { margin-top: 0; }
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 540px) {
+  .form-row-2 { grid-template-columns: 1fr; }
+  .c-form { padding: 1.5rem 1.25rem; }
+}
+
+.f-field {
+  margin-bottom: 14px;
+}
+
+.f-field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6A6A62;
+  margin-bottom: 6px;
+}
+
+.f-field input,
+.f-field select,
+.f-field textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(200,169,106,0.18);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-size: 0.88rem;
+  font-family: 'Manrope', sans-serif;
+  color: #F0EDE6;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.f-field input::placeholder,
+.f-field textarea::placeholder { color: #4A4A44; }
+
+.f-field input:focus,
+.f-field select:focus,
+.f-field textarea:focus {
+  border-color: rgba(200,169,106,0.55);
+  background: rgba(200,169,106,0.04);
+}
+
+.f-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8A96A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.f-field select option {
+  background: #141614;
+  color: #F0EDE6;
+}
+
+.f-field textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+/* Package selector */
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 440px) {
+  .pkg-grid { grid-template-columns: 1fr; }
+}
+
+.pkg-card {
+  border: 1px solid rgba(200,169,106,0.15);
+  border-radius: 8px;
+  padding: 14px 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  background: rgba(255,255,255,0.02);
+  user-select: none;
+  position: relative;
+}
+
+.pkg-card:hover {
+  border-color: rgba(200,169,106,0.4);
+  background: rgba(200,169,106,0.05);
+}
+
+.pkg-card.selected {
+  border-color: #C8A96A;
+  background: rgba(200,169,106,0.1);
+}
+
+.pkg-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 6px; right: 8px;
+  font-size: 10px;
+  color: #C8A96A;
+  font-weight: 700;
+}
+
+.pkg-popular {
+  position: absolute;
+  top: -8px; left: 50%;
+  transform: translateX(-50%);
+  background: #C8A96A;
+  color: #0B0D0B;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pkg-name {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #F0EDE6;
+  margin-bottom: 3px;
+}
+
+.pkg-price {
+  display: block;
+  font-size: 0.75rem;
+  color: #C8A96A;
+  font-weight: 600;
+}
+
+.pkg-desc {
+  display: block;
+  font-size: 0.7rem;
+  color: #5A5A52;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* Headcount helper */
+.headcount-hint {
+  font-size: 0.78rem;
+  color: #5A5A52;
+  margin-top: 5px;
+}
+
+.headcount-hint span {
+  color: #C8A96A;
+  font-weight: 600;
+}
+
+/* Submit area */
+.submit-area {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(200,169,106,0.1);
+}
+
+.btn-submit {
+  display: block;
+  width: 100%;
+  background: #C8A96A;
+  color: #0B0D0B;
+  border: none;
+  border-radius: 6px;
+  padding: 15px 2rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-submit:hover { opacity: 0.88; }
+.btn-submit:active { transform: scale(0.99); opacity: 0.76; }
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.submit-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #4A4A44;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Success state */
+.success-state {
+  display: none;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.success-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid #C8A96A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.25rem;
+  color: #C8A96A;
+}
+
+.success-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: #F0EDE6;
+  margin-bottom: 0.5rem;
+}
+
+.success-sub {
+  font-size: 0.85rem;
+  color: #7A7A72;
+  line-height: 1.6;
+}
+
+/* Error state */
+.field-error {
+  font-size: 0.75rem;
+  color: #FF6B6B;
+  margin-top: 4px;
+  display: none;
+}
+
+.f-field.has-error input,
+.f-field.has-error select {
+  border-color: rgba(255,107,107,0.5);
+}
+
+.f-field.has-error .field-error {
+  display: block;
+}
+
+/* Estimate preview */
+.estimate-box {
+  background: rgba(200,169,106,0.05);
+  border: 1px solid rgba(200,169,106,0.12);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  display: none;
+}
+
+.estimate-box.visible { display: flex; }
+
+.estimate-box {
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.estimate-label {
+  font-size: 0.8rem;
+  color: #7A7A72;
+}
+
+.estimate-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: #C8A96A;
+  white-space: nowrap;
+}
+
+.estimate-note {
+  font-size: 0.72rem;
+  color: #5A5A52;
+}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAV (unchanged) -->
 <nav class="nav">
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
     <img src="/nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
@@ -23,7 +575,7 @@
     <a href="/">Нүүр</a>
     <a href="/kemp/">Кемп</a>
     <a href="/premium/">Premium</a>
-    <a href="/holboo/">Холбоо барих</a>
+    <a href="/holboo/" class="active">Холбоо барих</a>
   </div>
   <div style="display:flex;align-items:center;gap:0.75rem">
     <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
@@ -37,87 +589,219 @@
 
 <!-- PAGE HEADER -->
 <header class="page-header">
-  <div class="ph ph--sand">
-    <div class="ph-sun"></div>
-    <div class="ph-hill"></div>
-  </div>
   <div class="container">
-    <span class="eyebrow"><span class="eyebrow-dot"></span>Холбоо барих</span>
-    <h1>Үнийн санал авах</h1>
-    <p>Маягтыг бөглөөд илгээгээрэй. Ажлын 24 цагт таны байгууллагад тохирсон үнийн санал илгээнэ.</p>
+    <div class="ph-label">Холбоо барих</div>
+    <h1 class="ph-title">Байгууллагын кемп<br><em>захиалах</em></h1>
+    <p class="ph-sub">Маягтыг бөглөөд илгээгээрэй. Ажлын 24 цагт таны байгууллагад тохирсон үнийн санал очно.</p>
   </div>
 </header>
 
-<!-- FORM -->
-<section class="section">
-  <div class="container">
-    <div class="contact-layout">
-      <div class="contact-info reveal">
-        <div class="info-item">
-          <span class="info-label">Утас</span>
-          <div class="info-value">
-            <a href="tel:+97699179417">9917-9417</a> · <a href="tel:+97688028216">8802-8216</a>
-          </div>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item"><strong>130+</strong> байгууллага</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><strong>24 цаг</strong> дотор хариу</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><strong>1,000 хүн</strong> хүртэл</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><strong>NDA</strong> боломжтой</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><strong>2021</strong> оноос хойш</div>
+  </div>
+</div>
+
+<!-- MAIN SECTION -->
+<div class="contact-section">
+
+  <!-- LEFT: Info -->
+  <aside class="c-info reveal">
+    <div class="c-info-head">Шууд холбогдох</div>
+
+    <div class="c-info-block">
+      <span class="c-info-label">Утас</span>
+      <a href="tel:+97699179417" class="phone-big">9917-9417</a>
+      <a href="tel:+97688028216" class="phone-big" style="font-size:1.1rem;color:#9A9A90;">8802-8216</a>
+    </div>
+
+    <div class="c-info-block">
+      <span class="c-info-label">Имэйл</span>
+      <div class="c-info-value">
+        <a href="mailto:hello@nomaadglobal.com">hello@nomaadglobal.com</a>
+      </div>
+    </div>
+
+    <div class="c-info-block">
+      <span class="c-info-label">Оффис</span>
+      <div class="c-info-value">БЗД, 11-р хороо<br>Ногоон зоорь 1-13, NOMAAD OFFICE</div>
+    </div>
+
+    <div class="c-info-block">
+      <span class="c-info-label">Кемпийн байршил</span>
+      <div class="c-info-value">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</div>
+    </div>
+
+    <div class="c-info-block">
+      <span class="c-info-label">Ажлын цаг</span>
+      <div class="c-info-value">Даваа – Баасан · 09:00–18:00</div>
+    </div>
+
+    <div class="proof-box">
+      <blockquote>
+        "Зохион байгуулалтын хувьд маш мэргэжлийн байсан. Хоол, хөтөлбөр, техник — бүгд нэг системд ажилласан нь ялгарч байлаа."
+      </blockquote>
+      <div class="proof-author">— Байгууллагын HR захирал</div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Form -->
+  <div class="c-form-wrap reveal">
+
+    <!-- Urgency banner -->
+    <div class="urgency-banner">
+      <div class="urgency-dot"></div>
+      <div class="urgency-text">
+        <strong>2026 зун хязгаарлагдмал</strong> — 6-р болон 7-р сарын эрэлттэй огноонууд дуусаж байна. Эрт захиалга өгснөөр тохирох огноо болон хөнгөлөлт авах боломжтой.
+      </div>
+    </div>
+
+    <form class="c-form" id="quoteForm" name="quote" method="POST" data-netlify="true" novalidate>
+      <input type="hidden" name="form-name" value="quote">
+      <input type="hidden" name="package" id="hiddenPkg" value="standard">
+
+      <!-- Байгууллага -->
+      <div class="form-section-title">Байгууллагын мэдээлэл</div>
+
+      <div class="form-row-2">
+        <div class="f-field" id="field-org">
+          <label for="org">Байгууллагын нэр <span style="color:#FF6B6B">*</span></label>
+          <input id="org" name="org" type="text" placeholder="XYZ ХХК" autocomplete="organization">
+          <div class="field-error">Байгууллагын нэрийг бөглөнө үү</div>
         </div>
-        <div class="info-item">
-          <span class="info-label">Имэйл</span>
-          <div class="info-value">
-            <a href="mailto:hello@nomaadglobal.com">hello@nomaadglobal.com</a>
-          </div>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Оффис</span>
-          <div class="info-value">БЗД, 11-р хороо, Ногоон зоорь 1-13, NOMAAD OFFICE</div>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Кемпийн байршил</span>
-          <div class="info-value">Эрдэнэ сум, Төв аймаг · УБ-аас 75 км</div>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Цагийн хуваарь</span>
-          <div class="info-value">Даваа – Баасан · 09:00 – 18:00</div>
+        <div class="f-field" id="field-contact">
+          <label for="contact">Холбоо барих хүн <span style="color:#FF6B6B">*</span></label>
+          <input id="contact" name="contact" type="text" placeholder="Овог Нэр" autocomplete="name">
+          <div class="field-error">Нэрийг бөглөнө үү</div>
         </div>
       </div>
 
-      <form
-        class="form reveal"
-        name="quote"
-        method="POST"
-        data-netlify="true"
-      >
-        <input type="hidden" name="form-name" value="quote">
-
-        <div class="form-field">
-          <label for="org">Байгууллагын нэр</label>
-          <input id="org" name="org" type="text" required autocomplete="organization">
+      <div class="form-row-2">
+        <div class="f-field" id="field-email">
+          <label for="email">Имэйл хаяг <span style="color:#FF6B6B">*</span></label>
+          <input id="email" name="email" type="email" placeholder="hr@company.mn" autocomplete="email">
+          <div class="field-error">Зөв имэйл хаяг оруулна уу</div>
         </div>
-
-        <div class="form-field">
-          <label for="people">Хүний тоо</label>
-          <input id="people" name="people" type="number" min="1" required placeholder="Жишээ: 120">
+        <div class="f-field">
+          <label for="phone">Утасны дугаар</label>
+          <input id="phone" name="phone" type="tel" placeholder="9911-1234" autocomplete="tel">
         </div>
+      </div>
 
-        <div class="form-field">
-          <label for="event_date">Арга хэмжээний огноо</label>
-          <input id="event_date" name="event_date" type="date" required>
+      <!-- Арга хэмжээ -->
+      <div class="form-section-title" style="margin-top:1.5rem">Арга хэмжээний мэдээлэл</div>
+
+      <div class="form-row-2">
+        <div class="f-field" id="field-people">
+          <label for="people">Хүний тоо <span style="color:#FF6B6B">*</span></label>
+          <input id="people" name="people" type="number" min="10" max="1000" placeholder="Жишээ: 150" oninput="updateEstimate()">
+          <div class="field-error">Хүний тоог оруулна уу (10–1000)</div>
         </div>
-
-        <div class="form-field">
-          <label for="email">Имэйл хаяг</label>
-          <input id="email" name="email" type="email" required autocomplete="email">
+        <div class="f-field">
+          <label for="event_date">Хүссэн огноо <span style="color:#FF6B6B">*</span></label>
+          <input id="event_date" name="event_date" type="date">
         </div>
+      </div>
 
-        <button type="submit" class="btn btn--sand btn--lg form-submit">Илгээх</button>
-        <div class="form-feedback" aria-live="polite"></div>
-      </form>
-    </div>
+      <div class="form-row-2">
+        <div class="f-field">
+          <label for="duration">Хугацаа</label>
+          <select id="duration" name="duration">
+            <option value="">Сонгоно уу</option>
+            <option value="1day">1 өдөр (буцаж ирнэ)</option>
+            <option value="1night">1 шөнө 2 өдөр</option>
+            <option value="2night">2 шөнө 3 өдөр</option>
+            <option value="custom">Бусад (тайлбарт бичнэ)</option>
+          </select>
+        </div>
+        <div class="f-field">
+          <label for="event_type">Арга хэмжээний төрөл</label>
+          <select id="event_type" name="event_type">
+            <option value="">Сонгоно уу</option>
+            <option value="teambuilding">Team building</option>
+            <option value="anniversary">Байгуулагдсан ойн арга хэмжээ</option>
+            <option value="retreat">Leadership retreat</option>
+            <option value="party">Корпоратив баяр</option>
+            <option value="other">Бусад</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Багц -->
+      <div class="form-section-title" style="margin-top:1.5rem">Багц сонгох</div>
+
+      <div class="pkg-grid">
+        <div class="pkg-card" id="pkg-basic" onclick="selectPkg('basic')">
+          <span class="pkg-name">Basic</span>
+          <span class="pkg-price">150,000₮/хүн</span>
+          <span class="pkg-desc">Майхан · хоол · орчин</span>
+        </div>
+        <div class="pkg-card selected" id="pkg-standard" onclick="selectPkg('standard')">
+          <div class="pkg-popular">Эрэлттэй</div>
+          <span class="pkg-name">Standard</span>
+          <span class="pkg-price">220,000₮/хүн</span>
+          <span class="pkg-desc">MC · sound · event flow</span>
+        </div>
+        <div class="pkg-card" id="pkg-premium" onclick="selectPkg('premium')">
+          <span class="pkg-name">Premium</span>
+          <span class="pkg-price">340,000₮/хүн</span>
+          <span class="pkg-desc">DJ · stage · after-movie</span>
+        </div>
+      </div>
+
+      <!-- Live estimate -->
+      <div class="estimate-box" id="estimateBox">
+        <div>
+          <div class="estimate-label">Ойролцоо тооцоо</div>
+          <div class="estimate-note">НӨАТ орсон · эцсийн үнэ тохиролцоно</div>
+        </div>
+        <div class="estimate-value" id="estimateVal">—</div>
+      </div>
+
+      <!-- Notes -->
+      <div class="f-field">
+        <label for="notes">Нэмэлт тайлбар / тусгай хүсэлт</label>
+        <textarea id="notes" name="notes" placeholder="Тусгай хоолны шаардлага, хөтөлбөрийн санаа, NDA хэрэгтэй эсэх, бусад..."></textarea>
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-area">
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Үнийн санал авах →
+        </button>
+        <p class="submit-note">
+          Ажлын 24 цагт таны имэйлд хариу очно.<br>
+          Мэдээллийг гуравдагч этгээдэд дамжуулахгүй.
+        </p>
+      </div>
+
+      <!-- Success state -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Амжилттай илгээгдлээ</div>
+        <p class="success-sub">
+          Ажлын 24 цагт таны имэйлд үнийн санал хүргэнэ.<br>
+          Яаралтай бол <a href="tel:+97699179417" style="color:#C8A96A">9917-9417</a> дугаарт залгаарай.
+        </p>
+      </div>
+
+    </form>
   </div>
-</section>
+</div>
 
 <!-- MOBILE CTA -->
 <div class="bottom-cta">
   <a class="phone" href="tel:+97699179417">9917-9417</a>
-  <a class="btn btn--sand" href="#">Үнийн санал авах</a>
+  <a class="btn btn--sand" href="#quoteForm">Үнийн санал авах</a>
 </div>
 
 <!-- FOOTER -->
@@ -128,6 +812,7 @@
         <a href="/" class="footer-logo" aria-label="NOMAAD Camp">
           <img src="/nomaad-logo-light.svg" alt="NOMAAD" width="168" height="40">
         </a>
+        <p class="footer-tagline">Байгальд шалгагдсан.</p>
         <p>Монголын анхдагч байгууллагын кемп. Байгаль дунд, мэргэжлийн зохион байгуулалттай.</p>
       </div>
       <div>
@@ -140,7 +825,7 @@
       <div>
         <h5>Байршил</h5>
         <p style="color:var(--muted);font-size:0.85rem">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
-        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорий 1-13,<br>NOMAAD OFFICE</p>
       </div>
       <div class="footer-cta">
         <h5>Холбоо барих</h5>
@@ -156,5 +841,83 @@
 </footer>
 
 <script src="/main.js"></script>
+<script>
+const PRICES = { basic: 150000, standard: 220000, premium: 340000 };
+let currentPkg = 'standard';
+
+function selectPkg(pkg) {
+  ['basic','standard','premium'].forEach(p => {
+    document.getElementById('pkg-' + p).classList.remove('selected');
+  });
+  document.getElementById('pkg-' + pkg).classList.add('selected');
+  currentPkg = pkg;
+  document.getElementById('hiddenPkg').value = pkg;
+  updateEstimate();
+}
+
+function updateEstimate() {
+  const people = parseInt(document.getElementById('people').value) || 0;
+  const box = document.getElementById('estimateBox');
+  const val = document.getElementById('estimateVal');
+  if (people >= 10) {
+    const total = people * PRICES[currentPkg];
+    val.textContent = total.toLocaleString('mn-MN') + '₮';
+    box.classList.add('visible');
+  } else {
+    box.classList.remove('visible');
+  }
+}
+
+// Form validation + submit
+document.getElementById('quoteForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let valid = true;
+
+  // Clear errors
+  document.querySelectorAll('.f-field').forEach(f => f.classList.remove('has-error'));
+
+  // Validate required fields
+  const checks = [
+    { id: 'field-org',     input: 'org',     check: v => v.trim().length > 0 },
+    { id: 'field-contact', input: 'contact', check: v => v.trim().length > 0 },
+    { id: 'field-email',   input: 'email',   check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'field-people',  input: 'people',  check: v => parseInt(v) >= 10 && parseInt(v) <= 1000 },
+  ];
+
+  checks.forEach(({ id, input, check }) => {
+    const val = document.getElementById(input).value;
+    if (!check(val)) {
+      document.getElementById(id).classList.add('has-error');
+      valid = false;
+    }
+  });
+
+  if (!valid) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Илгээж байна...';
+
+  // Netlify submit
+  const formData = new FormData(this);
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(formData).toString()
+  }).then(() => {
+    document.querySelector('.c-form').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+  }).catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Үнийн санал авах →';
+    alert('Алдаа гарлаа. Утсаар холбогдоно уу: 9917-9417');
+  });
+});
+
+// Set min date to today
+const dateInput = document.getElementById('event_date');
+const today = new Date().toISOString().split('T')[0];
+dateInput.setAttribute('min', today);
+</script>
 </body>
 </html>
