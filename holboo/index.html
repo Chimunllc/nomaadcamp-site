@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Холбоо барих — Үнийн санал авах · NOMAAD Camp</title>
+<meta name="description" content="Байгууллагын нэр, хүний тоо, огноо, имэйлээ үлдээгээрэй. 24 цагт үнийн санал илгээнэ.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#0B0D0B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
+    <img src="/nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
+  </a>
+  <div class="nav-links">
+    <a href="/">Нүүр</a>
+    <a href="/kemp/">Кемп</a>
+    <a href="/premium/">Premium</a>
+    <a href="/holboo/">Холбоо барих</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.75rem">
+    <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
+    <button class="nav-toggle" aria-label="Цэс">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="ph ph--sand">
+    <div class="ph-sun"></div>
+    <div class="ph-hill"></div>
+  </div>
+  <div class="container">
+    <span class="eyebrow"><span class="eyebrow-dot"></span>Холбоо барих</span>
+    <h1>Үнийн санал авах</h1>
+    <p>Маягтыг бөглөөд илгээгээрэй. Ажлын 24 цагт таны байгууллагад тохирсон үнийн санал илгээнэ.</p>
+  </div>
+</header>
+
+<!-- FORM -->
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <div class="info-item">
+          <span class="info-label">Утас</span>
+          <div class="info-value">
+            <a href="tel:+97699179417">9917-9417</a> · <a href="tel:+97688028216">8802-8216</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Имэйл</span>
+          <div class="info-value">
+            <a href="mailto:hello@nomaadglobal.com">hello@nomaadglobal.com</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Оффис</span>
+          <div class="info-value">БЗД, 11-р хороо, Ногоон зоорь 1-13, NOMAAD OFFICE</div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Кемпийн байршил</span>
+          <div class="info-value">Эрдэнэ сум, Төв аймаг · УБ-аас 75 км</div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Цагийн хуваарь</span>
+          <div class="info-value">Даваа – Баасан · 09:00 – 18:00</div>
+        </div>
+      </div>
+
+      <form
+        class="form reveal"
+        name="quote"
+        method="POST"
+        data-netlify="true"
+      >
+        <input type="hidden" name="form-name" value="quote">
+
+        <div class="form-field">
+          <label for="org">Байгууллагын нэр</label>
+          <input id="org" name="org" type="text" required autocomplete="organization">
+        </div>
+
+        <div class="form-field">
+          <label for="people">Хүний тоо</label>
+          <input id="people" name="people" type="number" min="1" required placeholder="Жишээ: 120">
+        </div>
+
+        <div class="form-field">
+          <label for="event_date">Арга хэмжээний огноо</label>
+          <input id="event_date" name="event_date" type="date" required>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Имэйл хаяг</label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+        </div>
+
+        <button type="submit" class="btn btn--sand btn--lg form-submit">Илгээх</button>
+        <div class="form-feedback" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE CTA -->
+<div class="bottom-cta">
+  <a class="phone" href="tel:+97699179417">9917-9417</a>
+  <a class="btn btn--sand" href="#">Үнийн санал авах</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="NOMAAD Camp">
+          <img src="/nomaad-logo-light.svg" alt="NOMAAD" width="168" height="40">
+        </a>
+        <p class="footer-tagline">Байгальд шалгагдсан.</p>
+        <p>Монголын анхдагч байгууллагын кемп. Байгаль дунд, мэргэжлийн зохион байгуулалттай.</p>
+      </div>
+      <div>
+        <h5>Хуудсууд</h5>
+        <a href="/">Нүүр</a>
+        <a href="/kemp/">Кемп</a>
+        <a href="/premium/">Premium</a>
+        <a href="/holboo/">Холбоо барих</a>
+      </div>
+      <div>
+        <h5>Байршил</h5>
+        <p style="color:var(--muted);font-size:0.85rem">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
+      </div>
+      <div class="footer-cta">
+        <h5>Холбоо барих</h5>
+        <a href="tel:+97699179417" class="phone">9917-9417</a>
+        <a class="btn btn--sand" href="/holboo/">Үнийн санал авах</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 ЧИМУН ХХК · NOMAAD Camp</span>
+      <span>Байгууллагын кемп · Монгол</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/main.js"></script>
+</body>
+</html>
