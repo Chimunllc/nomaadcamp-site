@@ -991,7 +991,7 @@ body.home-page h5 {
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
   color: var(--text-dark);
 }
-body.home-page p { color: rgba(26, 26, 26, 0.78); font-size: clamp(1rem, 1.1vw, 1.08rem); }
+body.home-page p { color: rgba(26, 26, 26, 0.86); font-size: clamp(1rem, 1.1vw, 1.08rem); }
 body.home-page .section { padding: clamp(3.5rem, 7vw, 7rem) 0; }
 
 body.home-page .nav {
@@ -1070,7 +1070,7 @@ body.home-page .nav-cta {
   flex-wrap: wrap;
   gap: 0.7rem;
   font-size: 0.92rem;
-  opacity: 0.9;
+  opacity: 0.98;
 }
 
 .section--light { background: var(--cream); }
@@ -1165,6 +1165,29 @@ body.home-page .nav-cta {
 
 body.home-page .gallery-card {
   border: 1px solid rgba(31, 42, 35, 0.14);
+}
+
+body.home-page .footer {
+  background: var(--charcoal);
+  color: rgba(255, 255, 255, 0.88);
+}
+body.home-page .footer p,
+body.home-page .footer .footer-meta,
+body.home-page .footer a {
+  color: rgba(255, 255, 255, 0.9);
+}
+body.home-page .footer .footer-bottom {
+  color: rgba(255, 255, 255, 0.72);
+}
+body.home-page .footer .footer-title,
+body.home-page .footer .footer-cta .phone {
+  color: #FFFFFF;
+}
+body.home-page .footer .footer-tagline {
+  color: var(--sand-2);
+}
+body.home-page .footer .footer-tagline::before {
+  background: var(--sand-2);
 }
 
 .cta-final {

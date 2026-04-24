@@ -47,7 +47,32 @@
 <main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <img src="/gallery-01.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <picture>
+      <source
+        type="image/webp"
+        srcset="
+          /.netlify/images?url=/gallery-01.jpg&w=640&h=360&fit=cover&fm=webp&q=72 640w,
+          /.netlify/images?url=/gallery-01.jpg&w=960&h=540&fit=cover&fm=webp&q=72 960w,
+          /.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=webp&q=72 1280w,
+          /.netlify/images?url=/gallery-01.jpg&w=1600&h=900&fit=cover&fm=webp&q=72 1600w,
+          /.netlify/images?url=/gallery-01.jpg&w=1920&h=1080&fit=cover&fm=webp&q=72 1920w"
+        sizes="100vw">
+      <img
+        src="/.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=jpg&q=76"
+        srcset="
+          /.netlify/images?url=/gallery-01.jpg&w=640&h=360&fit=cover&fm=jpg&q=76 640w,
+          /.netlify/images?url=/gallery-01.jpg&w=960&h=540&fit=cover&fm=jpg&q=76 960w,
+          /.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=jpg&q=76 1280w,
+          /.netlify/images?url=/gallery-01.jpg&w=1600&h=900&fit=cover&fm=jpg&q=76 1600w,
+          /.netlify/images?url=/gallery-01.jpg&w=1920&h=1080&fit=cover&fm=jpg&q=76 1920w"
+        sizes="100vw"
+        alt="NOMAAD кемпийн өргөн талбай"
+        class="hero-photo"
+        fetchpriority="high"
+        decoding="async"
+        width="1920"
+        height="1080">
+    </picture>
     <div class="hero-overlay"></div>
   </div>
 
