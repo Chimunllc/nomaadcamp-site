@@ -1422,3 +1422,18 @@ body.home-page .footer .footer-tagline::before {
     padding-top: calc(var(--nav-h) + 1.4rem);
   }
 }
+/* === HERO TEXT FIX (FINAL - DO NOT EDIT ABOVE CODE) === */
+
+body.home-page .hero--corporate h1,
+body.home-page .hero--corporate h1 span {
+  color: #FFFFFF !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  padding: 0 !important;
+  box-decoration-break: unset !important;
+  -webkit-box-decoration-break: unset !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
+}
