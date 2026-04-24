@@ -26,7 +26,7 @@
     <a href="/premium/">Premium</a>
     <a href="/holboo/">Холбоо барих</a>
   </div>
-  <div style="display:flex;align-items:center;gap:0.75rem">
+  <div class="nav-actions">
     <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
     <button class="nav-toggle" aria-label="Цэс">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -125,21 +125,13 @@
       <span class="eyebrow">Галерей</span>
       <h2>Бодит орчин.</h2>
     </div>
-    <div class="carousel reveal" data-carousel data-autoplay="false">
-      <div class="carousel-track">
-        <div class="carousel-slide"><img src="/gallery-01.jpg" alt="NOMAAD кемпийн орчин" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-02.jpg" alt="Асар дотроос" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-03.jpg" alt="Байгалийн орчин" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-04.jpg" alt="Хоолны бүс" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-05.jpg" alt="Үдшийн гэрэлтүүлэг" loading="lazy"></div>
-      </div>
-      <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <div class="carousel-dots" role="tablist"></div>
+    <div class="gallery-grid reveal">
+      <figure class="gallery-card gallery-card--wide"><img src="/gallery-01.jpg" alt="NOMAAD кемпийн төв талбай" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-02.jpg" alt="Асар доторх уур амьсгал" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-03.jpg" alt="Байгалийн ногоон орчин" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--tall"><img src="/gallery-04.jpg" alt="Хоолны үйлчилгээний бүс" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-05.jpg" alt="Оройн гэрэлтүүлэгтэй тайз" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--wide"><img src="/gallery-06.jpg" alt="Багаар ажиллах хөтөлбөр" loading="lazy"></figure>
     </div>
   </div>
 </section>

@@ -9,9 +9,22 @@
     navToggle.addEventListener('click', () => {
       nav.classList.toggle('is-open');
     });
+    document.addEventListener('click', (e) => {
+      if (!nav.classList.contains('is-open')) return;
+      if (!nav.contains(e.target)) nav.classList.remove('is-open');
+    });
     document.querySelectorAll('.nav-links a').forEach((a) => {
       a.addEventListener('click', () => nav.classList.remove('is-open'));
     });
+  }
+
+  // Sticky nav төлөв
+  if (nav) {
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   // Идэвхтэй nav холбоос
