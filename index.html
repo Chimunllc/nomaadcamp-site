@@ -16,9 +16,7 @@
 <meta property="og:url" content="https://nomaadcamp.mn/">
 <meta property="og:image" content="https://nomaadcamp.mn/gallery-01.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="style.css" as="style">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="home-page">
@@ -49,7 +47,32 @@
 <main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <img src="/gallery-01.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <picture>
+      <source
+        type="image/webp"
+        srcset="
+          /.netlify/images?url=/gallery-01.jpg&w=640&h=360&fit=cover&fm=webp&q=72 640w,
+          /.netlify/images?url=/gallery-01.jpg&w=960&h=540&fit=cover&fm=webp&q=72 960w,
+          /.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=webp&q=72 1280w,
+          /.netlify/images?url=/gallery-01.jpg&w=1600&h=900&fit=cover&fm=webp&q=72 1600w,
+          /.netlify/images?url=/gallery-01.jpg&w=1920&h=1080&fit=cover&fm=webp&q=72 1920w"
+        sizes="100vw">
+      <img
+        src="/.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=jpg&q=76"
+        srcset="
+          /.netlify/images?url=/gallery-01.jpg&w=640&h=360&fit=cover&fm=jpg&q=76 640w,
+          /.netlify/images?url=/gallery-01.jpg&w=960&h=540&fit=cover&fm=jpg&q=76 960w,
+          /.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=jpg&q=76 1280w,
+          /.netlify/images?url=/gallery-01.jpg&w=1600&h=900&fit=cover&fm=jpg&q=76 1600w,
+          /.netlify/images?url=/gallery-01.jpg&w=1920&h=1080&fit=cover&fm=jpg&q=76 1920w"
+        sizes="100vw"
+        alt="NOMAAD кемпийн өргөн талбай"
+        class="hero-photo"
+        fetchpriority="high"
+        decoding="async"
+        width="1920"
+        height="1080">
+    </picture>
     <div class="hero-overlay"></div>
   </div>
 
@@ -100,7 +123,7 @@
 
     <div class="camp-grid reveal">
       <button class="camp-card is-active" type="button" data-camp-target="camp-c">
-        <img src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async" class="defer-img">
         <div class="camp-card-body">
           <h3>C Кемп</h3>
           <p class="camp-size">10–50 хүн</p>
@@ -108,7 +131,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
-        <img src="/gallery-06.jpg" alt="B кемп" loading="lazy" decoding="async">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-06.jpg" alt="B кемп" loading="lazy" decoding="async" class="defer-img">
         <div class="camp-card-body">
           <h3>B Кемп</h3>
           <p class="camp-size">50–300 хүн</p>
@@ -116,7 +139,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-a">
-        <img src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async" class="defer-img">
         <div class="camp-card-body">
           <h3>A Кемп</h3>
           <p class="camp-size">200–1000 хүн</p>
@@ -124,7 +147,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-mobile">
-        <img src="/gallery-14.jpg" alt="Нүүдлийн кемп" loading="lazy" decoding="async">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-14.jpg" alt="Нүүдлийн кемп" loading="lazy" decoding="async" class="defer-img">
         <div class="camp-card-body">
           <h3>Нүүдлийн кемп</h3>
           <p class="camp-size">Хүссэн байршилд</p>
@@ -142,9 +165,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-11.jpg" alt="C кемп орчин" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-11.jpg" alt="C кемп орчин" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -160,9 +183,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-06.jpg" alt="B кемпийн талбай" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-06.jpg" alt="B кемпийн талбай" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -178,9 +201,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-01.jpg" alt="A кемпийн төв талбай" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-01.jpg" alt="A кемпийн төв талбай" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -196,9 +219,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async">
-            <img class="carousel-slide" src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async">
+            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -273,12 +296,12 @@
       <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
     </div>
     <div class="gallery-grid reveal">
-      <figure class="gallery-card gallery-card--wide"><img src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy" decoding="async"></figure>
-      <figure class="gallery-card"><img src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy" decoding="async"></figure>
-      <figure class="gallery-card"><img src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy" decoding="async"></figure>
-      <figure class="gallery-card gallery-card--tall"><img src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy" decoding="async"></figure>
-      <figure class="gallery-card"><img src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy" decoding="async"></figure>
-      <figure class="gallery-card gallery-card--wide"><img src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy" decoding="async"></figure>
+      <figure class="gallery-card gallery-card--wide"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy" decoding="async" class="defer-img"></figure>
+      <figure class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy" decoding="async" class="defer-img"></figure>
+      <figure class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy" decoding="async" class="defer-img"></figure>
+      <figure class="gallery-card gallery-card--tall"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy" decoding="async" class="defer-img"></figure>
+      <figure class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy" decoding="async" class="defer-img"></figure>
+      <figure class="gallery-card gallery-card--wide"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy" decoding="async" class="defer-img"></figure>
     </div>
   </div>
 </section>
@@ -309,7 +332,7 @@
       </div>
 
       <div>
-        <h5>Хуудас</h5>
+        <h3 class="footer-title">Хуудас</h3>
         <a href="/">Нүүр</a>
         <a href="/kemp/">Кемп</a>
         <a href="/premium/">Тусгай багц</a>
@@ -317,13 +340,13 @@
       </div>
 
       <div>
-        <h5>Байршил</h5>
+        <h3 class="footer-title">Байршил</h3>
         <p class="footer-meta">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
         <p class="footer-meta footer-meta--spaced">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD Оффис</p>
       </div>
 
       <div class="footer-cta">
-        <h5>Холбоо барих</h5>
+        <h3 class="footer-title">Холбоо барих</h3>
         <a href="tel:+97699179417" class="phone">9917-9417</a>
         <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
       </div>
@@ -336,6 +359,6 @@
   </div>
 </footer>
 
-<script src="/main.js"></script>
+<script src="/main.js" defer></script>
 </body>
 </html>
