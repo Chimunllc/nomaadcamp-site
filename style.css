@@ -156,10 +156,10 @@ p  { color: var(--muted); font-size: 16px; line-height: 1.6; }
 }
 .nav-logo:hover { opacity: 0.88; }
 .nav-logo-word {
-  height: 18px;
+  height: 20px;
   width: auto;
   display: block;
-  opacity: 0.96;
+  opacity: 1;
 }
 .nav-links {
   display: flex; gap: 0.15rem; align-items: center;
