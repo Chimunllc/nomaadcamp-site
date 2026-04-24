@@ -5,13 +5,40 @@
   // Мобайл nav toggle
   const nav = document.querySelector('.nav');
   const navToggle = document.querySelector('.nav-toggle');
+  const navMenu = nav ? nav.querySelector('.nav-links') : null;
   if (nav && navToggle) {
+    const setMenuOpen = (isOpen) => {
+      nav.classList.toggle('is-open', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('menu-open', isOpen);
+    };
+
     navToggle.addEventListener('click', () => {
-      nav.classList.toggle('is-open');
+      setMenuOpen(!nav.classList.contains('is-open'));
+    });
+    document.addEventListener('click', (e) => {
+      if (!nav.classList.contains('is-open')) return;
+      if (!nav.contains(e.target)) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenuOpen(false);
+        navToggle.focus();
+      }
     });
     document.querySelectorAll('.nav-links a').forEach((a) => {
-      a.addEventListener('click', () => nav.classList.remove('is-open'));
+      a.addEventListener('click', () => setMenuOpen(false));
     });
+    if (navMenu && !navMenu.id) navMenu.id = 'primary-nav';
+  }
+
+  // Sticky nav төлөв
+  if (nav) {
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   // Идэвхтэй nav холбоос
@@ -119,6 +146,23 @@
     render();
     start();
   });
+
+  // Нүүр хуудасны кемп дэлгэрэнгүй toggle
+  const campCards = document.querySelectorAll('[data-camp-target]');
+  if (campCards.length > 0) {
+    const campDetails = document.querySelectorAll('.camp-detail');
+    const showCampDetail = (targetId) => {
+      campCards.forEach((card) => {
+        card.classList.toggle('is-active', card.dataset.campTarget === targetId);
+      });
+      campDetails.forEach((detail) => {
+        detail.classList.toggle('is-open', detail.id === targetId);
+      });
+    };
+    campCards.forEach((card) => {
+      card.addEventListener('click', () => showCampDetail(card.dataset.campTarget));
+    });
+  }
 
   // Холбоо барих маягт (AJAX Netlify Forms)
   const form = document.querySelector('form[data-netlify="true"]');
