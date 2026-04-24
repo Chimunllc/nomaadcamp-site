@@ -43,6 +43,26 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 ::selection { background: var(--sand); color: var(--bg); }
 
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  background: var(--sand);
+  color: var(--bg);
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.55rem;
+  font-weight: 600;
+  transform: translateY(-140%);
+  transition: transform 0.2s var(--ease);
+}
+.skip-link:focus-visible { transform: translateY(0); }
+
+:focus-visible {
+  outline: 2px solid var(--sand);
+  outline-offset: 2px;
+}
+
 /* ── TYPOGRAPHY ── */
 h1, h2, h3, h4, h5 {
   font-family: 'Manrope', 'Inter', system-ui, sans-serif;
@@ -1057,14 +1077,18 @@ body.home-page .nav-cta {
 .trust-item {
   border: 1px solid rgba(31, 42, 35, 0.18);
   background: #f8f4ec;
-  color: rgba(31, 42, 35, 0.45);
   border-radius: 10px;
   min-height: 72px;
   display: grid;
   place-items: center;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  margin: 0;
+  padding: 0.5rem;
+}
+.trust-item img {
+  width: min(120px, 100%);
+  height: auto;
+  filter: saturate(0) contrast(1.15);
+  opacity: 0.88;
 }
 
 .exp-grid {

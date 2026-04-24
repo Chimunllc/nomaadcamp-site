@@ -8,23 +8,32 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="mask-icon" href="favicon.svg" color="#2F3E2F">
 <meta name="theme-color" content="#2F3E2F">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://nomaadcamp.mn/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NOMAAD Camp — Байгууллагын арга хэмжээний бүрэн зохион байгуулалт">
+<meta property="og:description" content="Байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт, том хэмжээний эвентийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлнэ.">
+<meta property="og:url" content="https://nomaadcamp.mn/">
+<meta property="og:image" content="https://nomaadcamp.mn/gallery-01.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="home-page">
+<a class="skip-link" href="#main-content">Үндсэн контент руу алгасах</a>
 
 <nav class="nav">
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
-    <img src="nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
+    <img src="nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35" decoding="async">
   </a>
   <div class="nav-links" id="primary-nav">
     <a href="#camps">Манай кемпүүд</a>
     <a href="#why-nomaad">Яагаад NOMAAD</a>
     <a href="#workflow">Хэрхэн ажилладаг</a>
     <a href="#clients">Хамтран ажилласан байгууллагууд</a>
-    <a href="#gallery">Зурагийн цомог</a>
+    <a href="#gallery">Зургийн цомог</a>
     <a href="#contact">Холбоо барих</a>
   </div>
   <div class="nav-actions">
@@ -37,9 +46,14 @@
   </div>
 </nav>
 
+<main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <img src="/gallery-01.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high">
+    <picture>
+      <source srcset="/.netlify/images?url=%2Fgallery-01.jpg&fm=avif&q=52&w=1920" type="image/avif">
+      <source srcset="/.netlify/images?url=%2Fgallery-01.jpg&fm=webp&q=68&w=1920" type="image/webp">
+      <img src="/gallery-01.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high" decoding="async" width="1920" height="1080">
+    </picture>
     <div class="hero-overlay"></div>
   </div>
 
@@ -69,13 +83,13 @@
       <h2>Хамтран ажилласан байгууллагууд</h2>
       <p>Монголын тэргүүлэгч компаниуд NOMAAD-ийг сонгосон.</p>
     </div>
-    <div class="trust-grid reveal" aria-label="Харилцагч байгууллагын лого байршуулах хэсэг">
-      <div class="trust-item">Лого</div>
-      <div class="trust-item">Лого</div>
-      <div class="trust-item">Лого</div>
-      <div class="trust-item">Лого</div>
-      <div class="trust-item">Лого</div>
-      <div class="trust-item">Лого</div>
+    <div class="trust-grid reveal" aria-label="Хамтран ажилласан байгууллагуудын лого">
+      <figure class="trust-item"><img src="/client-mcs.svg" alt="MCS Group лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-golomt.svg" alt="Golomt Bank лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-tt.svg" alt="Tavan Tolgoi лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-apu.svg" alt="APU Company лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-unitel.svg" alt="Unitel лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-khan.svg" alt="Khan Bank лого" width="120" height="36" loading="lazy" decoding="async"></figure>
     </div>
   </div>
 </section>
@@ -90,7 +104,7 @@
 
     <div class="camp-grid reveal">
       <button class="camp-card is-active" type="button" data-camp-target="camp-c">
-        <img src="/gallery-11.jpg" alt="C кемп">
+        <img src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async">
         <div class="camp-card-body">
           <h3>C Кемп</h3>
           <p class="camp-size">10–50 хүн</p>
@@ -98,7 +112,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
-        <img src="/gallery-06.jpg" alt="B кемп">
+        <img src="/gallery-06.jpg" alt="B кемп" loading="lazy" decoding="async">
         <div class="camp-card-body">
           <h3>B Кемп</h3>
           <p class="camp-size">50–300 хүн</p>
@@ -106,7 +120,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-a">
-        <img src="/gallery-01.jpg" alt="A кемп">
+        <img src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async">
         <div class="camp-card-body">
           <h3>A Кемп</h3>
           <p class="camp-size">200–1000 хүн</p>
@@ -114,7 +128,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-mobile">
-        <img src="/gallery-14.jpg" alt="Нүүдлийн кемп">
+        <img src="/gallery-14.jpg" alt="Нүүдлийн кемп" loading="lazy" decoding="async">
         <div class="camp-card-body">
           <h3>Нүүдлийн кемп</h3>
           <p class="camp-size">Хүссэн байршилд</p>
@@ -132,9 +146,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-11.jpg" alt="C кемп орчин">
-            <img class="carousel-slide" src="/gallery-12.jpg" alt="C кемпийн майхан">
-            <img class="carousel-slide" src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ">
+            <img class="carousel-slide" src="/gallery-11.jpg" alt="C кемп орчин" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -150,9 +164,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-06.jpg" alt="B кемпийн талбай">
-            <img class="carousel-slide" src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ">
-            <img class="carousel-slide" src="/gallery-08.jpg" alt="B кемпийн амралтын бүс">
+            <img class="carousel-slide" src="/gallery-06.jpg" alt="B кемпийн талбай" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -168,9 +182,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-01.jpg" alt="A кемпийн төв талбай">
-            <img class="carousel-slide" src="/gallery-02.jpg" alt="A кемпийн асар">
-            <img class="carousel-slide" src="/gallery-03.jpg" alt="A кемпийн байгаль">
+            <img class="carousel-slide" src="/gallery-01.jpg" alt="A кемпийн төв талбай" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -186,9 +200,9 @@
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
-            <img class="carousel-slide" src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил">
-            <img class="carousel-slide" src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт">
-            <img class="carousel-slide" src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ">
+            <img class="carousel-slide" src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
@@ -259,16 +273,40 @@
 <section class="section section--sand" id="gallery">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Зурагийн цомог</span>
+      <span class="eyebrow">Зургийн цомог</span>
       <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
     </div>
     <div class="gallery-grid reveal">
-      <figure class="gallery-card gallery-card--wide"><img src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy"></figure>
-      <figure class="gallery-card"><img src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy"></figure>
-      <figure class="gallery-card"><img src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy"></figure>
-      <figure class="gallery-card gallery-card--tall"><img src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy"></figure>
-      <figure class="gallery-card"><img src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy"></figure>
-      <figure class="gallery-card gallery-card--wide"><img src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--wide"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-17.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-17.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy" decoding="async">
+        </picture></figure>
+      <figure class="gallery-card"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-18.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-18.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy" decoding="async">
+        </picture></figure>
+      <figure class="gallery-card"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-19.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-19.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy" decoding="async">
+        </picture></figure>
+      <figure class="gallery-card gallery-card--tall"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-20.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-20.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy" decoding="async">
+        </picture></figure>
+      <figure class="gallery-card"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-04.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-04.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy" decoding="async">
+        </picture></figure>
+      <figure class="gallery-card gallery-card--wide"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-05.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-05.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy" decoding="async">
+        </picture></figure>
     </div>
   </div>
 </section>
@@ -280,6 +318,7 @@
     <a class="btn btn--accent btn--lg" href="/holboo/#quoteForm">Үнийн санал авах</a>
   </div>
 </section>
+</main>
 
 <div class="bottom-cta">
   <a class="phone" href="tel:+97699179417">9917-9417</a>
@@ -291,7 +330,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a href="/" class="footer-logo" aria-label="NOMAAD Camp">
-          <img src="nomaad-logo-light.svg" alt="NOMAAD" width="168" height="40">
+          <img src="nomaad-logo-light.svg" alt="NOMAAD" width="168" height="40" loading="lazy" decoding="async">
         </a>
         <p class="footer-tagline">Байгууллагын арга хэмжээний нэгдсэн шийдэл</p>
         <p>Кемп, уулзалт, том хэмжээний арга хэмжээг нэг баг, нэг системээр хэрэгжүүлнэ.</p>
