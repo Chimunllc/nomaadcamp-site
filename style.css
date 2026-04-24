@@ -1077,14 +1077,18 @@ body.home-page .nav-cta {
 .trust-item {
   border: 1px solid rgba(31, 42, 35, 0.18);
   background: #f8f4ec;
-  color: rgba(31, 42, 35, 0.45);
   border-radius: 10px;
   min-height: 72px;
   display: grid;
   place-items: center;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  margin: 0;
+  padding: 0.5rem;
+}
+.trust-item img {
+  width: min(120px, 100%);
+  height: auto;
+  filter: saturate(0) contrast(1.15);
+  opacity: 0.88;
 }
 
 .exp-grid {
