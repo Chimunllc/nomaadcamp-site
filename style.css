@@ -1237,22 +1237,50 @@ body.home-page .footer .footer-tagline::before {
   .trust-grid {
     grid-template-columns: 1fr;
   }
+
   .hero--corporate {
     min-height: 78vh;
     padding-top: calc(var(--nav-h) + 1.8rem);
   }
+
   .hero--corporate h1 {
     font-size: clamp(2rem, 9vw, 2.65rem);
     line-height: 1.08;
+    color: #FFFFFF;
+    background: none;
+    padding: 0;
+    box-decoration-break: unset;
+    -webkit-box-decoration-break: unset;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
   }
+
+  .hero--corporate h1 span {
+    background: none;
+    color: #FFFFFF;
+    padding: 0;
+    box-decoration-break: unset;
+    -webkit-box-decoration-break: unset;
+  }
+
   .hero--corporate .hero-sub {
     font-size: 0.97rem;
     line-height: 1.56;
     max-width: 100%;
   }
-  .hero--corporate .hero-actions { flex-direction: column; align-items: stretch; }
-  .hero--corporate .hero-actions .btn { width: 100%; }
-  body.home-page .section { padding: 3.6rem 0; }
+
+  .hero--corporate .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero--corporate .hero-actions .btn {
+    width: 100%;
+  }
+
+  body.home-page .section {
+    padding: 3.6rem 0;
+  }
+}
 }
 
 /* ── Homepage camp cards + detail ── */
