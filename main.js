@@ -147,6 +147,23 @@
     start();
   });
 
+  // Нүүр хуудасны кемп дэлгэрэнгүй toggle
+  const campCards = document.querySelectorAll('[data-camp-target]');
+  if (campCards.length > 0) {
+    const campDetails = document.querySelectorAll('.camp-detail');
+    const showCampDetail = (targetId) => {
+      campCards.forEach((card) => {
+        card.classList.toggle('is-active', card.dataset.campTarget === targetId);
+      });
+      campDetails.forEach((detail) => {
+        detail.classList.toggle('is-open', detail.id === targetId);
+      });
+    };
+    campCards.forEach((card) => {
+      card.addEventListener('click', () => showCampDetail(card.dataset.campTarget));
+    });
+  }
+
   // Холбоо барих маягт (AJAX Netlify Forms)
   const form = document.querySelector('form[data-netlify="true"]');
   const feedback = document.querySelector('.form-feedback');
