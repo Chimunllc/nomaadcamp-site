@@ -5,17 +5,31 @@
   // Мобайл nav toggle
   const nav = document.querySelector('.nav');
   const navToggle = document.querySelector('.nav-toggle');
+  const navMenu = nav ? nav.querySelector('.nav-links') : null;
   if (nav && navToggle) {
+    const setMenuOpen = (isOpen) => {
+      nav.classList.toggle('is-open', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('menu-open', isOpen);
+    };
+
     navToggle.addEventListener('click', () => {
-      nav.classList.toggle('is-open');
+      setMenuOpen(!nav.classList.contains('is-open'));
     });
     document.addEventListener('click', (e) => {
       if (!nav.classList.contains('is-open')) return;
-      if (!nav.contains(e.target)) nav.classList.remove('is-open');
+      if (!nav.contains(e.target)) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenuOpen(false);
+        navToggle.focus();
+      }
     });
     document.querySelectorAll('.nav-links a').forEach((a) => {
-      a.addEventListener('click', () => nav.classList.remove('is-open'));
+      a.addEventListener('click', () => setMenuOpen(false));
     });
+    if (navMenu && !navMenu.id) navMenu.id = 'primary-nav';
   }
 
   // Sticky nav төлөв
