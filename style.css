@@ -953,8 +953,8 @@ p  { color: var(--muted); font-size: 16px; line-height: 1.6; }
   .gallery-card--tall { min-height: 200px; }
 }
 @media (max-width: 560px) {
-  .container { padding: 0 1.25rem; }
-  .nav { padding: 0 1.25rem; }
+  .container { padding: 0 1rem; }
+  .nav { padding: 0 1rem; }
   .hero { min-height: auto; padding: calc(var(--nav-h) + 2.4rem) 0 3.2rem; }
   .hero-sub { margin: 1rem 0 1.4rem; font-size: 0.95rem; }
   .eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; }
@@ -1146,11 +1146,15 @@ body.home-page .nav-cta {
   gap: 0.9rem;
 }
 .pillar {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 3px solid rgba(200, 168, 120, 0.55);
   border-radius: 10px;
-  padding: 1rem 1.1rem;
+  padding: 1rem 1.1rem 1rem 1.3rem;
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.94rem;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .process-grid {
@@ -1231,12 +1235,10 @@ body.home-page .footer .footer-tagline::before {
 }
 
 @media (max-width: 760px) {
-  .exp-grid,
-  .process-grid,
-  .pillars,
-  .trust-grid {
-    grid-template-columns: 1fr;
-  }
+  .exp-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .hero--corporate {
     min-height: 78vh;
@@ -1280,7 +1282,6 @@ body.home-page .footer .footer-tagline::before {
   body.home-page .section {
     padding: 3.6rem 0;
   }
-}
 }
 
 /* ── Homepage camp cards + detail ── */
@@ -1422,6 +1423,75 @@ body.home-page .footer .footer-tagline::before {
     padding-top: calc(var(--nav-h) + 1.4rem);
   }
 }
+/* ── CAROUSEL CONTROLS ── */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(11, 13, 11, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.2s var(--ease);
+}
+.carousel-arrow:hover { background: rgba(11, 13, 11, 0.82); }
+.carousel-arrow--prev { left: 0.55rem; }
+.carousel-arrow--next { right: 0.55rem; }
+
+.carousel-dots {
+  position: absolute;
+  bottom: 0.65rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.35rem;
+  z-index: 4;
+}
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.38);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), width 0.25s var(--ease);
+}
+.carousel-dot.is-active {
+  background: rgba(255, 255, 255, 0.9);
+  width: 16px;
+}
+
+/* ── BOTTOM CTA ── */
+.bottom-cta .btn {
+  padding: 0.78rem 1.4rem;
+  font-size: 0.9rem;
+}
+.bottom-cta a.phone {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ── MOBILE PERF: remove backdrop-filter on hero inner at small sizes ── */
+@media (max-width: 560px) {
+  .hero--corporate .hero-inner {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: linear-gradient(180deg, rgba(12, 17, 14, 0.62), rgba(12, 17, 14, 0.28));
+  }
+}
+
 /* === HERO TEXT FIX (FINAL - DO NOT EDIT ABOVE CODE) === */
 
 body.home-page .hero--corporate h1,
