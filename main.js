@@ -147,8 +147,39 @@
     start();
   });
 
+  // Нүүр хуудасны кемп дэлгэрэнгүй toggle
+  const campCards = document.querySelectorAll('[data-camp-target]');
+  if (campCards.length > 0) {
+    const campDetails = document.querySelectorAll('.camp-detail');
+    const showCampDetail = (targetId) => {
+      campCards.forEach((card) => {
+        const isActive = card.dataset.campTarget === targetId;
+        card.classList.toggle('is-active', isActive);
+        card.setAttribute('aria-expanded', String(isActive));
+      });
+      campDetails.forEach((detail) => {
+        const isOpen = detail.id === targetId;
+        detail.classList.toggle('is-open', isOpen);
+        detail.hidden = !isOpen;
+      });
+    };
+    campCards.forEach((card) => {
+      card.addEventListener('click', () => showCampDetail(card.dataset.campTarget));
+      card.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const current = Array.from(campCards).indexOf(card);
+        const nextIndex = e.key === 'ArrowRight'
+          ? (current + 1) % campCards.length
+          : (current - 1 + campCards.length) % campCards.length;
+        const nextCard = campCards[nextIndex];
+        showCampDetail(nextCard.dataset.campTarget);
+        nextCard.focus();
+      });
+    });
+  }
+
   // Холбоо барих маягт (AJAX Netlify Forms)
-  const form = document.querySelector('form[data-netlify="true"]');
+  const form = document.querySelector('form[data-netlify="true"]:not([data-skip-shared-submit="true"])');
   const feedback = document.querySelector('.form-feedback');
   if (form && feedback) {
     form.addEventListener('submit', async (e) => {
