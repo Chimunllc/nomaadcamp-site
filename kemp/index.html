@@ -19,15 +19,15 @@
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
     <img src="/nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
   </a>
-  <div class="nav-links">
+  <div class="nav-links" id="primary-nav">
     <a href="/">Нүүр</a>
     <a href="/kemp/">Кемп</a>
     <a href="/premium/">Premium</a>
     <a href="/holboo/">Холбоо барих</a>
   </div>
-  <div style="display:flex;align-items:center;gap:0.75rem">
+  <div class="nav-actions">
     <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
-    <button class="nav-toggle" aria-label="Цэс">
+    <button class="nav-toggle" type="button" aria-label="Цэс" aria-controls="primary-nav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -114,7 +114,7 @@
 </section>
 
 <!-- PRICE -->
-<section class="section" style="padding-top:0">
+<section class="section section--flush-top">
   <div class="container">
     <div class="price-block reveal">
       <div>
@@ -128,7 +128,7 @@
 </section>
 
 <!-- CAROUSEL -->
-<section class="section" style="padding-top:0">
+<section class="section section--flush-top">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Галерей</span>
@@ -184,8 +184,8 @@
       </div>
       <div>
         <h5>Байршил</h5>
-        <p style="color:var(--muted);font-size:0.85rem">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
-        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
+        <p class="footer-meta">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
+        <p class="footer-meta footer-meta--spaced">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
       </div>
       <div class="footer-cta">
         <h5>Холбоо барих</h5>

@@ -3,32 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOMAAD Camp — Танай хамт олны хамгийн сайн өдөр</title>
-<meta name="description" content="Байгальд суурилсан орчин — 50-аас 1000 хүн хүртэл. Байгууллагын кемп, премиум туршлага Монголд.">
+<title>NOMAAD Camp — Байгууллагын арга хэмжээний бүрэн зохион байгуулалт</title>
+<meta name="description" content="NOMAAD кемп нь байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт, том хэмжээний эвентийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлнэ.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="mask-icon" href="favicon.svg" color="#4A5E3E">
-<meta name="theme-color" content="#0B0D0B">
+<link rel="mask-icon" href="favicon.svg" color="#2F3E2F">
+<meta name="theme-color" content="#2F3E2F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
 
-<!-- NAV -->
 <nav class="nav">
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
     <img src="nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
   </a>
-  <div class="nav-links">
-    <a href="/">Нүүр</a>
-    <a href="/kemp/">Кемп</a>
-    <a href="/premium/">Premium</a>
-    <a href="/holboo/">Холбоо барих</a>
+  <div class="nav-links" id="primary-nav">
+    <a href="#camps">Манай кемпүүд</a>
+    <a href="#why-nomaad">Яагаад NOMAAD</a>
+    <a href="#workflow">Хэрхэн ажилладаг</a>
+    <a href="#clients">Хамтран ажилласан байгууллагууд</a>
+    <a href="#gallery">Зурагийн цомог</a>
+    <a href="#contact">Холбоо барих</a>
   </div>
-  <div style="display:flex;align-items:center;gap:0.75rem">
-    <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
-    <button class="nav-toggle" aria-label="Цэс">
+  <div class="nav-actions">
+    <a class="nav-cta" href="/holboo/#quoteForm">Үнийн санал авах</a>
+    <button class="nav-toggle" type="button" aria-label="Цэс" aria-controls="primary-nav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -36,156 +37,253 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<header class="hero">
+<header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <div class="ph ph--hero">
-      <div class="ph-sun"></div>
-      <div class="ph-hill"></div>
-    </div>
+    <img src="/gallery-01.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high">
+    <div class="hero-overlay"></div>
   </div>
   <div class="container hero-inner">
-    <span class="eyebrow">
-      <span class="eyebrow-dot"></span>
-      Байгууллагын кемп · Монгол
-    </span>
-    <h1>Танай хамт олны<br>хамгийн сайн өдрийг<br><span>бид зохиодог</span>.</h1>
-    <p class="hero-sub">Байгальд суурилсан орчин — 50-аас 1000 хүн хүртэл. Тайз, асар, хоол, хөтөлбөр бүгд нэг системд.</p>
+    <span class="eyebrow"><span class="eyebrow-dot"></span>Байгууллагын арга хэмжээний нэгдсэн үйлчилгээ</span>
+    <h1>Зөвхөн танай байгууллагад зориулсан<br>кемпийн бүрэн шийдэл</h1>
+    <p class="hero-sub">NOMAAD кемп нь байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт болон том хэмжээний эвентүүдийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлдэг.</p>
     <div class="hero-actions">
-      <a class="btn btn--primary btn--lg" href="/kemp/">Кемп үзэх</a>
-      <a class="btn btn--ghost btn--lg" href="/premium/">Premium кемп үзэх</a>
+      <a class="btn btn--accent btn--lg" href="/holboo/#quoteForm">Үнийн санал авах</a>
+      <a class="btn btn--ghost-light btn--lg" href="#camps">Кемпүүд үзэх</a>
     </div>
     <div class="hero-meta">
-      <span>Эрдэнэ сум · УБ-аас 75 км</span>
+      <span>УБ-аас 75 км</span>
       <span aria-hidden="true">·</span>
-      <span>130+ байгууллагатай хамтарсан</span>
+      <span>30–1000 хүн</span>
+      <span aria-hidden="true">·</span>
+      <span>Бүрэн зохион байгуулалт</span>
     </div>
   </div>
 </header>
 
-<!-- HIGHLIGHTS -->
-<section class="section">
+<section class="section section--light trust" id="clients">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <span class="eyebrow">Харилцагч</span>
+      <h2>Хамтран ажилласан байгууллагууд</h2>
+      <p>Монголын тэргүүлэгч компаниуд NOMAAD-ийг сонгосон.</p>
+    </div>
+    <ul class="trust-grid reveal" aria-label="Харилцагч байгууллагын лого байршуулах хэсэг">
+      <li class="trust-item" aria-label="Байгууллагын лого байршуулна">Лого</li>
+      <li class="trust-item" aria-label="Байгууллагын лого байршуулна">Лого</li>
+      <li class="trust-item" aria-label="Байгууллагын лого байршуулна">Лого</li>
+      <li class="trust-item" aria-label="Байгууллагын лого байршуулна">Лого</li>
+      <li class="trust-item" aria-label="Байгууллагын лого байршуулна">Лого</li>
+      <li class="trust-item" aria-label="Байгууллагын лого байршуулна">Лого</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--sand" id="camps">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Хоёр түвшний туршлага</span>
-      <h2>Байгаль дунд — хамт олонд тохирсон орчин.</h2>
-      <p>Том хамт олны байгууллагын өдөр, эсвэл жижиг багийн тансаг туршлага — хоёулаа нэг чанарын мэдрэмжтэй.</p>
+      <span class="eyebrow">Кемпүүд</span>
+      <h2>Танай зорилгод тохирсон 4 төрлийн кемп</h2>
+      <p>Танай байгууллагын хүний тоо, зорилгоос хамааран сонгох боломжтой 4 төрлийн кемп.</p>
     </div>
 
-    <div class="feat-grid reveal">
-      <a class="feat" href="/kemp/">
-        <div class="ph ph--dawn">
-          <div class="ph-sun"></div>
-          <div class="ph-hill"></div>
-          <span class="ph-label">Кемп</span>
+    <div class="camp-grid reveal">
+      <button class="camp-card is-active" type="button" id="camp-tab-c" data-camp-target="camp-c" aria-controls="camp-c" aria-expanded="true">
+        <img src="/gallery-11.jpg" alt="C кемп">
+        <div class="camp-card-body">
+          <h3>C Кемп</h3>
+          <p class="camp-size">10–50 хүн</p>
+          <p>Цөөн хүний уулзалт, удирдлагын багт зориулсан төвлөрсөн, тухтай орчин.</p>
         </div>
-        <div class="feat-body">
-          <span class="eyebrow"><span class="eyebrow-dot"></span>Кемп</span>
-          <h3>Том, дунд хэмжээний байгууллагад</h3>
-          <p>50–1000 хүн хүртэл. Тайз, асар, хоол, MC, гэрэлтүүлэг, ариун цэвэр — бүгд багтсан.</p>
-          <span class="feat-link">Дэлгэрэнгүй үзэх <span aria-hidden="true">→</span></span>
+      </button>
+      <button class="camp-card" type="button" id="camp-tab-b" data-camp-target="camp-b" aria-controls="camp-b" aria-expanded="false">
+        <img src="/gallery-06.jpg" alt="B кемп">
+        <div class="camp-card-body">
+          <h3>B Кемп</h3>
+          <p class="camp-size">50–300 хүн</p>
+          <p>Баг, алба нэгжийн аялал, сургалт, дотоод арга хэмжээнд тохирсон.</p>
         </div>
-      </a>
+      </button>
+      <button class="camp-card" type="button" id="camp-tab-a" data-camp-target="camp-a" aria-controls="camp-a" aria-expanded="false">
+        <img src="/gallery-01.jpg" alt="A кемп">
+        <div class="camp-card-body">
+          <h3>A Кемп</h3>
+          <p class="camp-size">200–1000 хүн</p>
+          <p>Том хэмжээний байгууллагын ой, спорт өдөрлөг, олон хүний арга хэмжээнд.</p>
+        </div>
+      </button>
+      <button class="camp-card" type="button" id="camp-tab-mobile" data-camp-target="camp-mobile" aria-controls="camp-mobile" aria-expanded="false">
+        <img src="/gallery-14.jpg" alt="Нүүдлийн кемп">
+        <div class="camp-card-body">
+          <h3>Нүүдлийн кемп</h3>
+          <p class="camp-size">Хүссэн байршилд</p>
+          <p>Танай байгууллагын сонгосон байршилд кемп зохион байгуулах уян хатан шийдэл.</p>
+        </div>
+      </button>
+    </div>
 
-      <a class="feat" href="/premium/">
-        <div class="ph ph--night">
-          <div class="ph-sun"></div>
-          <div class="ph-hill"></div>
-          <span class="ph-label">Premium</span>
+    <div class="camp-detail-wrap reveal">
+      <article class="camp-detail is-open" id="camp-c" role="region" aria-labelledby="camp-tab-c">
+        <div class="camp-detail-text">
+          <h3>C Кемп · 10–50 хүн</h3>
+          <p>Удирдлагын баг, шийдвэр гаргах уулзалт, төвлөрсөн ажлын хөтөлбөрт тохирсон тайван орчин.</p>
+          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
         </div>
-        <div class="feat-body">
-          <span class="eyebrow"><span class="eyebrow-dot"></span>Premium</span>
-          <h3>Онцгой орчин · Тансаг туршлага</h3>
-          <p>10–50 хүн. Premium майхан, эксклюзив байршил, жижиг бүлэгт зориулсан уур амьсгал.</p>
-          <span class="feat-link">Дэлгэрэнгүй үзэх <span aria-hidden="true">→</span></span>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-11.jpg" alt="C кемп орчин">
+            <img class="carousel-slide" src="/gallery-12.jpg" alt="C кемпийн майхан">
+            <img class="carousel-slide" src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ">
+          </div>
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
+          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
         </div>
-      </a>
+      </article>
 
-      <a class="feat" href="/holboo/">
-        <div class="ph ph--sand">
-          <div class="ph-sun"></div>
-          <div class="ph-hill"></div>
-          <span class="ph-label">Үнийн санал</span>
+      <article class="camp-detail" id="camp-b" role="region" aria-labelledby="camp-tab-b" hidden>
+        <div class="camp-detail-text">
+          <h3>B Кемп · 50–300 хүн</h3>
+          <p>Баг, алба нэгжийн уялдаа, дотоод соёл, сургалтын хөтөлбөрийг нэгдсэн зохион байгуулалтаар хэрэгжүүлнэ.</p>
+          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
         </div>
-        <div class="feat-body">
-          <span class="eyebrow"><span class="eyebrow-dot"></span>Захиалга</span>
-          <h3>Үнийн санал авах</h3>
-          <p>Огноо, хүний тоо, хэлбэрээс хамаарсан тохирсон үнийн санал. 24 цагт хариу.</p>
-          <span class="feat-link">Маягт бөглөх <span aria-hidden="true">→</span></span>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-06.jpg" alt="B кемпийн талбай">
+            <img class="carousel-slide" src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ">
+            <img class="carousel-slide" src="/gallery-08.jpg" alt="B кемпийн амралтын бүс">
+          </div>
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
+          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
         </div>
-      </a>
+      </article>
+
+      <article class="camp-detail" id="camp-a" role="region" aria-labelledby="camp-tab-a" hidden>
+        <div class="camp-detail-text">
+          <h3>A Кемп · 200–1000 хүн</h3>
+          <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
+          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
+        </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-01.jpg" alt="A кемпийн төв талбай">
+            <img class="carousel-slide" src="/gallery-02.jpg" alt="A кемпийн асар">
+            <img class="carousel-slide" src="/gallery-03.jpg" alt="A кемпийн байгаль">
+          </div>
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
+          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
+        </div>
+      </article>
+
+      <article class="camp-detail" id="camp-mobile" role="region" aria-labelledby="camp-tab-mobile" hidden>
+        <div class="camp-detail-text">
+          <h3>Нүүдлийн кемп · Хүссэн байршилд</h3>
+          <p>Танай сонгосон байршилд талбай, техник, хоол, хөтөлбөрийн бүрэн зохион байгуулалтыг уян хатан хүргэнэ.</p>
+          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
+        </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил">
+            <img class="carousel-slide" src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт">
+            <img class="carousel-slide" src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ">
+          </div>
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
+          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
+        </div>
+      </article>
+    </div>
+
+    <p class="camp-footnote">10–1000 хүний байгууллагын арга хэмжээг төлөвлөлтөөс гүйцэтгэл хүртэл зохион байгуулна.</p>
+  </div>
+</section>
+
+<section class="section section--dark" id="why-nomaad">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Яагаад NOMAAD</span>
+      <h2>Байгууллагын хэрэгцээнд төвлөрсөн зохион байгуулалт</h2>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar">Хаалттай, зөвхөн танай байгууллагад зориулсан орчин</div>
+      <div class="pillar">Байршил сонгох уян хатан боломж</div>
+      <div class="pillar">Тайз, гэрэлтүүлэг, техник нэг дор</div>
+      <div class="pillar">Хоол, амралтын бүс бүхий зохион байгуулалт</div>
+      <div class="pillar">Бэлтгэл, явцыг нэгдсэн байдлаар удирдана</div>
+      <div class="pillar">Хүсэлт бүр холбогдох ажилтанд шууд хүрдэг</div>
+      <div class="pillar">Зураг, мэдээллээр явцыг хянах боломж</div>
+      <div class="pillar">Туршлагатай, нэгдсэн баг</div>
     </div>
   </div>
 </section>
 
-<!-- CAROUSEL -->
-<section class="section" style="padding-top:0">
+<section class="section section--light" id="workflow">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Галерей</span>
-      <h2>Бодит орчин.</h2>
+      <span class="eyebrow">Хэрхэн ажилладаг</span>
+      <h2>5 үе шаттай хамтын ажиллагаа</h2>
     </div>
-    <div class="carousel reveal" data-carousel data-autoplay="false">
-      <div class="carousel-track">
-        <div class="carousel-slide"><img src="/gallery-01.jpg" alt="NOMAAD кемпийн орчин" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-02.jpg" alt="Асар дотроос" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-03.jpg" alt="Байгалийн орчин" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-04.jpg" alt="Хоолны бүс" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-05.jpg" alt="Үдшийн гэрэлтүүлэг" loading="lazy"></div>
-      </div>
-      <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <div class="carousel-dots" role="tablist"></div>
+    <ol class="process-grid process-grid--five reveal">
+      <li>
+        <span>01</span>
+        <h3>Холбогдох</h3>
+        <p>Хүний тоо, огноо, зорилгын талаар мэдээлэл өгнө.</p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Шийдэл санал болгох</h3>
+        <p>Кемпийн төрөл, зохион байгуулалт, үнийн саналыг хамтдаа тодорхойлно.</p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Төлөвлөлт</h3>
+        <p>Манай баг бүх бэлтгэл, ажил үүргийг хуваарилж, явцыг нэгдсэн байдлаар удирдана.</p>
+      </li>
+      <li>
+        <span>04</span>
+        <h3>Гүйцэтгэл</h3>
+        <p>Арга хэмжээг төлөвлөгөөний дагуу бүрэн зохион байгуулж, явцын мэдээллийг тасралтгүй хүргэнэ.</p>
+      </li>
+      <li>
+        <span>05</span>
+        <h3>Тайлан, үр дүн</h3>
+        <p>Арга хэмжээний дараа зураг, мэдээллийг хүргэж, цаашдын хамтын ажиллагааны суурийг бүрдүүлнэ.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--sand" id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Зурагийн цомог</span>
+      <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <figure class="gallery-card gallery-card--wide"><img src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--tall"><img src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--wide"><img src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy"></figure>
     </div>
   </div>
 </section>
 
-<!-- BAND -->
-<section class="band">
-  <div class="ph ph--forest">
-    <div class="ph-hill"></div>
-  </div>
+<section class="section cta-final" id="contact">
   <div class="container reveal">
-    <span class="eyebrow">Байгальд суурилсан</span>
-    <h2>Нэг зэрэгт 1,000 хүн — асуудалгүй.</h2>
-    <p>42kVA/380V найдвартай эрчим хүч, орчин үеийн ариун цэвэр, 1,500м² асар. Байгууллагын баяр, нээлтийн арга хэмжээ, хамт олны аялал — бүгд нэг талбайд.</p>
-    <a class="btn btn--sand btn--lg" href="/kemp/" style="margin-top:2rem">Кемп үзэх</a>
+    <h2>Танай байгууллагад тохирсон арга хэмжээг хамтдаа зохион байгуулъя</h2>
+    <p>Хүний тоо, огноо, зорилгын мэдээллээ илгээнэ үү. Манай баг 24 цагийн дотор үнийн санал боловсруулж холбогдоно.</p>
+    <a class="btn btn--accent btn--lg" href="/holboo/#quoteForm">Үнийн санал авах</a>
   </div>
 </section>
 
-<!-- SPLIT -->
-<section class="section">
-  <div class="container">
-    <div class="split reveal">
-      <div class="split-media">
-        <div class="ph ph--forest">
-          <div class="ph-sun"></div>
-          <div class="ph-hill"></div>
-          <span class="ph-label">Кемпийн орчин</span>
-        </div>
-      </div>
-      <div class="split-body">
-        <span class="eyebrow"><span class="eyebrow-dot"></span>Манай зарчим</span>
-        <h2>Та хүмүүсээ авчир — бусдыг нь бид.</h2>
-        <p>Байгалийн цэвэр орчин, хаалттай талбай, мэргэжлийн баг. Орчин, хоол, хөтөлбөр, техник — нэг баг, нэг систем.</p>
-        <p>130+ байгууллагатай хамтран ажиллаж ирсэн туршлага. Тоног төхөөрөмж хуулагдана — гэхдээ систем хуулагдахад нэг сезон хэрэгтэй.</p>
-        <a class="btn btn--ghost btn--lg" href="/holboo/">Холбоо барих</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MOBILE CTA -->
 <div class="bottom-cta">
   <a class="phone" href="tel:+97699179417">9917-9417</a>
-  <a class="btn btn--sand" href="/holboo/">Үнийн санал авах</a>
+  <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
 </div>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-top">
@@ -193,30 +291,30 @@
         <a href="/" class="footer-logo" aria-label="NOMAAD Camp">
           <img src="nomaad-logo-light.svg" alt="NOMAAD" width="168" height="40">
         </a>
-        <p class="footer-tagline">Байгальд шалгагдсан.</p>
-        <p>Монголын анхдагч байгууллагын кемп. Байгаль дунд, мэргэжлийн зохион байгуулалттай.</p>
+        <p class="footer-tagline">Байгууллагын арга хэмжээний нэгдсэн шийдэл</p>
+        <p>Кемп, уулзалт, том хэмжээний арга хэмжээг нэг баг, нэг системээр хэрэгжүүлнэ.</p>
       </div>
       <div>
-        <h5>Хуудсууд</h5>
+        <h5>Хуудас</h5>
         <a href="/">Нүүр</a>
         <a href="/kemp/">Кемп</a>
-        <a href="/premium/">Premium</a>
+        <a href="/premium/">Тусгай багц</a>
         <a href="/holboo/">Холбоо барих</a>
       </div>
       <div>
         <h5>Байршил</h5>
-        <p style="color:var(--muted);font-size:0.85rem">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
-        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
+        <p class="footer-meta">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
+        <p class="footer-meta footer-meta--spaced">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD Оффис</p>
       </div>
       <div class="footer-cta">
         <h5>Холбоо барих</h5>
         <a href="tel:+97699179417" class="phone">9917-9417</a>
-        <a class="btn btn--sand" href="/holboo/">Үнийн санал авах</a>
+        <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 ЧИМУН ХХК · NOMAAD Camp</span>
-      <span>Байгууллагын кемп · Монгол</span>
+      <span>© 2026 ЧИМУН ХХК · NOMAAD Camp</span>
+      <span>Байгууллагын арга хэмжээ · Монгол</span>
     </div>
   </div>
 </footer>

@@ -202,6 +202,15 @@
 
 .phone-big:hover { color: #C8A96A !important; }
 
+.phone-big--secondary {
+  font-size: 1.1rem;
+  color: #9A9A90;
+}
+
+.req { color: #FF6B6B; }
+
+.inline-link { color: #C8A96A; }
+
 /* Social proof box */
 .proof-box {
   margin-top: 2rem;
@@ -562,15 +571,15 @@
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
     <img src="/nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
   </a>
-  <div class="nav-links">
+  <div class="nav-links" id="primary-nav">
     <a href="/">Нүүр</a>
     <a href="/kemp/">Кемп</a>
     <a href="/premium/">Premium</a>
     <a href="/holboo/" class="active">Холбоо барих</a>
   </div>
-  <div style="display:flex;align-items:center;gap:0.75rem">
+  <div class="nav-actions">
     <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
-    <button class="nav-toggle" aria-label="Цэс">
+    <button class="nav-toggle" type="button" aria-label="Цэс" aria-controls="primary-nav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -612,7 +621,7 @@
     <div class="c-info-block">
       <span class="c-info-label">Утас</span>
       <a href="tel:+97699179417" class="phone-big">9917-9417</a>
-      <a href="tel:+97688028216" class="phone-big" style="font-size:1.1rem;color:#9A9A90;">8802-8216</a>
+      <a href="tel:+97688028216" class="phone-big phone-big--secondary">8802-8216</a>
     </div>
 
     <div class="c-info-block">
@@ -656,7 +665,7 @@
       </div>
     </div>
 
-    <form class="c-form" id="quoteForm" name="quote" method="POST" data-netlify="true" novalidate>
+    <form class="c-form" id="quoteForm" name="quote" method="POST" data-netlify="true" data-skip-shared-submit="true" novalidate>
       <input type="hidden" name="form-name" value="quote">
       <input type="hidden" name="package" id="hiddenPkg" value="standard">
 
@@ -665,12 +674,12 @@
 
       <div class="form-row-2">
         <div class="f-field" id="field-org">
-          <label for="org">Байгууллагын нэр <span style="color:#FF6B6B">*</span></label>
+          <label for="org">Байгууллагын нэр <span class="req">*</span></label>
           <input id="org" name="org" type="text" placeholder="XYZ ХХК" autocomplete="organization">
           <div class="field-error">Байгууллагын нэрийг бөглөнө үү</div>
         </div>
         <div class="f-field" id="field-contact">
-          <label for="contact">Холбоо барих хүн <span style="color:#FF6B6B">*</span></label>
+          <label for="contact">Холбоо барих хүн <span class="req">*</span></label>
           <input id="contact" name="contact" type="text" placeholder="Овог Нэр" autocomplete="name">
           <div class="field-error">Нэрийг бөглөнө үү</div>
         </div>
@@ -678,7 +687,7 @@
 
       <div class="form-row-2">
         <div class="f-field" id="field-email">
-          <label for="email">Имэйл хаяг <span style="color:#FF6B6B">*</span></label>
+          <label for="email">Имэйл хаяг <span class="req">*</span></label>
           <input id="email" name="email" type="email" placeholder="hr@company.mn" autocomplete="email">
           <div class="field-error">Зөв имэйл хаяг оруулна уу</div>
         </div>
@@ -689,16 +698,16 @@
       </div>
 
       <!-- Арга хэмжээ -->
-      <div class="form-section-title" style="margin-top:1.5rem">Арга хэмжээний мэдээлэл</div>
+      <div class="form-section-title">Арга хэмжээний мэдээлэл</div>
 
       <div class="form-row-2">
         <div class="f-field" id="field-people">
-          <label for="people">Хүний тоо <span style="color:#FF6B6B">*</span></label>
+          <label for="people">Хүний тоо <span class="req">*</span></label>
           <input id="people" name="people" type="number" min="10" max="1000" placeholder="Жишээ: 150" oninput="updateEstimate()">
           <div class="field-error">Хүний тоог оруулна уу (10–1000)</div>
         </div>
         <div class="f-field">
-          <label for="event_date">Хүссэн огноо <span style="color:#FF6B6B">*</span></label>
+          <label for="event_date">Хүссэн огноо <span class="req">*</span></label>
           <input id="event_date" name="event_date" type="date">
         </div>
       </div>
@@ -728,7 +737,7 @@
       </div>
 
       <!-- Багц -->
-      <div class="form-section-title" style="margin-top:1.5rem">Багц сонгох</div>
+      <div class="form-section-title">Багц сонгох</div>
 
       <div class="pkg-grid">
         <div class="pkg-card" id="pkg-basic" onclick="selectPkg('basic')">
@@ -781,7 +790,7 @@
         <div class="success-title">Амжилттай илгээгдлээ</div>
         <p class="success-sub">
           Ажлын 24 цагт таны имэйлд үнийн санал хүргэнэ.<br>
-          Яаралтай бол <a href="tel:+97699179417" style="color:#C8A96A">9917-9417</a> дугаарт залгаарай.
+          Яаралтай бол <a href="tel:+97699179417" class="inline-link">9917-9417</a> дугаарт залгаарай.
         </p>
       </div>
 
@@ -815,8 +824,8 @@
       </div>
       <div>
         <h5>Байршил</h5>
-        <p style="color:var(--muted);font-size:0.85rem">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
-        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорий 1-13,<br>NOMAAD OFFICE</p>
+        <p class="footer-meta">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
+        <p class="footer-meta footer-meta--spaced">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорий 1-13,<br>NOMAAD OFFICE</p>
       </div>
       <div class="footer-cta">
         <h5>Холбоо барих</h5>
