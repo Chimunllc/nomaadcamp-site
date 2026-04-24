@@ -1,0 +1,39 @@
+[functions]
+
+  [functions.emails]
+  included_files = [
+    "./emails/**",
+    "./emails/**"
+  ]
+
+[build]
+publish = "."
+
+[[plugins]]
+origin = "ui"
+package = "@netlify/plugin-emails"
+pinned_version = "1"
+
+  [plugins.inputs]
+
+[context]
+
+  [context.deploy-preview]
+
+    [context.deploy-preview.functions]
+
+      [context.deploy-preview.functions.emails]
+      included_files = [
+        "./emails/**",
+        "./emails/**"
+      ]
+
+  [context."codex/find-the-error-message-u448mo"]
+
+    [context."codex/find-the-error-message-u448mo".functions]
+
+      [context."codex/find-the-error-message-u448mo".functions.emails]
+      included_files = [
+        "./emails/**",
+        "./emails/**"
+      ]
