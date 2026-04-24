@@ -20,15 +20,15 @@
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
     <img src="nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35">
   </a>
-  <div class="nav-links">
+  <div class="nav-links" id="primary-nav">
     <a href="/">Нүүр</a>
     <a href="/kemp/">Кемп</a>
     <a href="/premium/">Premium</a>
     <a href="/holboo/">Холбоо барих</a>
   </div>
-  <div style="display:flex;align-items:center;gap:0.75rem">
+  <div class="nav-actions">
     <a class="nav-cta" href="/holboo/">Үнийн санал авах</a>
-    <button class="nav-toggle" aria-label="Цэс">
+    <button class="nav-toggle" type="button" aria-label="Цэс" aria-controls="primary-nav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -119,27 +119,19 @@
 </section>
 
 <!-- CAROUSEL -->
-<section class="section" style="padding-top:0">
+<section class="section section--flush-top">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Галерей</span>
       <h2>Бодит орчин.</h2>
     </div>
-    <div class="carousel reveal" data-carousel data-autoplay="false">
-      <div class="carousel-track">
-        <div class="carousel-slide"><img src="/gallery-01.jpg" alt="NOMAAD кемпийн орчин" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-02.jpg" alt="Асар дотроос" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-03.jpg" alt="Байгалийн орчин" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-04.jpg" alt="Хоолны бүс" loading="lazy"></div>
-        <div class="carousel-slide"><img src="/gallery-05.jpg" alt="Үдшийн гэрэлтүүлэг" loading="lazy"></div>
-      </div>
-      <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <div class="carousel-dots" role="tablist"></div>
+    <div class="gallery-grid reveal">
+      <figure class="gallery-card gallery-card--wide"><img src="/gallery-01.jpg" alt="NOMAAD кемпийн төв талбай" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-02.jpg" alt="Асар доторх уур амьсгал" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-03.jpg" alt="Байгалийн ногоон орчин" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--tall"><img src="/gallery-04.jpg" alt="Хоолны үйлчилгээний бүс" loading="lazy"></figure>
+      <figure class="gallery-card"><img src="/gallery-05.jpg" alt="Оройн гэрэлтүүлэгтэй тайз" loading="lazy"></figure>
+      <figure class="gallery-card gallery-card--wide"><img src="/gallery-06.jpg" alt="Багаар ажиллах хөтөлбөр" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -153,7 +145,7 @@
     <span class="eyebrow">Байгальд суурилсан</span>
     <h2>Нэг зэрэгт 1,000 хүн — асуудалгүй.</h2>
     <p>42kVA/380V найдвартай эрчим хүч, орчин үеийн ариун цэвэр, 1,500м² асар. Байгууллагын баяр, нээлтийн арга хэмжээ, хамт олны аялал — бүгд нэг талбайд.</p>
-    <a class="btn btn--sand btn--lg" href="/kemp/" style="margin-top:2rem">Кемп үзэх</a>
+    <a class="btn btn--sand btn--lg u-mt-2" href="/kemp/">Кемп үзэх</a>
   </div>
 </section>
 
@@ -205,8 +197,8 @@
       </div>
       <div>
         <h5>Байршил</h5>
-        <p style="color:var(--muted);font-size:0.85rem">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
-        <p style="color:var(--muted);font-size:0.85rem;margin-top:0.75rem">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
+        <p class="footer-meta">Эрдэнэ сум, Төв аймаг<br>УБ-аас 75 км</p>
+        <p class="footer-meta footer-meta--spaced">Оффис: БЗД, 11-р хороо,<br>Ногоон зоорь 1-13,<br>NOMAAD OFFICE</p>
       </div>
       <div class="footer-cta">
         <h5>Холбоо барих</h5>
