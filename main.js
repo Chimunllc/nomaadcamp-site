@@ -114,12 +114,52 @@
     });
   }
 
+  function initCampDetailGalleries(camps) {
+    if (!camps) return;
+
+    document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
+      var key = gallery.getAttribute('data-camp-gallery');
+      var images = (camps[key] || []).slice(0, 6);
+      var track = gallery.querySelector('.camp-gallery__track');
+      var prev = gallery.querySelector('.camp-gallery__arrow--prev');
+      var next = gallery.querySelector('.camp-gallery__arrow--next');
+      if (!track || images.length === 0) {
+        if (gallery) gallery.hidden = true;
+        return;
+      }
+
+      track.innerHTML = '';
+      images.forEach(function (src) {
+        var img = document.createElement('img');
+        img.className = 'camp-gallery__img defer-img';
+        img.src = PLACEHOLDER;
+        img.setAttribute('data-src', src);
+        img.alt = 'Кемпийн зураг';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        track.appendChild(img);
+      });
+
+      var scrollByAmount = function () {
+        return Math.max(220, Math.floor(track.clientWidth * 0.5));
+      };
+
+      if (prev) prev.addEventListener('click', function () {
+        track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
+      });
+      if (next) next.addEventListener('click', function () {
+        track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
+      });
+    });
+  }
+
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
   initHeroSlider(manifest.hero);
   initGallery(manifest.gallery);
   initCampCarousels(manifest.camps);
+  initCampDetailGalleries(manifest.camps);
 
   // ── MOBILE NAV TOGGLE ────────────────────────────────────────
   var nav = document.querySelector('.nav');
