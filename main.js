@@ -5,9 +5,9 @@
   // Future-ready config: add pricing when realtime estimation is ready
   var PACKAGE_CONFIG = {
     camps: {
-      'camp-c':      { name: 'C Кемп',         isMobile: false },
-      'camp-b':      { name: 'B Кемп',         isMobile: false },
       'camp-a':      { name: 'A Кемп',         isMobile: false },
+      'camp-b':      { name: 'B Кемп',         isMobile: false },
+      'camp-c':      { name: 'C Кемп',         isMobile: false },
       'camp-mobile': { name: 'Нүүдлийн кемп',  isMobile: true  }
     },
     tiers: {
@@ -18,7 +18,11 @@
     addons: {
       'LED Screen':     { price: null },
       'Moonbeam Lounge':{ price: null },
-      'Тайзны эффект':  { price: null }
+      'Тайзны эффект':  { price: null },
+      'Shuttle Service':{
+        price: 1000000,
+        description: '45 хүний автобус · УБ ↔ Кемп / 2 талдаа'
+      }
     }
   };
 
@@ -347,8 +351,17 @@
     const fieldCampName  = document.getElementById('field-camp-name');
     const fieldTier      = document.getElementById('field-package-tier');
     const fieldFeature   = document.getElementById('field-visual-feature');
+    const fieldAddOns    = document.getElementById('field-add-ons');
     const locationWrap   = document.getElementById('location-field-wrap');
     const locationInput  = document.getElementById('location');
+    const additionalServicesInput = document.getElementById('additional-services');
+
+    const collectSelectedAddons = (groupName) => {
+      if (!groupName) return [];
+      return Array.from(document.querySelectorAll('input[name="' + groupName + '"]:checked'))
+        .map((input) => input.value)
+        .filter(Boolean);
+    };
 
     const openQuoteModal = (prefill) => {
       quoteModal.classList.add('is-open');
@@ -359,16 +372,22 @@
         var camp    = (prefill && prefill.camp)    || '';
         var tier    = (prefill && prefill.tier)    || '';
         var feature = (prefill && prefill.feature) || '';
+        var addOns  = (prefill && prefill.addOns)  || [];
+        var allServices = [];
+        if (feature) allServices.push(feature);
+        if (addOns.length > 0) allServices = allServices.concat(addOns);
 
         if (fieldCampName) fieldCampName.value = camp;
         if (fieldTier)     fieldTier.value     = tier;
         if (fieldFeature)  fieldFeature.value  = feature;
+        if (fieldAddOns)   fieldAddOns.value   = addOns.join(', ');
+        if (additionalServicesInput) additionalServicesInput.value = allServices.join(', ');
 
-        var hasPrefill = !!(camp || tier || feature);
+        var hasPrefill = !!(camp || tier || feature || addOns.length > 0);
         if (prefillBox)     prefillBox.hidden     = !hasPrefill;
         if (prefillCampRow) { prefillCampRow.hidden = !camp;    if (prefillCampVal) prefillCampVal.textContent = camp; }
         if (prefillTierRow) { prefillTierRow.hidden = !tier;    if (prefillTierVal) prefillTierVal.textContent = tier; }
-        if (prefillFeatRow) { prefillFeatRow.hidden = !feature; if (prefillFeatVal) prefillFeatVal.textContent = feature; }
+        if (prefillFeatRow) { prefillFeatRow.hidden = allServices.length === 0; if (prefillFeatVal) prefillFeatVal.textContent = allServices.join(', '); }
 
         var isMobile = camp === 'Нүүдлийн кемп';
         if (locationWrap)  locationWrap.hidden   = !isMobile;
@@ -388,6 +407,7 @@
       if (fieldCampName) fieldCampName.value = '';
       if (fieldTier)     fieldTier.value     = '';
       if (fieldFeature)  fieldFeature.value  = '';
+      if (fieldAddOns)   fieldAddOns.value   = '';
       if (locationWrap)  locationWrap.hidden   = true;
       if (locationInput) locationInput.required = false;
     };
@@ -398,12 +418,18 @@
         var campName    = (link.dataset.campName    || '').trim();
         var tier        = (link.dataset.tier        || '').trim();
         var visualGroup = (link.dataset.visualGroup || '').trim();
+        var addonGroup  = (link.dataset.addonGroup  || '').trim();
         var feature     = '';
         if (visualGroup) {
           var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
           feature = checked ? checked.value : '';
+          if (!feature) {
+            window.alert('Experience багцын нэмэлт үйлчилгээний 1 сонголт хийнэ үү.');
+            return;
+          }
         }
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature } : null);
+        var addOns = collectSelectedAddons(addonGroup);
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, addOns: addOns } : null);
       });
     });
 
@@ -449,13 +475,17 @@
         contact_name:   (fd.get('contact_name')  || '').trim(),
         phone,
         email,
-        event_date:     (fd.get('event_date')    || '').trim(),
+        start_datetime: (fd.get('start_datetime')|| '').trim(),
+        end_datetime:   (fd.get('end_datetime')  || '').trim(),
+        event_date:     (fd.get('start_datetime')|| '').trim(),
         guest_count:    (fd.get('guest_count')   || '').trim(),
         event_type:     (fd.get('event_type')    || '').trim(),
         location:       (fd.get('location')      || '').trim(),
         camp_name:      (fd.get('camp_name')     || '').trim(),
         package_tier:   (fd.get('package_tier')  || '').trim(),
         visual_feature: (fd.get('visual_feature')|| '').trim(),
+        add_ons:        (fd.get('add_ons')       || '').trim(),
+        additional_services: (fd.get('additional_services') || '').trim(),
         notes:          (fd.get('extra_info')    || '').trim(),
         source:         'nomaadcamp.com'
       };
@@ -476,7 +506,7 @@
         quoteMessage.className = 'quote-form__message quote-form__message--error';
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Илгээх';
+        submitBtn.textContent = 'Урьдчилсан санал авах';
       }
     });
   }
