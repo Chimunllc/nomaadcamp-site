@@ -330,6 +330,22 @@ p  { color: var(--muted); font-size: 16px; line-height: 1.6; }
     linear-gradient(180deg, #22201a 0%, #17170f 40%, #0d0e0a 100%);
 }
 
+/* ── HERO SLIDER ── */
+.hero-slides {
+  position: absolute;
+  inset: 0;
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.hero-slide.is-active { opacity: 1; }
+
 /* ── HERO ── */
 .hero {
   position: relative;
