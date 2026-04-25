@@ -18,6 +18,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="style.css" as="style">
 <link rel="stylesheet" href="style.css">
+<link rel="preload" as="image" href="/images/hero/gallery-04.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap"></noscript>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main-content">Үндсэн контент руу алгасах</a>
@@ -47,32 +52,8 @@
 <main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <picture>
-      <source
-        type="image/webp"
-        srcset="
-          /.netlify/images?url=/gallery-01.jpg&w=640&h=360&fit=cover&fm=webp&q=72 640w,
-          /.netlify/images?url=/gallery-01.jpg&w=960&h=540&fit=cover&fm=webp&q=72 960w,
-          /.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=webp&q=72 1280w,
-          /.netlify/images?url=/gallery-01.jpg&w=1600&h=900&fit=cover&fm=webp&q=72 1600w,
-          /.netlify/images?url=/gallery-01.jpg&w=1920&h=1080&fit=cover&fm=webp&q=72 1920w"
-        sizes="100vw">
-      <img
-        src="/.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=jpg&q=76"
-        srcset="
-          /.netlify/images?url=/gallery-01.jpg&w=640&h=360&fit=cover&fm=jpg&q=76 640w,
-          /.netlify/images?url=/gallery-01.jpg&w=960&h=540&fit=cover&fm=jpg&q=76 960w,
-          /.netlify/images?url=/gallery-01.jpg&w=1280&h=720&fit=cover&fm=jpg&q=76 1280w,
-          /.netlify/images?url=/gallery-01.jpg&w=1600&h=900&fit=cover&fm=jpg&q=76 1600w,
-          /.netlify/images?url=/gallery-01.jpg&w=1920&h=1080&fit=cover&fm=jpg&q=76 1920w"
-        sizes="100vw"
-        alt="NOMAAD кемпийн өргөн талбай"
-        class="hero-photo"
-        fetchpriority="high"
-        decoding="async"
-        width="1920"
-        height="1080">
-    </picture>
+    <!-- Slides are injected by main.js from images/manifest.js -->
+    <div class="hero-slides" id="hero-slides" aria-hidden="true"></div>
     <div class="hero-overlay"></div>
   </div>
 
@@ -123,7 +104,7 @@
 
     <div class="camp-grid reveal">
       <button class="camp-card is-active" type="button" data-camp-target="camp-c">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async"></noscript>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="C кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="c">
         <div class="camp-card-body">
           <h3>C Кемп</h3>
           <p class="camp-size">10–50 хүн</p>
@@ -131,7 +112,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-06.jpg" alt="B кемп" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-06.jpg" alt="B кемп" loading="lazy" decoding="async"></noscript>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="B кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="b">
         <div class="camp-card-body">
           <h3>B Кемп</h3>
           <p class="camp-size">50–300 хүн</p>
@@ -139,7 +120,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-a">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async"></noscript>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="A кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="a">
         <div class="camp-card-body">
           <h3>A Кемп</h3>
           <p class="camp-size">200–1000 хүн</p>
@@ -147,7 +128,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-mobile">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-14.jpg" alt="Нүүдлийн кемп" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-14.jpg" alt="Нүүдлийн кемп" loading="lazy" decoding="async"></noscript>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="Нүүдлийн кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="mobile">
         <div class="camp-card-body">
           <h3>Нүүдлийн кемп</h3>
           <p class="camp-size">Хүссэн байршилд</p>
@@ -163,12 +144,8 @@
           <p>Удирдлагын баг, шийдвэр гаргах уулзалт, төвлөрсөн ажлын хөтөлбөрт тохирсон тайван орчин.</p>
           <a class="btn btn--accent" href="#contact">Үнийн санал авах</a>
         </div>
-        <div class="camp-detail-media" data-carousel data-autoplay="false">
-          <div class="carousel-track">
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-11.jpg" alt="C кемп орчин" loading="lazy" decoding="async"><noscript><img src="/gallery-11.jpg" alt="C кемп орчин" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async"><noscript><img src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async"><noscript><img src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-          </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false" data-camp="c">
+          <div class="carousel-track"><!-- populated by main.js --></div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
           <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
@@ -181,12 +158,8 @@
           <p>Баг, алба нэгжийн уялдаа, дотоод соёл, сургалтын хөтөлбөрийг нэгдсэн зохион байгуулалтаар хэрэгжүүлнэ.</p>
           <a class="btn btn--accent" href="#contact">Үнийн санал авах</a>
         </div>
-        <div class="camp-detail-media" data-carousel data-autoplay="false">
-          <div class="carousel-track">
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-06.jpg" alt="B кемпийн талбай" loading="lazy" decoding="async"><noscript><img src="/gallery-06.jpg" alt="B кемпийн талбай" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async"><noscript><img src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async"><noscript><img src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-          </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false" data-camp="b">
+          <div class="carousel-track"><!-- populated by main.js --></div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
           <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
@@ -199,12 +172,8 @@
           <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
           <a class="btn btn--accent" href="#contact">Үнийн санал авах</a>
         </div>
-        <div class="camp-detail-media" data-carousel data-autoplay="false">
-          <div class="carousel-track">
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-01.jpg" alt="A кемпийн төв талбай" loading="lazy" decoding="async"><noscript><img src="/gallery-01.jpg" alt="A кемпийн төв талбай" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async"><noscript><img src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async"><noscript><img src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-          </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false" data-camp="a">
+          <div class="carousel-track"><!-- populated by main.js --></div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
           <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
@@ -217,12 +186,8 @@
           <p>Танай сонгосон байршилд талбай, техник, хоол, хөтөлбөрийн бүрэн зохион байгуулалтыг уян хатан хүргэнэ.</p>
           <a class="btn btn--accent" href="#contact">Үнийн санал авах</a>
         </div>
-        <div class="camp-detail-media" data-carousel data-autoplay="false">
-          <div class="carousel-track">
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил" loading="lazy" decoding="async"><noscript><img src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async"><noscript><img src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-            <img class="carousel-slide defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async"><noscript><img src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async" class="carousel-slide"></noscript>
-          </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false" data-camp="mobile">
+          <div class="carousel-track"><!-- populated by main.js --></div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
           <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
@@ -295,14 +260,8 @@
       <span class="eyebrow">Зургийн цомог</span>
       <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
     </div>
-    <div class="gallery-grid reveal">
-      <figure class="gallery-card gallery-card--wide"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy" decoding="async"></noscript></figure>
-      <figure class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy" decoding="async"></noscript></figure>
-      <figure class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy" decoding="async"></noscript></figure>
-      <figure class="gallery-card gallery-card--tall"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy" decoding="async"></noscript></figure>
-      <figure class="gallery-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy" decoding="async"></noscript></figure>
-      <figure class="gallery-card gallery-card--wide"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" data-src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy" decoding="async" class="defer-img"><noscript><img src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy" decoding="async"></noscript></figure>
-    </div>
+    <!-- Gallery cards are injected by main.js from images/manifest.js -->
+    <div class="gallery-grid reveal" id="gallery-grid"></div>
   </div>
 </section>
 
@@ -359,6 +318,7 @@
   </div>
 </footer>
 
+<script src="/images/manifest.js"></script>
 <script src="/main.js" defer></script>
 </body>
 </html>

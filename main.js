@@ -184,34 +184,14 @@
     deferredImages.forEach(loadImage);
   }
 
-  // Deferred image loading (reduce initial payload for Lighthouse)
-  const deferredImages = document.querySelectorAll('img.defer-img[data-src]');
-  const loadImage = (img) => {
-    const src = img.getAttribute('data-src');
-    if (!src) return;
-    img.src = src;
-    img.removeAttribute('data-src');
-  };
-  if ('IntersectionObserver' in window) {
-    const imgObs = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        loadImage(entry.target);
-        observer.unobserve(entry.target);
-      });
-    }, { rootMargin: '220px 0px' });
-    deferredImages.forEach((img) => imgObs.observe(img));
-  } else {
-    deferredImages.forEach(loadImage);
-  }
-
-  // Carousel
-  document.querySelectorAll('[data-carousel]').forEach((root) => {
-    const track = root.querySelector('.carousel-track');
-    const slides = root.querySelectorAll('.carousel-slide');
-    const dotsWrap = root.querySelector('.carousel-dots');
-    const prevBtn = root.querySelector('.carousel-arrow--prev');
-    const nextBtn = root.querySelector('.carousel-arrow--next');
+  // ── CAROUSEL ─────────────────────────────────────────────────
+  // Runs after camp carousels are populated so slides exist
+  document.querySelectorAll('[data-carousel]').forEach(function (root) {
+    var track = root.querySelector('.carousel-track');
+    var slides = root.querySelectorAll('.carousel-slide');
+    var dotsWrap = root.querySelector('.carousel-dots');
+    var prevBtn = root.querySelector('.carousel-arrow--prev');
+    var nextBtn = root.querySelector('.carousel-arrow--next');
     if (!track || slides.length === 0) return;
 
     var total = slides.length;
