@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "generate-manifest": "node scripts/generate-manifest.js",
     "optimize-images": "node scripts/optimize-images.js"
   },
   "devDependencies": {}

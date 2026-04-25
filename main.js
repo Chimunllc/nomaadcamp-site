@@ -27,29 +27,6 @@
   };
 
   var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E";
-  var CAMP_IMAGE_CONFIG = {
-    a:      { folder: 'a-camp',      prefix: 'a' },
-    b:      { folder: 'b-camp',      prefix: 'b' },
-    c:      { folder: 'c-camp',      prefix: 'c' },
-    mobile: { folder: 'mobile-camp', prefix: 'mobile' }
-  };
-
-  function getCampCoverPath(key) {
-    var cfg = CAMP_IMAGE_CONFIG[key];
-    if (!cfg) return '';
-    return '/images/camps/' + cfg.folder + '/' + cfg.prefix + '-cover.webp';
-  }
-
-  function getCampGalleryPaths(key) {
-    var cfg = CAMP_IMAGE_CONFIG[key];
-    if (!cfg) return [];
-    var base = '/images/camps/' + cfg.folder + '/' + cfg.prefix + '-';
-    var list = [];
-    for (var i = 1; i <= 6; i++) {
-      list.push(base + String(i).padStart(2, '0') + '.webp');
-    }
-    return list;
-  }
 
   // ── HERO SLIDER ──────────────────────────────────────────────
   // Loads images from NOMAAD_IMAGES.hero, crossfades every 5 s
@@ -103,14 +80,16 @@
   }
 
   // ── CAMP CAROUSELS ───────────────────────────────────────────
-  // Populates camp card thumbnails and carousel tracks from NOMAAD_IMAGES.camps
-  function initCampCarousels() {
+  // Sets camp card thumbnails and populates carousel tracks from manifest.camps
+  function initCampCarousels(camps) {
+    if (!camps) return;
     var altText = { a: 'A кемп', b: 'B кемп', c: 'C кемп', mobile: 'Нүүдлийн кемп' };
 
-    // Set thumbnail on each camp selector card (cover image naming convention)
+    // Set thumbnail on each camp selector card using cover image from manifest
     document.querySelectorAll('[data-camp-thumb]').forEach(function (img) {
       var key = img.getAttribute('data-camp-thumb');
-      var cover = getCampCoverPath(key);
+      var campData = camps[key];
+      var cover = campData && campData.cover;
       if (!cover) return;
       img.setAttribute('data-src', cover);
       img.addEventListener('error', function () {
@@ -118,10 +97,11 @@
       }, { once: true });
     });
 
-    // Populate each camp's carousel track
+    // Populate each camp's carousel track (for [data-camp] elements)
     document.querySelectorAll('[data-camp]').forEach(function (root) {
       var key = root.getAttribute('data-camp');
-      var list = getCampGalleryPaths(key);
+      var campData = camps[key];
+      var list = campData ? campData.gallery : [];
       var track = root.querySelector('.carousel-track');
       if (!track || !list || list.length === 0) return;
 
@@ -142,21 +122,26 @@
     });
   }
 
-  function initCampDetailGalleries() {
+  // ── CAMP DETAIL GALLERIES ────────────────────────────────────
+  // Populates the horizontal scroll gallery shown when "Багц үзэх" is clicked.
+  // Reads all images from manifest.camps[key].gallery — supports unlimited images.
+  // Shows placeholder state if gallery is empty.
+  function initCampDetailGalleries(camps) {
+    if (!camps) return;
+
     document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
       var key = gallery.getAttribute('data-camp-gallery');
-      var images = getCampGalleryPaths(key);
+      var campData = camps[key] || {};
+      var images = campData.gallery || [];
       var track = gallery.querySelector('.camp-gallery__track');
       var emptyState = gallery.querySelector('.camp-gallery__empty');
       var viewport = gallery.querySelector('.camp-gallery__viewport');
       var prev = gallery.querySelector('.camp-gallery__arrow--prev');
       var next = gallery.querySelector('.camp-gallery__arrow--next');
-      if (!track) {
-        return;
-      }
+      if (!track) return;
 
       if (images.length === 0) {
-        if (track) track.style.display = 'none';
+        track.style.display = 'none';
         if (prev) prev.hidden = true;
         if (next) next.hidden = true;
         if (viewport) viewport.classList.add('is-empty');
@@ -164,7 +149,7 @@
         return;
       }
 
-      if (track) track.style.display = '';
+      track.style.display = '';
       if (prev) prev.hidden = false;
       if (next) next.hidden = false;
       if (viewport) viewport.classList.remove('is-empty');
@@ -205,68 +190,13 @@
     });
   }
 
-  function initCampDetailGalleries(camps) {
-    if (!camps) return;
-
-    document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
-      var key = gallery.getAttribute('data-camp-gallery');
-      var images = (camps[key] || []).slice(0, 6);
-      var track = gallery.querySelector('.camp-gallery__track');
-      var emptyState = gallery.querySelector('.camp-gallery__empty');
-      var viewport = gallery.querySelector('.camp-gallery__viewport');
-      var prev = gallery.querySelector('.camp-gallery__arrow--prev');
-      var next = gallery.querySelector('.camp-gallery__arrow--next');
-      if (!track) {
-        return;
-      }
-
-      if (images.length === 0) {
-        if (track) track.style.display = 'none';
-        if (prev) prev.hidden = true;
-        if (next) next.hidden = true;
-        if (viewport) viewport.classList.add('is-empty');
-        if (emptyState) emptyState.hidden = false;
-        return;
-      }
-
-      if (track) track.style.display = '';
-      if (prev) prev.hidden = false;
-      if (next) next.hidden = false;
-      if (viewport) viewport.classList.remove('is-empty');
-      if (emptyState) emptyState.hidden = true;
-
-      track.innerHTML = '';
-      images.forEach(function (src) {
-        var img = document.createElement('img');
-        img.className = 'camp-gallery__img defer-img';
-        img.src = PLACEHOLDER;
-        img.setAttribute('data-src', src);
-        img.alt = 'Кемпийн зураг';
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        track.appendChild(img);
-      });
-
-      var scrollByAmount = function () {
-        return Math.max(220, Math.floor(track.clientWidth * 0.5));
-      };
-
-      if (prev) prev.addEventListener('click', function () {
-        track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
-      });
-      if (next) next.addEventListener('click', function () {
-        track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
-      });
-    });
-  }
-
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
   initHeroSlider(manifest.hero);
   initGallery(manifest.gallery);
-  initCampCarousels();
-  initCampDetailGalleries();
+  initCampCarousels(manifest.camps);
+  initCampDetailGalleries(manifest.camps);
 
   // ── MOBILE NAV TOGGLE ────────────────────────────────────────
   var nav = document.querySelector('.nav');
