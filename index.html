@@ -211,6 +211,7 @@
             <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
             <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Production" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
           </div>
+          <button class="camp-gallery__arrow camp-gallery__arrow--next" type="button" aria-label="Дараагийн зураг">›</button>
         </div>
         <div class="camp-gallery" data-camp-gallery="c" aria-label="C Кемп зургийн цомог">
           <button class="camp-gallery__arrow camp-gallery__arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
@@ -305,9 +306,16 @@
           </div>
           <button class="camp-gallery__arrow camp-gallery__arrow--next" type="button" aria-label="Дараагийн зураг">›</button>
         </div>
+        <div class="camp-gallery" data-camp-gallery="b" aria-label="B Кемп зургийн цомог">
+          <button class="camp-gallery__arrow camp-gallery__arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
+          <div class="camp-gallery__viewport">
+            <div class="camp-gallery__track"></div>
+          </div>
+          <button class="camp-gallery__arrow camp-gallery__arrow--next" type="button" aria-label="Дараагийн зураг">›</button>
+        </div>
       </article>
 
-      <article class="camp-detail has-packages" id="camp-a">
+      <article class="camp-detail has-packages is-open" id="camp-a">
         <div class="camp-detail-text">
           <h3>A Кемп · 200–1000 хүн</h3>
           <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
@@ -375,6 +383,7 @@
             <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
             <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Production" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
           </div>
+          <button class="camp-gallery__arrow camp-gallery__arrow--next" type="button" aria-label="Дараагийн зураг">›</button>
         </div>
         <div class="camp-gallery" data-camp-gallery="a" aria-label="A Кемп зургийн цомог">
           <button class="camp-gallery__arrow camp-gallery__arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
@@ -621,6 +630,7 @@
         <input type="hidden" name="camp_name" id="field-camp-name">
         <input type="hidden" name="package_tier" id="field-package-tier">
         <input type="hidden" name="visual_feature" id="field-visual-feature">
+        <input type="hidden" name="add_ons" id="field-add-ons">
       </div>
       <div class="quote-form__grid">
         <div class="quote-form__field">

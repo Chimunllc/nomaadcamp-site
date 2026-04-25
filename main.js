@@ -437,6 +437,7 @@
     const fieldCampName  = document.getElementById('field-camp-name');
     const fieldTier      = document.getElementById('field-package-tier');
     const fieldFeature   = document.getElementById('field-visual-feature');
+    const fieldAddOns    = document.getElementById('field-add-ons');
     const locationWrap   = document.getElementById('location-field-wrap');
     const locationInput  = document.getElementById('location');
     const shuttleServiceSelect = document.getElementById('shuttle-service');
