@@ -1352,6 +1352,7 @@ body.modal-open { overflow: hidden; }
   color: var(--charcoal);
 }
 .quote-form input,
+.quote-form select,
 .quote-form textarea {
   width: 100%;
   border: 1px solid rgba(31, 42, 35, 0.22);
@@ -1400,6 +1401,7 @@ body.modal-open { overflow: hidden; }
   .quote-modal { padding: 0.5rem; }
   .quote-modal__dialog { padding: 2.6rem 1rem 1.2rem; border-radius: 10px; }
   .quote-form input,
+  .quote-form select,
   .quote-form textarea { padding: 0.75rem 0.85rem; font-size: 1rem; }
   .hero--corporate {
     min-height: 78vh;
@@ -1913,6 +1915,36 @@ body.modal-open { overflow: hidden; }
   font-size: 0.78rem;
   color: rgba(26, 26, 26, 0.52);
   font-weight: 400;
+}
+
+.pkg-note {
+  margin-top: 0.45rem;
+  font-size: 0.76rem;
+  color: rgba(26, 26, 26, 0.6);
+  line-height: 1.45;
+}
+.pkg-addon-list {
+  margin-top: 0.85rem;
+}
+.pkg-addon-option {
+  display: grid;
+  gap: 0.2rem;
+  border: 1px solid rgba(31, 42, 35, 0.15);
+  border-radius: 12px;
+  padding: 0.7rem 0.8rem;
+  background: #fff;
+}
+.pkg-addon-option input {
+  margin: 0 0 0.25rem;
+}
+.pkg-addon-option__title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--charcoal);
+}
+.pkg-addon-option__meta {
+  font-size: 0.78rem;
+  color: rgba(26, 26, 26, 0.65);
 }
 
 /* ── MOBILE CAMP NOTE ─────────────────────────────────────── */

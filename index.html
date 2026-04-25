@@ -104,12 +104,12 @@
     </div>
 
     <div class="camp-grid reveal">
-      <button class="camp-card is-active" type="button" data-camp-target="camp-c">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="C кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="c">
+      <button class="camp-card is-active" type="button" data-camp-target="camp-a">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="A кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="a">
         <div class="camp-card-body">
-          <h3>C Кемп</h3>
-          <p class="camp-size">10–50 хүн</p>
-          <p>Цөөн хүний уулзалт, удирдлагын багт зориулсан төвлөрсөн, тухтай орчин.</p>
+          <h3>A Кемп</h3>
+          <p class="camp-size">200–1000 хүн</p>
+          <p>Том хэмжээний байгууллагын ой, спорт өдөрлөг, олон хүний арга хэмжээнд.</p>
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
@@ -120,12 +120,12 @@
           <p>Баг, алба нэгжийн аялал, сургалт, дотоод арга хэмжээнд тохирсон.</p>
         </div>
       </button>
-      <button class="camp-card" type="button" data-camp-target="camp-a">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="A кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="a">
+      <button class="camp-card" type="button" data-camp-target="camp-c">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="C кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="c">
         <div class="camp-card-body">
-          <h3>A Кемп</h3>
-          <p class="camp-size">200–1000 хүн</p>
-          <p>Том хэмжээний байгууллагын ой, спорт өдөрлөг, олон хүний арга хэмжээнд.</p>
+          <h3>C Кемп</h3>
+          <p class="camp-size">10–50 хүн</p>
+          <p>Цөөн хүний уулзалт, удирдлагын багт зориулсан төвлөрсөн, тухтай орчин.</p>
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-mobile">
@@ -139,7 +139,7 @@
     </div>
 
     <div class="camp-detail-wrap reveal">
-      <article class="camp-detail has-packages is-open" id="camp-c">
+      <article class="camp-detail has-packages" id="camp-c">
         <div class="camp-detail-text">
           <h3>C Кемп · 10–50 хүн</h3>
           <p>Удирдлагын баг, шийдвэр гаргах уулзалт, төвлөрсөн ажлын хөтөлбөрт тохирсон тайван орчин.</p>
@@ -157,7 +157,7 @@
               <li>Тайз, хөгжим</li>
               <li>Chill zone</li>
             </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Essential">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Essential" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--featured" role="listitem">
             <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Most Popular</span>
@@ -189,21 +189,31 @@
                 <span class="pkg-visual-option__label">Тайзны эффект</span>
               </label>
             </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Experience" data-visual-group="visual_c">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Experience" data-visual-group="visual_c" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price pkg-price--custom">Тусгай санал</div>
+              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
             </div>
             <ul class="pkg-features">
-              <li>MC / Хөтлөгч</li>
-              <li>Хөтөлбөрийн зохион байгуулалт</li>
-              <li>Event coordination</li>
-              <li>Full production management</li>
+              <li>Experience бүх үйлчилгээ</li>
+              <li>Хөтөлбөрийн найруулагч</li>
+              <li>Эвент зохион байгуулагч</li>
+              <li>Хөтлөгч</li>
+              <li>Хамгаалтын алба</li>
+              <li>Эмнэлгийн тусламж</li>
             </ul>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Production">Үнийн санал авах</a>
+            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
+            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Production" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
           </div>
+        </div>
+        <div class="pkg-addon-list" role="group" aria-label="Нэмэлт үйлчилгээ">
+          <label class="pkg-addon-option">
+            <input type="checkbox" name="addon_shuttle_c" value="Shuttle Service">
+            <span class="pkg-addon-option__title">Shuttle Service</span>
+            <span class="pkg-addon-option__meta">45 хүний автобус · УБ ↔ Кемп / 2 талдаа · +1,000,000₮</span>
+          </label>
         </div>
       </article>
 
@@ -225,7 +235,7 @@
               <li>Тайз, хөгжим</li>
               <li>Chill zone</li>
             </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Essential">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Essential" data-addon-group="addon_shuttle_b">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--featured" role="listitem">
             <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Most Popular</span>
@@ -257,25 +267,35 @@
                 <span class="pkg-visual-option__label">Тайзны эффект</span>
               </label>
             </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Experience" data-visual-group="visual_b">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Experience" data-visual-group="visual_b" data-addon-group="addon_shuttle_b">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price pkg-price--custom">Тусгай санал</div>
+              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
             </div>
             <ul class="pkg-features">
-              <li>MC / Хөтлөгч</li>
-              <li>Хөтөлбөрийн зохион байгуулалт</li>
-              <li>Event coordination</li>
-              <li>Full production management</li>
+              <li>Experience бүх үйлчилгээ</li>
+              <li>Хөтөлбөрийн найруулагч</li>
+              <li>Эвент зохион байгуулагч</li>
+              <li>Хөтлөгч</li>
+              <li>Хамгаалтын алба</li>
+              <li>Эмнэлгийн тусламж</li>
             </ul>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Production">Үнийн санал авах</a>
+            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
+            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Production" data-addon-group="addon_shuttle_b">Үнийн санал авах</a>
           </div>
+        </div>
+        <div class="pkg-addon-list" role="group" aria-label="Нэмэлт үйлчилгээ">
+          <label class="pkg-addon-option">
+            <input type="checkbox" name="addon_shuttle_b" value="Shuttle Service">
+            <span class="pkg-addon-option__title">Shuttle Service</span>
+            <span class="pkg-addon-option__meta">45 хүний автобус · УБ ↔ Кемп / 2 талдаа · +1,000,000₮</span>
+          </label>
         </div>
       </article>
 
-      <article class="camp-detail has-packages" id="camp-a">
+      <article class="camp-detail has-packages is-open" id="camp-a">
         <div class="camp-detail-text">
           <h3>A Кемп · 200–1000 хүн</h3>
           <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
@@ -293,7 +313,7 @@
               <li>Тайз, хөгжим</li>
               <li>Chill zone</li>
             </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Essential">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Essential" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--featured" role="listitem">
             <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Most Popular</span>
@@ -325,21 +345,31 @@
                 <span class="pkg-visual-option__label">Тайзны эффект</span>
               </label>
             </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Experience" data-visual-group="visual_a">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Experience" data-visual-group="visual_a" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price pkg-price--custom">Тусгай санал</div>
+              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
             </div>
             <ul class="pkg-features">
-              <li>MC / Хөтлөгч</li>
-              <li>Хөтөлбөрийн зохион байгуулалт</li>
-              <li>Event coordination</li>
-              <li>Full production management</li>
+              <li>Experience бүх үйлчилгээ</li>
+              <li>Хөтөлбөрийн найруулагч</li>
+              <li>Эвент зохион байгуулагч</li>
+              <li>Хөтлөгч</li>
+              <li>Хамгаалтын алба</li>
+              <li>Эмнэлгийн тусламж</li>
             </ul>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Production">Үнийн санал авах</a>
+            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
+            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Production" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
           </div>
+        </div>
+        <div class="pkg-addon-list" role="group" aria-label="Нэмэлт үйлчилгээ">
+          <label class="pkg-addon-option">
+            <input type="checkbox" name="addon_shuttle_a" value="Shuttle Service">
+            <span class="pkg-addon-option__title">Shuttle Service</span>
+            <span class="pkg-addon-option__meta">45 хүний автобус · УБ ↔ Кемп / 2 талдаа · +1,000,000₮</span>
+          </label>
         </div>
       </article>
 
@@ -361,7 +391,7 @@
               <li>Тайз, хөгжим</li>
               <li>Chill zone</li>
             </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Essential">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Essential" data-addon-group="addon_shuttle_mobile">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--featured" role="listitem">
             <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Most Popular</span>
@@ -393,7 +423,7 @@
                 <span class="pkg-visual-option__label">Тайзны эффект</span>
               </label>
             </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Experience" data-visual-group="visual_mobile">Үнийн санал авах</a>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Experience" data-visual-group="visual_mobile" data-addon-group="addon_shuttle_mobile">Үнийн санал авах</a>
           </div>
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
@@ -401,13 +431,23 @@
               <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
             </div>
             <ul class="pkg-features">
-              <li>MC / Хөтлөгч</li>
-              <li>Хөтөлбөрийн зохион байгуулалт</li>
-              <li>Event coordination</li>
-              <li>Full production management</li>
+              <li>Experience бүх үйлчилгээ</li>
+              <li>Хөтөлбөрийн найруулагч</li>
+              <li>Эвент зохион байгуулагч</li>
+              <li>Хөтлөгч</li>
+              <li>Хамгаалтын алба</li>
+              <li>Эмнэлгийн тусламж</li>
             </ul>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Production">Үнийн санал авах</a>
+            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
+            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Production" data-addon-group="addon_shuttle_mobile">Үнийн санал авах</a>
           </div>
+        </div>
+        <div class="pkg-addon-list" role="group" aria-label="Нэмэлт үйлчилгээ">
+          <label class="pkg-addon-option">
+            <input type="checkbox" name="addon_shuttle_mobile" value="Shuttle Service">
+            <span class="pkg-addon-option__title">Shuttle Service</span>
+            <span class="pkg-addon-option__meta">45 хүний автобус · УБ ↔ Кемп / 2 талдаа · +1,000,000₮</span>
+          </label>
         </div>
       </article>
     </div>
@@ -551,8 +591,12 @@
           <span class="quote-prefill__val" id="prefill-tier-val"></span>
         </div>
         <div class="quote-prefill__row" id="prefill-row-feature" hidden>
-          <span class="quote-prefill__key">Нэмэлт үйлчилгээ</span>
+          <span class="quote-prefill__key">Visual feature</span>
           <span class="quote-prefill__val" id="prefill-feature-val"></span>
+        </div>
+        <div class="quote-prefill__row" id="prefill-row-shuttle" hidden>
+          <span class="quote-prefill__key">Shuttle Service</span>
+          <span class="quote-prefill__val" id="prefill-shuttle-val"></span>
         </div>
         <input type="hidden" name="camp_name" id="field-camp-name">
         <input type="hidden" name="package_tier" id="field-package-tier">
@@ -576,8 +620,12 @@
           <input id="email" name="email" type="email" autocomplete="email">
         </div>
         <div class="quote-form__field">
-          <label for="event-date">Хүссэн огноо</label>
-          <input id="event-date" name="event_date" type="date" required>
+          <label for="start-datetime">Эхлэх огноо, цаг</label>
+          <input id="start-datetime" name="start_datetime" type="datetime-local" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="end-datetime">Дуусах огноо, цаг</label>
+          <input id="end-datetime" name="end_datetime" type="datetime-local" required>
         </div>
         <div class="quote-form__field">
           <label for="guest-count">Хүний тоо</label>
@@ -585,7 +633,17 @@
         </div>
         <div class="quote-form__field quote-form__field--full">
           <label for="event-type">Арга хэмжээний төрөл</label>
-          <input id="event-type" name="event_type" type="text">
+          <select id="event-type" name="event_type">
+            <option value="">Сонгоно уу</option>
+            <option value="Байгууллагын аялал">Байгууллагын аялал</option>
+            <option value="Team building">Team building</option>
+            <option value="Retreat">Retreat</option>
+            <option value="Байгууллагын ой">Байгууллагын ой</option>
+            <option value="Сургалт / workshop">Сургалт / workshop</option>
+            <option value="VIP event">VIP event</option>
+            <option value="Festival / outdoor event">Festival / outdoor event</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <div class="quote-form__field quote-form__field--full" id="location-field-wrap" hidden>
           <label for="location">Кемп байгуулах байршил <span class="quote-form__required" aria-hidden="true">*</span></label>
@@ -593,12 +651,21 @@
           <input id="location" name="location" type="text" placeholder="Жишээ: Архангай — Өгий нуур">
         </div>
         <div class="quote-form__field quote-form__field--full">
+          <label for="shuttle-service">Shuttle Service</label>
+          <select id="shuttle-service" name="shuttle_service">
+            <option value="Сонгохгүй">Сонгохгүй</option>
+            <option value="Өдрөөр / 2 талдаа — 1,000,000₮">Өдрөөр / 2 талдаа — 1,000,000₮</option>
+            <option value="Хоног / 2 талдаа — 1,200,000₮">Хоног / 2 талдаа — 1,200,000₮</option>
+          </select>
+          <small class="quote-form__helper-text">Shuttle Service нь зочдын тээвэрлэлтийн үйлчилгээ бөгөөд Нүүдлийн кемпийн логистикийн зардлаас тусдаа тооцогдоно.</small>
+        </div>
+        <div class="quote-form__field quote-form__field--full">
           <label for="extra-info">Нэмэлт мэдээлэл</label>
           <textarea id="extra-info" name="extra_info" rows="4"></textarea>
         </div>
       </div>
       <p class="quote-form__message" id="quote-form-message" aria-live="polite"></p>
-      <button class="btn btn--accent" type="submit">Илгээх</button>
+      <button class="btn btn--accent" type="submit">Урьдчилсан санал авах</button>
     </form>
   </div>
 </div>
