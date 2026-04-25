@@ -291,7 +291,7 @@
         card.classList.remove('is-active');
         card.setAttribute('aria-expanded', 'false');
         var cta = card.querySelector('[data-camp-cta]');
-        if (cta) cta.textContent = 'Үйлчилгээ үзэх →';
+        if (cta) cta.textContent = 'Багц үзэх →';
       });
       campDetails.forEach(function (detail) { detail.classList.remove('is-open'); });
     };
@@ -302,7 +302,7 @@
         card.classList.toggle('is-active', isTarget);
         card.setAttribute('aria-expanded', isTarget ? 'true' : 'false');
         var cta = card.querySelector('[data-camp-cta]');
-        if (cta) cta.textContent = isTarget ? 'Хаах ↑' : 'Үйлчилгээ үзэх →';
+        if (cta) cta.textContent = isTarget ? 'Хаах ↑' : 'Багц үзэх →';
       });
       campDetails.forEach(function (detail) {
         var isTarget = detail.id === targetId;

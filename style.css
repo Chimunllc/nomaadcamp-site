@@ -1509,19 +1509,12 @@ body.modal-open { overflow: hidden; }
 .camp-card.is-active .camp-card-cta {
   color: var(--accent);
 }
-.camp-card.is-active .camp-card-cta {
-  color: var(--accent);
-}
 .camp-card:hover {
   transform: translateY(-4px) scale(1.012);
   box-shadow: 0 20px 40px rgba(31, 42, 35, 0.18);
 }
 .camp-card:hover .camp-card-cta {
   transform: translateX(5px);
-  color: var(--charcoal);
-}
-.camp-card:hover .camp-card-cta {
-  transform: translateX(3px);
   color: var(--charcoal);
 }
 .camp-card:hover img {
