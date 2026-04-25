@@ -5,9 +5,9 @@
   // Future-ready config: add pricing when realtime estimation is ready
   var PACKAGE_CONFIG = {
     camps: {
-      'camp-c':      { name: 'C Кемп',         isMobile: false },
-      'camp-b':      { name: 'B Кемп',         isMobile: false },
       'camp-a':      { name: 'A Кемп',         isMobile: false },
+      'camp-b':      { name: 'B Кемп',         isMobile: false },
+      'camp-c':      { name: 'C Кемп',         isMobile: false },
       'camp-mobile': { name: 'Нүүдлийн кемп',  isMobile: true  }
     },
     tiers: {
@@ -18,11 +18,38 @@
     addons: {
       'LED Screen':     { price: null },
       'Moonbeam Lounge':{ price: null },
-      'Тайзны эффект':  { price: null }
+      'Тайзны эффект':  { price: null },
+      'Shuttle Service':{
+        price: 1000000,
+        description: '45 хүний автобус · УБ ↔ Кемп / 2 талдаа'
+      }
     }
   };
 
   var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E";
+  var CAMP_IMAGE_CONFIG = {
+    a:      { folder: 'a-camp',      prefix: 'a' },
+    b:      { folder: 'b-camp',      prefix: 'b' },
+    c:      { folder: 'c-camp',      prefix: 'c' },
+    mobile: { folder: 'mobile-camp', prefix: 'mobile' }
+  };
+
+  function getCampCoverPath(key) {
+    var cfg = CAMP_IMAGE_CONFIG[key];
+    if (!cfg) return '';
+    return '/images/camps/' + cfg.folder + '/' + cfg.prefix + '-cover.webp';
+  }
+
+  function getCampGalleryPaths(key) {
+    var cfg = CAMP_IMAGE_CONFIG[key];
+    if (!cfg) return [];
+    var base = '/images/camps/' + cfg.folder + '/' + cfg.prefix + '-';
+    var list = [];
+    for (var i = 1; i <= 6; i++) {
+      list.push(base + String(i).padStart(2, '0') + '.webp');
+    }
+    return list;
+  }
 
   // ── HERO SLIDER ──────────────────────────────────────────────
   // Loads images from NOMAAD_IMAGES.hero, crossfades every 5 s
@@ -77,22 +104,24 @@
 
   // ── CAMP CAROUSELS ───────────────────────────────────────────
   // Populates camp card thumbnails and carousel tracks from NOMAAD_IMAGES.camps
-  function initCampCarousels(camps) {
-    if (!camps) return;
-
+  function initCampCarousels() {
     var altText = { a: 'A кемп', b: 'B кемп', c: 'C кемп', mobile: 'Нүүдлийн кемп' };
 
-    // Set thumbnail on each camp selector card
+    // Set thumbnail on each camp selector card (cover image naming convention)
     document.querySelectorAll('[data-camp-thumb]').forEach(function (img) {
       var key = img.getAttribute('data-camp-thumb');
-      var list = camps[key];
-      if (list && list.length > 0) img.setAttribute('data-src', list[0]);
+      var cover = getCampCoverPath(key);
+      if (!cover) return;
+      img.setAttribute('data-src', cover);
+      img.addEventListener('error', function () {
+        img.src = PLACEHOLDER;
+      }, { once: true });
     });
 
     // Populate each camp's carousel track
     document.querySelectorAll('[data-camp]').forEach(function (root) {
       var key = root.getAttribute('data-camp');
-      var list = camps[key];
+      var list = getCampGalleryPaths(key);
       var track = root.querySelector('.carousel-track');
       if (!track || !list || list.length === 0) return;
 
@@ -105,7 +134,73 @@
         img.alt = (altText[key] || 'кемп') + ' - зураг ' + (i + 1);
         img.loading = 'lazy';
         img.decoding = 'async';
+        img.addEventListener('error', function () {
+          img.remove();
+        }, { once: true });
         track.appendChild(img);
+      });
+    });
+  }
+
+  function initCampDetailGalleries() {
+    document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
+      var key = gallery.getAttribute('data-camp-gallery');
+      var images = getCampGalleryPaths(key);
+      var track = gallery.querySelector('.camp-gallery__track');
+      var emptyState = gallery.querySelector('.camp-gallery__empty');
+      var viewport = gallery.querySelector('.camp-gallery__viewport');
+      var prev = gallery.querySelector('.camp-gallery__arrow--prev');
+      var next = gallery.querySelector('.camp-gallery__arrow--next');
+      if (!track) {
+        return;
+      }
+
+      if (images.length === 0) {
+        if (track) track.style.display = 'none';
+        if (prev) prev.hidden = true;
+        if (next) next.hidden = true;
+        if (viewport) viewport.classList.add('is-empty');
+        if (emptyState) emptyState.hidden = false;
+        return;
+      }
+
+      if (track) track.style.display = '';
+      if (prev) prev.hidden = false;
+      if (next) next.hidden = false;
+      if (viewport) viewport.classList.remove('is-empty');
+      if (emptyState) emptyState.hidden = true;
+
+      track.innerHTML = '';
+      images.forEach(function (src) {
+        var img = document.createElement('img');
+        img.className = 'camp-gallery__img defer-img';
+        img.src = PLACEHOLDER;
+        img.setAttribute('data-src', src);
+        img.alt = 'Кемпийн зураг';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.addEventListener('error', function () {
+          img.remove();
+          if (track.children.length === 0) {
+            track.style.display = 'none';
+            if (prev) prev.hidden = true;
+            if (next) next.hidden = true;
+            if (viewport) viewport.classList.add('is-empty');
+            if (emptyState) emptyState.hidden = false;
+          }
+        }, { once: true });
+        track.appendChild(img);
+      });
+
+      var scrollByAmount = function () {
+        return Math.max(220, Math.floor(track.clientWidth * 0.5));
+      };
+
+      if (prev) prev.addEventListener('click', function () {
+        track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
+      });
+      if (next) next.addEventListener('click', function () {
+        track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
       });
     });
   }
@@ -115,7 +210,8 @@
   var manifest = window.NOMAAD_IMAGES || {};
   initHeroSlider(manifest.hero);
   initGallery(manifest.gallery);
-  initCampCarousels(manifest.camps);
+  initCampCarousels();
+  initCampDetailGalleries();
 
   // ── MOBILE NAV TOGGLE ────────────────────────────────────────
   var nav = document.querySelector('.nav');
@@ -282,17 +378,45 @@
   var campCards = document.querySelectorAll('[data-camp-target]');
   if (campCards.length > 0) {
     var campDetails = document.querySelectorAll('.camp-detail');
-    var showCampDetail = function (targetId) {
+    var resetCampState = function () {
       campCards.forEach(function (card) {
-        card.classList.toggle('is-active', card.dataset.campTarget === targetId);
+        card.classList.remove('is-active');
+        card.setAttribute('aria-expanded', 'false');
+        var cta = card.querySelector('[data-camp-cta]');
+        if (cta) cta.textContent = 'Багц үзэх →';
+      });
+      campDetails.forEach(function (detail) { detail.classList.remove('is-open'); });
+    };
+    var showCampDetail = function (targetId) {
+      var targetDetail = null;
+      campCards.forEach(function (card) {
+        var isTarget = card.dataset.campTarget === targetId;
+        card.classList.toggle('is-active', isTarget);
+        card.setAttribute('aria-expanded', isTarget ? 'true' : 'false');
+        var cta = card.querySelector('[data-camp-cta]');
+        if (cta) cta.textContent = isTarget ? 'Хаах ↑' : 'Багц үзэх →';
       });
       campDetails.forEach(function (detail) {
-        detail.classList.toggle('is-open', detail.id === targetId);
+        var isTarget = detail.id === targetId;
+        detail.classList.toggle('is-open', isTarget);
+        if (isTarget) targetDetail = detail;
       });
+      if (targetDetail) {
+        window.setTimeout(function () {
+          targetDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      }
     };
     campCards.forEach(function (card) {
-      card.addEventListener('click', function () { showCampDetail(card.dataset.campTarget); });
+      card.addEventListener('click', function () {
+        if (card.classList.contains('is-active')) {
+          resetCampState();
+          return;
+        }
+        showCampDetail(card.dataset.campTarget);
+      });
     });
+    resetCampState();
   }
 
   // ── CONTACT FORM (AJAX Netlify) ───────────────────────────────
@@ -341,39 +465,73 @@
     const prefillCampRow = document.getElementById('prefill-row-camp');
     const prefillTierRow = document.getElementById('prefill-row-tier');
     const prefillFeatRow = document.getElementById('prefill-row-feature');
+    const prefillShuttleRow = document.getElementById('prefill-row-shuttle');
     const prefillCampVal = document.getElementById('prefill-camp-val');
     const prefillTierVal = document.getElementById('prefill-tier-val');
     const prefillFeatVal = document.getElementById('prefill-feature-val');
+    const prefillShuttleVal = document.getElementById('prefill-shuttle-val');
     const fieldCampName  = document.getElementById('field-camp-name');
     const fieldTier      = document.getElementById('field-package-tier');
     const fieldFeature   = document.getElementById('field-visual-feature');
     const locationWrap   = document.getElementById('location-field-wrap');
     const locationInput  = document.getElementById('location');
+    const shuttleServiceSelect = document.getElementById('shuttle-service');
+
+    const applyLocationVisibility = (camp) => {
+      var normalizedCamp = (camp || '').trim();
+      var isMobile = normalizedCamp === 'Нүүдлийн кемп';
+      if (locationWrap) {
+        locationWrap.hidden = !isMobile;
+        locationWrap.style.display = isMobile ? '' : 'none';
+      }
+      if (locationInput) {
+        locationInput.required = isMobile;
+        if (!isMobile) locationInput.value = '';
+      }
+    };
+
+    const collectSelectedAddons = (groupName) => {
+      if (!groupName) return [];
+      return Array.from(document.querySelectorAll('input[name="' + groupName + '"]:checked'))
+        .map((input) => input.value)
+        .filter(Boolean);
+    };
 
     const openQuoteModal = (prefill) => {
       quoteModal.classList.add('is-open');
       quoteModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
+      var camp = (prefill && prefill.camp) || '';
 
       if (prefillBox) {
-        var camp    = (prefill && prefill.camp)    || '';
         var tier    = (prefill && prefill.tier)    || '';
         var feature = (prefill && prefill.feature) || '';
+        var addOns  = (prefill && prefill.addOns)  || [];
+        var shuttleService = (prefill && prefill.shuttleService) || 'Сонгохгүй';
 
         if (fieldCampName) fieldCampName.value = camp;
         if (fieldTier)     fieldTier.value     = tier;
         if (fieldFeature)  fieldFeature.value  = feature;
+        if (shuttleServiceSelect) shuttleServiceSelect.value = shuttleService;
 
-        var hasPrefill = !!(camp || tier || feature);
+        var hasPrefill = !!(camp || tier || feature || shuttleService !== 'Сонгохгүй');
         if (prefillBox)     prefillBox.hidden     = !hasPrefill;
         if (prefillCampRow) { prefillCampRow.hidden = !camp;    if (prefillCampVal) prefillCampVal.textContent = camp; }
         if (prefillTierRow) { prefillTierRow.hidden = !tier;    if (prefillTierVal) prefillTierVal.textContent = tier; }
         if (prefillFeatRow) { prefillFeatRow.hidden = !feature; if (prefillFeatVal) prefillFeatVal.textContent = feature; }
+        if (prefillShuttleRow) {
+          var showShuttle = shuttleService && shuttleService !== 'Сонгохгүй';
+          prefillShuttleRow.hidden = !showShuttle;
+          if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleService;
+        }
 
-        var isMobile = camp === 'Нүүдлийн кемп';
-        if (locationWrap)  locationWrap.hidden   = !isMobile;
-        if (locationInput) locationInput.required = isMobile;
+        if (addOns.indexOf('Shuttle Service') !== -1 && shuttleServiceSelect && shuttleServiceSelect.value === 'Сонгохгүй') {
+          shuttleServiceSelect.value = 'Өдрөөр / 2 талдаа — 1,000,000₮';
+          if (prefillShuttleRow) prefillShuttleRow.hidden = false;
+          if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleServiceSelect.value;
+        }
       }
+      applyLocationVisibility(camp);
 
       window.setTimeout(() => {
         if (firstInput) firstInput.focus();
@@ -388,8 +546,8 @@
       if (fieldCampName) fieldCampName.value = '';
       if (fieldTier)     fieldTier.value     = '';
       if (fieldFeature)  fieldFeature.value  = '';
-      if (locationWrap)  locationWrap.hidden   = true;
-      if (locationInput) locationInput.required = false;
+      if (shuttleServiceSelect) shuttleServiceSelect.value = 'Сонгохгүй';
+      applyLocationVisibility('');
     };
 
     quoteOpeners.forEach((link) => {
@@ -398,14 +556,29 @@
         var campName    = (link.dataset.campName    || '').trim();
         var tier        = (link.dataset.tier        || '').trim();
         var visualGroup = (link.dataset.visualGroup || '').trim();
+        var addonGroup  = (link.dataset.addonGroup  || '').trim();
         var feature     = '';
         if (visualGroup) {
           var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
           feature = checked ? checked.value : '';
+          if (!feature) {
+            window.alert('Experience багцын нэмэлт үйлчилгээний 1 сонголт хийнэ үү.');
+            return;
+          }
         }
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature } : null);
+        var addOns = collectSelectedAddons(addonGroup);
+        var shuttlePrefill = addOns.indexOf('Shuttle Service') !== -1 ? 'Өдрөөр / 2 талдаа — 1,000,000₮' : 'Сонгохгүй';
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, addOns: addOns, shuttleService: shuttlePrefill } : null);
       });
     });
+
+    if (shuttleServiceSelect) {
+      shuttleServiceSelect.addEventListener('change', () => {
+        var shuttleValue = shuttleServiceSelect.value || 'Сонгохгүй';
+        if (prefillShuttleRow) prefillShuttleRow.hidden = shuttleValue === 'Сонгохгүй';
+        if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleValue;
+      });
+    }
 
     closeTargets.forEach((el) => {
       el.addEventListener('click', () => closeQuoteModal());
@@ -445,18 +618,24 @@
       submitBtn.textContent = 'Илгээж байна…';
 
       const payload = {
+        camp:           (fd.get('camp_name')     || '').trim(),
+        tier:           (fd.get('package_tier')  || '').trim(),
+        visual_feature: (fd.get('visual_feature')|| '').trim(),
+        shuttle_service:(fd.get('shuttle_service') || '').trim(),
+        location:       ((fd.get('camp_name') || '').trim() === 'Нүүдлийн кемп') ? (fd.get('location') || '').trim() : '',
+        notes:          (fd.get('extra_info')    || '').trim(),
         company:        (fd.get('organization')  || '').trim(),
         contact_name:   (fd.get('contact_name')  || '').trim(),
         phone,
         email,
-        event_date:     (fd.get('event_date')    || '').trim(),
+        start_datetime: (fd.get('start_datetime')|| '').trim(),
+        end_datetime:   (fd.get('end_datetime')  || '').trim(),
+        event_date:     (fd.get('start_datetime')|| '').trim(),
         guest_count:    (fd.get('guest_count')   || '').trim(),
         event_type:     (fd.get('event_type')    || '').trim(),
-        location:       (fd.get('location')      || '').trim(),
         camp_name:      (fd.get('camp_name')     || '').trim(),
         package_tier:   (fd.get('package_tier')  || '').trim(),
-        visual_feature: (fd.get('visual_feature')|| '').trim(),
-        notes:          (fd.get('extra_info')    || '').trim(),
+        shuttle_service_label: (fd.get('shuttle_service') || '').trim(),
         source:         'nomaadcamp.com'
       };
 
@@ -476,7 +655,7 @@
         quoteMessage.className = 'quote-form__message quote-form__message--error';
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Илгээх';
+        submitBtn.textContent = 'Урьдчилсан санал авах';
       }
     });
   }
