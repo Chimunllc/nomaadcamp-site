@@ -287,12 +287,20 @@
   if (campCards.length > 0) {
     var campDetails = document.querySelectorAll('.camp-detail');
     var showCampDetail = function (targetId) {
+      var targetDetail = null;
       campCards.forEach(function (card) {
         card.classList.toggle('is-active', card.dataset.campTarget === targetId);
       });
       campDetails.forEach(function (detail) {
-        detail.classList.toggle('is-open', detail.id === targetId);
+        var isTarget = detail.id === targetId;
+        detail.classList.toggle('is-open', isTarget);
+        if (isTarget) targetDetail = detail;
       });
+      if (targetDetail) {
+        window.setTimeout(function () {
+          targetDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      }
     };
     campCards.forEach(function (card) {
       card.addEventListener('click', function () { showCampDetail(card.dataset.campTarget); });
