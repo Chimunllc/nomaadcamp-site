@@ -343,18 +343,71 @@
         </div>
       </article>
 
-      <article class="camp-detail" id="camp-mobile">
+      <article class="camp-detail has-packages" id="camp-mobile">
         <div class="camp-detail-text">
           <h3>Нүүдлийн кемп · Хүссэн байршилд</h3>
-          <p>Таны сонгосон байршилд кемпийг бүрэн зөөвөрлөн байгуулна.</p>
-          <p class="camp-mobile-note">Үнэ нь үйлчилгээний түвшин дээр үндэслэгдэж, байршил болон логистикийн нөхцлөөс хамааран нэмэлт тээврийн зардал тооцогдоно.</p>
-          <a class="btn btn--accent" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп">Үнийн санал авах</a>
+          <p>Нүүдлийн кемп нь таны сонгосон байршилд кемпийг бүрэн зөөвөрлөн байгуулдаг үйлчилгээ юм. Үнэ нь A/B кемпийн үйлчилгээний түвшин дээр үндэслэгдэх бөгөөд байршил, зам, логистикийн нөхцлөөс хамааран нэмэлт хүний нөөц болон тээврийн зардал тооцогдоно.</p>
         </div>
-        <div class="camp-detail-media" data-carousel data-autoplay="false" data-camp="mobile">
-          <div class="carousel-track"><!-- populated by main.js --></div>
-          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
-          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
-          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
+        <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
+          <div class="pkg-card" role="listitem">
+            <div class="pkg-header">
+              <span class="pkg-tier-label">Essential</span>
+              <div class="pkg-price">180,000₮<span class="pkg-per"> / хүн</span></div>
+            </div>
+            <ul class="pkg-features">
+              <li>Майхан кемп</li>
+              <li>Өдрийн 2 хоол</li>
+              <li>Өглөөний цай</li>
+              <li>Тайз, хөгжим</li>
+              <li>Chill zone</li>
+            </ul>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Essential">Үнийн санал авах</a>
+          </div>
+          <div class="pkg-card pkg-card--featured" role="listitem">
+            <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Most Popular</span>
+            <div class="pkg-header">
+              <span class="pkg-tier-label">Experience</span>
+              <div class="pkg-price">220,000₮<span class="pkg-per"> / хүн</span></div>
+            </div>
+            <ul class="pkg-features">
+              <li>Essential бүх үйлчилгээ</li>
+              <li>Buffet хоол</li>
+              <li>Premium sleeping bag</li>
+              <li>DJ</li>
+              <li>Bartender</li>
+              <li>After movie</li>
+            </ul>
+            <div class="pkg-divider" aria-hidden="true"></div>
+            <p class="pkg-choice-label">Дараахаас 1 сонголт</p>
+            <div class="pkg-visual-selector" role="radiogroup" aria-label="Нэмэлт үйлчилгээ сонгох">
+              <label class="pkg-visual-option">
+                <input type="radio" name="visual_mobile" value="LED Screen">
+                <span class="pkg-visual-option__label">LED Screen</span>
+              </label>
+              <label class="pkg-visual-option">
+                <input type="radio" name="visual_mobile" value="Moonbeam Lounge">
+                <span class="pkg-visual-option__label">Moonbeam Lounge</span>
+              </label>
+              <label class="pkg-visual-option">
+                <input type="radio" name="visual_mobile" value="Тайзны эффект">
+                <span class="pkg-visual-option__label">Тайзны эффект</span>
+              </label>
+            </div>
+            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Experience" data-visual-group="visual_mobile">Үнийн санал авах</a>
+          </div>
+          <div class="pkg-card pkg-card--custom" role="listitem">
+            <div class="pkg-header">
+              <span class="pkg-tier-label">Production</span>
+              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
+            </div>
+            <ul class="pkg-features">
+              <li>MC / Хөтлөгч</li>
+              <li>Хөтөлбөрийн зохион байгуулалт</li>
+              <li>Event coordination</li>
+              <li>Full production management</li>
+            </ul>
+            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Production">Үнийн санал авах</a>
+          </div>
         </div>
       </article>
     </div>
@@ -534,9 +587,10 @@
           <label for="event-type">Арга хэмжээний төрөл</label>
           <input id="event-type" name="event_type" type="text">
         </div>
-        <div class="quote-form__field quote-form__field--full">
+        <div class="quote-form__field quote-form__field--full" id="location-field-wrap" hidden>
           <label for="location">Кемп байгуулах байршил <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <input id="location" name="location" type="text" required placeholder="Төв аймаг — Манзушир">
+          <small class="quote-form__helper-text">Аймаг, сум эсвэл Google Maps location оруулна уу</small>
+          <input id="location" name="location" type="text" placeholder="Жишээ: Архангай — Өгий нуур">
         </div>
         <div class="quote-form__field quote-form__field--full">
           <label for="extra-info">Нэмэлт мэдээлэл</label>

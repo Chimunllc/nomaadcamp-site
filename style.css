@@ -1909,6 +1909,11 @@ body.modal-open { overflow: hidden; }
   color: var(--accent);
   margin-left: 0.15rem;
 }
+.quote-form__helper-text {
+  font-size: 0.78rem;
+  color: rgba(26, 26, 26, 0.52);
+  font-weight: 400;
+}
 
 /* ── MOBILE CAMP NOTE ─────────────────────────────────────── */
 .camp-mobile-note {
