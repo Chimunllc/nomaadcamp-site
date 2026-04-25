@@ -73,6 +73,34 @@
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
   }
 
+  // data-src зурагт fallback (хуучин deploy/cached HTML нийцүүлэлт)
+  const deferredImages = document.querySelectorAll('img.defer-img[data-src]');
+  if (deferredImages.length > 0) {
+    const loadImage = (img) => {
+      const src = img.getAttribute('data-src');
+      if (!src) return;
+      img.setAttribute('src', src);
+      img.removeAttribute('data-src');
+      img.classList.remove('defer-img');
+    };
+    if ('IntersectionObserver' in window) {
+      const imageObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadImage(entry.target);
+              imageObs.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: '220px 0px' }
+      );
+      deferredImages.forEach((img) => imageObs.observe(img));
+    } else {
+      deferredImages.forEach(loadImage);
+    }
+  }
+
   // Carousel
   document.querySelectorAll('[data-carousel]').forEach((root) => {
     const track = root.querySelector('.carousel-track');
@@ -194,6 +222,54 @@
       } finally {
         if (submitBtn) submitBtn.disabled = false;
       }
+    });
+  }
+
+  // Үнийн санал modal маягт
+  const quoteModal = document.getElementById('quote-modal');
+  const quoteForm = document.getElementById('quote-form');
+  const quoteMessage = document.getElementById('quote-form-message');
+  const quoteOpeners = document.querySelectorAll('[data-quote-open="true"]');
+  if (quoteModal && quoteForm && quoteMessage && quoteOpeners.length > 0) {
+    const closeTargets = quoteModal.querySelectorAll('[data-quote-close]');
+    const firstInput = quoteForm.querySelector('input, textarea');
+
+    const openQuoteModal = () => {
+      quoteModal.classList.add('is-open');
+      quoteModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      window.setTimeout(() => {
+        if (firstInput) firstInput.focus();
+      }, 20);
+    };
+
+    const closeQuoteModal = () => {
+      quoteModal.classList.remove('is-open');
+      quoteModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    };
+
+    quoteOpeners.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openQuoteModal();
+      });
+    });
+
+    closeTargets.forEach((el) => {
+      el.addEventListener('click', () => closeQuoteModal());
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && quoteModal.classList.contains('is-open')) {
+        closeQuoteModal();
+      }
+    });
+
+    quoteForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      quoteMessage.textContent = 'Таны хүсэлтийг хүлээн авлаа. Манай баг удахгүй холбогдох болно.';
+      quoteForm.reset();
     });
   }
 })();
