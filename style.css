@@ -1061,16 +1061,15 @@ body.home-page .nav-cta {
 
 .hero--corporate {
   min-height: 90vh;
-  padding-top: calc(var(--nav-h) + 3rem);
+  padding-top: calc(var(--nav-h) + 1.2rem);
+  padding-bottom: 2.2rem;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   position: relative;
   color: var(--text-light);
 }
 .hero--corporate .hero-media::after {
-  background:
-    linear-gradient(180deg, rgba(11, 13, 11, 0.16) 0%, rgba(11, 13, 11, 0.36) 58%, rgba(11, 13, 11, 0.56) 100%),
-    linear-gradient(90deg, rgba(11, 13, 11, 0.24) 0%, rgba(11, 13, 11, 0.03) 72%);
+  background: none;
 }
 .hero-photo,
 .hero-video {
@@ -1082,32 +1081,38 @@ body.home-page .nav-cta {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(31, 42, 35, 0.12), rgba(31, 42, 35, 0.2));
+  background: none;
 }
-.hero--corporate .hero-inner { position: relative; z-index: 1; max-width: 560px; }
+.hero--corporate .hero-inner { position: relative; z-index: 1; max-width: 500px; padding: 0; margin-bottom: 0.2rem; }
 .hero--corporate .eyebrow,
 .hero--corporate .hero-sub,
 .hero--corporate h1,
 .hero--corporate .hero-meta { color: var(--text-light); }
 .hero--corporate .hero-sub {
-  max-width: 540px;
-  font-size: clamp(0.96rem, 1.05vw, 1.05rem);
-  line-height: 1.58;
-  margin: 1rem 0 1.55rem;
+  max-width: 500px;
+  font-size: clamp(0.88rem, 0.98vw, 0.98rem);
+  line-height: 1.52;
+  margin: 0.75rem 0 1.15rem;
 }
 .hero--corporate h1 {
-  font-size: clamp(1.45rem, 3.2vw, 2.45rem);
-  line-height: 1.14;
-  letter-spacing: -0.016em;
+  font-size: clamp(1.12rem, 2.15vw, 1.62rem);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
 }
-.hero--corporate .hero-actions { gap: 0.6rem; }
+.hero--corporate .hero-actions { gap: 0.5rem; }
 .hero--corporate .hero-meta {
-  margin-top: 0.9rem;
+  margin-top: 0.55rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.7rem;
-  font-size: 0.86rem;
-  opacity: 0.9;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  opacity: 0.92;
+}
+.hero--corporate .eyebrow,
+.hero--corporate h1,
+.hero--corporate .hero-sub,
+.hero--corporate .hero-meta {
+  text-shadow: 0 2px 10px rgba(8, 10, 8, 0.28);
 }
 
 .section--light { background: var(--cream); }
@@ -1305,9 +1310,11 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
 
   .hero--corporate {
     min-height: 78vh;
-    padding-top: calc(var(--nav-h) + 1.8rem);
+    padding-top: calc(var(--nav-h) + 1.1rem);
+    padding-bottom: 1.4rem;
   }
-  .hero--corporate h1 { font-size: clamp(1.55rem, 7.2vw, 2.05rem); }
+  .hero--corporate h1 { font-size: clamp(1.02rem, 5.4vw, 1.35rem); }
+  .hero--corporate .hero-sub { margin: 0.65rem 0 1rem; }
   .hero--corporate .hero-actions { flex-direction: column; align-items: stretch; }
   .hero--corporate .hero-actions .btn { width: 100%; }
 }
