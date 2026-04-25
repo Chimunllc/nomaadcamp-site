@@ -345,16 +345,27 @@
     const prefillCampRow = document.getElementById('prefill-row-camp');
     const prefillTierRow = document.getElementById('prefill-row-tier');
     const prefillFeatRow = document.getElementById('prefill-row-feature');
+    const prefillShuttleRow = document.getElementById('prefill-row-shuttle');
     const prefillCampVal = document.getElementById('prefill-camp-val');
     const prefillTierVal = document.getElementById('prefill-tier-val');
     const prefillFeatVal = document.getElementById('prefill-feature-val');
+    const prefillShuttleVal = document.getElementById('prefill-shuttle-val');
     const fieldCampName  = document.getElementById('field-camp-name');
     const fieldTier      = document.getElementById('field-package-tier');
     const fieldFeature   = document.getElementById('field-visual-feature');
     const fieldAddOns    = document.getElementById('field-add-ons');
     const locationWrap   = document.getElementById('location-field-wrap');
     const locationInput  = document.getElementById('location');
-    const additionalServicesInput = document.getElementById('additional-services');
+    const shuttleServiceSelect = document.getElementById('shuttle-service');
+
+    const applyLocationVisibility = (camp) => {
+      var isMobile = camp === 'Нүүдлийн кемп';
+      if (locationWrap) locationWrap.hidden = !isMobile;
+      if (locationInput) {
+        locationInput.required = isMobile;
+        if (!isMobile) locationInput.value = '';
+      }
+    };
 
     const collectSelectedAddons = (groupName) => {
       if (!groupName) return [];
@@ -373,25 +384,30 @@
         var tier    = (prefill && prefill.tier)    || '';
         var feature = (prefill && prefill.feature) || '';
         var addOns  = (prefill && prefill.addOns)  || [];
-        var allServices = [];
-        if (feature) allServices.push(feature);
-        if (addOns.length > 0) allServices = allServices.concat(addOns);
+        var shuttleService = (prefill && prefill.shuttleService) || 'Сонгохгүй';
 
         if (fieldCampName) fieldCampName.value = camp;
         if (fieldTier)     fieldTier.value     = tier;
         if (fieldFeature)  fieldFeature.value  = feature;
-        if (fieldAddOns)   fieldAddOns.value   = addOns.join(', ');
-        if (additionalServicesInput) additionalServicesInput.value = allServices.join(', ');
+        if (shuttleServiceSelect) shuttleServiceSelect.value = shuttleService;
 
-        var hasPrefill = !!(camp || tier || feature || addOns.length > 0);
+        var hasPrefill = !!(camp || tier || feature || shuttleService !== 'Сонгохгүй');
         if (prefillBox)     prefillBox.hidden     = !hasPrefill;
         if (prefillCampRow) { prefillCampRow.hidden = !camp;    if (prefillCampVal) prefillCampVal.textContent = camp; }
         if (prefillTierRow) { prefillTierRow.hidden = !tier;    if (prefillTierVal) prefillTierVal.textContent = tier; }
-        if (prefillFeatRow) { prefillFeatRow.hidden = allServices.length === 0; if (prefillFeatVal) prefillFeatVal.textContent = allServices.join(', '); }
+        if (prefillFeatRow) { prefillFeatRow.hidden = !feature; if (prefillFeatVal) prefillFeatVal.textContent = feature; }
+        if (prefillShuttleRow) {
+          var showShuttle = shuttleService && shuttleService !== 'Сонгохгүй';
+          prefillShuttleRow.hidden = !showShuttle;
+          if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleService;
+        }
 
-        var isMobile = camp === 'Нүүдлийн кемп';
-        if (locationWrap)  locationWrap.hidden   = !isMobile;
-        if (locationInput) locationInput.required = isMobile;
+        if (addOns.indexOf('Shuttle Service') !== -1 && shuttleServiceSelect && shuttleServiceSelect.value === 'Сонгохгүй') {
+          shuttleServiceSelect.value = 'Өдрөөр / 2 талдаа — 1,000,000₮';
+          if (prefillShuttleRow) prefillShuttleRow.hidden = false;
+          if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleServiceSelect.value;
+        }
+        applyLocationVisibility(camp);
       }
 
       window.setTimeout(() => {
@@ -407,9 +423,8 @@
       if (fieldCampName) fieldCampName.value = '';
       if (fieldTier)     fieldTier.value     = '';
       if (fieldFeature)  fieldFeature.value  = '';
-      if (fieldAddOns)   fieldAddOns.value   = '';
-      if (locationWrap)  locationWrap.hidden   = true;
-      if (locationInput) locationInput.required = false;
+      if (shuttleServiceSelect) shuttleServiceSelect.value = 'Сонгохгүй';
+      applyLocationVisibility('');
     };
 
     quoteOpeners.forEach((link) => {
@@ -429,9 +444,18 @@
           }
         }
         var addOns = collectSelectedAddons(addonGroup);
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, addOns: addOns } : null);
+        var shuttlePrefill = addOns.indexOf('Shuttle Service') !== -1 ? 'Өдрөөр / 2 талдаа — 1,000,000₮' : 'Сонгохгүй';
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, addOns: addOns, shuttleService: shuttlePrefill } : null);
       });
     });
+
+    if (shuttleServiceSelect) {
+      shuttleServiceSelect.addEventListener('change', () => {
+        var shuttleValue = shuttleServiceSelect.value || 'Сонгохгүй';
+        if (prefillShuttleRow) prefillShuttleRow.hidden = shuttleValue === 'Сонгохгүй';
+        if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleValue;
+      });
+    }
 
     closeTargets.forEach((el) => {
       el.addEventListener('click', () => closeQuoteModal());
@@ -471,6 +495,12 @@
       submitBtn.textContent = 'Илгээж байна…';
 
       const payload = {
+        camp:           (fd.get('camp_name')     || '').trim(),
+        tier:           (fd.get('package_tier')  || '').trim(),
+        visual_feature: (fd.get('visual_feature')|| '').trim(),
+        shuttle_service:(fd.get('shuttle_service') || '').trim(),
+        location:       ((fd.get('camp_name') || '').trim() === 'Нүүдлийн кемп') ? (fd.get('location') || '').trim() : '',
+        notes:          (fd.get('extra_info')    || '').trim(),
         company:        (fd.get('organization')  || '').trim(),
         contact_name:   (fd.get('contact_name')  || '').trim(),
         phone,
@@ -480,13 +510,9 @@
         event_date:     (fd.get('start_datetime')|| '').trim(),
         guest_count:    (fd.get('guest_count')   || '').trim(),
         event_type:     (fd.get('event_type')    || '').trim(),
-        location:       (fd.get('location')      || '').trim(),
         camp_name:      (fd.get('camp_name')     || '').trim(),
         package_tier:   (fd.get('package_tier')  || '').trim(),
-        visual_feature: (fd.get('visual_feature')|| '').trim(),
-        add_ons:        (fd.get('add_ons')       || '').trim(),
-        additional_services: (fd.get('additional_services') || '').trim(),
-        notes:          (fd.get('extra_info')    || '').trim(),
+        shuttle_service_label: (fd.get('shuttle_service') || '').trim(),
         source:         'nomaadcamp.com'
       };
 

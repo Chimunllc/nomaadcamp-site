@@ -591,8 +591,12 @@
           <span class="quote-prefill__val" id="prefill-tier-val"></span>
         </div>
         <div class="quote-prefill__row" id="prefill-row-feature" hidden>
-          <span class="quote-prefill__key">Нэмэлт үйлчилгээ</span>
+          <span class="quote-prefill__key">Visual feature</span>
           <span class="quote-prefill__val" id="prefill-feature-val"></span>
+        </div>
+        <div class="quote-prefill__row" id="prefill-row-shuttle" hidden>
+          <span class="quote-prefill__key">Shuttle Service</span>
+          <span class="quote-prefill__val" id="prefill-shuttle-val"></span>
         </div>
         <input type="hidden" name="camp_name" id="field-camp-name">
         <input type="hidden" name="package_tier" id="field-package-tier">
@@ -648,8 +652,12 @@
           <input id="location" name="location" type="text" placeholder="Жишээ: Архангай — Өгий нуур">
         </div>
         <div class="quote-form__field quote-form__field--full">
-          <label for="additional-services">Нэмэлт үйлчилгээ</label>
-          <input id="additional-services" name="additional_services" type="text" placeholder="Жишээ: LED Screen, Shuttle Service">
+          <label for="shuttle-service">Shuttle Service</label>
+          <select id="shuttle-service" name="shuttle_service">
+            <option value="Сонгохгүй">Сонгохгүй</option>
+            <option value="Өдрөөр / 2 талдаа — 1,000,000₮">Өдрөөр / 2 талдаа — 1,000,000₮</option>
+            <option value="Хоног / 2 талдаа — 1,200,000₮">Хоног / 2 талдаа — 1,200,000₮</option>
+          </select>
           <small class="quote-form__helper-text">Shuttle Service нь зочдын тээвэрлэлтийн үйлчилгээ бөгөөд Нүүдлийн кемпийн логистикийн зардлаас тусдаа тооцогдоно.</small>
         </div>
         <div class="quote-form__field quote-form__field--full">
