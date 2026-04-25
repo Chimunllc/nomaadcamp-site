@@ -205,6 +205,61 @@
     });
   }
 
+  function initCampDetailGalleries(camps) {
+    if (!camps) return;
+
+    document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
+      var key = gallery.getAttribute('data-camp-gallery');
+      var images = (camps[key] || []).slice(0, 6);
+      var track = gallery.querySelector('.camp-gallery__track');
+      var emptyState = gallery.querySelector('.camp-gallery__empty');
+      var viewport = gallery.querySelector('.camp-gallery__viewport');
+      var prev = gallery.querySelector('.camp-gallery__arrow--prev');
+      var next = gallery.querySelector('.camp-gallery__arrow--next');
+      if (!track) {
+        return;
+      }
+
+      if (images.length === 0) {
+        if (track) track.style.display = 'none';
+        if (prev) prev.hidden = true;
+        if (next) next.hidden = true;
+        if (viewport) viewport.classList.add('is-empty');
+        if (emptyState) emptyState.hidden = false;
+        return;
+      }
+
+      if (track) track.style.display = '';
+      if (prev) prev.hidden = false;
+      if (next) next.hidden = false;
+      if (viewport) viewport.classList.remove('is-empty');
+      if (emptyState) emptyState.hidden = true;
+
+      track.innerHTML = '';
+      images.forEach(function (src) {
+        var img = document.createElement('img');
+        img.className = 'camp-gallery__img defer-img';
+        img.src = PLACEHOLDER;
+        img.setAttribute('data-src', src);
+        img.alt = 'Кемпийн зураг';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        track.appendChild(img);
+      });
+
+      var scrollByAmount = function () {
+        return Math.max(220, Math.floor(track.clientWidth * 0.5));
+      };
+
+      if (prev) prev.addEventListener('click', function () {
+        track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
+      });
+      if (next) next.addEventListener('click', function () {
+        track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
+      });
+    });
+  }
+
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
@@ -473,6 +528,7 @@
     const fieldCampName  = document.getElementById('field-camp-name');
     const fieldTier      = document.getElementById('field-package-tier');
     const fieldFeature   = document.getElementById('field-visual-feature');
+    const fieldAddOns    = document.getElementById('field-add-ons');
     const locationWrap   = document.getElementById('location-field-wrap');
     const locationInput  = document.getElementById('location');
     const shuttleServiceSelect = document.getElementById('shuttle-service');
