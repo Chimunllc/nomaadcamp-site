@@ -1287,11 +1287,13 @@ body.modal-open { overflow: hidden; }
   place-items: center;
   padding: 1rem;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.2s var(--ease);
+  transition: opacity 0.2s var(--ease), visibility 0.2s var(--ease);
 }
 .quote-modal.is-open {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 .quote-modal__backdrop {
@@ -1302,25 +1304,33 @@ body.modal-open { overflow: hidden; }
 .quote-modal__dialog {
   position: relative;
   width: min(680px, 96vw);
-  max-height: min(86vh, 860px);
-  overflow: auto;
+  max-height: min(88vh, 860px);
+  overflow-y: auto;
+  overflow-x: hidden;
   background: var(--cream);
   border-radius: 14px;
   border: 1px solid rgba(31, 42, 35, 0.16);
   box-shadow: 0 18px 40px rgba(9, 12, 10, 0.24);
-  padding: 1.15rem 1.15rem 1.2rem;
+  padding: 2.8rem 1.4rem 1.4rem;
 }
 .quote-modal__close {
   position: absolute;
-  top: 0.45rem;
+  top: 0.55rem;
   right: 0.55rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: transparent;
   color: var(--charcoal);
   font-size: 1.7rem;
   line-height: 1;
   cursor: pointer;
+  border-radius: 6px;
 }
+.quote-modal__close:hover { background: rgba(31, 42, 35, 0.08); }
 .quote-modal__dialog h2 {
   color: var(--charcoal);
   margin-bottom: 0.85rem;
@@ -1385,6 +1395,10 @@ body.modal-open { overflow: hidden; }
     grid-template-columns: 1fr;
   }
   .quote-form__grid { grid-template-columns: 1fr; }
+  .quote-modal { padding: 0.5rem; }
+  .quote-modal__dialog { padding: 2.6rem 1rem 1.2rem; border-radius: 10px; }
+  .quote-form input,
+  .quote-form textarea { padding: 0.75rem 0.85rem; font-size: 1rem; }
   .hero--corporate {
     min-height: 78vh;
     padding-top: calc(var(--nav-h) + 1.1rem);
