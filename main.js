@@ -347,6 +347,8 @@
     const fieldCampName  = document.getElementById('field-camp-name');
     const fieldTier      = document.getElementById('field-package-tier');
     const fieldFeature   = document.getElementById('field-visual-feature');
+    const locationWrap   = document.getElementById('location-field-wrap');
+    const locationInput  = document.getElementById('location');
 
     const openQuoteModal = (prefill) => {
       quoteModal.classList.add('is-open');
@@ -367,6 +369,10 @@
         if (prefillCampRow) { prefillCampRow.hidden = !camp;    if (prefillCampVal) prefillCampVal.textContent = camp; }
         if (prefillTierRow) { prefillTierRow.hidden = !tier;    if (prefillTierVal) prefillTierVal.textContent = tier; }
         if (prefillFeatRow) { prefillFeatRow.hidden = !feature; if (prefillFeatVal) prefillFeatVal.textContent = feature; }
+
+        var isMobile = camp === 'Нүүдлийн кемп';
+        if (locationWrap)  locationWrap.hidden   = !isMobile;
+        if (locationInput) locationInput.required = isMobile;
       }
 
       window.setTimeout(() => {
@@ -382,6 +388,8 @@
       if (fieldCampName) fieldCampName.value = '';
       if (fieldTier)     fieldTier.value     = '';
       if (fieldFeature)  fieldFeature.value  = '';
+      if (locationWrap)  locationWrap.hidden   = true;
+      if (locationInput) locationInput.required = false;
     };
 
     quoteOpeners.forEach((link) => {
