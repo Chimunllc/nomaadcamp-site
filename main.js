@@ -11,13 +11,10 @@
     if (!container || !images || images.length === 0) return;
 
     images.forEach(function (src, i) {
-      var img = document.createElement('img');
-      img.src = src;
-      img.alt = 'NOMAAD кемпийн орчин';
-      img.className = 'hero-slide' + (i === 0 ? ' is-active' : '');
-      img.setAttribute('fetchpriority', i === 0 ? 'high' : 'low');
-      img.decoding = 'async';
-      container.appendChild(img);
+      var div = document.createElement('div');
+      div.className = 'hero-slide' + (i === 0 ? ' is-active' : '');
+      div.style.backgroundImage = 'url("' + src + '")';
+      container.appendChild(div);
     });
 
     var slides = container.querySelectorAll('.hero-slide');
