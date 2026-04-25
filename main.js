@@ -359,8 +359,12 @@
     const shuttleServiceSelect = document.getElementById('shuttle-service');
 
     const applyLocationVisibility = (camp) => {
-      var isMobile = camp === 'Нүүдлийн кемп';
-      if (locationWrap) locationWrap.hidden = !isMobile;
+      var normalizedCamp = (camp || '').trim();
+      var isMobile = normalizedCamp === 'Нүүдлийн кемп';
+      if (locationWrap) {
+        locationWrap.hidden = !isMobile;
+        locationWrap.style.display = isMobile ? '' : 'none';
+      }
       if (locationInput) {
         locationInput.required = isMobile;
         if (!isMobile) locationInput.value = '';
@@ -378,9 +382,9 @@
       quoteModal.classList.add('is-open');
       quoteModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
+      var camp = (prefill && prefill.camp) || '';
 
       if (prefillBox) {
-        var camp    = (prefill && prefill.camp)    || '';
         var tier    = (prefill && prefill.tier)    || '';
         var feature = (prefill && prefill.feature) || '';
         var addOns  = (prefill && prefill.addOns)  || [];
@@ -407,8 +411,8 @@
           if (prefillShuttleRow) prefillShuttleRow.hidden = false;
           if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleServiceSelect.value;
         }
-        applyLocationVisibility(camp);
       }
+      applyLocationVisibility(camp);
 
       window.setTimeout(() => {
         if (firstInput) firstInput.focus();
