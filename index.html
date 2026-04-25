@@ -299,7 +299,7 @@
         </div>
       </article>
 
-      <article class="camp-detail has-packages" id="camp-a">
+      <article class="camp-detail has-packages is-open" id="camp-a">
         <div class="camp-detail-text">
           <h3>A Кемп · 200–1000 хүн</h3>
           <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
@@ -453,6 +453,13 @@
           </div>
           <button class="camp-gallery__arrow camp-gallery__arrow--next" type="button" aria-label="Дараагийн зураг">›</button>
         </div>
+        <div class="pkg-addon-list" role="group" aria-label="Нэмэлт үйлчилгээ">
+          <label class="pkg-addon-option">
+            <input type="checkbox" name="addon_shuttle_mobile" value="Shuttle Service">
+            <span class="pkg-addon-option__title">Shuttle Service</span>
+            <span class="pkg-addon-option__meta">45 хүний автобус · УБ ↔ Кемп / 2 талдаа · +1,000,000₮</span>
+          </label>
+        </div>
       </article>
     </div>
 
@@ -605,6 +612,7 @@
         <input type="hidden" name="camp_name" id="field-camp-name">
         <input type="hidden" name="package_tier" id="field-package-tier">
         <input type="hidden" name="visual_feature" id="field-visual-feature">
+        <input type="hidden" name="add_ons" id="field-add-ons">
       </div>
       <div class="quote-form__grid">
         <div class="quote-form__field">
