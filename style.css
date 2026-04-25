@@ -1458,6 +1458,16 @@ body.modal-open { overflow: hidden; }
   font-size: 0.95rem;
   margin-top: 0.35rem;
 }
+.camp-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(31, 42, 35, 0.62);
+  transition: transform 0.22s var(--ease), color 0.22s var(--ease);
+}
 .camp-size {
   color: var(--primary-forest);
   font-weight: 700;
@@ -1466,9 +1476,16 @@ body.modal-open { overflow: hidden; }
   border-color: var(--accent);
   box-shadow: 0 0 0 1px rgba(198, 93, 46, 0.3), 0 16px 30px rgba(31, 42, 35, 0.12);
 }
+.camp-card.is-active .camp-card-cta {
+  color: var(--accent);
+}
 .camp-card:hover {
   transform: translateY(-3px) scale(1.01);
   box-shadow: 0 16px 34px rgba(31, 42, 35, 0.14);
+}
+.camp-card:hover .camp-card-cta {
+  transform: translateX(3px);
+  color: var(--charcoal);
 }
 .camp-card:hover img {
   transform: scale(1.04);

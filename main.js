@@ -286,10 +286,23 @@
   var campCards = document.querySelectorAll('[data-camp-target]');
   if (campCards.length > 0) {
     var campDetails = document.querySelectorAll('.camp-detail');
+    var resetCampState = function () {
+      campCards.forEach(function (card) {
+        card.classList.remove('is-active');
+        card.setAttribute('aria-expanded', 'false');
+        var cta = card.querySelector('[data-camp-cta]');
+        if (cta) cta.textContent = 'Үйлчилгээ үзэх →';
+      });
+      campDetails.forEach(function (detail) { detail.classList.remove('is-open'); });
+    };
     var showCampDetail = function (targetId) {
       var targetDetail = null;
       campCards.forEach(function (card) {
-        card.classList.toggle('is-active', card.dataset.campTarget === targetId);
+        var isTarget = card.dataset.campTarget === targetId;
+        card.classList.toggle('is-active', isTarget);
+        card.setAttribute('aria-expanded', isTarget ? 'true' : 'false');
+        var cta = card.querySelector('[data-camp-cta]');
+        if (cta) cta.textContent = isTarget ? 'Хаах ↑' : 'Үйлчилгээ үзэх →';
       });
       campDetails.forEach(function (detail) {
         var isTarget = detail.id === targetId;
@@ -303,8 +316,15 @@
       }
     };
     campCards.forEach(function (card) {
-      card.addEventListener('click', function () { showCampDetail(card.dataset.campTarget); });
+      card.addEventListener('click', function () {
+        if (card.classList.contains('is-active')) {
+          resetCampState();
+          return;
+        }
+        showCampDetail(card.dataset.campTarget);
+      });
     });
+    resetCampState();
   }
 
   // ── CONTACT FORM (AJAX Netlify) ───────────────────────────────
