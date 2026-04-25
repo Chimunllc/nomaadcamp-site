@@ -196,4 +196,52 @@
       }
     });
   }
+
+  // Үнийн санал modal маягт
+  const quoteModal = document.getElementById('quote-modal');
+  const quoteForm = document.getElementById('quote-form');
+  const quoteMessage = document.getElementById('quote-form-message');
+  const quoteOpeners = document.querySelectorAll('a[href="/holboo/#quoteForm"]');
+  if (quoteModal && quoteForm && quoteMessage && quoteOpeners.length > 0) {
+    const closeTargets = quoteModal.querySelectorAll('[data-quote-close]');
+    const firstInput = quoteForm.querySelector('input, textarea');
+
+    const openQuoteModal = () => {
+      quoteModal.classList.add('is-open');
+      quoteModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      window.setTimeout(() => {
+        if (firstInput) firstInput.focus();
+      }, 20);
+    };
+
+    const closeQuoteModal = () => {
+      quoteModal.classList.remove('is-open');
+      quoteModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    };
+
+    quoteOpeners.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openQuoteModal();
+      });
+    });
+
+    closeTargets.forEach((el) => {
+      el.addEventListener('click', () => closeQuoteModal());
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && quoteModal.classList.contains('is-open')) {
+        closeQuoteModal();
+      }
+    });
+
+    quoteForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      quoteMessage.textContent = 'Таны хүсэлтийг хүлээн авлаа. Манай баг удахгүй холбогдох болно.';
+      quoteForm.reset();
+    });
+  }
 })();

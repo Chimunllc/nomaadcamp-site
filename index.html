@@ -49,7 +49,9 @@
 <main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <img src="/gallery-01.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="/videos/hero.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay"></div>
   </div>
 
@@ -335,6 +337,52 @@
     </div>
   </div>
 </footer>
+
+<div class="quote-modal" id="quote-modal" aria-hidden="true">
+  <div class="quote-modal__backdrop" data-quote-close></div>
+  <div class="quote-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+    <button class="quote-modal__close" type="button" aria-label="Хаах" data-quote-close>×</button>
+    <h2 id="quote-modal-title">Үнийн санал авах</h2>
+    <form class="quote-form" id="quote-form">
+      <div class="quote-form__grid">
+        <div class="quote-form__field">
+          <label for="org-name">Байгууллагын нэр</label>
+          <input id="org-name" name="organization" type="text" autocomplete="organization">
+        </div>
+        <div class="quote-form__field">
+          <label for="contact-name">Холбоо барих хүний нэр</label>
+          <input id="contact-name" name="contact_name" type="text" autocomplete="name" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="phone">Утас</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="email">Имэйл</label>
+          <input id="email" name="email" type="email" autocomplete="email">
+        </div>
+        <div class="quote-form__field">
+          <label for="event-date">Хүссэн огноо</label>
+          <input id="event-date" name="event_date" type="date" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="guest-count">Хүний тоо</label>
+          <input id="guest-count" name="guest_count" type="number" min="1" step="1" required>
+        </div>
+        <div class="quote-form__field quote-form__field--full">
+          <label for="event-type">Арга хэмжээний төрөл</label>
+          <input id="event-type" name="event_type" type="text">
+        </div>
+        <div class="quote-form__field quote-form__field--full">
+          <label for="extra-info">Нэмэлт мэдээлэл</label>
+          <textarea id="extra-info" name="extra_info" rows="4"></textarea>
+        </div>
+      </div>
+      <p class="quote-form__message" id="quote-form-message" aria-live="polite"></p>
+      <button class="btn btn--accent" type="submit">Илгээх</button>
+    </form>
+  </div>
+</div>
 
 <script src="/main.js"></script>
 </body>
