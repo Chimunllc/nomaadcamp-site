@@ -343,6 +343,7 @@ p  { color: var(--muted); font-size: 16px; line-height: 1.6; }
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 1.4s ease;
+  filter: saturate(1.18) brightness(1.06);
 }
 .hero-slide.is-active { opacity: 1; }
 
@@ -377,8 +378,8 @@ p  { color: var(--muted); font-size: 16px; line-height: 1.6; }
   content: '';
   position: absolute; inset: 0;
   background:
-    linear-gradient(180deg, rgba(11,13,11,0.4) 0%, rgba(11,13,11,0.55) 55%, rgba(11,13,11,0.95) 100%),
-    linear-gradient(90deg, rgba(11,13,11,0.55) 0%, rgba(11,13,11,0) 70%);
+    linear-gradient(180deg, rgba(11,13,11,0.18) 0%, rgba(11,13,11,0.32) 55%, rgba(11,13,11,0.88) 100%),
+    linear-gradient(90deg, rgba(11,13,11,0.32) 0%, rgba(11,13,11,0) 70%);
   z-index: 1;
 }
 .hero-inner {
@@ -1071,8 +1072,8 @@ body.home-page .nav-cta {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(110deg, rgba(20, 28, 23, 0.84) 0%, rgba(20, 28, 23, 0.5) 50%, rgba(20, 28, 23, 0.35) 100%),
-    linear-gradient(180deg, rgba(31, 42, 35, 0.54), rgba(31, 42, 35, 0.46));
+    linear-gradient(110deg, rgba(20, 28, 23, 0.58) 0%, rgba(20, 28, 23, 0.28) 50%, rgba(20, 28, 23, 0.10) 100%),
+    linear-gradient(180deg, rgba(31, 42, 35, 0.34), rgba(31, 42, 35, 0.24));
 }
 .hero--corporate .hero-inner {
   position: relative;
