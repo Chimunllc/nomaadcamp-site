@@ -212,6 +212,34 @@
     }
   }
 
+  // data-src зурагт fallback (хуучин deploy/cached HTML нийцүүлэлт)
+  const deferredImages = document.querySelectorAll('img.defer-img[data-src]');
+  if (deferredImages.length > 0) {
+    const loadImage = (img) => {
+      const src = img.getAttribute('data-src');
+      if (!src) return;
+      img.setAttribute('src', src);
+      img.removeAttribute('data-src');
+      img.classList.remove('defer-img');
+    };
+    if ('IntersectionObserver' in window) {
+      const imageObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadImage(entry.target);
+              imageObs.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: '220px 0px' }
+      );
+      deferredImages.forEach((img) => imageObs.observe(img));
+    } else {
+      deferredImages.forEach(loadImage);
+    }
+  }
+
   // Carousel
   document.querySelectorAll('[data-carousel]').forEach((root) => {
     const track = root.querySelector('.carousel-track');
