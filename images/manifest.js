@@ -42,6 +42,7 @@ window.NOMAAD_IMAGES = {
     "mobile": {
       "cover": "/images/camps/mobile-camp/cover/mobile-cover.webp",
       "gallery": [
+        "/images/camps/mobile-camp/gallery/01.webp",
         "/images/camps/mobile-camp/gallery/mobile-01.webp",
         "/images/camps/mobile-camp/gallery/mobile-02.webp"
       ]
