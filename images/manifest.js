@@ -43,6 +43,7 @@ window.NOMAAD_IMAGES = {
       "cover": "/images/camps/mobile-camp/cover/mobile-cover.webp",
       "gallery": [
         "/images/camps/mobile-camp/gallery/01.webp",
+        "/images/camps/mobile-camp/gallery/481080444_1152247173363351_5856001241748562614_n.jpg",
         "/images/camps/mobile-camp/gallery/mobile-01.webp",
         "/images/camps/mobile-camp/gallery/mobile-02.webp"
       ]
