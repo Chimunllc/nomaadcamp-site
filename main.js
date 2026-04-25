@@ -2,6 +2,26 @@
 (function () {
   'use strict';
 
+  // Future-ready config: add pricing when realtime estimation is ready
+  var PACKAGE_CONFIG = {
+    camps: {
+      'camp-c':      { name: 'C Кемп',         isMobile: false },
+      'camp-b':      { name: 'B Кемп',         isMobile: false },
+      'camp-a':      { name: 'A Кемп',         isMobile: false },
+      'camp-mobile': { name: 'Нүүдлийн кемп',  isMobile: true  }
+    },
+    tiers: {
+      'Essential':   { hasAddon: false },
+      'Experience':  { hasAddon: true  },
+      'Production':  { hasAddon: false }
+    },
+    addons: {
+      'LED Screen':     { price: null },
+      'Moonbeam Lounge':{ price: null },
+      'Тайзны эффект':  { price: null }
+    }
+  };
+
   var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E";
 
   // ── HERO SLIDER ──────────────────────────────────────────────
@@ -317,10 +337,38 @@
     const closeTargets = quoteModal.querySelectorAll('[data-quote-close]');
     const firstInput = quoteForm.querySelector('input, textarea');
 
-    const openQuoteModal = () => {
+    const prefillBox     = document.getElementById('quote-prefill');
+    const prefillCampRow = document.getElementById('prefill-row-camp');
+    const prefillTierRow = document.getElementById('prefill-row-tier');
+    const prefillFeatRow = document.getElementById('prefill-row-feature');
+    const prefillCampVal = document.getElementById('prefill-camp-val');
+    const prefillTierVal = document.getElementById('prefill-tier-val');
+    const prefillFeatVal = document.getElementById('prefill-feature-val');
+    const fieldCampName  = document.getElementById('field-camp-name');
+    const fieldTier      = document.getElementById('field-package-tier');
+    const fieldFeature   = document.getElementById('field-visual-feature');
+
+    const openQuoteModal = (prefill) => {
       quoteModal.classList.add('is-open');
       quoteModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
+
+      if (prefillBox) {
+        var camp    = (prefill && prefill.camp)    || '';
+        var tier    = (prefill && prefill.tier)    || '';
+        var feature = (prefill && prefill.feature) || '';
+
+        if (fieldCampName) fieldCampName.value = camp;
+        if (fieldTier)     fieldTier.value     = tier;
+        if (fieldFeature)  fieldFeature.value  = feature;
+
+        var hasPrefill = !!(camp || tier || feature);
+        if (prefillBox)     prefillBox.hidden     = !hasPrefill;
+        if (prefillCampRow) { prefillCampRow.hidden = !camp;    if (prefillCampVal) prefillCampVal.textContent = camp; }
+        if (prefillTierRow) { prefillTierRow.hidden = !tier;    if (prefillTierVal) prefillTierVal.textContent = tier; }
+        if (prefillFeatRow) { prefillFeatRow.hidden = !feature; if (prefillFeatVal) prefillFeatVal.textContent = feature; }
+      }
+
       window.setTimeout(() => {
         if (firstInput) firstInput.focus();
       }, 20);
@@ -330,12 +378,24 @@
       quoteModal.classList.remove('is-open');
       quoteModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
+      if (prefillBox)    prefillBox.hidden = true;
+      if (fieldCampName) fieldCampName.value = '';
+      if (fieldTier)     fieldTier.value     = '';
+      if (fieldFeature)  fieldFeature.value  = '';
     };
 
     quoteOpeners.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        openQuoteModal();
+        var campName    = (link.dataset.campName    || '').trim();
+        var tier        = (link.dataset.tier        || '').trim();
+        var visualGroup = (link.dataset.visualGroup || '').trim();
+        var feature     = '';
+        if (visualGroup) {
+          var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
+          feature = checked ? checked.value : '';
+        }
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature } : null);
       });
     });
 
@@ -377,15 +437,19 @@
       submitBtn.textContent = 'Илгээж байна…';
 
       const payload = {
-        company:      (fd.get('organization') || '').trim(),
-        contact_name: (fd.get('contact_name') || '').trim(),
+        company:        (fd.get('organization')  || '').trim(),
+        contact_name:   (fd.get('contact_name')  || '').trim(),
         phone,
         email,
-        event_date:   (fd.get('event_date')   || '').trim(),
-        guest_count:  (fd.get('guest_count')  || '').trim(),
-        event_type:   (fd.get('event_type')   || '').trim(),
-        notes:        (fd.get('extra_info')   || '').trim(),
-        source:       'nomaadcamp.com'
+        event_date:     (fd.get('event_date')    || '').trim(),
+        guest_count:    (fd.get('guest_count')   || '').trim(),
+        event_type:     (fd.get('event_type')    || '').trim(),
+        location:       (fd.get('location')      || '').trim(),
+        camp_name:      (fd.get('camp_name')     || '').trim(),
+        package_tier:   (fd.get('package_tier')  || '').trim(),
+        visual_feature: (fd.get('visual_feature')|| '').trim(),
+        notes:          (fd.get('extra_info')    || '').trim(),
+        source:         'nomaadcamp.com'
       };
 
       try {
@@ -398,7 +462,7 @@
         quoteMessage.textContent = 'Хүсэлт амжилттай илгээгдлээ';
         quoteMessage.className = 'quote-form__message quote-form__message--success';
         quoteForm.reset();
-        window.setTimeout(() => closeQuoteModal(), 2500);
+        window.setTimeout(() => closeQuoteModal(), 2400);
       } catch (_) {
         quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдоно уу.';
         quoteMessage.className = 'quote-form__message quote-form__message--error';

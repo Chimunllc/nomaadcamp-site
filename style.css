@@ -1814,6 +1814,112 @@ body.modal-open { overflow: hidden; }
   }
 }
 
+/* ── VISUAL FEATURE SELECTOR ─────────────────────────────── */
+.pkg-visual-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pkg-visual-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.42rem 0.65rem;
+  border: 1px solid rgba(31, 42, 35, 0.18);
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  transition: border-color 0.18s var(--ease), background 0.18s var(--ease);
+}
+.pkg-visual-option:hover {
+  border-color: rgba(198, 93, 46, 0.5);
+  background: rgba(198, 93, 46, 0.04);
+}
+.pkg-visual-option input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid rgba(31, 42, 35, 0.35);
+  border-radius: 50%;
+  flex: 0 0 14px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.18s var(--ease);
+}
+.pkg-visual-option input[type="radio"]:checked {
+  border-color: var(--accent);
+}
+.pkg-visual-option input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.pkg-visual-option:has(input:checked) {
+  border-color: var(--accent);
+  background: rgba(198, 93, 46, 0.06);
+}
+.pkg-visual-option__label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.72);
+  cursor: pointer;
+  line-height: 1.3;
+}
+.pkg-visual-option:has(input:checked) .pkg-visual-option__label {
+  color: var(--charcoal);
+  font-weight: 600;
+}
+
+/* ── QUOTE PRE-FILL SUMMARY ──────────────────────────────── */
+.quote-prefill {
+  background: rgba(47, 62, 47, 0.05);
+  border: 1px solid rgba(47, 62, 47, 0.14);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+}
+.quote-prefill__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+}
+.quote-prefill__key {
+  font-weight: 600;
+  color: rgba(26, 26, 26, 0.48);
+  min-width: 130px;
+}
+.quote-prefill__val {
+  color: var(--charcoal);
+  font-weight: 700;
+}
+
+/* ── REQUIRED FIELD INDICATOR ─────────────────────────────── */
+.quote-form__required {
+  color: var(--accent);
+  margin-left: 0.15rem;
+}
+
+/* ── MOBILE CAMP NOTE ─────────────────────────────────────── */
+.camp-mobile-note {
+  font-size: 0.82rem;
+  color: rgba(26, 26, 26, 0.6);
+  line-height: 1.55;
+  border-left: 2px solid rgba(198, 93, 46, 0.35);
+  padding-left: 0.75rem;
+  margin-top: -0.3rem !important;
+}
+
 /* === HERO TEXT FIX (FINAL - DO NOT EDIT ABOVE CODE) === */
 
 body.home-page .hero--corporate h1,
