@@ -349,10 +349,63 @@
       }
     });
 
-    quoteForm.addEventListener('submit', (e) => {
+    const N8N_WEBHOOK_URL = 'PASTE_N8N_WEBHOOK_URL_HERE';
+
+    quoteForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      quoteMessage.textContent = 'Таны хүсэлтийг хүлээн авлаа. Манай баг удахгүй холбогдох болно.';
-      quoteForm.reset();
+
+      const submitBtn = quoteForm.querySelector('[type="submit"]');
+      const fd = new FormData(quoteForm);
+      const phone = (fd.get('phone') || '').trim();
+      const email = (fd.get('email') || '').trim();
+
+      quoteMessage.className = 'quote-form__message';
+      quoteMessage.textContent = '';
+
+      if (phone && !/^[\d\s+\-() ]{6,20}$/.test(phone)) {
+        quoteMessage.textContent = 'Утасны дугаар буруу байна.';
+        quoteMessage.className = 'quote-form__message quote-form__message--error';
+        return;
+      }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        quoteMessage.textContent = 'Имэйл хаяг буруу байна.';
+        quoteMessage.className = 'quote-form__message quote-form__message--error';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Илгээж байна…';
+
+      const payload = {
+        company:      (fd.get('organization') || '').trim(),
+        contact_name: (fd.get('contact_name') || '').trim(),
+        phone,
+        email,
+        event_date:   (fd.get('event_date')   || '').trim(),
+        guest_count:  (fd.get('guest_count')  || '').trim(),
+        event_type:   (fd.get('event_type')   || '').trim(),
+        notes:        (fd.get('extra_info')   || '').trim(),
+        source:       'nomaadcamp.com'
+      };
+
+      try {
+        const res = await fetch(N8N_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        quoteMessage.textContent = 'Хүсэлт амжилттай илгээгдлээ';
+        quoteMessage.className = 'quote-form__message quote-form__message--success';
+        quoteForm.reset();
+        window.setTimeout(() => closeQuoteModal(), 2500);
+      } catch (_) {
+        quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдоно уу.';
+        quoteMessage.className = 'quote-form__message quote-form__message--error';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Илгээх';
+      }
     });
   }
 })();

@@ -1368,6 +1368,8 @@ body.modal-open { overflow: hidden; }
   color: var(--primary-forest);
   font-weight: 500;
 }
+.quote-form__message--success { color: var(--primary-forest); }
+.quote-form__message--error   { color: var(--error); }
 
 @media (max-width: 1100px) {
   .trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
