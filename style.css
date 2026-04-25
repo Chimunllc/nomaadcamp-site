@@ -1739,6 +1739,10 @@ body.modal-open { overflow: hidden; }
   overflow: hidden;
   border-radius: 12px;
 }
+.camp-gallery__viewport.is-empty {
+  border: 1px solid rgba(31, 42, 35, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(245, 241, 232, 0.8));
+}
 .camp-gallery__track {
   display: flex;
   gap: 0.55rem;
@@ -1776,6 +1780,21 @@ body.modal-open { overflow: hidden; }
   background: #fff;
   border-color: rgba(198, 93, 46, 0.45);
   transform: translateY(-1px);
+}
+.camp-gallery__empty {
+  padding: 0.95rem 1rem;
+  color: rgba(26, 26, 26, 0.72);
+}
+.camp-gallery__empty p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.camp-gallery__empty small {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 0.76rem;
+  color: rgba(26, 26, 26, 0.56);
 }
 .pkg-card {
   position: relative;
@@ -2044,30 +2063,6 @@ body.modal-open { overflow: hidden; }
   color: rgba(26, 26, 26, 0.6);
   line-height: 1.45;
 }
-.pkg-addon-list {
-  margin-top: 0.85rem;
-}
-.pkg-addon-option {
-  display: grid;
-  gap: 0.2rem;
-  border: 1px solid rgba(31, 42, 35, 0.15);
-  border-radius: 12px;
-  padding: 0.7rem 0.8rem;
-  background: #fff;
-}
-.pkg-addon-option input {
-  margin: 0 0 0.25rem;
-}
-.pkg-addon-option__title {
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: var(--charcoal);
-}
-.pkg-addon-option__meta {
-  font-size: 0.78rem;
-  color: rgba(26, 26, 26, 0.65);
-}
-
 /* ── MOBILE CAMP NOTE ─────────────────────────────────────── */
 .camp-mobile-note {
   font-size: 0.82rem;

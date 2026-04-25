@@ -121,12 +121,28 @@
       var key = gallery.getAttribute('data-camp-gallery');
       var images = (camps[key] || []).slice(0, 6);
       var track = gallery.querySelector('.camp-gallery__track');
+      var emptyState = gallery.querySelector('.camp-gallery__empty');
+      var viewport = gallery.querySelector('.camp-gallery__viewport');
       var prev = gallery.querySelector('.camp-gallery__arrow--prev');
       var next = gallery.querySelector('.camp-gallery__arrow--next');
-      if (!track || images.length === 0) {
-        if (gallery) gallery.hidden = true;
+      if (!track) {
         return;
       }
+
+      if (images.length === 0) {
+        if (track) track.style.display = 'none';
+        if (prev) prev.hidden = true;
+        if (next) next.hidden = true;
+        if (viewport) viewport.classList.add('is-empty');
+        if (emptyState) emptyState.hidden = false;
+        return;
+      }
+
+      if (track) track.style.display = '';
+      if (prev) prev.hidden = false;
+      if (next) next.hidden = false;
+      if (viewport) viewport.classList.remove('is-empty');
+      if (emptyState) emptyState.hidden = true;
 
       track.innerHTML = '';
       images.forEach(function (src) {
