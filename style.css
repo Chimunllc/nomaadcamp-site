@@ -1124,6 +1124,12 @@ body.home-page .nav-cta {
 .section--dark h3,
 .section--dark li,
 .section--dark .pillar { color: var(--text-light); }
+body.home-page .section--dark h2,
+body.home-page .section--dark p,
+body.home-page .section--dark .eyebrow,
+body.home-page .section--dark h3,
+body.home-page .section--dark li,
+body.home-page .section--dark .pillar { color: rgba(255, 255, 255, 0.96); }
 
 .trust-grid {
   display: grid;
@@ -1266,6 +1272,8 @@ body.home-page .footer .footer-tagline::before {
 }
 .cta-final h2,
 .cta-final p { color: var(--text-light); }
+body.home-page .cta-final h2,
+body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
 .cta-final p { max-width: 720px; margin: 0.8rem auto 1.6rem; }
 
 @media (max-width: 1100px) {
