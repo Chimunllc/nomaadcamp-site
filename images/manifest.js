@@ -18,19 +18,31 @@ window.NOMAAD_IMAGES = {
   ],
   "camps": {
     "a": {
-      "cover": "/images/camps/a-camp/cover/A-01.jpg",
+      "cover": "/images/camps/a-camp/cover/516791132_1249324066988994_7236995618864252267_n.jpg",
       "gallery": [
-        "/images/camps/a-camp/gallery/481024639_1152238890030846_6226793545414696685_n.jpg",
-        "/images/camps/a-camp/gallery/481976416_1155736906347711_1687494666032244796_n.jpg",
-        "/images/camps/a-camp/gallery/A-01.jpg",
-        "/images/camps/a-camp/gallery/A-02.jpg",
-        "/images/camps/a-camp/gallery/A-03.jpg"
+        "/images/camps/a-camp/gallery/481079165_1152247143363354_6339986456406502712_n.jpg",
+        "/images/camps/a-camp/gallery/481216510_1150900090164726_6144427359539858322_n.jpg",
+        "/images/camps/a-camp/gallery/481261911_1151578586763543_4790611935648483867_n.jpg",
+        "/images/camps/a-camp/gallery/481290304_1150899923498076_146070325897299227_n.jpg",
+        "/images/camps/a-camp/gallery/481475628_1150900080164727_3243613269616035992_n.jpg",
+        "/images/camps/a-camp/gallery/481475920_1150900060164729_8102678781114645058_n.jpg",
+        "/images/camps/a-camp/gallery/481677024_1152247130030022_4616486509329515100_n.jpg",
+        "/images/camps/a-camp/gallery/482049701_1152238963364172_4623094402279520580_n.jpg",
+        "/images/camps/a-camp/gallery/498673752_1211111604143574_1980107969661774275_n.jpg",
+        "/images/camps/a-camp/gallery/508577864_1234422215145846_5726433488358768002_n.jpg",
+        "/images/camps/a-camp/gallery/526782782_1269315874989813_7037524833627375972_n.jpg",
+        "/images/camps/a-camp/gallery/Screenshot 2026-04-26 at 12.27.10.png"
       ]
     },
     "b": {
-      "cover": "/images/camps/b-camp/cover/gallery-06.jpg",
+      "cover": "/images/camps/b-camp/cover/DJI_20250725152844_0015_D.jpg",
       "gallery": [
+        "/images/camps/b-camp/gallery/525225068_1267547411833326_6748176839399281706_n.jpg",
         "/images/camps/b-camp/gallery/DJI_20250725152831_0014_D.jpg",
+        "/images/camps/b-camp/gallery/b2.jpg",
+        "/images/camps/b-camp/gallery/b3.jpg",
+        "/images/camps/b-camp/gallery/b4.jpg",
+        "/images/camps/b-camp/gallery/bcamp.jpg",
         "/images/camps/b-camp/gallery/gallery-06.jpg",
         "/images/camps/b-camp/gallery/gallery-07.jpg",
         "/images/camps/b-camp/gallery/gallery-08.jpg"
@@ -40,16 +52,19 @@ window.NOMAAD_IMAGES = {
       "cover": "/images/camps/c-camp/cover/c-cover.jpg",
       "gallery": [
         "/images/camps/c-camp/gallery/2.webp",
-        "/images/camps/c-camp/gallery/c-01.jpg"
+        "/images/camps/c-camp/gallery/c2.jpg",
+        "/images/camps/c-camp/gallery/c4.jpg"
       ]
     },
     "mobile": {
-      "cover": "/images/camps/mobile-camp/cover/mobile-cover.webp",
+      "cover": "/images/camps/mobile-camp/cover/gallery-20.jpg",
       "gallery": [
-        "/images/camps/mobile-camp/gallery/01.webp",
-        "/images/camps/mobile-camp/gallery/481080444_1152247173363351_5856001241748562614_n.jpg",
-        "/images/camps/mobile-camp/gallery/mobile-01.webp",
-        "/images/camps/mobile-camp/gallery/mobile-02.webp"
+        "/images/camps/mobile-camp/gallery/480926596_1150142873573781_120003575192392008_n.jpg",
+        "/images/camps/mobile-camp/gallery/481002059_1152069033381165_4247459599491477283_n.jpg",
+        "/images/camps/mobile-camp/gallery/481153087_1150142846907117_5843438727625385537_n.jpg",
+        "/images/camps/mobile-camp/gallery/481914247_1152616986659703_5992810539030354001_n.jpg",
+        "/images/camps/mobile-camp/gallery/496846586_1205121231409278_6731493953383684426_n.jpg",
+        "/images/camps/mobile-camp/gallery/DSC07839.jpg"
       ]
     }
   }
