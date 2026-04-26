@@ -2453,46 +2453,65 @@ body.home-page .footer {
   color: var(--muted);
 }
 
+#why-nomaad .section-head > p {
+  max-width: 65ch;
+  color: rgba(154, 156, 148, 0.94);
+}
+
 #why-nomaad .wn-cap-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.05rem;
   margin-bottom: 2.5rem;
 }
 
 #why-nomaad .wn-cap-item {
-  border: 1px solid var(--line-2);
-  border-left: 2px solid var(--sand);
+  border: 1px solid rgba(245, 245, 240, 0.1);
+  border-left: 1px solid rgba(200, 168, 120, 0.36);
+  border-bottom-color: rgba(245, 245, 240, 0.13);
   border-radius: 10px;
-  padding: 1.4rem 1.4rem 1.4rem 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  transition: background 0.2s var(--ease);
+  padding: 1.5rem 1.5rem 1.45rem 1.55rem;
+  background: rgba(255, 255, 255, 0.022);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025), inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+  transition: background 0.42s var(--ease), border-color 0.42s var(--ease), box-shadow 0.42s var(--ease), transform 0.42s var(--ease);
 }
 
 #why-nomaad .wn-cap-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(245, 245, 240, 0.14);
+  border-bottom-color: rgba(200, 168, 120, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 -1px 0 rgba(200, 168, 120, 0.14);
+  transform: translateY(-1px);
 }
 
 #why-nomaad .wn-cap-num {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--sand);
-  margin-bottom: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(200, 168, 120, 0.72);
+  margin-bottom: 0.68rem;
+  line-height: 1;
 }
 
 #why-nomaad .wn-cap-item h3 {
   font-size: 1.02rem;
   font-weight: 600;
   line-height: 1.35;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.52rem;
+  transition: color 0.42s var(--ease);
+}
+
+#why-nomaad .wn-cap-item:hover h3 {
+  color: #f5f4ef;
 }
 
 #why-nomaad .wn-cap-item p {
   font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--muted);
+  line-height: 1.72;
+  color: rgba(154, 156, 148, 0.92);
+  max-width: 34ch;
+  letter-spacing: 0.005em;
 }
 
 #why-nomaad .wn-stats {
@@ -2542,6 +2561,7 @@ body.home-page .footer {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
+  border: 1px solid rgba(245, 245, 240, 0.12);
   aspect-ratio: 4 / 3;
   margin: 0;
 }
@@ -2551,12 +2571,12 @@ body.home-page .footer {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: saturate(0.7) brightness(0.88);
-  transition: filter 0.3s var(--ease);
+  filter: saturate(0.92) contrast(1.03) brightness(0.93);
+  transition: filter 0.45s var(--ease);
 }
 
 #why-nomaad .wn-strip-img:hover img {
-  filter: saturate(0.85) brightness(0.95);
+  filter: saturate(1) contrast(1.04) brightness(0.98);
 }
 
 #why-nomaad .wn-strip-img figcaption {
@@ -2574,6 +2594,7 @@ body.home-page .footer {
 @media (max-width: 768px) {
   #why-nomaad .wn-cap-grid {
     grid-template-columns: 1fr;
+    gap: 0.9rem;
   }
   #why-nomaad .wn-stats {
     grid-template-columns: 1fr;
