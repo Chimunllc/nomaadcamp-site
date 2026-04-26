@@ -1734,15 +1734,15 @@ body.modal-open { overflow: hidden; }
   overflow: hidden;
   border-radius: 12px;
   border: 1px solid rgba(31, 42, 35, 0.14);
-  background: rgba(248, 245, 238, 0.75);
+  background: #111612;
   box-shadow: 0 6px 18px rgba(31, 42, 35, 0.08);
 }
 .camp-gallery__featured-img {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: clamp(200px, 52vh, 600px);
   display: block;
-  object-fit: cover;
-  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  object-fit: contain;
+  transition: opacity 0.48s var(--ease);
 }
 .camp-gallery__viewport {
   overflow: hidden;
@@ -2706,8 +2706,8 @@ body.home-page .footer {
 .cat-gallery__featured-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 7;
-  background: var(--stone);
+  height: clamp(280px, 72vh, 820px);
+  background: #111612;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -2715,12 +2715,12 @@ body.home-page .footer {
 .cat-gallery__featured-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  transition: opacity 0.22s var(--ease), transform 0.55s var(--ease);
+  transition: opacity 0.48s var(--ease), transform 0.6s var(--ease);
 }
 .cat-gallery__featured-img.is-fading { opacity: 0; }
-.cat-gallery__featured-wrap:hover .cat-gallery__featured-img { transform: scale(1.012); }
+.cat-gallery__featured-wrap:hover .cat-gallery__featured-img { transform: scale(1.008); }
 
 /* Editorial label overlay — bottom-left, subtle */
 .cat-gallery__label-wrap {
@@ -2810,17 +2810,17 @@ body.home-page .footer {
 
 /* ─ Responsive ─ */
 @media (max-width: 960px) {
-  .cat-gallery__featured-wrap { aspect-ratio: 4 / 3; }
+  .cat-gallery__featured-wrap { height: clamp(240px, 65vh, 680px); }
 }
 @media (max-width: 760px) {
-  .cat-gallery__featured-wrap { border-radius: 8px; }
+  .cat-gallery__featured-wrap { height: clamp(220px, 60vh, 540px); border-radius: 8px; }
   .cat-gallery__tab { padding: 0.55rem 1rem 0.65rem; font-size: 0.66rem; }
   .cat-gallery__thumb { width: 72px; height: 50px; }
   .cat-gallery__label-wrap { bottom: 0.9rem; left: 1rem; }
   .cat-gallery__desc { display: none; }
 }
 @media (max-width: 480px) {
-  .cat-gallery__featured-wrap { aspect-ratio: 5 / 4; border-radius: 6px; }
+  .cat-gallery__featured-wrap { height: clamp(200px, 55vh, 440px); border-radius: 6px; }
   .cat-gallery__thumb { width: 64px; height: 44px; }
   .cat-gallery__label { font-size: 0.58rem; padding: 0.18rem 0.5rem; }
 }
