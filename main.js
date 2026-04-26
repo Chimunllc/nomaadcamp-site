@@ -136,27 +136,31 @@
       var track = gallery.querySelector('.camp-gallery__track');
       var emptyState = gallery.querySelector('.camp-gallery__empty');
       var viewport = gallery.querySelector('.camp-gallery__viewport');
-      var prev = gallery.querySelector('.camp-gallery__arrow--prev');
-      var next = gallery.querySelector('.camp-gallery__arrow--next');
+      var featured = gallery.querySelector('.camp-gallery__featured');
+      var featuredImg = gallery.querySelector('.camp-gallery__featured-img');
       if (!track) return;
 
-      if (images.length === 0) {
-        track.style.display = 'none';
-        if (prev) prev.hidden = true;
-        if (next) next.hidden = true;
-        if (viewport) viewport.classList.add('is-empty');
-        if (emptyState) emptyState.hidden = false;
-        return;
-      }
+      var setEmptyState = function (isEmpty) {
+        track.style.display = isEmpty ? 'none' : '';
+        if (featured) featured.hidden = isEmpty;
+        if (viewport) viewport.classList.toggle('is-empty', isEmpty);
+        if (emptyState) emptyState.hidden = !isEmpty;
+      };
 
-      track.style.display = '';
-      if (prev) prev.hidden = false;
-      if (next) next.hidden = false;
-      if (viewport) viewport.classList.remove('is-empty');
-      if (emptyState) emptyState.hidden = true;
+      var setFeaturedImage = function (thumb) {
+        if (!featuredImg || !thumb) return;
+        featuredImg.src = thumb.getAttribute('data-src') || thumb.src;
+        featuredImg.setAttribute('data-src', thumb.getAttribute('data-src') || thumb.src);
+        featuredImg.alt = thumb.alt || 'Кемпийн онцлох зураг';
+
+        track.querySelectorAll('.camp-gallery__img').forEach(function (item) {
+          item.classList.toggle('is-active', item === thumb);
+        });
+      };
 
       track.innerHTML = '';
-      images.forEach(function (src) {
+
+      images.forEach(function (src, index) {
         var img = document.createElement('img');
         img.className = 'camp-gallery__img defer-img';
         img.src = PLACEHOLDER;
@@ -164,29 +168,40 @@
         img.alt = 'Кемпийн зураг';
         img.loading = 'lazy';
         img.decoding = 'async';
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', 'Зураг сонгох');
+        img.addEventListener('click', function () {
+          setFeaturedImage(img);
+        });
+        img.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            setFeaturedImage(img);
+          }
+        });
         img.addEventListener('error', function () {
           img.remove();
           if (track.children.length === 0) {
-            track.style.display = 'none';
-            if (prev) prev.hidden = true;
-            if (next) next.hidden = true;
-            if (viewport) viewport.classList.add('is-empty');
-            if (emptyState) emptyState.hidden = false;
+            setEmptyState(true);
           }
         }, { once: true });
         track.appendChild(img);
+
+        if (index === 0 && featuredImg) {
+          featuredImg.src = PLACEHOLDER;
+          featuredImg.setAttribute('data-src', src);
+          featuredImg.alt = 'Кемпийн онцлох зураг';
+        }
       });
 
-      var scrollByAmount = function () {
-        return Math.max(220, Math.floor(track.clientWidth * 0.5));
-      };
+      if (track.children.length === 0) {
+        setEmptyState(true);
+        return;
+      }
 
-      if (prev) prev.addEventListener('click', function () {
-        track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
-      });
-      if (next) next.addEventListener('click', function () {
-        track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
-      });
+      setEmptyState(false);
+      setFeaturedImage(track.querySelector('.camp-gallery__img'));
     });
   }
 
