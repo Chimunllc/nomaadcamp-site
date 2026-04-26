@@ -2291,7 +2291,7 @@ body.home-page .camp-detail {
 /* ─ Process / workflow ─ */
 #workflow .section-head {
   max-width: 680px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 #workflow .section-head h2 {
   font-size: clamp(1.45rem, 2.8vw, 2.1rem);
@@ -2302,52 +2302,53 @@ body.home-page .camp-detail {
 }
 #workflow .section-head p {
   font-size: 0.9rem;
-  margin-top: 0.65rem;
-  line-height: 1.65;
-  color: rgba(31, 42, 35, 0.48);
+  margin-top: 0.75rem;
+  line-height: 1.68;
+  color: rgba(31, 42, 35, 0.50);
   letter-spacing: 0.005em;
   max-width: 56ch;
 }
 #workflow .process-grid {
-  gap: 1.1rem;
+  gap: 1.35rem;
 }
 #workflow .process-grid li {
-  padding: 1.15rem 1.3rem;
+  padding: 1.3rem 1.5rem;
   border-radius: 10px;
-  border-color: rgba(31, 42, 35, 0.09);
-  background: rgba(255, 255, 255, 0.44);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(31, 42, 35, 0.07);
+  background: rgba(255, 255, 255, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
   transition: background 0.42s ease, border-color 0.42s ease;
 }
 #workflow .process-grid li:hover {
-  background: rgba(255, 255, 255, 0.66);
-  border-color: rgba(31, 42, 35, 0.13);
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(31, 42, 35, 0.10);
 }
 #workflow .process-grid span {
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 0.64rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   display: block;
-  color: rgba(31, 42, 35, 0.34);
+  color: rgba(31, 42, 35, 0.28);
 }
 #workflow .process-grid h3 {
   font-size: 0.98rem;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 0.44rem;
-  color: rgba(31, 42, 35, 0.9);
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+  max-width: 18ch;
+  color: rgba(31, 42, 35, 0.88);
   transition: color 0.42s ease;
 }
 #workflow .process-grid li:hover h3 {
-  color: rgba(31, 42, 35, 1);
+  color: rgba(31, 42, 35, 0.96);
 }
 #workflow .process-grid p {
   font-size: 0.875rem;
-  line-height: 1.7;
-  max-width: 30ch;
-  color: rgba(31, 42, 35, 0.56);
+  line-height: 1.72;
+  max-width: 28ch;
+  color: rgba(31, 42, 35, 0.60);
 }
 
 /* ─ Why NOMAAD pillars ─ */
@@ -2418,7 +2419,7 @@ body.home-page .footer {
     padding: 1.15rem 1.15rem 1.4rem;
   }
   #workflow .process-grid li {
-    padding: 1rem 1.1rem;
+    padding: 1.15rem 1.3rem;
   }
   .exp-card {
     padding: 1.35rem 1.2rem;
