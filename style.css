@@ -2088,3 +2088,348 @@ body.home-page .hero--corporate h1 span {
   -webkit-box-decoration-break: unset !important;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
 }
+
+/* ── PREMIUM DESIGN POLISH ───────────────────────────────────────────
+   Visual refinements: typography hierarchy, spacing normalization,
+   card premium feel. No structure, layout, or business logic changes.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* ─ Variable update ─ */
+:root {
+  --radius: 10px;
+}
+
+/* ─ Typography ─ */
+.eyebrow {
+  letter-spacing: 0.18em;
+  font-size: 0.69rem;
+}
+body.home-page .section--light .eyebrow,
+body.home-page .section--sand .eyebrow {
+  color: rgba(26, 26, 26, 0.52);
+}
+.section--dark .eyebrow {
+  color: rgba(242, 241, 236, 0.65);
+}
+h2 {
+  letter-spacing: -0.025em;
+}
+body.home-page .section-head p {
+  margin-top: 0.95rem;
+  color: rgba(26, 26, 26, 0.68);
+  font-size: clamp(0.97rem, 1.1vw, 1.05rem);
+  line-height: 1.72;
+}
+
+/* ─ Section spacing ─ */
+body.home-page .section {
+  padding: clamp(4rem, 7.5vw, 7.5rem) 0;
+}
+.section-head {
+  margin-bottom: 3.5rem;
+}
+
+/* ─ Buttons: reduce SaaS-pill → editorial ─ */
+.btn {
+  border-radius: 6px;
+  letter-spacing: 0.018em;
+}
+.btn:hover {
+  filter: none;
+}
+.btn--primary:hover {
+  filter: none;
+  background: rgba(242, 241, 236, 0.88);
+}
+.btn--accent:hover {
+  filter: none;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(198, 93, 46, 0.28);
+}
+.btn--ghost:hover {
+  filter: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.btn--ghost-light:hover {
+  filter: none;
+  background: rgba(31, 42, 35, 0.38);
+}
+.btn--sand:hover {
+  filter: none;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(200, 168, 120, 0.22);
+}
+.btn--forest:hover {
+  filter: none;
+  box-shadow: 0 8px 20px rgba(47, 62, 47, 0.18);
+  transform: translateY(-1px);
+}
+
+/* ─ Camp Cards ─ */
+.camp-grid {
+  gap: 1.4rem;
+}
+.camp-card {
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(31, 42, 35, 0.05), 0 6px 22px rgba(31, 42, 35, 0.07);
+}
+.camp-card img {
+  height: 195px;
+}
+.camp-card::after {
+  height: 195px;
+}
+.camp-card::before {
+  height: 195px;
+}
+.camp-card-body {
+  padding: 1.35rem 1.3rem 1.6rem;
+}
+.camp-card-body h3 {
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+}
+.camp-card-body p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.camp-card-cta {
+  font-size: 0.84rem;
+  padding-top: 1rem;
+}
+.camp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(31, 42, 35, 0.15);
+}
+.camp-card.is-active {
+  transform: translateY(-2px) scale(1.008);
+  box-shadow: 0 0 0 1px rgba(198, 93, 46, 0.3), 0 16px 36px rgba(31, 42, 35, 0.18);
+}
+.camp-size {
+  font-size: 0.86rem;
+}
+
+/* ─ Camp detail ─ */
+.camp-detail {
+  border-radius: 12px;
+}
+body.home-page .camp-detail {
+  box-shadow: 0 2px 14px rgba(31, 42, 35, 0.05);
+}
+
+/* ─ Package Cards ─ */
+.camp-packages {
+  gap: 1.1rem;
+}
+.pkg-card {
+  padding: 1.6rem 1.4rem;
+  border-radius: 10px;
+  gap: 0.75rem;
+}
+.pkg-price {
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  margin-top: 0.15rem;
+}
+.pkg-tier-label {
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+}
+.pkg-features li {
+  padding: 0.35rem 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+.pkg-choices li {
+  padding: 0.25rem 0;
+  font-size: 0.82rem;
+}
+.pkg-cta {
+  padding: 0.78rem 1.15rem;
+  font-size: 0.88rem;
+  border-radius: 6px;
+  letter-spacing: 0.018em;
+}
+.pkg-badge {
+  font-size: 0.61rem;
+  padding: 0.25rem 0.8rem;
+  letter-spacing: 0.14em;
+}
+.pkg-card--featured {
+  box-shadow: 0 0 0 1px rgba(198, 93, 46, 0.22), 0 6px 20px rgba(31, 42, 35, 0.09);
+}
+.pkg-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(31, 42, 35, 0.12);
+}
+.pkg-card--featured:hover {
+  box-shadow: 0 0 0 1px rgba(198, 93, 46, 0.3), 0 10px 32px rgba(31, 42, 35, 0.12);
+}
+.pkg-cta--forest:hover {
+  filter: none;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(47, 62, 47, 0.22);
+}
+
+/* ─ Client trust strip ─ */
+.trust-grid {
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.trust-item {
+  min-height: 80px;
+  padding: 0.9rem 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(31, 42, 35, 0.05);
+}
+
+/* ─ Process / workflow ─ */
+.process-grid {
+  gap: 1.25rem;
+}
+.process-grid li {
+  padding: 1.55rem 1.45rem;
+  border-radius: 12px;
+}
+.process-grid span {
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+  display: block;
+  color: var(--accent);
+}
+.process-grid h3 {
+  font-size: 1.02rem;
+  margin-bottom: 0.45rem;
+}
+.process-grid p {
+  font-size: 0.9rem;
+  line-height: 1.62;
+}
+
+/* ─ Why NOMAAD pillars ─ */
+.pillars {
+  gap: 1rem;
+}
+.pillar {
+  padding: 1.15rem 1.25rem 1.15rem 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  border-radius: 8px;
+  border-left-width: 2px;
+  border-left-color: rgba(200, 168, 120, 0.5);
+}
+
+/* ─ Experience cards ─ */
+.exp-grid {
+  gap: 1.4rem;
+}
+.exp-card {
+  padding: 1.75rem 1.6rem;
+  border-radius: 12px;
+}
+.exp-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+.exp-card ul {
+  margin: 0.9rem 0 1.1rem 1rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+.exp-card li {
+  margin-bottom: 0.3rem;
+}
+
+/* ─ Gallery ─ */
+body.home-page .gallery-card {
+  border-radius: 10px;
+}
+
+/* ─ CTA final section ─ */
+.cta-final {
+  padding: clamp(4.5rem, 8vw, 8rem) 0;
+}
+.cta-final p {
+  font-size: clamp(1rem, 1.1vw, 1.07rem);
+  margin: 0.95rem auto 2.1rem;
+  opacity: 0.88;
+}
+
+/* ─ Footer ─ */
+body.home-page .footer {
+  padding: 5rem 0 2.5rem;
+}
+
+/* ─ Mobile polish ─ */
+@media (max-width: 768px) {
+  .section-head {
+    margin-bottom: 2.5rem;
+  }
+  .camp-card img,
+  .camp-card::after,
+  .camp-card::before {
+    height: 185px;
+  }
+  .camp-card-body {
+    padding: 1.15rem 1.15rem 1.4rem;
+  }
+  .process-grid li {
+    padding: 1.25rem 1.15rem;
+  }
+  .exp-card {
+    padding: 1.35rem 1.2rem;
+  }
+  .pillars {
+    gap: 0.8rem;
+  }
+  .pillar {
+    padding: 1rem 1rem 1rem 1.25rem;
+  }
+  .pkg-price {
+    font-size: clamp(1.3rem, 5vw, 1.55rem);
+  }
+  .pkg-card {
+    padding: 1.35rem 1.15rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .section-head {
+    margin-bottom: 2rem;
+  }
+  body.home-page .section {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+  }
+  .camp-card img,
+  .camp-card::after,
+  .camp-card::before {
+    height: 170px;
+  }
+  .camp-card-body {
+    padding: 1rem 1rem 1.25rem;
+  }
+  .pkg-card {
+    padding: 1.25rem 1rem;
+  }
+  .pkg-cta {
+    padding: 0.72rem 1rem;
+  }
+  .trust-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .trust-item {
+    min-height: 64px;
+    padding: 0.65rem;
+  }
+  .pillars {
+    gap: 0.75rem;
+  }
+  .pillar {
+    font-size: 0.9rem;
+    padding: 0.9rem 0.9rem 0.9rem 1.1rem;
+  }
+}
