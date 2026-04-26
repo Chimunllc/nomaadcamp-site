@@ -2,6 +2,7 @@
 // DO NOT edit by hand. To add images:
 //   cover image  → images/camps/<camp>/cover/<any-filename>
 //   gallery image → images/camps/<camp>/gallery/<any-filename>
+//   category gallery → images/gallery/<category>/<filename>
 // Then commit and push — Netlify regenerates this file on every deploy.
 window.NOMAAD_IMAGES = {
   "hero": [
@@ -11,11 +12,57 @@ window.NOMAAD_IMAGES = {
     "/images/hero/gallery-19.jpg",
     "/images/hero/hero-01.jpg"
   ],
-  "gallery": [
-    "/images/gallery/gallery-09.jpg",
-    "/images/gallery/gallery-10.jpg",
-    "/images/gallery/gallery-20.jpg"
-  ],
+  "gallery": [],
+  "galleryCategories": {
+    "stage": {
+      "title": "Тайз ба хөтөлбөр",
+      "label": "STAGE",
+      "description": "Том хэмжээний outdoor арга хэмжээний тайз болон хөтөлбөрийн орчин.",
+      "cover": null,
+      "images": []
+    },
+    "lounge": {
+      "title": "Lounge бүс",
+      "label": "LOUNGE",
+      "description": "Тайвширлын орчин, зочид буудлын клуб-маягийн зайлшгүй элемент.",
+      "cover": "/images/gallery/lounge/01.jpg",
+      "images": [
+        "/images/gallery/lounge/01.jpg"
+      ]
+    },
+    "dining": {
+      "title": "Хоол үйлчилгээ",
+      "label": "DINING",
+      "description": "Катеринг, buffet үйлчилгээ — арга хэмжээний хоол, ундааны нэгдсэн дэд бүтэц.",
+      "cover": "/images/gallery/dining/01.jpg",
+      "images": [
+        "/images/gallery/dining/01.jpg"
+      ]
+    },
+    "setup": {
+      "title": "Setup ба бэлтгэл",
+      "label": "SETUP",
+      "description": "Тохижилт, техник, дэд бүтэц — арга хэмжээний өдрийн өмнөх бэлтгэл.",
+      "cover": "/images/gallery/setup/01.jpg",
+      "images": [
+        "/images/gallery/setup/01.jpg"
+      ]
+    },
+    "team": {
+      "title": "Баг ба оролцогчид",
+      "label": "TEAM",
+      "description": "NOMAAD баг болон оролцогчдын хамтын ажиллагаа, тэмцэл, баяр.",
+      "cover": null,
+      "images": []
+    },
+    "night": {
+      "title": "Оройн хөтөлбөр",
+      "label": "NIGHT",
+      "description": "Орой болсон хойно — гэрэлтүүлэг, DJ, Bartender, шөнийн уур амьсгал.",
+      "cover": null,
+      "images": []
+    }
+  },
   "camps": {
     "a": {
       "cover": "/images/camps/a-camp/cover/516791132_1249324066988994_7236995618864252267_n.jpg",

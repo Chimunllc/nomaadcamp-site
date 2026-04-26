@@ -205,6 +205,121 @@
     });
   }
 
+  // ── CATEGORY GALLERY ─────────────────────────────────────────
+  // Renders the #gallery section from manifest.galleryCategories.
+  // Tabs → featured image → thumbnail strip, all driven by manifest data.
+  function initCategoryGallery(galleryCategories) {
+    var container = document.getElementById('cat-gallery');
+    if (!container) return;
+
+    var categories = galleryCategories || {};
+    var keys = Object.keys(categories);
+    if (keys.length === 0) return;
+
+    var tabsEl    = document.getElementById('cat-gallery-tabs');
+    var featImg   = document.getElementById('cat-gallery-featured-img');
+    var featWrap  = document.getElementById('cat-gallery-featured-wrap');
+    var labelEl   = document.getElementById('cat-gallery-label');
+    var descEl    = document.getElementById('cat-gallery-desc');
+    var thumbsEl  = document.getElementById('cat-gallery-thumbs');
+    if (!tabsEl || !featImg || !thumbsEl) return;
+
+    var activeKey   = null;
+    var fadeTimer   = null;
+
+    function setFeaturedSrc(src, alt) {
+      if (fadeTimer) clearTimeout(fadeTimer);
+      featImg.classList.add('is-fading');
+      fadeTimer = setTimeout(function () {
+        featImg.src = src || '';
+        featImg.alt = alt || '';
+        featImg.classList.remove('is-fading');
+      }, 220);
+    }
+
+    function setActiveThumb(activeIndex) {
+      var thumbBtns = thumbsEl.querySelectorAll('.cat-gallery__thumb');
+      thumbBtns.forEach(function (btn, i) {
+        btn.classList.toggle('is-active', i === activeIndex);
+        btn.setAttribute('aria-pressed', i === activeIndex ? 'true' : 'false');
+      });
+    }
+
+    function activateCategory(key) {
+      if (activeKey === key) return;
+      activeKey = key;
+
+      var cat    = categories[key] || {};
+      var images = cat.images || [];
+
+      tabsEl.querySelectorAll('.cat-gallery__tab').forEach(function (tab) {
+        var isActive = tab.dataset.cat === key;
+        tab.classList.toggle('is-active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      if (labelEl) labelEl.textContent = cat.label || key.toUpperCase();
+      if (descEl)  descEl.textContent  = cat.description || '';
+
+      thumbsEl.innerHTML = '';
+
+      if (images.length === 0) {
+        if (featWrap) featWrap.classList.add('cat-gallery__featured-wrap--empty');
+        setFeaturedSrc('', '');
+        return;
+      }
+
+      if (featWrap) featWrap.classList.remove('cat-gallery__featured-wrap--empty');
+      setFeaturedSrc(images[0], cat.label || key);
+
+      images.forEach(function (src, i) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cat-gallery__thumb' + (i === 0 ? ' is-active' : '');
+        btn.setAttribute('role', 'listitem');
+        btn.setAttribute('aria-label', 'Зураг ' + (i + 1));
+        btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+
+        var img = document.createElement('img');
+        img.src = PLACEHOLDER;
+        img.setAttribute('data-src', src);
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.className = 'defer-img';
+        img.addEventListener('error', function () { btn.hidden = true; }, { once: true });
+
+        btn.appendChild(img);
+        btn.addEventListener('click', function () {
+          setFeaturedSrc(src, cat.label || key);
+          setActiveThumb(i);
+        });
+        thumbsEl.appendChild(btn);
+      });
+
+      if (window._nomaadDeferObserver) {
+        thumbsEl.querySelectorAll('img.defer-img[data-src]').forEach(function (img) {
+          window._nomaadDeferObserver.observe(img);
+        });
+      }
+    }
+
+    keys.forEach(function (key) {
+      var cat = categories[key] || {};
+      var tab = document.createElement('button');
+      tab.type = 'button';
+      tab.className = 'cat-gallery__tab';
+      tab.dataset.cat = key;
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', 'false');
+      tab.textContent = cat.title || key;
+      tab.addEventListener('click', function () { activateCategory(key); });
+      tabsEl.appendChild(tab);
+    });
+
+    activateCategory(keys[0]);
+  }
+
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
@@ -212,6 +327,7 @@
   initGallery(manifest.gallery);
   initCampCarousels(manifest.camps);
   initCampDetailGalleries(manifest.camps);
+  initCategoryGallery(manifest.galleryCategories);
 
   // ── MOBILE NAV TOGGLE ────────────────────────────────────────
   var nav = document.querySelector('.nav');
@@ -296,6 +412,7 @@
       });
     }, { rootMargin: '220px 0px' });
     deferredImages.forEach(function (img) { imgObs.observe(img); });
+    window._nomaadDeferObserver = imgObs;
   } else {
     deferredImages.forEach(loadImage);
   }
