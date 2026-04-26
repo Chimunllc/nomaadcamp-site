@@ -334,11 +334,39 @@
     activateCategory(keys[0]);
   }
 
+  // ── PARTNERS ────────────────────────────────────────────────
+  // Renders partner logos from manifest.partners into #clients .trust-grid.
+  function initPartners(partnerLogos) {
+    var grid = document.querySelector('#clients .trust-grid');
+    if (!grid) return;
+
+    var logos = partnerLogos || [];
+    if (logos.length === 0) return;
+
+    grid.innerHTML = '';
+    logos.forEach(function (src) {
+      var figure = document.createElement('figure');
+      figure.className = 'trust-item';
+
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ') + ' лого';
+      img.width = 120;
+      img.height = 36;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      figure.appendChild(img);
+      grid.appendChild(figure);
+    });
+  }
+
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
   initHeroSlider(manifest.hero);
   initGallery(manifest.gallery);
+  initPartners(manifest.partners);
   initCampCarousels(manifest.camps);
   initCampDetailGalleries(manifest.camps);
   initCategoryGallery(manifest.galleryCategories);
