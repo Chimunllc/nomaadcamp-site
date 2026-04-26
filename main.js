@@ -147,15 +147,29 @@
         if (emptyState) emptyState.hidden = !isEmpty;
       };
 
-      var setFeaturedImage = function (thumb) {
+      var setFeaturedImage = function (thumb, immediate) {
         if (!featuredImg || !thumb) return;
-        featuredImg.src = thumb.getAttribute('data-src') || thumb.src;
-        featuredImg.setAttribute('data-src', thumb.getAttribute('data-src') || thumb.src);
-        featuredImg.alt = thumb.alt || 'Кемпийн онцлох зураг';
+        var newSrc = thumb.getAttribute('data-src') || thumb.src;
 
         track.querySelectorAll('.camp-gallery__img').forEach(function (item) {
           item.classList.toggle('is-active', item === thumb);
         });
+
+        if (immediate) {
+          featuredImg.src = newSrc;
+          featuredImg.setAttribute('data-src', newSrc);
+          featuredImg.alt = thumb.alt || 'Кемпийн онцлох зураг';
+          return;
+        }
+
+        featuredImg.style.opacity = '0';
+        clearTimeout(featuredImg._fadeTimer);
+        featuredImg._fadeTimer = setTimeout(function () {
+          featuredImg.src = newSrc;
+          featuredImg.setAttribute('data-src', newSrc);
+          featuredImg.alt = thumb.alt || 'Кемпийн онцлох зураг';
+          featuredImg.style.opacity = '';
+        }, 480);
       };
 
       track.innerHTML = '';
@@ -172,12 +186,12 @@
         img.setAttribute('role', 'button');
         img.setAttribute('aria-label', 'Зураг сонгох');
         img.addEventListener('click', function () {
-          setFeaturedImage(img);
+          setFeaturedImage(img, false);
         });
         img.addEventListener('keydown', function (event) {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            setFeaturedImage(img);
+            setFeaturedImage(img, false);
           }
         });
         img.addEventListener('error', function () {
@@ -201,7 +215,7 @@
       }
 
       setEmptyState(false);
-      setFeaturedImage(track.querySelector('.camp-gallery__img'));
+      setFeaturedImage(track.querySelector('.camp-gallery__img'), true);
     });
   }
 
@@ -234,7 +248,7 @@
         featImg.src = src || '';
         featImg.alt = alt || '';
         featImg.classList.remove('is-fading');
-      }, 220);
+      }, 480);
     }
 
     function setActiveThumb(activeIndex) {
