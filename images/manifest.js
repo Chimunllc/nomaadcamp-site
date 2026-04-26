@@ -20,6 +20,8 @@ window.NOMAAD_IMAGES = {
     "a": {
       "cover": "/images/camps/a-camp/cover/A-01.jpg",
       "gallery": [
+        "/images/camps/a-camp/gallery/481024639_1152238890030846_6226793545414696685_n.jpg",
+        "/images/camps/a-camp/gallery/481976416_1155736906347711_1687494666032244796_n.jpg",
         "/images/camps/a-camp/gallery/A-01.jpg",
         "/images/camps/a-camp/gallery/A-02.jpg",
         "/images/camps/a-camp/gallery/A-03.jpg"
@@ -28,6 +30,7 @@ window.NOMAAD_IMAGES = {
     "b": {
       "cover": "/images/camps/b-camp/cover/gallery-06.jpg",
       "gallery": [
+        "/images/camps/b-camp/gallery/DJI_20250725152831_0014_D.jpg",
         "/images/camps/b-camp/gallery/gallery-06.jpg",
         "/images/camps/b-camp/gallery/gallery-07.jpg",
         "/images/camps/b-camp/gallery/gallery-08.jpg"
