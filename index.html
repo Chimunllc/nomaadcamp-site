@@ -582,9 +582,24 @@
     <div class="section-head reveal">
       <span class="eyebrow">Зургийн цомог</span>
       <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
+      <p>NOMAAD кемпийн арга хэмжээний зохион байгуулалт, орчин, гүйцэтгэлийн чанар.</p>
     </div>
-    <!-- Gallery cards are injected by main.js from images/manifest.js -->
-    <div class="gallery-grid reveal" id="gallery-grid"></div>
+    <!-- Category gallery injected by main.js from images/manifest.js → galleryCategories -->
+    <div class="cat-gallery reveal" id="cat-gallery" aria-label="Категорийн зургийн цомог">
+      <div class="cat-gallery__tabs" id="cat-gallery-tabs" role="tablist" aria-label="Зургийн категориуд"></div>
+      <div class="cat-gallery__body">
+        <div class="cat-gallery__featured-wrap" id="cat-gallery-featured-wrap">
+          <img class="cat-gallery__featured-img" id="cat-gallery-featured-img" src="" alt="" decoding="async">
+          <div class="cat-gallery__label-wrap">
+            <span class="cat-gallery__label" id="cat-gallery-label"></span>
+            <span class="cat-gallery__desc" id="cat-gallery-desc"></span>
+          </div>
+        </div>
+        <div class="cat-gallery__thumbs-wrap">
+          <div class="cat-gallery__thumbs" id="cat-gallery-thumbs" role="list" aria-label="Зургийн жагсаалт"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -737,7 +752,7 @@
   </div>
 </div>
 
-<script src="/images/manifest.js?v=93f22332"></script>
+<script src="/images/manifest.js?v=565ef40b"></script>
 <script src="/main.js"></script>
 </body>
 </html>
