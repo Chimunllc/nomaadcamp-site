@@ -1,12 +1,13 @@
 // scripts/generate-manifest.js
 // Auto-generates images/manifest.js by scanning image folders.
 // Run: node scripts/generate-manifest.js
-// Netlify runs this automatically as the build command.
+// Netlify and GitHub Actions run this automatically as the build command.
 
 'use strict';
 
-const fs   = require('fs');
-const path = require('path');
+const fs     = require('fs');
+const path   = require('path');
+const crypto = require('crypto');
 
 const ROOT      = path.join(__dirname, '..');
 const CAMPS_DIR = path.join(ROOT, 'images', 'camps');
@@ -62,6 +63,23 @@ const out = [
 ].join('\n');
 
 fs.writeFileSync(OUTPUT, out, 'utf8');
+
+// Cache-bust the manifest <script> tag in index.html so browsers always
+// fetch the new file when its content changes (GitHub Pages serves with
+// Cache-Control: max-age=600, so without this browsers show stale images).
+const hash      = crypto.createHash('sha256').update(out).digest('hex').slice(0, 8);
+const indexPath = path.join(ROOT, 'index.html');
+if (fs.existsSync(indexPath)) {
+  const html    = fs.readFileSync(indexPath, 'utf8');
+  const updated = html.replace(
+    /<script src="\/images\/manifest\.js(?:\?[^"]*)?"><\/script>/,
+    `<script src="/images/manifest.js?v=${hash}"></script>`
+  );
+  if (updated !== html) {
+    fs.writeFileSync(indexPath, updated, 'utf8');
+    console.log('index.html updated — manifest cache-bust hash: ' + hash);
+  }
+}
 
 console.log('manifest written → ' + path.relative(process.cwd(), OUTPUT));
 Object.entries(camps).forEach(([k, v]) =>
