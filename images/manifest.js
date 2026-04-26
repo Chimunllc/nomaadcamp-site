@@ -39,6 +39,7 @@ window.NOMAAD_IMAGES = {
     "c": {
       "cover": "/images/camps/c-camp/cover/c-cover.jpg",
       "gallery": [
+        "/images/camps/c-camp/gallery/2.webp",
         "/images/camps/c-camp/gallery/c-01.jpg"
       ]
     },
