@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOMAAD Camp — Байгууллагын арга хэмжээний бүрэн зохион байгуулалт</title>
-<meta name="description" content="NOMAAD кемп нь байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт, том хэмжээний эвентийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлнэ.">
+<title>NOMAAD Camp | Байгууллагын арга хэмжээний нэгдсэн шийдэл</title>
+<meta name="description" content="NOMAAD Camp нь байгууллагын арга хэмжээг төлөвлөлт, кемпийн зохион байгуулалт, катеринг, техник, хөтөлбөрийн гүйцэтгэлтэй нь хамтад нь хэрэгжүүлэх нэгдсэн үйлчилгээ үзүүлдэг.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="mask-icon" href="favicon.svg" color="#2F3E2F">
 <meta name="theme-color" content="#2F3E2F">
@@ -29,12 +29,13 @@
     <a href="#camps">Манай кемпүүд</a>
     <a href="#why-nomaad">Яагаад NOMAAD</a>
     <a href="#workflow">Хэрхэн ажилладаг</a>
+    <a href="#gallery">Зургийн цомог</a>
     <a href="#clients">Хамтран ажилласан байгууллагууд</a>
     <a href="#gallery">Зургийн цомог</a>
     <a href="#contact">Холбоо барих</a>
   </div>
   <div class="nav-actions">
-    <a class="nav-cta" href="/holboo/#quoteForm">Үнийн санал авах</a>
+    <a class="nav-cta" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
     <button class="nav-toggle" type="button" aria-label="Цэс" aria-controls="primary-nav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M4 6h16M4 12h16M4 18h16"/>
@@ -57,9 +58,9 @@
   <div class="container hero-inner">
     <span class="eyebrow"><span class="eyebrow-dot"></span>Байгууллагын арга хэмжээний нэгдсэн үйлчилгээ</span>
     <h1>Зөвхөн танай байгууллагад зориулсан<br>кемпийн бүрэн шийдэл</h1>
-    <p class="hero-sub">NOMAAD кемп нь байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт болон том хэмжээний эвентүүдийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлдэг.</p>
+    <p class="hero-sub">30-аас 1000 хүний арга хэмжээг бэлтгэлээс гүйцэтгэл хүртэл нэгдсэн байдлаар зохион байгуулна. Хаалттай, зөвхөн танай байгууллагад зориулсан орчин.</p>
     <div class="hero-actions">
-      <a class="btn btn--accent btn--lg" href="/holboo/#quoteForm">Үнийн санал авах</a>
+      <a class="btn btn--accent btn--lg" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
       <a class="btn btn--ghost-light btn--lg" href="#camps">Кемпүүд үзэх</a>
     </div>
 
@@ -103,9 +104,10 @@
       <button class="camp-card is-active" type="button" data-camp-target="camp-c">
         <img src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
         <div class="camp-card-body">
-          <h3>C Кемп</h3>
-          <p class="camp-size">10–50 хүн</p>
-          <p>Цөөн хүний уулзалт, удирдлагын багт зориулсан төвлөрсөн, тухтай орчин.</p>
+          <h3>A Кемп</h3>
+          <p class="camp-size">200–1000 хүн</p>
+          <p>Том хэмжээний байгууллагын ой, спорт өдөрлөг, олон хүний арга хэмжээнд.</p>
+          <span class="camp-card-cta" data-camp-cta>Багц үзэх →</span>
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
@@ -114,14 +116,16 @@
           <h3>B Кемп</h3>
           <p class="camp-size">50–300 хүн</p>
           <p>Баг, алба нэгжийн аялал, сургалт, дотоод арга хэмжээнд тохирсон.</p>
+          <span class="camp-card-cta" data-camp-cta>Багц үзэх →</span>
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-a">
         <img src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
         <div class="camp-card-body">
-          <h3>A Кемп</h3>
-          <p class="camp-size">200–1000 хүн</p>
-          <p>Том хэмжээний байгууллагын ой, спорт өдөрлөг, олон хүний арга хэмжээнд.</p>
+          <h3>C Кемп</h3>
+          <p class="camp-size">10–50 хүн</p>
+          <p>Цөөн хүний уулзалт, удирдлагын багт зориулсан төвлөрсөн, тухтай орчин.</p>
+          <span class="camp-card-cta" data-camp-cta>Багц үзэх →</span>
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-mobile">
@@ -130,16 +134,16 @@
           <h3>Нүүдлийн кемп</h3>
           <p class="camp-size">Хүссэн байршилд</p>
           <p>Танай байгууллагын сонгосон байршилд кемп зохион байгуулах уян хатан шийдэл.</p>
+          <span class="camp-card-cta" data-camp-cta>Багц үзэх →</span>
         </div>
       </button>
     </div>
 
     <div class="camp-detail-wrap reveal">
-      <article class="camp-detail is-open" id="camp-c">
+      <article class="camp-detail has-packages" id="camp-c">
         <div class="camp-detail-text">
           <h3>C Кемп · 10–50 хүн</h3>
           <p>Удирдлагын баг, шийдвэр гаргах уулзалт, төвлөрсөн ажлын хөтөлбөрт тохирсон тайван орчин.</p>
-          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
@@ -147,17 +151,13 @@
             <img class="carousel-slide" src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async">
             <img class="carousel-slide" src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
-          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
-          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
-          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
         </div>
       </article>
 
-      <article class="camp-detail" id="camp-b">
+      <article class="camp-detail has-packages" id="camp-b">
         <div class="camp-detail-text">
           <h3>B Кемп · 50–300 хүн</h3>
           <p>Баг, алба нэгжийн уялдаа, дотоод соёл, сургалтын хөтөлбөрийг нэгдсэн зохион байгуулалтаар хэрэгжүүлнэ.</p>
-          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
@@ -165,17 +165,13 @@
             <img class="carousel-slide" src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async">
             <img class="carousel-slide" src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async">
           </div>
-          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
-          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
-          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
         </div>
       </article>
 
-      <article class="camp-detail" id="camp-a">
+      <article class="camp-detail has-packages is-open" id="camp-a">
         <div class="camp-detail-text">
           <h3>A Кемп · 200–1000 хүн</h3>
           <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
-          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
         </div>
         <div class="camp-detail-media" data-carousel data-autoplay="false">
           <div class="carousel-track">
@@ -183,13 +179,10 @@
             <img class="carousel-slide" src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async">
             <img class="carousel-slide" src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async">
           </div>
-          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
-          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
-          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
         </div>
       </article>
 
-      <article class="camp-detail" id="camp-mobile">
+      <article class="camp-detail has-packages" id="camp-mobile">
         <div class="camp-detail-text">
           <h3>Нүүдлийн кемп · Хүссэн байршилд</h3>
           <p>Танай сонгосон байршилд талбай, техник, хоол, хөтөлбөрийн бүрэн зохион байгуулалтыг уян хатан хүргэнэ.</p>
@@ -201,9 +194,6 @@
             <img class="carousel-slide" src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async">
             <img class="carousel-slide" src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
-          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Өмнөх зураг">‹</button>
-          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Дараах зураг">›</button>
-          <div class="carousel-dots" aria-label="Зургийн сонголт"></div>
         </div>
       </article>
     </div>
@@ -216,17 +206,59 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Яагаад NOMAAD</span>
-      <h2>Байгууллагын хэрэгцээнд төвлөрсөн зохион байгуулалт</h2>
+      <h2>Нэг баг · Нэг систем · Нэг хариуцлага</h2>
+      <p>Байгууллагын outdoor арга хэмжээний бүх үйл ажиллагааг нэг баг хариуцна. Тохижилт, техник тоног төхөөрөмж, катеринг үйлчилгээ болон арга хэмжээний зохион байгуулалтыг нэгдсэн байдлаар удирдана.</p>
+      <p class="wn-positioning">Бид майхан түрээслэдэггүй. Байгууллагын outdoor арга хэмжээг системтэй удирддаг.</p>
     </div>
-    <div class="pillars reveal">
-      <div class="pillar">Хаалттай, зөвхөн танай байгууллагад зориулсан орчин</div>
-      <div class="pillar">Байршил сонгох уян хатан боломж</div>
-      <div class="pillar">Тайз, гэрэлтүүлэг, техник нэг дор</div>
-      <div class="pillar">Хоол, амралтын бүс бүхий зохион байгуулалт</div>
-      <div class="pillar">Бэлтгэл, явцыг нэгдсэн байдлаар удирдана</div>
-      <div class="pillar">Хүсэлт бүр холбогдох ажилтанд шууд хүрдэг</div>
-      <div class="pillar">Зураг, мэдээллээр явцыг хянах боломж</div>
-      <div class="pillar">Туршлагатай, нэгдсэн баг</div>
+    <div class="wn-cap-grid reveal">
+      <div class="wn-cap-item">
+        <span class="wn-cap-num">01</span>
+        <h3>Хаалттай орчин</h3>
+        <p>Зөвхөн танай байгууллагад зориулсан зохион байгуулалт. Гадны зочин байхгүй.</p>
+      </div>
+      <div class="wn-cap-item">
+        <span class="wn-cap-num">02</span>
+        <h3>Нэгдсэн дэд бүтэц</h3>
+        <p>Тайз, хөгжим, гэрэлтүүлэг, асар, катеринг үйлчилгээг нэг баг хариуцна. Та тусдаа гүйцэтгэгч хайх шаардлагагүй.</p>
+      </div>
+      <div class="wn-cap-item">
+        <span class="wn-cap-num">03</span>
+        <h3>Суурин болон нүүдлийн</h3>
+        <p>Манай суурин кемп дээр эсвэл таны сонгосон газарт зохион байгуулна. Байршил саад болохгүй.</p>
+      </div>
+      <div class="wn-cap-item">
+        <span class="wn-cap-num">04</span>
+        <h3>Нэгдсэн удирдлага</h3>
+        <p>Бэлтгэлийн явц, гүйцэтгэл, арга хэмжээний дараах тайланг нэгдсэн байдлаар хүргэнэ. Таны цагийг хэмнэнэ.</p>
+      </div>
+    </div>
+    <div class="wn-stats reveal">
+      <div class="wn-stat">
+        <span class="wn-stat-num">130+</span>
+        <span class="wn-stat-label">байгууллага итгэсэн</span>
+      </div>
+      <div class="wn-stat">
+        <span class="wn-stat-num">1000</span>
+        <span class="wn-stat-label">хүн хүртэл нэг арга хэмжээнд</span>
+      </div>
+      <div class="wn-stat">
+        <span class="wn-stat-num">8+</span>
+        <span class="wn-stat-label">жилийн корпорейт outdoor туршлага</span>
+      </div>
+    </div>
+    <div class="wn-strip reveal">
+      <figure class="wn-strip-img">
+        <img src="/images/camps/a-camp/cover/A-01.jpg" alt="Тайзны бэлтгэл" loading="lazy" decoding="async">
+        <figcaption>Тайзны бэлтгэл</figcaption>
+      </figure>
+      <figure class="wn-strip-img">
+        <img src="/images/gallery/gallery-09.jpg" alt="Хоол үйлчилгээ" loading="lazy" decoding="async">
+        <figcaption>Хоол үйлчилгээ</figcaption>
+      </figure>
+      <figure class="wn-strip-img">
+        <img src="/images/gallery/gallery-20.jpg" alt="Lounge бүс" loading="lazy" decoding="async">
+        <figcaption>Lounge бүс</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -234,34 +266,34 @@
 <section class="section section--light" id="workflow">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Хэрхэн ажилладаг</span>
-      <h2>5 үе шаттай хамтын ажиллагаа</h2>
+      <h2>Төлөвлөлтөөс гүйцэтгэл хүртэл</h2>
+      <p>Байгууллагын арга хэмжээний нэгдсэн зохион байгуулалтын процесс</p>
     </div>
     <ol class="process-grid process-grid--five reveal">
       <li>
         <span>01</span>
-        <h3>Холбогдох</h3>
-        <p>Хүний тоо, огноо, зорилгын талаар мэдээлэл өгнө.</p>
+        <h3>Хэрэгцээ тодорхойлох</h3>
+        <p>Танай байгууллагын зорилго, хүний тоо, огноо болон арга хэмжээний хэлбэрийг тодорхойлно.</p>
       </li>
       <li>
         <span>02</span>
-        <h3>Шийдэл санал болгох</h3>
-        <p>Кемпийн төрөл, зохион байгуулалт, үнийн саналыг хамтдаа тодорхойлно.</p>
+        <h3>Шийдэл боловсруулах</h3>
+        <p>Кемпийн бүтэц, дэд бүтэц, хоол үйлчилгээ болон үнийн саналыг нэгтгэн боловсруулна.</p>
       </li>
       <li>
         <span>03</span>
-        <h3>Төлөвлөлт</h3>
-        <p>Манай баг бүх бэлтгэл, ажил үүргийг хуваарилж, явцыг нэгдсэн байдлаар удирдана.</p>
+        <h3>Нэгдсэн бэлтгэл</h3>
+        <p>Техник, тохижилт, хүний нөөц болон ажил үүргийг манай баг нэгдсэн байдлаар удирдана.</p>
       </li>
       <li>
         <span>04</span>
-        <h3>Гүйцэтгэл</h3>
-        <p>Арга хэмжээг төлөвлөгөөний дагуу бүрэн зохион байгуулж, явцын мэдээллийг тасралтгүй хүргэнэ.</p>
+        <h3>Гүйцэтгэл ба явцын мэдээлэл</h3>
+        <p>Арга хэмжээг төлөвлөгөөний дагуу зохион байгуулж, явцын мэдээллийг тасралтгүй хүргэнэ.</p>
       </li>
       <li>
         <span>05</span>
-        <h3>Тайлан, үр дүн</h3>
-        <p>Арга хэмжээний дараа зураг, мэдээллийг хүргэж, цаашдын хамтын ажиллагааны суурийг бүрдүүлнэ.</p>
+        <h3>Тайлан ба дараагийн алхам</h3>
+        <p>Арга хэмжээний дараах зураг, мэдээлэл болон тайланг хүргэж, дараагийн хамтын ажиллагааны суурийг бүрдүүлнэ.</p>
       </li>
     </ol>
   </div>
@@ -272,6 +304,7 @@
     <div class="section-head reveal">
       <span class="eyebrow">Зургийн цомог</span>
       <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
+      <p>NOMAAD кемпийн арга хэмжээний зохион байгуулалт, орчин, гүйцэтгэлийн чанар.</p>
     </div>
     <div class="gallery-grid reveal">
       <figure class="gallery-card gallery-card--wide"><picture>
@@ -308,18 +341,29 @@
   </div>
 </section>
 
+<section class="section section--light trust" id="clients">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <span class="eyebrow">Харилцагч</span>
+      <h2>Хамтран ажилласан байгууллагууд</h2>
+      <p>Монголын тэргүүлэгч компаниуд NOMAAD-ийг сонгосон.</p>
+    </div>
+    <div class="trust-grid reveal" aria-label="Хамтран ажилласан байгууллагуудын лого"></div>
+  </div>
+</section>
+
 <section class="section cta-final" id="contact">
   <div class="container reveal">
     <h2>Танай байгууллагад тохирсон арга хэмжээг хамтдаа зохион байгуулъя</h2>
     <p>Хүний тоо, огноо, зорилгын мэдээллээ илгээнэ үү. Манай баг 24 цагийн дотор үнийн санал боловсруулж холбогдоно.</p>
-    <a class="btn btn--accent btn--lg" href="/holboo/#quoteForm">Үнийн санал авах</a>
+    <a class="btn btn--accent btn--lg" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
   </div>
 </section>
 </main>
 
 <div class="bottom-cta">
   <a class="phone" href="tel:+97699179417">9917-9417</a>
-  <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
+  <a class="btn btn--accent" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
 </div>
 
 <footer class="footer">
@@ -350,7 +394,7 @@
       <div class="footer-cta">
         <h3 class="footer-title">Холбоо барих</h3>
         <a href="tel:+97699179417" class="phone">9917-9417</a>
-        <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
+        <a class="btn btn--accent" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
       </div>
     </div>
 
@@ -361,6 +405,103 @@
   </div>
 </footer>
 
+<div class="quote-modal" id="quote-modal" aria-hidden="true">
+  <div class="quote-modal__backdrop" data-quote-close></div>
+  <div class="quote-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+    <button class="quote-modal__close" type="button" aria-label="Хаах" data-quote-close>×</button>
+    <h2 id="quote-modal-title">Үнийн санал авах</h2>
+    <form class="quote-form" id="quote-form">
+      <div class="quote-prefill" id="quote-prefill" hidden>
+        <div class="quote-prefill__row" id="prefill-row-camp">
+          <span class="quote-prefill__key">Кемп</span>
+          <span class="quote-prefill__val" id="prefill-camp-val"></span>
+        </div>
+        <div class="quote-prefill__row" id="prefill-row-tier" hidden>
+          <span class="quote-prefill__key">Түвшин</span>
+          <span class="quote-prefill__val" id="prefill-tier-val"></span>
+        </div>
+        <div class="quote-prefill__row" id="prefill-row-feature" hidden>
+          <span class="quote-prefill__key">Visual feature</span>
+          <span class="quote-prefill__val" id="prefill-feature-val"></span>
+        </div>
+        <div class="quote-prefill__row" id="prefill-row-shuttle" hidden>
+          <span class="quote-prefill__key">Shuttle Service</span>
+          <span class="quote-prefill__val" id="prefill-shuttle-val"></span>
+        </div>
+        <input type="hidden" name="camp_name" id="field-camp-name">
+        <input type="hidden" name="package_tier" id="field-package-tier">
+        <input type="hidden" name="visual_feature" id="field-visual-feature">
+        <input type="hidden" name="add_ons" id="field-add-ons">
+      </div>
+      <div class="quote-form__grid">
+        <div class="quote-form__field">
+          <label for="org-name">Байгууллагын нэр</label>
+          <input id="org-name" name="organization" type="text" autocomplete="organization">
+        </div>
+        <div class="quote-form__field">
+          <label for="contact-name">Холбоо барих хүний нэр</label>
+          <input id="contact-name" name="contact_name" type="text" autocomplete="name" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="phone">Утас</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="email">Имэйл</label>
+          <input id="email" name="email" type="email" autocomplete="email">
+        </div>
+        <div class="quote-form__field">
+          <label for="start-datetime">Эхлэх огноо, цаг</label>
+          <input id="start-datetime" name="start_datetime" type="datetime-local" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="end-datetime">Дуусах огноо, цаг</label>
+          <input id="end-datetime" name="end_datetime" type="datetime-local" required>
+        </div>
+        <div class="quote-form__field">
+          <label for="guest-count">Хүний тоо</label>
+          <input id="guest-count" name="guest_count" type="number" min="1" step="1" required>
+        </div>
+        <div class="quote-form__field quote-form__field--full">
+          <label for="event-type">Арга хэмжээний төрөл</label>
+          <select id="event-type" name="event_type">
+            <option value="">Сонгоно уу</option>
+            <option value="Байгууллагын аялал">Байгууллагын аялал</option>
+            <option value="Team building">Team building</option>
+            <option value="Retreat">Retreat</option>
+            <option value="Байгууллагын ой">Байгууллагын ой</option>
+            <option value="Сургалт / workshop">Сургалт / workshop</option>
+            <option value="VIP event">VIP event</option>
+            <option value="Festival / outdoor event">Festival / outdoor event</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="quote-form__field quote-form__field--full" id="location-field-wrap" hidden>
+          <label for="location">Кемп байгуулах байршил <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <small class="quote-form__helper-text">Аймаг, сум эсвэл Google Maps location оруулна уу</small>
+          <input id="location" name="location" type="text" placeholder="Жишээ: Архангай — Өгий нуур">
+        </div>
+        <div class="quote-form__field quote-form__field--full">
+          <label for="shuttle-service">Shuttle Service</label>
+          <select id="shuttle-service" name="shuttle_service">
+            <option value="Сонгохгүй">Сонгохгүй</option>
+            <option value="Өдрөөр / 2 талдаа — 1,000,000₮">Өдрөөр / 2 талдаа — 1,000,000₮</option>
+            <option value="Хоног / 2 талдаа — 1,200,000₮">Хоног / 2 талдаа — 1,200,000₮</option>
+          </select>
+          <small class="quote-form__helper-text">Shuttle Service нь зочдын тээвэрлэлтийн үйлчилгээ бөгөөд Нүүдлийн кемпийн логистикийн зардлаас тусдаа тооцогдоно.</small>
+        </div>
+        <div class="quote-form__field quote-form__field--full">
+          <label for="extra-info">Нэмэлт мэдээлэл</label>
+          <textarea id="extra-info" name="extra_info" rows="4"></textarea>
+        </div>
+      </div>
+      <p class="quote-form__message" id="quote-form-message" aria-live="polite"></p>
+      <button class="btn btn--accent" type="submit">Урьдчилсан санал авах</button>
+    </form>
+  </div>
+</div>
+
+<script src="/images/manifest.js?v=f2430dd0"></script>
 <script src="/main.js"></script>
 </body>
 </html>
