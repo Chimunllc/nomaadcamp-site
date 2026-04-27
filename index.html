@@ -659,78 +659,81 @@
 <div class="quote-modal" id="quote-modal" aria-hidden="true">
   <div class="quote-modal__backdrop" data-quote-close></div>
   <div class="quote-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
-    <button class="quote-modal__close" type="button" aria-label="Хаах" data-quote-close>×</button>
+    <button class="quote-modal__close" type="button" aria-label="Хаах" data-quote-close>&#x2715;</button>
     <h2 id="quote-modal-title">Үнийн санал авах</h2>
-    <form class="quote-form" id="quote-form">
-      <div class="quote-prefill" id="quote-prefill" hidden>
-        <div class="quote-prefill__row" id="prefill-row-camp">
-          <span class="quote-prefill__key">Кемп</span>
-          <span class="quote-prefill__val" id="prefill-camp-val"></span>
-        </div>
-        <div class="quote-prefill__row" id="prefill-row-tier" hidden>
-          <span class="quote-prefill__key">Түвшин</span>
-          <span class="quote-prefill__val" id="prefill-tier-val"></span>
-        </div>
-        <div class="quote-prefill__row" id="prefill-row-feature" hidden>
-          <span class="quote-prefill__key">Visual feature</span>
-          <span class="quote-prefill__val" id="prefill-feature-val"></span>
-        </div>
-        <div class="quote-prefill__row" id="prefill-row-shuttle" hidden>
-          <span class="quote-prefill__key">Shuttle Service</span>
-          <span class="quote-prefill__val" id="prefill-shuttle-val"></span>
-        </div>
-        <input type="hidden" name="camp_name" id="field-camp-name">
-        <input type="hidden" name="package_tier" id="field-package-tier">
-        <input type="hidden" name="visual_feature" id="field-visual-feature">
-        <input type="hidden" name="add_ons" id="field-add-ons">
-      </div>
+    <p class="quote-context-hint" id="quote-context-hint" hidden></p>
+    <form class="quote-form" id="quote-form" novalidate>
       <div class="quote-form__grid">
         <div class="quote-form__field">
-          <label for="org-name">Байгууллагын нэр</label>
-          <input id="org-name" name="organization" type="text" autocomplete="organization">
+          <label for="field-camp">Кемп <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <select id="field-camp" name="camp_name" required>
+            <option value="">Сонгоно уу</option>
+            <option value="A Кемп">A Кемп</option>
+            <option value="B Кемп">B Кемп</option>
+            <option value="C Кемп">C Кемп</option>
+            <option value="Нүүдлийн кемп">Нүүдлийн кемп</option>
+          </select>
+          <span class="quote-field-error" id="err-camp" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="contact-name">Холбоо барих хүний нэр</label>
+          <label for="field-tier">Түвшин <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <select id="field-tier" name="package_tier" required>
+            <option value="">Сонгоно уу</option>
+            <option value="Essential">Essential</option>
+            <option value="Experience">Experience</option>
+            <option value="Production">Production</option>
+          </select>
+          <span class="quote-field-error" id="err-tier" role="alert" hidden></span>
+        </div>
+        <div class="quote-form__field">
+          <label for="org-name">Байгууллагын нэр <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <input id="org-name" name="organization" type="text" autocomplete="organization" required>
+          <span class="quote-field-error" id="err-org" role="alert" hidden></span>
+        </div>
+        <div class="quote-form__field">
+          <label for="contact-name">Холбоо барих хүний нэр <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="contact-name" name="contact_name" type="text" autocomplete="name" required>
+          <span class="quote-field-error" id="err-contact" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="phone">Утас</label>
+          <label for="phone">Утас <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+          <span class="quote-field-error" id="err-phone" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
           <label for="email">Имэйл</label>
           <input id="email" name="email" type="email" autocomplete="email">
+          <span class="quote-field-error" id="err-email" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="start-datetime">Эхлэх огноо, цаг</label>
+          <label for="start-datetime">Эхлэх огноо, цаг <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="start-datetime" name="start_datetime" type="datetime-local" required>
+          <span class="quote-field-error" id="err-start" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="end-datetime">Дуусах огноо, цаг</label>
+          <label for="end-datetime">Дуусах огноо, цаг <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="end-datetime" name="end_datetime" type="datetime-local" required>
+          <span class="quote-field-error" id="err-end" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="guest-count">Хүний тоо</label>
+          <label for="guest-count">Хүний тоо <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="guest-count" name="guest_count" type="number" min="1" step="1" required>
-        </div>
-        <div class="quote-form__field quote-form__field--full">
-          <label for="event-type">Арга хэмжээний төрөл</label>
-          <select id="event-type" name="event_type">
-            <option value="">Сонгоно уу</option>
-            <option value="Байгууллагын аялал">Байгууллагын аялал</option>
-            <option value="Team building">Team building</option>
-            <option value="Retreat">Retreat</option>
-            <option value="Байгууллагын ой">Байгууллагын ой</option>
-            <option value="Сургалт / workshop">Сургалт / workshop</option>
-            <option value="VIP event">VIP event</option>
-            <option value="Festival / outdoor event">Festival / outdoor event</option>
-            <option value="Other">Other</option>
-          </select>
+          <span class="quote-field-error" id="err-guests" role="alert" hidden></span>
         </div>
         <div class="quote-form__field quote-form__field--full" id="location-field-wrap" hidden>
           <label for="location">Кемп байгуулах байршил <span class="quote-form__required" aria-hidden="true">*</span></label>
           <small class="quote-form__helper-text">Аймаг, сум эсвэл Google Maps location оруулна уу</small>
           <input id="location" name="location" type="text" placeholder="Жишээ: Архангай — Өгий нуур">
+          <span class="quote-field-error" id="err-location" role="alert" hidden></span>
+        </div>
+        <div class="quote-form__field quote-form__field--full">
+          <label for="visual-feature-select">Visual feature</label>
+          <select id="visual-feature-select" name="visual_feature">
+            <option value="">Сонгохгүй</option>
+            <option value="LED Screen">LED Screen</option>
+            <option value="Moonbeam Lounge">Moonbeam Lounge</option>
+            <option value="Тайзны эффект">Тайзны эффект</option>
+          </select>
         </div>
         <div class="quote-form__field quote-form__field--full">
           <label for="shuttle-service">Shuttle Service</label>

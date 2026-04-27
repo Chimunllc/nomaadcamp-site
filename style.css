@@ -2062,6 +2062,48 @@ body.modal-open { overflow: hidden; }
   font-weight: 400;
 }
 
+/* ── QUOTE CONTEXT HINT ───────────────────────────────────── */
+.quote-context-hint {
+  background: rgba(47, 62, 47, 0.08);
+  border-left: 3px solid var(--primary-forest);
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--charcoal);
+  line-height: 1.45;
+}
+
+/* ── INLINE FIELD ERRORS ──────────────────────────────────── */
+.quote-field-error {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--error);
+  margin-top: 0.15rem;
+  display: block;
+}
+.quote-field-error[hidden] { display: none; }
+
+.quote-form input.is-error,
+.quote-form select.is-error,
+.quote-form textarea.is-error {
+  border-color: var(--error);
+  outline: none;
+}
+.quote-form input.is-error:focus,
+.quote-form select.is-error:focus,
+.quote-form textarea.is-error:focus {
+  box-shadow: 0 0 0 2px rgba(217, 74, 58, 0.18);
+}
+
+/* ── SUCCESS MESSAGE ──────────────────────────────────────── */
+.quote-form__message--success {
+  color: var(--primary-forest) !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
 .pkg-note {
   margin-top: 0.45rem;
   font-size: 0.76rem;
