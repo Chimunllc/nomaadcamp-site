@@ -2824,3 +2824,93 @@ body.home-page .footer {
   .cat-gallery__thumb { width: 64px; height: 44px; }
   .cat-gallery__label { font-size: 0.58rem; padding: 0.18rem 0.5rem; }
 }
+
+/* ── SEO/RESPONSIVE POLISH (mobile stability only) ───────────── */
+body.home-page main,
+body.home-page section,
+body.home-page .container,
+body.home-page .camp-detail,
+body.home-page .camp-packages,
+body.home-page .camp-gallery,
+body.home-page .cat-gallery,
+body.home-page .trust-grid,
+body.home-page .footer,
+body.home-page .cta-final {
+  min-width: 0;
+}
+
+body.home-page p,
+body.home-page h1,
+body.home-page h2,
+body.home-page h3,
+body.home-page h4,
+body.home-page h5,
+body.home-page a,
+body.home-page button {
+  overflow-wrap: anywhere;
+}
+
+body.home-page .hero-video,
+body.home-page .hero-photo,
+body.home-page img,
+body.home-page video {
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  body.home-page .nav.is-open .nav-links {
+    padding: 1rem 1rem 1.25rem;
+  }
+  body.home-page .nav.is-open .nav-links a {
+    width: 100%;
+    min-height: 44px;
+  }
+  body.home-page .hero--corporate .hero-inner {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+  body.home-page .camp-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+  }
+  body.home-page .camp-packages {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  body.home-page .pkg-card .btn,
+  body.home-page .camp-card,
+  body.home-page .camp-card-cta,
+  body.home-page .cta-final .btn,
+  body.home-page .footer a {
+    min-height: 44px;
+  }
+  body.home-page .trust-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  body.home-page .cta-final h2 {
+    line-height: 1.28;
+  }
+  body.home-page .footer-top {
+    gap: 1.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body.home-page .container {
+    padding-left: clamp(0.75rem, 3.2vw, 1rem);
+    padding-right: clamp(0.75rem, 3.2vw, 1rem);
+  }
+  body.home-page .hero-meta {
+    gap: 0.28rem 0.45rem;
+    flex-wrap: wrap;
+  }
+  body.home-page .hero-actions .btn,
+  body.home-page .cta-final .btn {
+    width: 100%;
+  }
+  body.home-page .camp-packages {
+    grid-template-columns: 1fr;
+  }
+  body.home-page .cat-gallery__tabs {
+    padding-bottom: 0.15rem;
+  }
+}
