@@ -618,211 +618,288 @@
     });
   }
 
-  // Үнийн санал modal маягт
-  const quoteModal = document.getElementById('quote-modal');
-  const quoteForm = document.getElementById('quote-form');
-  const quoteMessage = document.getElementById('quote-form-message');
-  const quoteOpeners = document.querySelectorAll('[data-quote-open="true"]');
-  if (quoteModal && quoteForm && quoteMessage && quoteOpeners.length > 0) {
-    const closeTargets = quoteModal.querySelectorAll('[data-quote-close]');
-    const firstInput = quoteForm.querySelector('input, textarea');
+  // ── QUOTE MODAL ──────────────────────────────────────────────
+  var quoteModal   = document.getElementById('quote-modal');
+  var quoteForm    = document.getElementById('quote-form');
+  var quoteMessage = document.getElementById('quote-form-message');
+  var quoteOpeners = document.querySelectorAll('[data-quote-open="true"]');
 
-    const prefillBox     = document.getElementById('quote-prefill');
-    const prefillCampRow = document.getElementById('prefill-row-camp');
-    const prefillTierRow = document.getElementById('prefill-row-tier');
-    const prefillFeatRow = document.getElementById('prefill-row-feature');
-    const prefillShuttleRow = document.getElementById('prefill-row-shuttle');
-    const prefillCampVal = document.getElementById('prefill-camp-val');
-    const prefillTierVal = document.getElementById('prefill-tier-val');
-    const prefillFeatVal = document.getElementById('prefill-feature-val');
-    const prefillShuttleVal = document.getElementById('prefill-shuttle-val');
-    const fieldCampName  = document.getElementById('field-camp-name');
-    const fieldTier      = document.getElementById('field-package-tier');
-    const fieldFeature   = document.getElementById('field-visual-feature');
-    const fieldAddOns    = document.getElementById('field-add-ons');
-    const locationWrap   = document.getElementById('location-field-wrap');
-    const locationInput  = document.getElementById('location');
-    const shuttleServiceSelect = document.getElementById('shuttle-service');
+  if (quoteModal && quoteForm && quoteOpeners.length > 0) {
+    var closeTargets   = quoteModal.querySelectorAll('[data-quote-close]');
+    var campSelect     = document.getElementById('field-camp');
+    var tierSelect     = document.getElementById('field-tier');
+    var orgInput       = document.getElementById('org-name');
+    var contactInput   = document.getElementById('contact-name');
+    var phoneInput     = document.getElementById('phone');
+    var emailInput     = document.getElementById('email');
+    var startInput     = document.getElementById('start-datetime');
+    var endInput       = document.getElementById('end-datetime');
+    var guestInput     = document.getElementById('guest-count');
+    var locationWrap   = document.getElementById('location-field-wrap');
+    var locationInput  = document.getElementById('location');
+    var visualSelect   = document.getElementById('visual-feature-select');
+    var shuttleSelect  = document.getElementById('shuttle-service');
+    var contextHint    = document.getElementById('quote-context-hint');
 
-    const applyLocationVisibility = (camp) => {
-      var normalizedCamp = (camp || '').trim();
-      var isMobile = normalizedCamp === 'Нүүдлийн кемп';
-      if (locationWrap) {
-        locationWrap.hidden = !isMobile;
-        locationWrap.style.display = isMobile ? '' : 'none';
-      }
+    var errCamp     = document.getElementById('err-camp');
+    var errTier     = document.getElementById('err-tier');
+    var errOrg      = document.getElementById('err-org');
+    var errContact  = document.getElementById('err-contact');
+    var errPhone    = document.getElementById('err-phone');
+    var errEmail    = document.getElementById('err-email');
+    var errStart    = document.getElementById('err-start');
+    var errEnd      = document.getElementById('err-end');
+    var errGuests   = document.getElementById('err-guests');
+    var errLocation = document.getElementById('err-location');
+
+    function showFieldError(errEl, inputEl, msg) {
+      if (!errEl) return;
+      errEl.textContent = msg;
+      errEl.hidden = false;
+      if (inputEl) inputEl.classList.add('is-error');
+    }
+
+    function clearFieldError(errEl, inputEl) {
+      if (!errEl) return;
+      errEl.hidden = true;
+      errEl.textContent = '';
+      if (inputEl) inputEl.classList.remove('is-error');
+    }
+
+    function clearAllErrors() {
+      clearFieldError(errCamp,     campSelect);
+      clearFieldError(errTier,     tierSelect);
+      clearFieldError(errOrg,      orgInput);
+      clearFieldError(errContact,  contactInput);
+      clearFieldError(errPhone,    phoneInput);
+      clearFieldError(errEmail,    emailInput);
+      clearFieldError(errStart,    startInput);
+      clearFieldError(errEnd,      endInput);
+      clearFieldError(errGuests,   guestInput);
+      clearFieldError(errLocation, locationInput);
+    }
+
+    function applyLocationVisibility(camp) {
+      var isMobile = (camp || '').trim() === 'Нүүдлийн кемп';
+      if (locationWrap) locationWrap.hidden = !isMobile;
       if (locationInput) {
         locationInput.required = isMobile;
         if (!isMobile) locationInput.value = '';
       }
-    };
+    }
 
-    const collectSelectedAddons = (groupName) => {
-      if (!groupName) return [];
-      return Array.from(document.querySelectorAll('input[name="' + groupName + '"]:checked'))
-        .map((input) => input.value)
-        .filter(Boolean);
-    };
-
-    const openQuoteModal = (prefill) => {
+    function openQuoteModal(prefill) {
       quoteModal.classList.add('is-open');
       quoteModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
-      var camp = (prefill && prefill.camp) || '';
 
-      if (prefillBox) {
-        var tier    = (prefill && prefill.tier)    || '';
-        var feature = (prefill && prefill.feature) || '';
-        var addOns  = (prefill && prefill.addOns)  || [];
-        var shuttleService = (prefill && prefill.shuttleService) || 'Сонгохгүй';
+      var camp    = (prefill && prefill.camp)    || '';
+      var tier    = (prefill && prefill.tier)    || '';
+      var feature = (prefill && prefill.feature) || '';
 
-        if (fieldCampName) fieldCampName.value = camp;
-        if (fieldTier)     fieldTier.value     = tier;
-        if (fieldFeature)  fieldFeature.value  = feature;
-        if (shuttleServiceSelect) shuttleServiceSelect.value = shuttleService;
+      if (campSelect)    campSelect.value    = camp;
+      if (tierSelect)    tierSelect.value    = tier;
+      if (visualSelect)  visualSelect.value  = feature;
+      if (shuttleSelect) shuttleSelect.value = 'Сонгохгүй';
 
-        var hasPrefill = !!(camp || tier || feature || shuttleService !== 'Сонгохгүй');
-        if (prefillBox)     prefillBox.hidden     = !hasPrefill;
-        if (prefillCampRow) { prefillCampRow.hidden = !camp;    if (prefillCampVal) prefillCampVal.textContent = camp; }
-        if (prefillTierRow) { prefillTierRow.hidden = !tier;    if (prefillTierVal) prefillTierVal.textContent = tier; }
-        if (prefillFeatRow) { prefillFeatRow.hidden = !feature; if (prefillFeatVal) prefillFeatVal.textContent = feature; }
-        if (prefillShuttleRow) {
-          var showShuttle = shuttleService && shuttleService !== 'Сонгохгүй';
-          prefillShuttleRow.hidden = !showShuttle;
-          if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleService;
-        }
-
-        if (addOns.indexOf('Shuttle Service') !== -1 && shuttleServiceSelect && shuttleServiceSelect.value === 'Сонгохгүй') {
-          shuttleServiceSelect.value = 'Өдрөөр / 2 талдаа — 1,000,000₮';
-          if (prefillShuttleRow) prefillShuttleRow.hidden = false;
-          if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleServiceSelect.value;
+      if (contextHint) {
+        if (camp && tier) {
+          contextHint.textContent = 'Та ' + camp + ' · ' + tier + ' багцын үнийн санал авах гэж байна.';
+          contextHint.hidden = false;
+        } else {
+          contextHint.hidden = true;
         }
       }
+
       applyLocationVisibility(camp);
+      clearAllErrors();
+      if (quoteMessage) { quoteMessage.textContent = ''; quoteMessage.className = 'quote-form__message'; }
 
-      window.setTimeout(() => {
-        if (firstInput) firstInput.focus();
+      window.setTimeout(function () {
+        var firstFocus = (camp && tier) ? orgInput : campSelect;
+        if (firstFocus) firstFocus.focus();
       }, 20);
-    };
+    }
 
-    const closeQuoteModal = () => {
+    function closeQuoteModal() {
       quoteModal.classList.remove('is-open');
       quoteModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
-      if (prefillBox)    prefillBox.hidden = true;
-      if (fieldCampName) fieldCampName.value = '';
-      if (fieldTier)     fieldTier.value     = '';
-      if (fieldFeature)  fieldFeature.value  = '';
-      if (shuttleServiceSelect) shuttleServiceSelect.value = 'Сонгохгүй';
+      if (contextHint) contextHint.hidden = true;
       applyLocationVisibility('');
-    };
+      clearAllErrors();
+    }
 
-    quoteOpeners.forEach((link) => {
-      link.addEventListener('click', (e) => {
+    // Show/hide location field when camp select changes
+    if (campSelect) {
+      campSelect.addEventListener('change', function () {
+        applyLocationVisibility(campSelect.value);
+        clearFieldError(errCamp, campSelect);
+      });
+    }
+
+    // Clear inline errors on user input
+    var clearOnChange = [
+      [tierSelect,    errTier,     tierSelect],
+      [orgInput,      errOrg,      orgInput],
+      [contactInput,  errContact,  contactInput],
+      [phoneInput,    errPhone,    phoneInput],
+      [emailInput,    errEmail,    emailInput],
+      [startInput,    errStart,    startInput],
+      [endInput,      errEnd,      endInput],
+      [guestInput,    errGuests,   guestInput],
+      [locationInput, errLocation, locationInput]
+    ];
+    clearOnChange.forEach(function (tuple) {
+      var el = tuple[0]; var errEl = tuple[1]; var inputEl = tuple[2];
+      if (!el) return;
+      el.addEventListener('input',  function () { clearFieldError(errEl, inputEl); });
+      el.addEventListener('change', function () { clearFieldError(errEl, inputEl); });
+    });
+
+    // Open modal from any quote trigger button
+    quoteOpeners.forEach(function (link) {
+      link.addEventListener('click', function (e) {
         e.preventDefault();
         var campName    = (link.dataset.campName    || '').trim();
         var tier        = (link.dataset.tier        || '').trim();
         var visualGroup = (link.dataset.visualGroup || '').trim();
-        var addonGroup  = (link.dataset.addonGroup  || '').trim();
         var feature     = '';
         if (visualGroup) {
           var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
           feature = checked ? checked.value : '';
-          if (!feature) {
-            window.alert('Experience багцын нэмэлт үйлчилгээний 1 сонголт хийнэ үү.');
-            return;
-          }
         }
-        var addOns = collectSelectedAddons(addonGroup);
-        var shuttlePrefill = addOns.indexOf('Shuttle Service') !== -1 ? 'Өдрөөр / 2 талдаа — 1,000,000₮' : 'Сонгохгүй';
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, addOns: addOns, shuttleService: shuttlePrefill } : null);
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature } : null);
       });
     });
 
-    if (shuttleServiceSelect) {
-      shuttleServiceSelect.addEventListener('change', () => {
-        var shuttleValue = shuttleServiceSelect.value || 'Сонгохгүй';
-        if (prefillShuttleRow) prefillShuttleRow.hidden = shuttleValue === 'Сонгохгүй';
-        if (prefillShuttleVal) prefillShuttleVal.textContent = shuttleValue;
-      });
-    }
-
-    closeTargets.forEach((el) => {
-      el.addEventListener('click', () => closeQuoteModal());
+    closeTargets.forEach(function (el) {
+      el.addEventListener('click', function () { closeQuoteModal(); });
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && quoteModal.classList.contains('is-open')) {
         closeQuoteModal();
       }
     });
 
-    const N8N_WEBHOOK_URL = 'https://chimun.app.n8n.cloud/webhook/nomaad-quote';
+    var N8N_WEBHOOK_URL = 'https://chimun.app.n8n.cloud/webhook/nomaad-quote';
 
-    quoteForm.addEventListener('submit', async (e) => {
+    quoteForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      const submitBtn = quoteForm.querySelector('[type="submit"]');
-      const fd = new FormData(quoteForm);
-      const phone = (fd.get('phone') || '').trim();
-      const email = (fd.get('email') || '').trim();
+      clearAllErrors();
+      if (quoteMessage) { quoteMessage.textContent = ''; quoteMessage.className = 'quote-form__message'; }
 
-      quoteMessage.className = 'quote-form__message';
-      quoteMessage.textContent = '';
+      var fd       = new FormData(quoteForm);
+      var camp     = (fd.get('camp_name')      || '').trim();
+      var tier     = (fd.get('package_tier')   || '').trim();
+      var org      = (fd.get('organization')   || '').trim();
+      var contact  = (fd.get('contact_name')   || '').trim();
+      var phone    = (fd.get('phone')          || '').trim();
+      var email    = (fd.get('email')          || '').trim();
+      var startDt  = (fd.get('start_datetime') || '').trim();
+      var endDt    = (fd.get('end_datetime')   || '').trim();
+      var guests   = (fd.get('guest_count')    || '').trim();
+      var location = (fd.get('location')       || '').trim();
+      var isMobile = camp === 'Нүүдлийн кемп';
 
-      if (phone && !/^[\d\s+\-() ]{6,20}$/.test(phone)) {
-        quoteMessage.textContent = 'Утасны дугаар буруу байна.';
-        quoteMessage.className = 'quote-form__message quote-form__message--error';
-        return;
+      var hasError = false;
+      var firstErrorEl = null;
+
+      function markError(errEl, inputEl, msg) {
+        showFieldError(errEl, inputEl, msg);
+        hasError = true;
+        if (!firstErrorEl) firstErrorEl = inputEl;
       }
+
+      if (!camp)    markError(errCamp,    campSelect,    'Кемп сонгоно уу.');
+      if (!tier)    markError(errTier,    tierSelect,    'Түвшин сонгоно уу.');
+      if (!org)     markError(errOrg,     orgInput,      'Байгууллагын нэр оруулна уу.');
+      if (!contact) markError(errContact, contactInput,  'Холбоо барих хүний нэр оруулна уу.');
+
+      if (!phone) {
+        markError(errPhone, phoneInput, 'Утасны дугаар оруулна уу.');
+      } else {
+        // Mongolian phone: 8 digits, optionally prefixed with +976 or 976
+        var cleanPhone = phone.replace(/[\s\-\(\)\+]/g, '').replace(/^976/, '');
+        if (!/^\d{7,8}$/.test(cleanPhone)) {
+          markError(errPhone, phoneInput, 'Монгол утасны дугаар буруу байна. (жишээ: 99179417)');
+        }
+      }
+
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        quoteMessage.textContent = 'Имэйл хаяг буруу байна.';
-        quoteMessage.className = 'quote-form__message quote-form__message--error';
+        markError(errEmail, emailInput, 'Имэйл хаяг буруу байна.');
+      }
+
+      if (!startDt) {
+        markError(errStart, startInput, 'Эхлэх огноо, цаг оруулна уу.');
+      }
+
+      if (!endDt) {
+        markError(errEnd, endInput, 'Дуусах огноо, цаг оруулна уу.');
+      } else if (startDt && new Date(endDt) <= new Date(startDt)) {
+        markError(errEnd, endInput, 'Дуусах огноо эхлэх огнооноос хойш байх ёстой.');
+      }
+
+      if (!guests || parseInt(guests, 10) < 1) {
+        markError(errGuests, guestInput, 'Хүний тоо оруулна уу.');
+      }
+
+      if (isMobile && !location) {
+        markError(errLocation, locationInput, 'Кемп байгуулах байршил оруулна уу.');
+      }
+
+      if (hasError) {
+        if (firstErrorEl) firstErrorEl.focus();
         return;
       }
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Илгээж байна…';
+      var submitBtn = quoteForm.querySelector('[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Илгээж байна…'; }
 
-      const payload = {
-        camp:           (fd.get('camp_name')     || '').trim(),
-        tier:           (fd.get('package_tier')  || '').trim(),
-        visual_feature: (fd.get('visual_feature')|| '').trim(),
-        shuttle_service:(fd.get('shuttle_service') || '').trim(),
-        location:       ((fd.get('camp_name') || '').trim() === 'Нүүдлийн кемп') ? (fd.get('location') || '').trim() : '',
-        notes:          (fd.get('extra_info')    || '').trim(),
-        company:        (fd.get('organization')  || '').trim(),
-        contact_name:   (fd.get('contact_name')  || '').trim(),
-        phone,
-        email,
-        start_datetime: (fd.get('start_datetime')|| '').trim(),
-        end_datetime:   (fd.get('end_datetime')  || '').trim(),
-        event_date:     (fd.get('start_datetime')|| '').trim(),
-        guest_count:    (fd.get('guest_count')   || '').trim(),
-        event_type:     (fd.get('event_type')    || '').trim(),
-        camp_name:      (fd.get('camp_name')     || '').trim(),
-        package_tier:   (fd.get('package_tier')  || '').trim(),
+      var payload = {
+        camp:                  camp,
+        tier:                  tier,
+        visual_feature:        (fd.get('visual_feature')  || '').trim(),
+        shuttle_service:       (fd.get('shuttle_service') || '').trim(),
+        location:              isMobile ? location : '',
+        notes:                 (fd.get('extra_info')      || '').trim(),
+        company:               org,
+        contact_name:          contact,
+        phone:                 phone,
+        email:                 email,
+        start_datetime:        startDt,
+        end_datetime:          endDt,
+        event_date:            startDt,
+        guest_count:           guests,
+        camp_name:             camp,
+        package_tier:          tier,
         shuttle_service_label: (fd.get('shuttle_service') || '').trim(),
-        source:         'nomaadcamp.com'
+        source:                'nomaadcamp.com'
       };
 
       try {
-        const res = await fetch(N8N_WEBHOOK_URL, {
+        var res = await fetch(N8N_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        quoteMessage.textContent = 'Хүсэлт амжилттай илгээгдлээ';
-        quoteMessage.className = 'quote-form__message quote-form__message--success';
+        if (quoteMessage) {
+          quoteMessage.textContent = 'Таны хүсэлт амжилттай илгээгдлээ. Манай баг 24 цагийн дотор холбогдоно.';
+          quoteMessage.className = 'quote-form__message quote-form__message--success';
+        }
         quoteForm.reset();
-        window.setTimeout(() => closeQuoteModal(), 2400);
+        applyLocationVisibility('');
+        window.setTimeout(function () { closeQuoteModal(); }, 3000);
       } catch (_) {
-        quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдоно уу.';
-        quoteMessage.className = 'quote-form__message quote-form__message--error';
+        if (quoteMessage) {
+          quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдох эсвэл 9917-9417 дугаарт залгана уу.';
+          quoteMessage.className = 'quote-form__message quote-form__message--error';
+        }
       } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Урьдчилсан санал авах';
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Урьдчилсан санал авах'; }
       }
     });
   }
