@@ -2,7 +2,7 @@
 // DO NOT edit by hand. To add images:
 //   cover image  → images/camps/<camp>/cover/<any-filename>
 //   gallery image → images/camps/<camp>/gallery/<any-filename>
-//   category gallery → images/gallery/<category>/<filename>
+//   partner logos → logos/partners/<any-filename>
 // Then commit and push — Netlify regenerates this file on every deploy.
 window.NOMAAD_IMAGES = {
   "hero": [
@@ -12,7 +12,19 @@ window.NOMAAD_IMAGES = {
     "/images/hero/gallery-19.jpg",
     "/images/hero/hero-01.jpg"
   ],
-  "gallery": [],
+  "gallery": [
+    "/images/gallery/gallery-09.jpg",
+    "/images/gallery/gallery-10.jpg",
+    "/images/gallery/gallery-20.jpg"
+  ],
+  "partners": [
+    "/logos/partners/client-apu.svg",
+    "/logos/partners/client-golomt.svg",
+    "/logos/partners/client-khan.svg",
+    "/logos/partners/client-mcs.svg",
+    "/logos/partners/client-tt.svg",
+    "/logos/partners/client-unitel.svg"
+  ],
   "galleryCategories": {
     "stage": {
       "title": "Тайз ба хөтөлбөр",
@@ -22,30 +34,42 @@ window.NOMAAD_IMAGES = {
       "images": []
     },
     "lounge": {
-      "title": "Lounge бүс",
-      "label": "LOUNGE",
-      "description": "Тайвширлын орчин, зочид буудлын клуб-маягийн зайлшгүй элемент.",
+      "title": "Чөлөөт орчин",
+      "label": "Чөлөөт орчин",
+      "description": "Чөлөөт харилцаа, амралт болон outdoor acoustic орчны зохион байгуулалт.",
       "cover": "/images/gallery/lounge/01.jpg",
       "images": [
         "/images/gallery/lounge/01.jpg"
       ]
     },
     "dining": {
-      "title": "Хоол үйлчилгээ",
-      "label": "DINING",
-      "description": "Катеринг, buffet үйлчилгээ — арга хэмжээний хоол, ундааны нэгдсэн дэд бүтэц.",
-      "cover": "/images/gallery/dining/01.jpg",
+      "title": "Катеринг үйлчилгээ",
+      "label": "Катеринг",
+      "description": "Байгууллагын арга хэмжээнд зориулсан катеринг болон buffet үйлчилгээг нэгдсэн байдлаар зохион байгуулна.",
+      "cover": "/images/gallery/dining/477734850_1136988128222589_3475023461521596684_n.jpg",
       "images": [
-        "/images/gallery/dining/01.jpg"
+        "/images/gallery/dining/477734850_1136988128222589_3475023461521596684_n.jpg",
+        "/images/gallery/dining/481080072_1152247096696692_1157408756925740180_n.jpg",
+        "/images/gallery/dining/481084542_1150137226907679_7302794082867681262_n.jpg",
+        "/images/gallery/dining/481119357_1151578200096915_2968307237344432604_n.jpg",
+        "/images/gallery/dining/481270158_1150900113498057_385902645609428743_n.jpg",
+        "/images/gallery/dining/481897943_1151578180096917_3016324357198583754_n.jpg"
       ]
     },
     "setup": {
       "title": "Setup ба бэлтгэл",
       "label": "SETUP",
       "description": "Тохижилт, техник, дэд бүтэц — арга хэмжээний өдрийн өмнөх бэлтгэл.",
-      "cover": "/images/gallery/setup/01.jpg",
+      "cover": "/images/gallery/setup/481023225_1152247153363353_5018493050852888482_n.jpg",
       "images": [
-        "/images/gallery/setup/01.jpg"
+        "/images/gallery/setup/481023225_1152247153363353_5018493050852888482_n.jpg",
+        "/images/gallery/setup/481084746_1150900190164716_2002492711595995957_n.jpg",
+        "/images/gallery/setup/481216510_1150900090164726_6144427359539858322_n.jpg",
+        "/images/gallery/setup/481475628_1150900080164727_3243613269616035992_n.jpg",
+        "/images/gallery/setup/481475920_1150900060164729_8102678781114645058_n.jpg",
+        "/images/gallery/setup/IMG_0499.JPG",
+        "/images/gallery/setup/Screenshot 2026-04-26 at 19.01.01.png",
+        "/images/gallery/setup/gallery-20.jpg"
       ]
     },
     "team": {
@@ -90,9 +114,7 @@ window.NOMAAD_IMAGES = {
         "/images/camps/b-camp/gallery/b3.jpg",
         "/images/camps/b-camp/gallery/b4.jpg",
         "/images/camps/b-camp/gallery/bcamp.jpg",
-        "/images/camps/b-camp/gallery/gallery-06.jpg",
-        "/images/camps/b-camp/gallery/gallery-07.jpg",
-        "/images/camps/b-camp/gallery/gallery-08.jpg"
+        "/images/camps/b-camp/gallery/gallery-07.jpg"
       ]
     },
     "c": {

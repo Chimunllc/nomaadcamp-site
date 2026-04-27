@@ -128,6 +128,7 @@
   // Shows placeholder state if gallery is empty.
   function initCampDetailGalleries(camps) {
     if (!camps) return;
+    var campAltText = { a: 'A кемп', b: 'B кемп', c: 'C кемп', mobile: 'Нүүдлийн кемп' };
 
     document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
       var key = gallery.getAttribute('data-camp-gallery');
@@ -179,7 +180,9 @@
         img.className = 'camp-gallery__img defer-img';
         img.src = PLACEHOLDER;
         img.setAttribute('data-src', src);
-        img.alt = 'Кемпийн зураг';
+        img.alt = (campAltText[key] || 'Кемп') + ' - зураг ' + (index + 1);
+        img.width = 160;
+        img.height = 86;
         img.loading = 'lazy';
         img.decoding = 'async';
         img.tabIndex = 0;
@@ -237,6 +240,8 @@
     var descEl    = document.getElementById('cat-gallery-desc');
     var thumbsEl  = document.getElementById('cat-gallery-thumbs');
     if (!tabsEl || !featImg || !thumbsEl) return;
+    featImg.loading = 'lazy';
+    featImg.decoding = 'async';
 
     var activeKey   = null;
     var fadeTimer   = null;
@@ -297,7 +302,9 @@
         var img = document.createElement('img');
         img.src = PLACEHOLDER;
         img.setAttribute('data-src', src);
-        img.alt = '';
+        img.alt = (cat.title || cat.label || key) + ' - зураг ' + (i + 1);
+        img.width = 88;
+        img.height = 60;
         img.loading = 'lazy';
         img.decoding = 'async';
         img.className = 'defer-img';
@@ -334,11 +341,39 @@
     activateCategory(keys[0]);
   }
 
+  // ── PARTNERS ────────────────────────────────────────────────
+  // Renders partner logos from manifest.partners into #clients .trust-grid.
+  function initPartners(partnerLogos) {
+    var grid = document.querySelector('#clients .trust-grid');
+    if (!grid) return;
+
+    var logos = partnerLogos || [];
+    if (logos.length === 0) return;
+
+    grid.innerHTML = '';
+    logos.forEach(function (src) {
+      var figure = document.createElement('figure');
+      figure.className = 'trust-item';
+
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ') + ' лого';
+      img.width = 120;
+      img.height = 36;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      figure.appendChild(img);
+      grid.appendChild(figure);
+    });
+  }
+
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
   initHeroSlider(manifest.hero);
   initGallery(manifest.gallery);
+  initPartners(manifest.partners);
   initCampCarousels(manifest.camps);
   initCampDetailGalleries(manifest.camps);
   initCategoryGallery(manifest.galleryCategories);
