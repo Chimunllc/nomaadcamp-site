@@ -14,27 +14,16 @@
 <meta property="og:title" content="NOMAAD Camp — Байгууллагын арга хэмжээний бүрэн зохион байгуулалт">
 <meta property="og:description" content="Байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт, том хэмжээний эвентийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлнэ.">
 <meta property="og:url" content="https://nomaadcamp.mn/">
-<meta property="og:image" content="https://nomaadcamp.mn/images/camps/a-camp/cover/A-01.jpg">
-<meta property="og:site_name" content="NOMAAD Camp">
-<meta property="og:locale" content="mn_MN">
+<meta property="og:image" content="https://nomaadcamp.mn/gallery-01.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NOMAAD Camp | Байгууллагын арга хэмжээний нэгдсэн шийдэл">
-<meta name="twitter:description" content="Байгууллагын арга хэмжээг кемп, катеринг, техник, хөтөлбөрийн гүйцэтгэлтэй нь нэгдсэн байдлаар зохион байгуулна.">
-<meta name="twitter:image" content="https://nomaadcamp.mn/images/camps/a-camp/cover/A-01.jpg">
-<link rel="preload" href="style.css" as="style">
 <link rel="stylesheet" href="style.css">
-<link rel="preload" as="image" href="/images/hero/gallery-05.jpg" fetchpriority="high">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap"></noscript>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main-content">Үндсэн контент руу алгасах</a>
 
 <nav class="nav">
   <a href="/" class="nav-logo" aria-label="NOMAAD Camp">
-    <img src="nomaad-logo.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35" decoding="async">
+    <img src="nomaad-logo-light.svg" alt="NOMAAD" class="nav-logo-word" width="148" height="35" decoding="async">
   </a>
   <div class="nav-links" id="primary-nav">
     <a href="#camps">Манай кемпүүд</a>
@@ -42,6 +31,7 @@
     <a href="#workflow">Хэрхэн ажилладаг</a>
     <a href="#gallery">Зургийн цомог</a>
     <a href="#clients">Хамтран ажилласан байгууллагууд</a>
+    <a href="#gallery">Зургийн цомог</a>
     <a href="#contact">Холбоо барих</a>
   </div>
   <div class="nav-actions">
@@ -57,9 +47,11 @@
 <main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-      <source src="/videos/hero.mp4" type="video/mp4">
-    </video>
+    <picture>
+      <source srcset="/.netlify/images?url=%2Fgallery-03.jpg&fm=avif&q=52&w=1600" type="image/avif">
+      <source srcset="/.netlify/images?url=%2Fgallery-03.jpg&fm=webp&q=68&w=1600" type="image/webp">
+      <img src="/gallery-03.jpg" alt="NOMAAD кемпийн өргөн талбай" class="hero-photo" fetchpriority="high" decoding="async" width="1600" height="900" sizes="100vw">
+    </picture>
     <div class="hero-overlay"></div>
   </div>
 
@@ -82,7 +74,23 @@
   </div>
 </header>
 
-
+<section class="section section--light trust" id="clients">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <span class="eyebrow">Харилцагч</span>
+      <h2>Хамтран ажилласан байгууллагууд</h2>
+      <p>Монголын тэргүүлэгч компаниуд NOMAAD-ийг сонгосон.</p>
+    </div>
+    <div class="trust-grid reveal" aria-label="Хамтран ажилласан байгууллагуудын лого">
+      <figure class="trust-item"><img src="/client-mcs.svg" alt="MCS Group лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-golomt.svg" alt="Golomt Bank лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-tt.svg" alt="Tavan Tolgoi лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-apu.svg" alt="APU Company лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-unitel.svg" alt="Unitel лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+      <figure class="trust-item"><img src="/client-khan.svg" alt="Khan Bank лого" width="120" height="36" loading="lazy" decoding="async"></figure>
+    </div>
+  </div>
+</section>
 
 <section class="section section--sand" id="camps">
   <div class="container">
@@ -93,8 +101,8 @@
     </div>
 
     <div class="camp-grid reveal">
-      <button class="camp-card" type="button" data-camp-target="camp-a">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="A кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="a">
+      <button class="camp-card is-active" type="button" data-camp-target="camp-c">
+        <img src="/gallery-11.jpg" alt="C кемп" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
         <div class="camp-card-body">
           <h3>A Кемп</h3>
           <p class="camp-size">200–1000 хүн</p>
@@ -103,7 +111,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="B кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="b">
+        <img src="/gallery-06.jpg" alt="B кемп" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
         <div class="camp-card-body">
           <h3>B Кемп</h3>
           <p class="camp-size">50–300 хүн</p>
@@ -111,8 +119,8 @@
           <span class="camp-card-cta" data-camp-cta>Багц үзэх →</span>
         </div>
       </button>
-      <button class="camp-card" type="button" data-camp-target="camp-c">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="C кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="c">
+      <button class="camp-card" type="button" data-camp-target="camp-a">
+        <img src="/gallery-01.jpg" alt="A кемп" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
         <div class="camp-card-body">
           <h3>C Кемп</h3>
           <p class="camp-size">10–50 хүн</p>
@@ -121,7 +129,7 @@
         </div>
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-mobile">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="Нүүдлийн кемп" loading="lazy" decoding="async" class="defer-img" data-camp-thumb="mobile">
+        <img src="/gallery-14.jpg" alt="Нүүдлийн кемп" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
         <div class="camp-card-body">
           <h3>Нүүдлийн кемп</h3>
           <p class="camp-size">Хүссэн байршилд</p>
@@ -137,80 +145,11 @@
           <h3>C Кемп · 10–50 хүн</h3>
           <p>Удирдлагын баг, шийдвэр гаргах уулзалт, төвлөрсөн ажлын хөтөлбөрт тохирсон тайван орчин.</p>
         </div>
-        <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
-          <div class="pkg-card" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Essential</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Майхан кемп</li>
-              <li>Өдрийн 2 хоол</li>
-              <li>Өглөөний цай</li>
-              <li>Тайз, хөгжим</li>
-              <li>Chill zone</li>
-            </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Essential" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--featured" role="listitem">
-            <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Эрэлттэй багц</span>
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Experience</span>
-              <div class="pkg-price">350,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Essential бүх үйлчилгээ</li>
-              <li>Buffet хоол</li>
-              <li>Premium sleeping bag</li>
-              <li>DJ</li>
-              <li>Bartender</li>
-              <li>After movie</li>
-            </ul>
-            <div class="pkg-divider" aria-hidden="true"></div>
-            <p class="pkg-choice-label">Дараахаас 1 сонголт</p>
-            <div class="pkg-visual-selector" role="radiogroup" aria-label="Нэмэлт үйлчилгээ сонгох">
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_c" value="LED Screen">
-                <span class="pkg-visual-option__label">LED Screen</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_c" value="Moonbeam Lounge">
-                <span class="pkg-visual-option__label">Moonbeam Lounge</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_c" value="Тайзны эффект">
-                <span class="pkg-visual-option__label">Тайзны эффект</span>
-              </label>
-            </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Experience" data-visual-group="visual_c" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--custom" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Experience бүх үйлчилгээ</li>
-              <li>Хөтөлбөрийн найруулагч</li>
-              <li>Эвент зохион байгуулагч</li>
-              <li>Хөтлөгч</li>
-              <li>Хамгаалтын алба</li>
-              <li>Эмнэлгийн тусламж</li>
-            </ul>
-            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="C Кемп" data-tier="Production" data-addon-group="addon_shuttle_c">Үнийн санал авах</a>
-          </div>
-        </div>
-        <div class="camp-gallery" data-camp-gallery="c" aria-label="C Кемп зургийн цомог">
-          <div class="camp-gallery__featured">
-            <img class="camp-gallery__featured-img defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="Кемпийн онцлох зураг" width="1600" height="900" loading="lazy" decoding="async">
-          </div>
-          <div class="camp-gallery__viewport">
-            <div class="camp-gallery__track"></div>
-            <div class="camp-gallery__empty" hidden>
-              <p>Зургийн цомог удахгүй нэмэгдэнэ.</p>
-              <small>Тухайн кемпийн бодит зураг, орчны мэдээллийг энд байршуулна.</small>
-            </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-11.jpg" alt="C кемп орчин" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-12.jpg" alt="C кемпийн майхан" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-13.jpg" alt="C кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
         </div>
       </article>
@@ -220,80 +159,11 @@
           <h3>B Кемп · 50–300 хүн</h3>
           <p>Баг, алба нэгжийн уялдаа, дотоод соёл, сургалтын хөтөлбөрийг нэгдсэн зохион байгуулалтаар хэрэгжүүлнэ.</p>
         </div>
-        <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
-          <div class="pkg-card" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Essential</span>
-              <div class="pkg-price">180,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Майхан кемп</li>
-              <li>Өдрийн 2 хоол</li>
-              <li>Өглөөний цай</li>
-              <li>Тайз, хөгжим</li>
-              <li>Chill zone</li>
-            </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Essential" data-addon-group="addon_shuttle_b">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--featured" role="listitem">
-            <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Эрэлттэй багц</span>
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Experience</span>
-              <div class="pkg-price">220,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Essential бүх үйлчилгээ</li>
-              <li>Buffet хоол</li>
-              <li>Premium sleeping bag</li>
-              <li>DJ</li>
-              <li>Bartender</li>
-              <li>After movie</li>
-            </ul>
-            <div class="pkg-divider" aria-hidden="true"></div>
-            <p class="pkg-choice-label">Дараахаас 1 сонголт</p>
-            <div class="pkg-visual-selector" role="radiogroup" aria-label="Нэмэлт үйлчилгээ сонгох">
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_b" value="LED Screen">
-                <span class="pkg-visual-option__label">LED Screen</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_b" value="Moonbeam Lounge">
-                <span class="pkg-visual-option__label">Moonbeam Lounge</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_b" value="Тайзны эффект">
-                <span class="pkg-visual-option__label">Тайзны эффект</span>
-              </label>
-            </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Experience" data-visual-group="visual_b" data-addon-group="addon_shuttle_b">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--custom" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Experience бүх үйлчилгээ</li>
-              <li>Хөтөлбөрийн найруулагч</li>
-              <li>Эвент зохион байгуулагч</li>
-              <li>Хөтлөгч</li>
-              <li>Хамгаалтын алба</li>
-              <li>Эмнэлгийн тусламж</li>
-            </ul>
-            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="B Кемп" data-tier="Production" data-addon-group="addon_shuttle_b">Үнийн санал авах</a>
-          </div>
-        </div>
-        <div class="camp-gallery" data-camp-gallery="b" aria-label="B Кемп зургийн цомог">
-          <div class="camp-gallery__featured">
-            <img class="camp-gallery__featured-img defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="Кемпийн онцлох зураг" width="1600" height="900" loading="lazy" decoding="async">
-          </div>
-          <div class="camp-gallery__viewport">
-            <div class="camp-gallery__track"></div>
-            <div class="camp-gallery__empty" hidden>
-              <p>Зургийн цомог удахгүй нэмэгдэнэ.</p>
-              <small>Тухайн кемпийн бодит зураг, орчны мэдээллийг энд байршуулна.</small>
-            </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-06.jpg" alt="B кемпийн талбай" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-07.jpg" alt="B кемпийн арга хэмжээ" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-08.jpg" alt="B кемпийн амралтын бүс" loading="lazy" decoding="async">
           </div>
         </div>
       </article>
@@ -303,80 +173,11 @@
           <h3>A Кемп · 200–1000 хүн</h3>
           <p>Том хэмжээний байгууллагын ойн баяр, өдөрлөг, олон оролцогчтой арга хэмжээг найдвартай зохион байгуулна.</p>
         </div>
-        <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
-          <div class="pkg-card" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Essential</span>
-              <div class="pkg-price">180,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Майхан кемп</li>
-              <li>Өдрийн 2 хоол</li>
-              <li>Өглөөний цай</li>
-              <li>Тайз, хөгжим</li>
-              <li>Chill zone</li>
-            </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Essential" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--featured" role="listitem">
-            <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Эрэлттэй багц</span>
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Experience</span>
-              <div class="pkg-price">220,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Essential бүх үйлчилгээ</li>
-              <li>Buffet хоол</li>
-              <li>Premium sleeping bag</li>
-              <li>DJ</li>
-              <li>Bartender</li>
-              <li>After movie</li>
-            </ul>
-            <div class="pkg-divider" aria-hidden="true"></div>
-            <p class="pkg-choice-label">Дараахаас 1 сонголт</p>
-            <div class="pkg-visual-selector" role="radiogroup" aria-label="Нэмэлт үйлчилгээ сонгох">
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_a" value="LED Screen">
-                <span class="pkg-visual-option__label">LED Screen</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_a" value="Moonbeam Lounge">
-                <span class="pkg-visual-option__label">Moonbeam Lounge</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_a" value="Тайзны эффект">
-                <span class="pkg-visual-option__label">Тайзны эффект</span>
-              </label>
-            </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Experience" data-visual-group="visual_a" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--custom" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Experience бүх үйлчилгээ</li>
-              <li>Хөтөлбөрийн найруулагч</li>
-              <li>Эвент зохион байгуулагч</li>
-              <li>Хөтлөгч</li>
-              <li>Хамгаалтын алба</li>
-              <li>Эмнэлгийн тусламж</li>
-            </ul>
-            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="A Кемп" data-tier="Production" data-addon-group="addon_shuttle_a">Үнийн санал авах</a>
-          </div>
-        </div>
-        <div class="camp-gallery" data-camp-gallery="a" aria-label="A Кемп зургийн цомог">
-          <div class="camp-gallery__featured">
-            <img class="camp-gallery__featured-img defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="Кемпийн онцлох зураг" width="1600" height="900" loading="lazy" decoding="async">
-          </div>
-          <div class="camp-gallery__viewport">
-            <div class="camp-gallery__track"></div>
-            <div class="camp-gallery__empty" hidden>
-              <p>Зургийн цомог удахгүй нэмэгдэнэ.</p>
-              <small>Тухайн кемпийн бодит зураг, орчны мэдээллийг энд байршуулна.</small>
-            </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-01.jpg" alt="A кемпийн төв талбай" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-02.jpg" alt="A кемпийн асар" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-03.jpg" alt="A кемпийн байгаль" loading="lazy" decoding="async">
           </div>
         </div>
       </article>
@@ -384,82 +185,14 @@
       <article class="camp-detail has-packages" id="camp-mobile">
         <div class="camp-detail-text">
           <h3>Нүүдлийн кемп · Хүссэн байршилд</h3>
-          <p>Нүүдлийн кемп нь таны сонгосон байршилд кемпийг бүрэн зөөвөрлөн байгуулдаг үйлчилгээ юм. Үнэ нь A/B кемпийн үйлчилгээний түвшин дээр үндэслэгдэх бөгөөд байршил, зам, логистикийн нөхцлөөс хамааран нэмэлт хүний нөөц болон тээврийн зардал тооцогдоно.</p>
+          <p>Танай сонгосон байршилд талбай, техник, хоол, хөтөлбөрийн бүрэн зохион байгуулалтыг уян хатан хүргэнэ.</p>
+          <a class="btn btn--accent" href="/holboo/#quoteForm">Үнийн санал авах</a>
         </div>
-        <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
-          <div class="pkg-card" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Essential</span>
-              <div class="pkg-price">180,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Майхан кемп</li>
-              <li>Өдрийн 2 хоол</li>
-              <li>Өглөөний цай</li>
-              <li>Тайз, хөгжим</li>
-              <li>Chill zone</li>
-            </ul>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Essential" data-addon-group="addon_shuttle_mobile">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--featured" role="listitem">
-            <span class="pkg-badge" aria-label="Хамгийн их сонгогдсон">Эрэлттэй багц</span>
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Experience</span>
-              <div class="pkg-price">220,000₮<span class="pkg-per"> / хүн</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Essential бүх үйлчилгээ</li>
-              <li>Buffet хоол</li>
-              <li>Premium sleeping bag</li>
-              <li>DJ</li>
-              <li>Bartender</li>
-              <li>After movie</li>
-            </ul>
-            <div class="pkg-divider" aria-hidden="true"></div>
-            <p class="pkg-choice-label">Дараахаас 1 сонголт</p>
-            <div class="pkg-visual-selector" role="radiogroup" aria-label="Нэмэлт үйлчилгээ сонгох">
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_mobile" value="LED Screen">
-                <span class="pkg-visual-option__label">LED Screen</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_mobile" value="Moonbeam Lounge">
-                <span class="pkg-visual-option__label">Moonbeam Lounge</span>
-              </label>
-              <label class="pkg-visual-option">
-                <input type="radio" name="visual_mobile" value="Тайзны эффект">
-                <span class="pkg-visual-option__label">Тайзны эффект</span>
-              </label>
-            </div>
-            <a class="btn btn--accent pkg-cta" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Experience" data-visual-group="visual_mobile" data-addon-group="addon_shuttle_mobile">Үнийн санал авах</a>
-          </div>
-          <div class="pkg-card pkg-card--custom" role="listitem">
-            <div class="pkg-header">
-              <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
-            </div>
-            <ul class="pkg-features">
-              <li>Experience бүх үйлчилгээ</li>
-              <li>Хөтөлбөрийн найруулагч</li>
-              <li>Эвент зохион байгуулагч</li>
-              <li>Хөтлөгч</li>
-              <li>Хамгаалтын алба</li>
-              <li>Эмнэлгийн тусламж</li>
-            </ul>
-            <p class="pkg-note">Уран бүтээлч, артист болон тусгай production элементүүдийг тусгайлан тооцоолно.</p>
-            <a class="btn pkg-cta pkg-cta--forest" href="#quote-modal" data-quote-open="true" data-camp-name="Нүүдлийн кемп" data-tier="Production" data-addon-group="addon_shuttle_mobile">Үнийн санал авах</a>
-          </div>
-        </div>
-        <div class="camp-gallery" data-camp-gallery="mobile" aria-label="Нүүдлийн кемп зургийн цомог">
-          <div class="camp-gallery__featured">
-            <img class="camp-gallery__featured-img defer-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="Кемпийн онцлох зураг" width="1600" height="900" loading="lazy" decoding="async">
-          </div>
-          <div class="camp-gallery__viewport">
-            <div class="camp-gallery__track"></div>
-            <div class="camp-gallery__empty" hidden>
-              <p>Зургийн цомог удахгүй нэмэгдэнэ.</p>
-              <small>Тухайн кемпийн бодит зураг, орчны мэдээллийг энд байршуулна.</small>
-            </div>
+        <div class="camp-detail-media" data-carousel data-autoplay="false">
+          <div class="carousel-track">
+            <img class="carousel-slide" src="/gallery-14.jpg" alt="Нүүдлийн кемпийн байршил" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-15.jpg" alt="Нүүдлийн кемпийн зохион байгуулалт" loading="lazy" decoding="async">
+            <img class="carousel-slide" src="/gallery-16.jpg" alt="Нүүдлийн кемпийн үйлчилгээ" loading="lazy" decoding="async">
           </div>
         </div>
       </article>
@@ -573,21 +306,37 @@
       <h2>Том хэмжээ · Уур амьсгал · Бэлтгэл · Баг</h2>
       <p>NOMAAD кемпийн арга хэмжээний зохион байгуулалт, орчин, гүйцэтгэлийн чанар.</p>
     </div>
-    <!-- Category gallery injected by main.js from images/manifest.js → galleryCategories -->
-    <div class="cat-gallery reveal" id="cat-gallery" aria-label="Категорийн зургийн цомог">
-      <div class="cat-gallery__tabs" id="cat-gallery-tabs" role="tablist" aria-label="Зургийн категориуд"></div>
-      <div class="cat-gallery__body">
-        <div class="cat-gallery__featured-wrap" id="cat-gallery-featured-wrap">
-          <img class="cat-gallery__featured-img" id="cat-gallery-featured-img" src="" alt="" width="1600" height="900" loading="lazy" decoding="async">
-          <div class="cat-gallery__label-wrap">
-            <span class="cat-gallery__label" id="cat-gallery-label"></span>
-            <span class="cat-gallery__desc" id="cat-gallery-desc"></span>
-          </div>
-        </div>
-        <div class="cat-gallery__thumbs-wrap">
-          <div class="cat-gallery__thumbs" id="cat-gallery-thumbs" role="list" aria-label="Зургийн жагсаалт"></div>
-        </div>
-      </div>
+    <div class="gallery-grid reveal">
+      <figure class="gallery-card gallery-card--wide"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-17.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-17.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-17.jpg" alt="Том хэмжээний арга хэмжээ" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
+        </picture></figure>
+      <figure class="gallery-card"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-18.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-18.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-18.jpg" alt="Орчны уур амьсгал" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
+        </picture></figure>
+      <figure class="gallery-card"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-19.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-19.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-19.jpg" alt="Техникийн бэлтгэл" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
+        </picture></figure>
+      <figure class="gallery-card gallery-card--tall"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-20.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-20.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-20.jpg" alt="Багийн ажиллагаа" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
+        </picture></figure>
+      <figure class="gallery-card"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-04.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-04.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-04.jpg" alt="Хоолны зохион байгуулалт" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
+        </picture></figure>
+      <figure class="gallery-card gallery-card--wide"><picture>
+          <source srcset="/.netlify/images?url=%2Fgallery-05.jpg&fm=avif&q=52&w=1400" type="image/avif">
+          <source srcset="/.netlify/images?url=%2Fgallery-05.jpg&fm=webp&q=68&w=1400" type="image/webp">
+          <img src="/gallery-05.jpg" alt="Оройн арга хэмжээ" loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, (max-width: 1180px) 50vw, 33vw">
+        </picture></figure>
     </div>
   </div>
 </section>
