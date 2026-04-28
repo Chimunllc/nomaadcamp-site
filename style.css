@@ -1991,7 +1991,7 @@ body.modal-open { overflow: hidden; }
   transition: max-height 0.28s ease;
 }
 .pkg-accordion.is-open .pkg-accordion__body {
-  max-height: 10rem;
+  max-height: 14rem;
 }
 .pkg-accordion__line {
   font-size: 0.8rem;
@@ -2159,6 +2159,58 @@ body.modal-open { overflow: hidden; }
   color: rgba(26, 26, 26, 0.6);
   line-height: 1.45;
 }
+/* ── PRICE ESTIMATE BLOCK ─────────────────────────────────── */
+.quote-estimate {
+  grid-column: 1 / -1;
+  background: rgba(31, 42, 35, 0.04);
+  border: 1px solid rgba(31, 42, 35, 0.14);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.quote-estimate__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 0.2rem;
+}
+.quote-estimate__tier {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+.quote-estimate__custom {
+  font-size: 0.82rem;
+  color: rgba(31, 42, 35, 0.7);
+  line-height: 1.5;
+}
+.quote-estimate__row {
+  font-size: 0.82rem;
+  color: rgba(31, 42, 35, 0.72);
+}
+.quote-estimate__num {
+  color: var(--accent);
+  font-weight: 600;
+}
+.quote-estimate__divider {
+  border: none;
+  border-top: 1px solid rgba(31, 42, 35, 0.14);
+  margin: 0.2rem 0;
+}
+.quote-estimate__total {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+.quote-estimate__disclaimer {
+  font-size: 0.74rem;
+  color: rgba(31, 42, 35, 0.5);
+  line-height: 1.45;
+  margin-top: 0.15rem;
+}
+
 /* ── MOBILE CAMP NOTE ─────────────────────────────────────── */
 .camp-mobile-note {
   font-size: 0.82rem;

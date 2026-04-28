@@ -640,6 +640,7 @@
     var visualSelect   = document.getElementById('visual-feature-select');
     var shuttleSelect  = document.getElementById('shuttle-service');
     var contextHint    = document.getElementById('quote-context-hint');
+    var estimateEl     = document.getElementById('quote-estimate');
 
     var errCamp     = document.getElementById('err-camp');
     var errTier     = document.getElementById('err-tier');
@@ -696,11 +697,12 @@
       var camp    = (prefill && prefill.camp)    || '';
       var tier    = (prefill && prefill.tier)    || '';
       var feature = (prefill && prefill.feature) || '';
+      var shuttle = (prefill && prefill.shuttle) || 'Сонгохгүй';
 
       if (campSelect)    campSelect.value    = camp;
       if (tierSelect)    tierSelect.value    = tier;
       if (visualSelect)  visualSelect.value  = feature;
-      if (shuttleSelect) shuttleSelect.value = 'Сонгохгүй';
+      if (shuttleSelect) shuttleSelect.value = shuttle;
 
       if (contextHint) {
         if (camp && tier) {
@@ -714,6 +716,7 @@
       applyLocationVisibility(camp);
       clearAllErrors();
       if (quoteMessage) { quoteMessage.textContent = ''; quoteMessage.className = 'quote-form__message'; }
+      updateEstimate();
 
       window.setTimeout(function () {
         var firstFocus = (camp && tier) ? orgInput : campSelect;
@@ -726,6 +729,7 @@
       quoteModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
       if (contextHint) contextHint.hidden = true;
+      if (estimateEl) estimateEl.hidden = true;
       applyLocationVisibility('');
       clearAllErrors();
     }
@@ -757,6 +761,74 @@
       el.addEventListener('change', function () { clearFieldError(errEl, inputEl); });
     });
 
+    // ── PRICE ESTIMATE ─────────────────────────────────────────
+    var PRICE_TABLE = {
+      'Essential': { 'A Кемп': 180000, 'B Кемп': 180000, 'C Кемп': 280000, 'Нүүдлийн кемп': 180000 },
+      'Experience': { 'A Кемп': 220000, 'B Кемп': 220000, 'C Кемп': 350000, 'Нүүдлийн кемп': 220000 }
+    };
+    var SHUTTLE_PRICE = {
+      'Сонгохгүй': 0,
+      'Өдрөөр / 2 талдаа — 1,000,000₮': 1000000,
+      'Хоног / 2 талдаа — 1,200,000₮': 1200000
+    };
+    var SHUTTLE_LABEL = {
+      'Өдрөөр / 2 талдаа — 1,000,000₮': 'Тээвэр (өдрөөр)',
+      'Хоног / 2 талдаа — 1,200,000₮': 'Тээвэр (хоногоор)'
+    };
+
+    function formatMNT(n) {
+      return n.toLocaleString('en-US') + '₮';
+    }
+
+    function updateEstimate() {
+      if (!estimateEl) return;
+      var camp   = campSelect    ? campSelect.value              : '';
+      var tier   = tierSelect    ? tierSelect.value              : '';
+      var guests = guestInput    ? parseInt(guestInput.value, 10) : 0;
+      var shuttle = shuttleSelect ? shuttleSelect.value          : 'Сонгохгүй';
+
+      if (!camp || !tier || !guests || guests < 1) {
+        estimateEl.hidden = true;
+        return;
+      }
+
+      estimateEl.hidden = false;
+
+      if (tier === 'Production') {
+        estimateEl.innerHTML =
+          '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>' +
+          '<p class="quote-estimate__tier">Production багц</p>' +
+          '<p class="quote-estimate__custom">Тусгайлан тооцоологдоно.<br>Манай баг 24 цагийн дотор холбогдоно.</p>';
+        return;
+      }
+
+      var campPrices = PRICE_TABLE[tier];
+      if (!campPrices) { estimateEl.hidden = true; return; }
+      var perPerson = campPrices[camp];
+      if (!perPerson) { estimateEl.hidden = true; return; }
+
+      var base = perPerson * guests;
+      var shuttleAmount = SHUTTLE_PRICE[shuttle] !== undefined ? SHUTTLE_PRICE[shuttle] : 0;
+      var total = base + shuttleAmount;
+      var shuttleLabelText = SHUTTLE_LABEL[shuttle];
+
+      var html = '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>';
+      html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн</p>';
+      html += '<p class="quote-estimate__row">' + guests + ' × ' + formatMNT(perPerson) + ' = <span class="quote-estimate__num">' + formatMNT(base) + '</span></p>';
+      if (shuttleLabelText) {
+        html += '<p class="quote-estimate__row">' + shuttleLabelText + ': <span class="quote-estimate__num">+' + formatMNT(shuttleAmount) + '</span></p>';
+      }
+      html += '<hr class="quote-estimate__divider">';
+      html += '<p class="quote-estimate__total">~<span class="quote-estimate__num">' + formatMNT(total) + '</span>-с эхлэнэ</p>';
+      html += '<p class="quote-estimate__disclaimer">Эцсийн үнэ байршил, нэмэлт үйлчилгээнээс хамааран өөрчлөгдөнө.</p>';
+      estimateEl.innerHTML = html;
+    }
+
+    if (campSelect)    campSelect.addEventListener('change',  updateEstimate);
+    if (tierSelect)    tierSelect.addEventListener('change',  updateEstimate);
+    if (guestInput)    guestInput.addEventListener('input',   updateEstimate);
+    if (shuttleSelect) shuttleSelect.addEventListener('change', updateEstimate);
+
     // Open modal from any quote trigger button
     quoteOpeners.forEach(function (link) {
       link.addEventListener('click', function (e) {
@@ -764,12 +836,18 @@
         var campName    = (link.dataset.campName    || '').trim();
         var tier        = (link.dataset.tier        || '').trim();
         var visualGroup = (link.dataset.visualGroup || '').trim();
+        var addonGroup  = (link.dataset.addonGroup  || '').trim();
         var feature     = '';
         if (visualGroup) {
           var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
           feature = checked ? checked.value : '';
         }
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature } : null);
+        var shuttle = 'Сонгохгүй';
+        if (addonGroup) {
+          var addonChecked = document.querySelector('input[name="' + addonGroup + '"]:checked');
+          shuttle = addonChecked ? addonChecked.value : 'Сонгохгүй';
+        }
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, shuttle: shuttle } : null);
       });
     });
 
