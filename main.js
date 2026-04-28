@@ -792,6 +792,9 @@
       if (quoteMessage) { quoteMessage.textContent = ''; quoteMessage.className = 'quote-form__message'; }
 
       var fd       = new FormData(quoteForm);
+
+      if ((fd.get('website') || '').trim()) return;
+
       var camp     = (fd.get('camp_name')      || '').trim();
       var tier     = (fd.get('package_tier')   || '').trim();
       var org      = (fd.get('organization')   || '').trim();
