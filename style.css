@@ -1955,6 +1955,55 @@ body.modal-open { overflow: hidden; }
   filter: brightness(1.15);
 }
 
+/* ── PACKAGE ACCORDION ───────────────────────────────────── */
+.pkg-accordion {
+  width: 100%;
+}
+.pkg-accordion__toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  color: rgba(26, 26, 26, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  gap: 0.4rem;
+}
+.pkg-accordion__toggle:hover {
+  color: rgba(26, 26, 26, 0.9);
+}
+.pkg-accordion__arrow {
+  display: inline-block;
+  transition: transform 0.28s ease;
+  flex-shrink: 0;
+}
+.pkg-accordion.is-open .pkg-accordion__arrow {
+  transform: rotate(180deg);
+}
+.pkg-accordion__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s ease;
+}
+.pkg-accordion.is-open .pkg-accordion__body {
+  max-height: 10rem;
+}
+.pkg-accordion__line {
+  font-size: 0.8rem;
+  color: rgba(26, 26, 26, 0.65);
+  margin: 0;
+  padding: 0.15rem 0;
+  line-height: 1.4;
+}
+.pkg-accordion__line a {
+  color: var(--accent);
+}
+
 @media (max-width: 720px) {
   .camp-packages {
     grid-template-columns: 1fr;

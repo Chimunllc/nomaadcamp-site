@@ -906,4 +906,14 @@
       }
     });
   }
+
+  // Package card accordions
+  document.querySelectorAll('.pkg-accordion__toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var accordion = btn.closest('.pkg-accordion');
+      var isOpen = accordion.classList.contains('is-open');
+      accordion.classList.toggle('is-open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
 })();
