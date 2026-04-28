@@ -682,7 +682,10 @@
 
     function applyLocationVisibility(camp) {
       var isMobile = (camp || '').trim() === 'Нүүдлийн кемп';
-      if (locationWrap) locationWrap.hidden = !isMobile;
+      if (locationWrap) {
+        locationWrap.classList.toggle('is-visible', isMobile);
+        locationWrap.setAttribute('aria-hidden', String(!isMobile));
+      }
       if (locationInput) {
         locationInput.required = isMobile;
         if (!isMobile) locationInput.value = '';
@@ -836,18 +839,12 @@
         var campName    = (link.dataset.campName    || '').trim();
         var tier        = (link.dataset.tier        || '').trim();
         var visualGroup = (link.dataset.visualGroup || '').trim();
-        var addonGroup  = (link.dataset.addonGroup  || '').trim();
         var feature     = '';
         if (visualGroup) {
           var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
           feature = checked ? checked.value : '';
         }
-        var shuttle = 'Сонгохгүй';
-        if (addonGroup) {
-          var addonChecked = document.querySelector('input[name="' + addonGroup + '"]:checked');
-          shuttle = addonChecked ? addonChecked.value : 'Сонгохгүй';
-        }
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, shuttle: shuttle } : null);
+        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, shuttle: 'Сонгохгүй' } : null);
       });
     });
 

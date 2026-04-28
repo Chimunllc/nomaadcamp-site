@@ -1345,6 +1345,22 @@ body.modal-open { overflow: hidden; }
   flex-direction: column;
   gap: 0.35rem;
 }
+.quote-form__field--conditional {
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 220ms ease, max-height 260ms ease, transform 220ms ease, margin 220ms ease;
+  margin-top: 0;
+}
+.quote-form__field--conditional.is-visible {
+  opacity: 1;
+  max-height: 220px;
+  transform: translateY(0);
+  pointer-events: auto;
+  margin-top: 0.1rem;
+}
 .quote-form__field--full { grid-column: 1 / -1; }
 .quote-form label {
   font-size: 0.86rem;
