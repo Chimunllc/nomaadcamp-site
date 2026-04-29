@@ -18,11 +18,7 @@
     addons: {
       'LED Screen':     { price: null },
       'Moonbeam Lounge':{ price: null },
-      'Тайзны эффект':  { price: null },
-      'Shuttle Service':{
-        price: 1000000,
-        description: '45 хүний автобус · УБ ↔ Кемп / 2 талдаа'
-      }
+      'Тайзны эффект':  { price: null }
     }
   };
 
@@ -683,7 +679,21 @@
     function applyLocationVisibility(camp) {
       var isMobile = (camp || '').trim() === 'Нүүдлийн кемп';
       if (locationWrap) {
-        locationWrap.classList.toggle('is-visible', isMobile);
+        if (isMobile) {
+          locationWrap.style.display = 'flex';
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              locationWrap.classList.add('is-visible');
+            });
+          });
+        } else {
+          locationWrap.classList.remove('is-visible');
+          window.setTimeout(function () {
+            if (!locationWrap.classList.contains('is-visible')) {
+              locationWrap.style.display = 'none';
+            }
+          }, 280);
+        }
         locationWrap.setAttribute('aria-hidden', String(!isMobile));
       }
       if (locationInput) {
