@@ -3073,3 +3073,35 @@ body.home-page video {
     padding-bottom: 0.15rem;
   }
 }
+
+.midweek-addons {
+  margin-top: 48px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #F5F2EA;
+  text-align: center;
+}
+
+.midweek-addons h3 {
+  margin: 0 0 20px;
+}
+
+.midweek-addon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.midweek-addon-grid span {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #E0DDD5;
+}
+
+@media (max-width: 768px) {
+  .midweek-addons {
+    padding: 24px 16px;
+  }
+}
