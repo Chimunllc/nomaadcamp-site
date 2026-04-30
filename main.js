@@ -637,6 +637,9 @@
     var shuttleSelect  = document.getElementById('shuttle-service');
     var contextHint    = document.getElementById('quote-context-hint');
     var estimateEl     = document.getElementById('quote-estimate');
+    var campFieldWrap  = document.getElementById('camp-field-wrap');
+    var tierFieldWrap  = document.getElementById('tier-field-wrap');
+    var modalTitleEl   = document.getElementById('quote-modal-title');
 
     var errCamp     = document.getElementById('err-camp');
     var errTier     = document.getElementById('err-tier');
@@ -712,13 +715,29 @@
       var feature = (prefill && prefill.feature) || '';
       var shuttle = (prefill && prefill.shuttle) || 'Сонгохгүй';
 
+      var isDayProgram = (camp === 'Half Day хөтөлбөр' || camp === 'Full Day хөтөлбөр');
+
+      if (modalTitleEl) {
+        if (isDayProgram) {
+          var dayLabel = camp === 'Half Day хөтөлбөр' ? 'Хагас өдрийн' : 'Бүтэн өдрийн';
+          modalTitleEl.textContent = 'Өдрийн хөтөлбөр · ' + dayLabel + ' багцын үнийн санал авах';
+        } else {
+          modalTitleEl.textContent = 'Үнийн санал авах';
+        }
+      }
+
+      if (campFieldWrap) campFieldWrap.hidden = isDayProgram;
+      if (tierFieldWrap) tierFieldWrap.hidden = isDayProgram;
+      if (campSelect)    campSelect.required  = !isDayProgram;
+      if (tierSelect)    tierSelect.required  = !isDayProgram;
+
       if (campSelect)    campSelect.value    = camp;
       if (tierSelect)    tierSelect.value    = tier;
       if (visualSelect)  visualSelect.value  = feature;
       if (shuttleSelect) shuttleSelect.value = shuttle;
 
       if (contextHint) {
-        if (camp && tier) {
+        if (!isDayProgram && camp && tier) {
           contextHint.textContent = 'Та ' + camp + ' · ' + tier + ' багцын үнийн санал авах гэж байна.';
           contextHint.hidden = false;
         } else {
@@ -733,6 +752,7 @@
 
       window.setTimeout(function () {
         var firstFocus = (camp && tier) ? orgInput : campSelect;
+        if (isDayProgram || !firstFocus) firstFocus = orgInput;
         if (firstFocus) firstFocus.focus();
       }, 20);
     }
@@ -743,6 +763,11 @@
       document.body.classList.remove('modal-open');
       if (contextHint) contextHint.hidden = true;
       if (estimateEl) estimateEl.hidden = true;
+      if (campFieldWrap) campFieldWrap.hidden = false;
+      if (tierFieldWrap) tierFieldWrap.hidden = false;
+      if (campSelect) campSelect.required = true;
+      if (tierSelect) tierSelect.required = true;
+      if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
     }
