@@ -746,6 +746,20 @@
       applyLocationVisibility(camp);
       clearAllErrors();
       if (quoteMessage) { quoteMessage.textContent = ''; quoteMessage.className = 'quote-form__message'; }
+
+      // Apply tier inclusions and set qty defaults based on current guest count
+      applyTierInclusions(tier);
+      var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+      quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qtyInput) {
+        var card = qtyInput.closest('.quote-addon-card');
+        var cb = card ? card.querySelector('input[name="addons[]"]') : null;
+        if (cb && cb.disabled) return;
+        if (currentGuests > 0) {
+          qtyInput.value = currentGuests;
+          qtyInput.max = currentGuests;
+        }
+      });
+      updateAutoScaleLabels(currentGuests);
       updateEstimate();
 
       window.setTimeout(function () {
@@ -765,13 +779,26 @@
       applyLocationVisibility('');
       clearAllErrors();
       // Reset add-on UI
-      quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) { cb.checked = false; });
+      quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
+        cb.checked = false;
+        cb.disabled = false;
+      });
+      quoteForm.querySelectorAll('.quote-addon-card').forEach(function (card) {
+        card.classList.remove('quote-addon-card--included');
+        var badge = card.querySelector('.quote-addon-card__included-badge');
+        if (badge) badge.remove();
+      });
       quoteForm.querySelectorAll('.quote-addon-card__time-config').forEach(function (el) { el.hidden = true; });
       quoteForm.querySelectorAll('.quote-addon-card__sub-options').forEach(function (el) { el.hidden = true; });
+      quoteForm.querySelectorAll('.quote-addon-card__quantity').forEach(function (el) { el.hidden = true; });
       var bartenderPriceEl = document.querySelector('[data-bartender-price]');
       if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
       var djPriceEl = document.querySelector('[data-dj-price]');
       if (djPriceEl) djPriceEl.textContent = '+1,000,000₮';
+      var medicalPriceEl = document.querySelector('[data-medical-price]');
+      if (medicalPriceEl) medicalPriceEl.textContent = '+1,000,000₮';
+      var securityPriceEl = document.querySelector('[data-security-price]');
+      if (securityPriceEl) securityPriceEl.textContent = '+1,000,000₮';
     }
 
     // Clear inline errors on user input
@@ -807,6 +834,24 @@
       'Хоног / 2 талдаа — 1,200,000₮': 'Тээвэр (хоногоор)'
     };
 
+    var TIER_INCLUSIONS = {
+      'Essential': [],
+      'Experience': ['welcome_drink', 'sleeping_bag', 'coffee_corner', 'lunch_upgrade', 'dinner_upgrade'],
+      'Production': [
+        'welcome_drink', 'amenity_kit', 'sleeping_bag', 'coffee_corner',
+        'lunch_upgrade', 'dinner_upgrade', 'dj_service', 'bartender_service', 'photo_4h',
+        'medical_service', 'security_service', 'program_design', 'onsite_coordination', 'team_activities'
+      ]
+    };
+
+    var PRODUCTION_PRICING = [
+      { min: 50,  max: 99,       price: 350000 },
+      { min: 100, max: 199,      price: 280000 },
+      { min: 200, max: 299,      price: 250000 },
+      { min: 300, max: 499,      price: 220000 },
+      { min: 500, max: Infinity, price: 200000 }
+    ];
+
     function formatMNT(n) {
       return n.toLocaleString('en-US') + '₮';
     }
@@ -828,6 +873,88 @@
       return count * 500000;
     }
 
+    function calculateMedicalPrice(guests) {
+      return (Math.ceil(guests / 500) || 1) * 1000000;
+    }
+
+    function calculateSecurityPrice(guests) {
+      return Math.max(2, Math.ceil(guests / 100)) * 500000;
+    }
+
+    function getProductionPricePerPerson(guests) {
+      var tier = null;
+      for (var i = 0; i < PRODUCTION_PRICING.length; i++) {
+        if (guests >= PRODUCTION_PRICING[i].min && guests <= PRODUCTION_PRICING[i].max) {
+          tier = PRODUCTION_PRICING[i];
+          break;
+        }
+      }
+      return tier ? tier.price : 200000;
+    }
+
+    function applyTierInclusions(tier) {
+      var includedItems = TIER_INCLUSIONS[tier] || [];
+      quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
+        var card = cb.closest('.quote-addon-card');
+        if (!card) return;
+        var isIncluded = includedItems.indexOf(cb.value) !== -1;
+        if (isIncluded) {
+          cb.checked = true;
+          cb.disabled = true;
+          card.classList.add('quote-addon-card--included');
+          if (!card.querySelector('.quote-addon-card__included-badge')) {
+            var badge = document.createElement('span');
+            badge.className = 'quote-addon-card__included-badge';
+            badge.textContent = tier + ' багцад багтсан';
+            var nameEl = card.querySelector('.quote-addon-card__name');
+            if (nameEl) nameEl.appendChild(badge);
+          }
+          var qtyDiv = card.querySelector('.quote-addon-card__quantity');
+          if (qtyDiv) qtyDiv.hidden = true;
+          var subOpts = card.querySelector('.quote-addon-card__sub-options');
+          if (subOpts) subOpts.hidden = true;
+          var timeConf = card.querySelector('.quote-addon-card__time-config');
+          if (timeConf) timeConf.hidden = true;
+        } else {
+          cb.disabled = false;
+          card.classList.remove('quote-addon-card--included');
+          var existingBadge = card.querySelector('.quote-addon-card__included-badge');
+          if (existingBadge) existingBadge.remove();
+        }
+      });
+    }
+
+    function updateAutoScaleLabels(guests) {
+      var g = guests || 0;
+      var bartenderCount = Math.ceil(g / 75) || 1;
+      var bartenderPriceEl = document.querySelector('[data-bartender-price]');
+      if (bartenderPriceEl) {
+        if (g < 1) {
+          bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
+        } else {
+          bartenderPriceEl.textContent = '+' + (bartenderCount * 500000).toLocaleString('en-US') + '₮ (' + bartenderCount + ' bartender, ' + g + ' хүний event-д)';
+        }
+      }
+      var medicalCount = Math.ceil(g / 500) || 1;
+      var medicalPriceEl = document.querySelector('[data-medical-price]');
+      if (medicalPriceEl) {
+        if (g < 1) {
+          medicalPriceEl.textContent = '+1,000,000₮';
+        } else {
+          medicalPriceEl.textContent = '+' + (medicalCount * 1000000).toLocaleString('en-US') + '₮ (' + medicalCount + ' эмч, ' + g + ' хүний event-д)';
+        }
+      }
+      var officerCount = Math.max(2, Math.ceil(g / 100));
+      var securityPriceEl = document.querySelector('[data-security-price]');
+      if (securityPriceEl) {
+        if (g < 1) {
+          securityPriceEl.textContent = '+1,000,000₮';
+        } else {
+          securityPriceEl.textContent = '+' + (officerCount * 500000).toLocaleString('en-US') + '₮ (' + officerCount + ' officer, ' + g + ' хүний event-д)';
+        }
+      }
+    }
+
     function updateEstimate() {
       if (!estimateEl) return;
       var camp    = campSelect    ? campSelect.value               : '';
@@ -842,18 +969,15 @@
 
       estimateEl.hidden = false;
 
+      var perPerson;
       if (tier === 'Production') {
-        estimateEl.innerHTML =
-          '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>' +
-          '<p class="quote-estimate__tier">Production багц</p>' +
-          '<p class="quote-estimate__custom">Тусгайлан тооцоологдоно.<br>Манай баг 24 цагийн дотор холбогдоно.</p>';
-        return;
+        perPerson = getProductionPricePerPerson(guests);
+      } else {
+        var campPrices = PRICE_TABLE[tier];
+        if (!campPrices) { estimateEl.hidden = true; return; }
+        perPerson = campPrices[camp];
+        if (!perPerson) { estimateEl.hidden = true; return; }
       }
-
-      var campPrices = PRICE_TABLE[tier];
-      if (!campPrices) { estimateEl.hidden = true; return; }
-      var perPerson = campPrices[camp];
-      if (!perPerson) { estimateEl.hidden = true; return; }
 
       var base = perPerson * guests;
       var shuttleAmount = SHUTTLE_PRICE[shuttle] !== undefined ? SHUTTLE_PRICE[shuttle] : 0;
@@ -862,14 +986,23 @@
       var perPersonAddonsSum = 0;
       var flatAddonsSum = 0;
       var addonRows = '';
+      var includedRows = '';
 
       document.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
-        var type  = cb.dataset.type;
         var label = cb.dataset.label || cb.value;
+        if (cb.disabled) {
+          includedRows += '<p class="quote-estimate__row">✓ ' + label + '</p>';
+          return;
+        }
+        var type = cb.dataset.type;
         if (type === 'per-person') {
           var ppPrice = parseInt(cb.dataset.price, 10);
-          perPersonAddonsSum += ppPrice;
-          addonRows += '<p class="quote-estimate__row">' + label + ': ' + formatMNT(ppPrice) + ' × ' + guests + ' = <span class="quote-estimate__num">' + formatMNT(ppPrice * guests) + '</span></p>';
+          var card = cb.closest('.quote-addon-card');
+          var qtyInput = card ? card.querySelector('.quote-addon-card__qty-input') : null;
+          var qty = qtyInput ? (parseInt(qtyInput.value, 10) || guests) : guests;
+          var ppTotal = ppPrice * qty;
+          perPersonAddonsSum += ppTotal;
+          addonRows += '<p class="quote-estimate__row">' + label + ': ' + formatMNT(ppPrice) + ' × ' + qty + ' = <span class="quote-estimate__num">' + formatMNT(ppTotal) + '</span></p>';
         } else if (type === 'flat-dynamic' && cb.value === 'dj_service') {
           var djPrice = calculateDJPrice();
           flatAddonsSum += djPrice;
@@ -879,18 +1012,38 @@
           var btCount = Math.ceil(guests / 75) || 1;
           flatAddonsSum += btPrice;
           addonRows += '<p class="quote-estimate__row">Bartender (' + btCount + '): <span class="quote-estimate__num">+' + formatMNT(btPrice) + '</span></p>';
-        } else if (type === 'flat') {
+        } else if (type === 'per-event-auto-medical') {
+          var medPrice = calculateMedicalPrice(guests);
+          var medCount = Math.ceil(guests / 500) || 1;
+          flatAddonsSum += medPrice;
+          addonRows += '<p class="quote-estimate__row">Эмнэлгийн тусламж (' + medCount + ' эмч): <span class="quote-estimate__num">+' + formatMNT(medPrice) + '</span></p>';
+        } else if (type === 'per-event-auto-security') {
+          var secPrice = calculateSecurityPrice(guests);
+          var secCount = Math.max(2, Math.ceil(guests / 100));
+          flatAddonsSum += secPrice;
+          addonRows += '<p class="quote-estimate__row">Хамгаалалт (' + secCount + ' officer): <span class="quote-estimate__num">+' + formatMNT(secPrice) + '</span></p>';
+        } else if (type === 'flat' && cb.dataset.price) {
           var flatPrice = parseInt(cb.dataset.price, 10);
           flatAddonsSum += flatPrice;
           addonRows += '<p class="quote-estimate__row">' + label + ': <span class="quote-estimate__num">+' + formatMNT(flatPrice) + '</span></p>';
+        } else if (type === 'flat') {
+          addonRows += '<p class="quote-estimate__row">' + label + ' (үнэ тохирно)</p>';
         }
       });
 
-      var total = base + (perPersonAddonsSum * guests) + flatAddonsSum + shuttleAmount;
+      var total = base + perPersonAddonsSum + flatAddonsSum + shuttleAmount;
 
       var html = '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>';
-      html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн</p>';
+      if (tier === 'Production') {
+        html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн · ' + formatMNT(perPerson) + '/хүн</p>';
+      } else {
+        html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн</p>';
+      }
       html += '<p class="quote-estimate__row">' + guests + ' × ' + formatMNT(perPerson) + ' = <span class="quote-estimate__num">' + formatMNT(base) + '</span></p>';
+      if (includedRows) {
+        html += '<p class="quote-estimate__row quote-estimate__row--addon-section">Багцад багтсан үйлчилгээ:</p>';
+        html += includedRows;
+      }
       if (addonRows) {
         html += '<p class="quote-estimate__row quote-estimate__row--addon-section">Нэмэлт үйлчилгээ:</p>';
         html += addonRows;
@@ -909,7 +1062,55 @@
 
     // ── ADD-ON LISTENERS ───────────────────────────────────────
     document.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
-      cb.addEventListener('change', updateEstimate);
+      cb.addEventListener('change', function (e) {
+        if (cb.disabled) return;
+        var card = cb.closest('.quote-addon-card');
+        // Per-person: toggle quantity input
+        if (cb.dataset.type === 'per-person' && card) {
+          var qtyDiv = card.querySelector('.quote-addon-card__quantity');
+          if (qtyDiv) {
+            qtyDiv.hidden = !e.target.checked;
+            if (e.target.checked) {
+              var qtyInput = qtyDiv.querySelector('.quote-addon-card__qty-input');
+              var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 1) : 1;
+              if (qtyInput) {
+                qtyInput.value = currentGuests;
+                qtyInput.max = currentGuests;
+                updateQtyTotal(qtyDiv, parseInt(cb.dataset.price, 10), currentGuests);
+              }
+            }
+          }
+          // Welcome drink: also toggle sub-options
+          var subOptions = card.querySelector('.quote-addon-card__sub-options');
+          if (subOptions) subOptions.hidden = !e.target.checked;
+        }
+        // DJ: toggle time config
+        if (cb.value === 'dj_service' && card) {
+          var timeConfig = card.querySelector('.quote-addon-card__time-config');
+          if (timeConfig) timeConfig.hidden = !e.target.checked;
+        }
+        updateEstimate();
+      });
+    });
+
+    function updateQtyTotal(qtyDiv, unitPrice, qty) {
+      var totalEl = qtyDiv.querySelector('.quote-addon-card__qty-total');
+      if (totalEl && unitPrice && qty) {
+        totalEl.textContent = formatMNT(unitPrice * qty);
+      }
+    }
+
+    // Per-person quantity inputs: update total display and estimate
+    document.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qtyInput) {
+      qtyInput.addEventListener('input', function () {
+        var card = qtyInput.closest('.quote-addon-card');
+        var cb = card ? card.querySelector('input[name="addons[]"]') : null;
+        var unitPrice = cb ? parseInt(cb.dataset.price, 10) : 0;
+        var qty = parseInt(qtyInput.value, 10) || 0;
+        var qtyDiv = qtyInput.closest('.quote-addon-card__quantity');
+        if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, qty);
+        updateEstimate();
+      });
     });
 
     var djStartSel = document.querySelector('[name="dj_start_time"]');
@@ -925,33 +1126,25 @@
       if (priceEl) priceEl.textContent = '+' + calculateDJPrice().toLocaleString('en-US') + '₮';
     });
 
-    var djCb = document.querySelector('input[value="dj_service"]');
-    if (djCb) {
-      djCb.addEventListener('change', function (e) {
-        var timeConfig = e.target.closest('.quote-addon-card').querySelector('.quote-addon-card__time-config');
-        if (timeConfig) timeConfig.hidden = !e.target.checked;
-      });
-    }
-
-    var welcomeDrinkCb = document.querySelector('input[value="welcome_drink"]');
-    if (welcomeDrinkCb) {
-      welcomeDrinkCb.addEventListener('change', function (e) {
-        var subOptions = e.target.closest('.quote-addon-card').querySelector('.quote-addon-card__sub-options');
-        if (subOptions) subOptions.hidden = !e.target.checked;
-      });
-    }
-
     if (guestInput) {
       guestInput.addEventListener('input', function () {
-        var bartenderPriceEl = document.querySelector('[data-bartender-price]');
-        if (!bartenderPriceEl) return;
-        var g = parseInt(guestInput.value, 10);
-        if (!g || g < 1) {
-          bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
-          return;
-        }
-        var btCount = Math.ceil(g / 75);
-        bartenderPriceEl.textContent = '+' + (btCount * 500000).toLocaleString('en-US') + '₮ (' + btCount + ' bartender)';
+        var g = parseInt(guestInput.value, 10) || 0;
+        // Update all per-person qty inputs: clamp to new guest count
+        quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qtyInput) {
+          var card = qtyInput.closest('.quote-addon-card');
+          var cb = card ? card.querySelector('input[name="addons[]"]') : null;
+          if (cb && cb.disabled) return;
+          qtyInput.max = g;
+          var currentVal = parseInt(qtyInput.value, 10) || 0;
+          if (currentVal > g) {
+            qtyInput.value = g;
+            var unitPrice = cb ? parseInt(cb.dataset.price, 10) : 0;
+            var qtyDiv = qtyInput.closest('.quote-addon-card__quantity');
+            if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+          }
+        });
+        updateAutoScaleLabels(g);
+        updateEstimate();
       });
     }
     // ── /ADD-ON LISTENERS ──────────────────────────────────────
@@ -1061,25 +1254,38 @@
       var guestsInt = parseInt(guests, 10) || 0;
       var selectedAddons = [];
       quoteForm.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        var card = cb.closest('.quote-addon-card');
         var item = {
-          code:  cb.value,
-          name:  cb.dataset.label || cb.value,
-          type:  cb.dataset.type  || 'unknown'
+          code:          cb.value,
+          name:          cb.dataset.label || cb.value,
+          type:          cb.dataset.type  || 'unknown',
+          tier_included: cb.disabled
         };
-        if (cb.value === 'dj_service') {
+        if (cb.dataset.type === 'per-person' && !cb.disabled) {
+          var qtyInput = card ? card.querySelector('.quote-addon-card__qty-input') : null;
+          item.quantity   = qtyInput ? (parseInt(qtyInput.value, 10) || guestsInt) : guestsInt;
+          item.unit_price = parseInt(cb.dataset.price, 10) || 0;
+          item.price      = item.unit_price * item.quantity;
+        } else if (cb.value === 'dj_service' && !cb.disabled) {
           var djS = parseInt((document.querySelector('[name="dj_start_time"]') || {}).value, 10) || 18;
           var djE = parseInt((document.querySelector('[name="dj_end_time"]')   || {}).value, 10) || 20;
           item.start_time = djS + ':00';
           item.end_time   = djE <= 24 ? djE + ':00' : (djE - 24) + ':00';
           item.duration   = djE - djS;
           item.price      = calculateDJPrice();
-        } else if (cb.value === 'bartender_service') {
+        } else if (cb.value === 'bartender_service' && !cb.disabled) {
           item.bartender_count = Math.ceil(guestsInt / 75) || 1;
           item.price           = calculateBartenderPrice(guestsInt);
-        } else if (cb.dataset.price) {
+        } else if (cb.value === 'medical_service' && !cb.disabled) {
+          item.medical_count = Math.ceil(guestsInt / 500) || 1;
+          item.price         = calculateMedicalPrice(guestsInt);
+        } else if (cb.value === 'security_service' && !cb.disabled) {
+          item.officer_count = Math.max(2, Math.ceil(guestsInt / 100));
+          item.price         = calculateSecurityPrice(guestsInt);
+        } else if (cb.dataset.price && !cb.disabled) {
           item.price = parseInt(cb.dataset.price, 10);
         }
-        if (cb.value === 'welcome_drink') {
+        if (cb.value === 'welcome_drink' && !cb.disabled) {
           var drinkTypeEl = quoteForm.querySelector('input[name="welcome_drink_type"]:checked');
           if (drinkTypeEl) item.drink_type = drinkTypeEl.value;
         }
@@ -1088,8 +1294,7 @@
 
       var addonEstimatedTotal = 0;
       selectedAddons.forEach(function (a) {
-        if (a.type === 'per-person' && a.price) addonEstimatedTotal += a.price * guestsInt;
-        else if (a.price) addonEstimatedTotal += a.price;
+        if (!a.tier_included && a.price) addonEstimatedTotal += a.price;
       });
 
       var payload = {

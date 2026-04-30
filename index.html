@@ -212,8 +212,9 @@
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">Захиалгат<span class="pkg-per"> тохирно</span></div>
+              <div class="pkg-price">350,000₮<span class="pkg-per"> / хүн</span></div>
             </div>
+            <small class="pkg-price-note">10–50 хүний event-д</small>
             <p class="pkg-note">Томоохон байгууллагын арга хэмжээнд зориулсан бүрэн үйлчилгээний зохион байгуулалт.</p>
             <ul class="pkg-features">
               <li>Experience багцын бүх үйлчилгээ</li>
@@ -338,8 +339,9 @@
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
+              <div class="pkg-price">220,000₮ - 350,000₮<span class="pkg-per"> / хүн</span></div>
             </div>
+            <small class="pkg-price-note">Хүний тооноос хамаарна</small>
             <p class="pkg-note">Томоохон байгууллагын арга хэмжээнд зориулсан бүрэн үйлчилгээний зохион байгуулалт.</p>
             <ul class="pkg-features">
               <li>Experience багцын бүх үйлчилгээ</li>
@@ -464,8 +466,9 @@
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
+              <div class="pkg-price">220,000₮ - 350,000₮<span class="pkg-per"> / хүн</span></div>
             </div>
+            <small class="pkg-price-note">Хүний тооноос хамаарна</small>
             <p class="pkg-note">Томоохон байгууллагын арга хэмжээнд зориулсан бүрэн үйлчилгээний зохион байгуулалт.</p>
             <ul class="pkg-features">
               <li>Experience багцын бүх үйлчилгээ</li>
@@ -590,8 +593,9 @@
           <div class="pkg-card pkg-card--custom" role="listitem">
             <div class="pkg-header">
               <span class="pkg-tier-label">Production</span>
-              <div class="pkg-price">280,000₮<span class="pkg-per">-с эхлэнэ</span></div>
+              <div class="pkg-price">220,000₮ - 350,000₮<span class="pkg-per"> / хүн</span></div>
             </div>
+            <small class="pkg-price-note">Хүний тооноос хамаарна</small>
             <p class="pkg-note">Томоохон байгууллагын арга хэмжээнд зориулсан бүрэн үйлчилгээний зохион байгуулалт.</p>
             <ul class="pkg-features">
               <li>Experience багцын бүх үйлчилгээ</li>
@@ -974,6 +978,12 @@
                   <span class="quote-addon-card__name">Welcome drink</span>
                   <span class="quote-addon-card__detail">4 төрөл сонголттой</span>
                   <span class="quote-addon-card__price">+5,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="welcome_drink_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 5,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
                 <div class="quote-addon-card__sub-options" hidden>
                   <span class="quote-addon-card__sub-label">Ундааны төрөл:</span>
@@ -992,6 +1002,12 @@
                   <span class="quote-addon-card__name">Зочдын ариун цэврийн багц</span>
                   <span class="quote-addon-card__detail">Сойз, ОО, саван, шампунь</span>
                   <span class="quote-addon-card__price">+5,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="amenity_kit_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 5,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
               </label>
 
@@ -1000,15 +1016,27 @@
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Sleeping bag</span>
                   <span class="quote-addon-card__price">+10,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="sleeping_bag_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 10,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
               </label>
 
               <label class="quote-addon-card">
-                <input type="checkbox" name="addons[]" value="coffee_tea_corner" data-price="5000" data-type="per-person" data-label="Coffee &amp; tea corner">
+                <input type="checkbox" name="addons[]" value="coffee_corner" data-price="5000" data-type="per-person" data-label="Coffee &amp; tea corner">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Coffee &amp; tea corner</span>
                   <span class="quote-addon-card__detail">07:30–09:00</span>
                   <span class="quote-addon-card__price">+5,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="coffee_corner_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 5,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
               </label>
 
@@ -1017,6 +1045,12 @@
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Өдрийн buffet upgrade</span>
                   <span class="quote-addon-card__price">+10,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="lunch_upgrade_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 10,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
               </label>
 
@@ -1025,15 +1059,27 @@
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Оройн buffet upgrade</span>
                   <span class="quote-addon-card__price">+10,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="dinner_upgrade_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 10,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
               </label>
 
               <label class="quote-addon-card">
-                <input type="checkbox" name="addons[]" value="late_night_snacks" data-price="8000" data-type="per-person" data-label="Late night snacks">
+                <input type="checkbox" name="addons[]" value="late_snacks" data-price="8000" data-type="per-person" data-label="Late night snacks">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Late night snacks</span>
                   <span class="quote-addon-card__detail">22:00–24:00</span>
                   <span class="quote-addon-card__price">+8,000₮ / хүн</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
+                    <input type="number" name="late_snacks_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <span class="quote-addon-card__qty-text">хүн × 8,000₮ =</span>
+                    <span class="quote-addon-card__qty-total">—</span>
+                  </div>
                 </div>
               </label>
 
@@ -1048,6 +1094,7 @@
                 <input type="checkbox" name="addons[]" value="dj_service" data-type="flat-dynamic" data-label="DJ service">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">DJ service</span>
+                  <span class="quote-addon-card__detail">18:00–02:00 хүрээнд цаг сонгох</span>
                   <div class="quote-addon-card__time-config" hidden>
                     <div class="quote-addon-card__time-row">
                       <label class="quote-addon-card__time-label">Эхлэх цаг:
@@ -1084,10 +1131,69 @@
               </label>
 
               <label class="quote-addon-card">
-                <input type="checkbox" name="addons[]" value="photographer" data-price="500000" data-type="flat" data-label="Гэрэл зургийн үйлчилгээ">
+                <input type="checkbox" name="addons[]" value="photo_4h" data-price="500000" data-type="flat" data-label="Гэрэл зургийн үйлчилгээ">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Гэрэл зургийн үйлчилгээ (4 цаг)</span>
                   <span class="quote-addon-card__price">+500,000₮</span>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="quote-addons__group">
+            <h4 class="quote-addons__group-title">Event-д тооцох үйлчилгээ</h4>
+            <div class="quote-addons__grid quote-addons__grid--per-event">
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="medical_service" data-type="per-event-auto-medical" data-label="Анхан шатны эмнэлгийн тусламж">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Анхан шатны эмнэлгийн тусламж</span>
+                  <span class="quote-addon-card__detail">1 эмч сувилагч + medical асар</span>
+                  <span class="quote-addon-card__price" data-medical-price>+1,000,000₮</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="security_service" data-type="per-event-auto-security" data-label="Хамгаалалтын алба">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Хамгаалалтын алба</span>
+                  <span class="quote-addon-card__detail">2 officer continuous coverage минимум</span>
+                  <span class="quote-addon-card__price" data-security-price>+1,000,000₮</span>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="quote-addons__group">
+            <h4 class="quote-addons__group-title">Production үйлчилгээ</h4>
+            <div class="quote-addons__grid quote-addons__grid--production">
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="program_design" data-type="flat" data-label="Хөтөлбөр боловсруулах">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Хөтөлбөр боловсруулах</span>
+                  <span class="quote-addon-card__detail">Арга хэмжээний хөтөлбөр хамтран боловсруулах</span>
+                  <span class="quote-addon-card__price">Үнэ тохирно</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="onsite_coordination" data-type="flat" data-label="On-site coordination">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">On-site coordination</span>
+                  <span class="quote-addon-card__detail">Хөтөлбөрийн дагуу нэгдсэн байдлаар удирдах</span>
+                  <span class="quote-addon-card__price">Үнэ тохирно</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="team_activities" data-type="flat" data-label="Team activities">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Team activities</span>
+                  <span class="quote-addon-card__detail">Багийн уур амьсгал дэмжих тоглоом, өрсөлдөөн</span>
+                  <span class="quote-addon-card__price">Үнэ тохирно</span>
                 </div>
               </label>
 
