@@ -1277,6 +1277,19 @@ body.home-page .footer .footer-tagline::before {
 body.home-page .cta-final h2,
 body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
 .cta-final p { max-width: 720px; margin: 0.8rem auto 1.6rem; }
+.cta-final__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 600px) {
+  .cta-final__actions { flex-direction: column; align-items: stretch; }
+  .cta-final__actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 
 body.modal-open { overflow: hidden; }
 .quote-modal {

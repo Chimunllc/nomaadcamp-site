@@ -46,7 +46,7 @@
     <a href="#contact">Холбоо барих</a>
   </div>
   <div class="nav-actions">
-    <a class="nav-cta" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
+    <a class="nav-cta" href="tel:+97699179417">9917-9417</a>
     <button class="nav-toggle" type="button" aria-label="Цэс" aria-controls="primary-nav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M4 6h16M4 12h16M4 18h16"/>
@@ -69,8 +69,8 @@
     <h1>Зөвхөн танай байгууллагад зориулсан<br>кемпийн бүрэн шийдэл</h1>
     <p class="hero-sub">30-аас 1000 хүний арга хэмжээг бэлтгэлээс гүйцэтгэл хүртэл нэгдсэн байдлаар зохион байгуулна. Хаалттай, зөвхөн танай байгууллагад зориулсан орчин.</p>
     <div class="hero-actions">
-      <a class="btn btn--accent btn--lg" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
-      <a class="btn btn--ghost-light btn--lg" href="#camps">Кемпүүд үзэх</a>
+      <a class="btn btn--accent btn--lg" href="#camps">Кемпүүд үзэх</a>
+      <a class="btn btn--ghost-light btn--lg" href="#midweek">Өдрийн хөтөлбөр үзэх</a>
     </div>
 
     <div class="hero-meta">
@@ -860,15 +860,18 @@
 <section class="section cta-final" id="contact">
   <div class="container reveal">
     <h2>Танай байгууллагад тохирсон арга хэмжээг хамтдаа зохион байгуулъя</h2>
-    <p>Хүний тоо, огноо, зорилгын мэдээллээ илгээнэ үү. Манай баг 24 цагийн дотор үнийн санал боловсруулж холбогдоно.</p>
-    <a class="btn btn--accent btn--lg" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
+    <p>Кемп эсвэл өдрийн хөтөлбөрөөс сонгоод тохирох багцын үнийн санал авна уу.</p>
+    <div class="cta-final__actions">
+      <a class="btn btn--accent btn--lg" href="#camps">Кемпүүд үзэх</a>
+      <a class="btn btn--ghost-light btn--lg" href="#midweek">Өдрийн хөтөлбөр үзэх</a>
+    </div>
   </div>
 </section>
 </main>
 
 <div class="bottom-cta">
   <a class="phone" href="tel:+97699179417">9917-9417</a>
-  <a class="btn btn--accent" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
+  <a class="btn btn--ghost" href="#camps">Кемпүүд үзэх</a>
 </div>
 
 <footer class="footer">
@@ -899,7 +902,7 @@
       <div class="footer-cta">
         <h3 class="footer-title">Холбоо барих</h3>
         <a href="tel:+97699179417" class="phone">9917-9417</a>
-        <a class="btn btn--accent" href="#quote-modal" data-quote-open="true">Үнийн санал авах</a>
+        <a href="mailto:info@nomaadcamp.mn">info@nomaadcamp.mn</a>
       </div>
     </div>
 
@@ -918,31 +921,8 @@
     <p class="quote-context-hint" id="quote-context-hint" hidden></p>
     <form class="quote-form" id="quote-form" novalidate>
       <div class="quote-form__grid">
-        <div class="quote-form__field" id="camp-field-wrap">
-          <label for="field-camp">Кемп <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <select id="field-camp" name="camp_name" required>
-            <option value="">Сонгоно уу</option>
-            <option value="A Кемп">A Кемп</option>
-            <option value="B Кемп">B Кемп</option>
-            <option value="C Кемп">C Кемп</option>
-            <option value="Нүүдлийн кемп">Нүүдлийн кемп</option>
-            <option value="Half Day хөтөлбөр">Half Day хөтөлбөр</option>
-            <option value="Full Day хөтөлбөр">Full Day хөтөлбөр</option>
-          </select>
-          <span class="quote-field-error" id="err-camp" role="alert" hidden></span>
-        </div>
-        <div class="quote-form__field" id="tier-field-wrap">
-          <label for="field-tier">Түвшин <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <select id="field-tier" name="package_tier" required>
-            <option value="">Сонгоно уу</option>
-            <option value="Essential">Essential</option>
-            <option value="Experience">Experience</option>
-            <option value="Production">Production</option>
-            <option value="Half Day">Half Day</option>
-            <option value="Full Day">Full Day</option>
-          </select>
-          <span class="quote-field-error" id="err-tier" role="alert" hidden></span>
-        </div>
+        <input type="hidden" id="field-camp" name="camp_name">
+        <input type="hidden" id="field-tier" name="package_tier">
         <div class="quote-form__field">
           <label for="org-name">Байгууллагын нэр <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="org-name" name="organization" type="text" autocomplete="organization" required>
