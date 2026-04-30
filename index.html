@@ -921,31 +921,8 @@
     <p class="quote-context-hint" id="quote-context-hint" hidden></p>
     <form class="quote-form" id="quote-form" novalidate>
       <div class="quote-form__grid">
-        <div class="quote-form__field" id="camp-field-wrap">
-          <label for="field-camp">Кемп <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <select id="field-camp" name="camp_name" required>
-            <option value="">Сонгоно уу</option>
-            <option value="A Кемп">A Кемп</option>
-            <option value="B Кемп">B Кемп</option>
-            <option value="C Кемп">C Кемп</option>
-            <option value="Нүүдлийн кемп">Нүүдлийн кемп</option>
-            <option value="Half Day хөтөлбөр">Half Day хөтөлбөр</option>
-            <option value="Full Day хөтөлбөр">Full Day хөтөлбөр</option>
-          </select>
-          <span class="quote-field-error" id="err-camp" role="alert" hidden></span>
-        </div>
-        <div class="quote-form__field" id="tier-field-wrap">
-          <label for="field-tier">Түвшин <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <select id="field-tier" name="package_tier" required>
-            <option value="">Сонгоно уу</option>
-            <option value="Essential">Essential</option>
-            <option value="Experience">Experience</option>
-            <option value="Production">Production</option>
-            <option value="Half Day">Half Day</option>
-            <option value="Full Day">Full Day</option>
-          </select>
-          <span class="quote-field-error" id="err-tier" role="alert" hidden></span>
-        </div>
+        <input type="hidden" id="field-camp" name="camp_name">
+        <input type="hidden" id="field-tier" name="package_tier">
         <div class="quote-form__field">
           <label for="org-name">Байгууллагын нэр <span class="quote-form__required" aria-hidden="true">*</span></label>
           <input id="org-name" name="organization" type="text" autocomplete="organization" required>
