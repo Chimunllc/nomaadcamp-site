@@ -836,20 +836,37 @@
 
     var TIER_INCLUSIONS = {
       'Essential': [],
-      'Experience': ['welcome_drink', 'sleeping_bag', 'coffee_corner', 'lunch_upgrade', 'dinner_upgrade'],
+      'Experience': [
+        'welcome_drink', 'sleeping_bag', 'coffee_corner',
+        'lunch_upgrade', 'dinner_upgrade',
+        'moonbeam_lounge', 'dj_service', 'photo_4h'
+      ],
       'Production': [
-        'welcome_drink', 'amenity_kit', 'sleeping_bag', 'coffee_corner',
-        'lunch_upgrade', 'dinner_upgrade', 'dj_service', 'bartender_service', 'photo_4h',
-        'medical_service', 'security_service', 'program_design', 'onsite_coordination', 'team_activities'
+        'welcome_drink', 'sleeping_bag', 'coffee_corner',
+        'lunch_upgrade', 'dinner_upgrade',
+        'moonbeam_lounge', 'dj_service', 'photo_4h',
+        'amenity_kit', 'bartender_service',
+        'medical_service', 'security_service',
+        'program_design', 'onsite_coordination', 'team_activities',
+        'led_screen_18m2'
       ]
     };
 
+    function getTierInclusions(campName, tier) {
+      var included = TIER_INCLUSIONS[tier] ? TIER_INCLUSIONS[tier].slice() : [];
+      if (tier === 'Production' &&
+          (campName === 'C Кемп' || campName === 'Нүүдлийн кемп')) {
+        included = included.filter(function (item) { return item !== 'led_screen_18m2'; });
+      }
+      return included;
+    }
+
     var PRODUCTION_PRICING = [
-      { min: 50,  max: 99,       price: 350000 },
-      { min: 100, max: 199,      price: 280000 },
-      { min: 200, max: 299,      price: 250000 },
-      { min: 300, max: 499,      price: 220000 },
-      { min: 500, max: Infinity, price: 200000 }
+      { min: 50,  max: 99,       price: 280000 },
+      { min: 100, max: 199,      price: 250000 },
+      { min: 200, max: 299,      price: 230000 },
+      { min: 300, max: 499,      price: 210000 },
+      { min: 500, max: Infinity, price: 195000 }
     ];
 
     function formatMNT(n) {
@@ -881,7 +898,9 @@
       return Math.max(2, Math.ceil(guests / 100)) * 500000;
     }
 
-    function getProductionPricePerPerson(guests) {
+    function getProductionPricePerPerson(guests, campName) {
+      if (campName === 'C Кемп') return 350000;
+      if (campName === 'Нүүдлийн кемп') return 220000;
       var tier = null;
       for (var i = 0; i < PRODUCTION_PRICING.length; i++) {
         if (guests >= PRODUCTION_PRICING[i].min && guests <= PRODUCTION_PRICING[i].max) {
@@ -889,11 +908,12 @@
           break;
         }
       }
-      return tier ? tier.price : 200000;
+      return tier ? tier.price : 195000;
     }
 
     function applyTierInclusions(tier) {
-      var includedItems = TIER_INCLUSIONS[tier] || [];
+      var campName = campSelect ? campSelect.value : '';
+      var includedItems = getTierInclusions(campName, tier);
       quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
         var card = cb.closest('.quote-addon-card');
         if (!card) return;
@@ -964,6 +984,8 @@
 
       if (!camp || !tier || !guests || guests < 1) {
         estimateEl.hidden = true;
+        var nudgeEl2 = document.getElementById('tier-nudge');
+        if (nudgeEl2) nudgeEl2.hidden = true;
         return;
       }
 
@@ -971,7 +993,7 @@
 
       var perPerson;
       if (tier === 'Production') {
-        perPerson = getProductionPricePerPerson(guests);
+        perPerson = getProductionPricePerPerson(guests, camp);
       } else {
         var campPrices = PRICE_TABLE[tier];
         if (!campPrices) { estimateEl.hidden = true; return; }
@@ -1055,6 +1077,204 @@
       html += '<p class="quote-estimate__total">~<span class="quote-estimate__num">' + formatMNT(total) + '</span>-с эхлэнэ</p>';
       html += '<p class="quote-estimate__disclaimer">Эцсийн үнэ байршил, нэмэлт үйлчилгээнээс хамааран өөрчлөгдөнө.</p>';
       estimateEl.innerHTML = html;
+
+      checkTierUpgradeNudge();
+    }
+
+    function calculateAddonPrice(cb, guests) {
+      var type = cb.dataset.type;
+      if (type === 'per-person') {
+        var ppPrice = parseInt(cb.dataset.price, 10);
+        var card = cb.closest('.quote-addon-card');
+        var qtyInput = card ? card.querySelector('.quote-addon-card__qty-input') : null;
+        var qty = qtyInput ? (parseInt(qtyInput.value, 10) || guests) : guests;
+        return ppPrice * qty;
+      } else if (type === 'flat-dynamic' && cb.value === 'dj_service') {
+        return calculateDJPrice();
+      } else if (type === 'flat-auto' && cb.value === 'bartender_service') {
+        return calculateBartenderPrice(guests);
+      } else if (type === 'per-event-auto-medical') {
+        return calculateMedicalPrice(guests);
+      } else if (type === 'per-event-auto-security') {
+        return calculateSecurityPrice(guests);
+      } else if (type === 'flat' && cb.dataset.price) {
+        return parseInt(cb.dataset.price, 10);
+      }
+      return 0;
+    }
+
+    function calculateAddonSum(guests, excludedCodes) {
+      var sum = 0;
+      quoteForm.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        if (cb.disabled) return;
+        if (excludedCodes && excludedCodes.indexOf(cb.value) !== -1) return;
+        sum += calculateAddonPrice(cb, guests);
+      });
+      return sum;
+    }
+
+    function calculateCurrentTotal() {
+      var c    = campSelect    ? campSelect.value               : '';
+      var t    = tierSelect    ? tierSelect.value               : '';
+      var g    = guestInput    ? (parseInt(guestInput.value, 10) || 0) : 0;
+      var sh   = shuttleSelect ? shuttleSelect.value            : 'Сонгохгүй';
+      if (!c || !t || g < 1) return 0;
+      var perPerson;
+      if (t === 'Production') {
+        perPerson = getProductionPricePerPerson(g, c);
+      } else {
+        var cp = PRICE_TABLE[t];
+        if (!cp || !cp[c]) return 0;
+        perPerson = cp[c];
+      }
+      var shuttleAmt = SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0;
+      return perPerson * g + shuttleAmt + calculateAddonSum(g, null);
+    }
+
+    function calculateProductionTotal(campName, guests) {
+      var sh = shuttleSelect ? shuttleSelect.value : 'Сонгохгүй';
+      var shuttleAmt = SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0;
+      var base = getProductionPricePerPerson(guests, campName) * guests;
+      var inclusions = getTierInclusions(campName, 'Production');
+      return base + shuttleAmt + calculateAddonSum(guests, inclusions);
+    }
+
+    function calculateExperienceTotal(campName, guests) {
+      var sh = shuttleSelect ? shuttleSelect.value : 'Сонгохгүй';
+      var shuttleAmt = SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0;
+      var cp = PRICE_TABLE['Experience'];
+      if (!cp || !cp[campName]) return Infinity;
+      var base = cp[campName] * guests;
+      var inclusions = getTierInclusions(campName, 'Experience');
+      return base + shuttleAmt + calculateAddonSum(guests, inclusions);
+    }
+
+    function getSelectedAddonCodes() {
+      var codes = [];
+      quoteForm.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        if (!cb.disabled) codes.push(cb.value);
+      });
+      return codes;
+    }
+
+    function getSelectedItemsInTier(tier, campName) {
+      var tierItems = getTierInclusions(campName, tier);
+      var result = [];
+      quoteForm.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        if (tierItems.indexOf(cb.value) !== -1) result.push(cb.value);
+      });
+      return result;
+    }
+
+    function checkTierUpgradeNudge() {
+      var guests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+      var currentTier = tierSelect ? tierSelect.value : '';
+      var campName = campSelect ? campSelect.value : '';
+      var nudge = document.getElementById('tier-nudge');
+      if (!nudge || !currentTier || !campName || guests < 1) {
+        if (nudge) nudge.hidden = true;
+        return;
+      }
+
+      if (currentTier === 'Production') {
+        nudge.hidden = true;
+        return;
+      }
+
+      var currentTotal = calculateCurrentTotal();
+      if (currentTotal <= 0) { nudge.hidden = true; return; }
+
+      var userSelectedProductionItems = getSelectedItemsInTier('Production', campName);
+
+      if (userSelectedProductionItems.length >= 5) {
+        var productionTotal = calculateProductionTotal(campName, guests);
+        if (productionTotal < currentTotal) {
+          var userSelectedCodes = getSelectedAddonCodes();
+          var productionInclusions = getTierInclusions(campName, 'Production');
+          var bonusItems = [];
+          if (productionInclusions.indexOf('led_screen_18m2') !== -1 &&
+              userSelectedCodes.indexOf('led_screen_18m2') === -1) {
+            bonusItems.push({ name: 'LED дэлгэц 18м²' });
+          }
+          if (userSelectedCodes.indexOf('amenity_kit') === -1) {
+            bonusItems.push({ name: 'Зочдын ариун цэврийн багц' });
+          }
+          if (userSelectedCodes.indexOf('program_design') === -1) {
+            bonusItems.push({ name: 'Хөтөлбөр боловсруулах' });
+          }
+          if (userSelectedCodes.indexOf('team_activities') === -1) {
+            bonusItems.push({ name: 'Team activities' });
+          }
+          showNudge({
+            targetTier: 'Production',
+            savings: currentTotal - productionTotal,
+            currentTotal: currentTotal,
+            bonusItems: bonusItems
+          });
+          return;
+        }
+      }
+
+      if (currentTier === 'Essential') {
+        var userSelectedExperienceItems = getSelectedItemsInTier('Experience', campName);
+        if (userSelectedExperienceItems.length >= 3) {
+          var experienceTotal = calculateExperienceTotal(campName, guests);
+          if (experienceTotal < currentTotal) {
+            showNudge({
+              targetTier: 'Experience',
+              savings: currentTotal - experienceTotal,
+              currentTotal: currentTotal,
+              bonusItems: []
+            });
+            return;
+          }
+        }
+      }
+
+      nudge.hidden = true;
+    }
+
+    function showNudge(opts) {
+      var nudge = document.getElementById('tier-nudge');
+      if (!nudge) return;
+      nudge.querySelector('[data-target-tier-display]').textContent = opts.targetTier;
+      nudge.querySelector('[data-target-tier]').textContent = opts.targetTier;
+      nudge.querySelector('[data-savings-amount]').textContent = opts.savings.toLocaleString() + '₮';
+      var pct = Math.round((opts.savings / opts.currentTotal) * 100);
+      nudge.querySelector('[data-savings-percent]').textContent = '(' + pct + '% хямд)';
+      var bonusBlock = nudge.querySelector('.quote-tier-nudge__bonus');
+      var bonusList  = nudge.querySelector('[data-bonus-list]');
+      if (opts.bonusItems && opts.bonusItems.length > 0) {
+        bonusBlock.hidden = false;
+        bonusList.innerHTML = '';
+        opts.bonusItems.forEach(function (item) {
+          var li = document.createElement('li');
+          li.textContent = item.name;
+          bonusList.appendChild(li);
+        });
+      } else {
+        bonusBlock.hidden = true;
+      }
+      nudge.hidden = false;
+    }
+
+    var nudgeEl = document.getElementById('tier-nudge');
+    if (nudgeEl) {
+      nudgeEl.querySelector('[data-tier-switch]').addEventListener('click', function () {
+        var targetTier = nudgeEl.querySelector('[data-target-tier]').textContent;
+        if (tierSelect) tierSelect.value = targetTier;
+        var cName = campSelect ? campSelect.value : '';
+        applyTierInclusions(targetTier);
+        var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+        quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qi) {
+          var card = qi.closest('.quote-addon-card');
+          var cb = card ? card.querySelector('input[name="addons[]"]') : null;
+          if (cb && cb.disabled) return;
+          if (currentGuests > 0) { qi.value = currentGuests; qi.max = currentGuests; }
+        });
+        updateAutoScaleLabels(currentGuests);
+        updateEstimate();
+      });
     }
 
     if (guestInput)    guestInput.addEventListener('input',   updateEstimate);
