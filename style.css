@@ -3349,6 +3349,72 @@ body.home-page video {
   opacity: 0.75;
 }
 
+/* Quantity input */
+.quote-addon-card__quantity {
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.quote-addon-card__qty-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--primary-forest);
+}
+.quote-addon-card__qty-input {
+  width: 72px;
+  padding: 0.28rem 0.45rem;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  background: #fff;
+  color: var(--primary-forest);
+}
+.quote-addon-card__qty-text {
+  font-size: 0.76rem;
+  color: #6b7280;
+}
+.quote-addon-card__qty-total {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Tier-included state */
+.quote-addon-card--included {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+.quote-addon-card--included input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.quote-addon-card__included-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  margin-left: 0.4rem;
+  background: #C65D2E;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 4px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Production pricing note */
+.pkg-price-note {
+  display: block;
+  font-size: 0.72rem;
+  color: rgba(26, 26, 26, 0.52);
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
 /* Mobile: single column */
 @media (max-width: 600px) {
   .quote-addons__grid {
@@ -3356,5 +3422,9 @@ body.home-page video {
   }
   .quote-addon-card--full {
     grid-column: 1;
+  }
+  .quote-addon-card__quantity {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
