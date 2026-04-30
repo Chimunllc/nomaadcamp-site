@@ -958,7 +958,144 @@
           <input id="guest-count" name="guest_count" type="number" min="1" step="1" required>
           <span class="quote-field-error" id="err-guests" role="alert" hidden></span>
         </div>
-        <div class="quote-estimate quote-form__field--full" id="quote-estimate" hidden></div>
+
+        <!-- ── НЭМЭЛТ ҮЙЛЧИЛГЭЭ ─────────────────────────────────── -->
+        <div class="quote-form__field quote-form__field--full quote-addons-wrap" id="quote-addons-section">
+          <h3 class="quote-addons__title">Нэмэлт үйлчилгээ (заавал биш)</h3>
+          <p class="quote-addons__subtitle">Хэрэгцээтэй сонгож, үндсэн багц дээр нэмж захиалаарай</p>
+
+          <div class="quote-addons__group">
+            <h4 class="quote-addons__group-title">Хүний тоогоор тооцох нэмэлтүүд</h4>
+            <div class="quote-addons__grid quote-addons__grid--per-person">
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="welcome_drink" data-price="5000" data-type="per-person" data-label="Welcome drink">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Welcome drink</span>
+                  <span class="quote-addon-card__detail">4 төрөл сонголттой</span>
+                  <span class="quote-addon-card__price">+5,000₮ / хүн</span>
+                </div>
+                <div class="quote-addon-card__sub-options" hidden>
+                  <span class="quote-addon-card__sub-label">Ундааны төрөл:</span>
+                  <div class="quote-addon-card__radio-group">
+                    <label class="quote-addon-card__radio"><input type="radio" name="welcome_drink_type" value="lemon_water"> Lemon water</label>
+                    <label class="quote-addon-card__radio"><input type="radio" name="welcome_drink_type" value="iced_tea"> Iced tea</label>
+                    <label class="quote-addon-card__radio"><input type="radio" name="welcome_drink_type" value="berry"> Berry</label>
+                    <label class="quote-addon-card__radio"><input type="radio" name="welcome_drink_type" value="mint"> Mint</label>
+                  </div>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="amenity_kit" data-price="5000" data-type="per-person" data-label="Зочдын ариун цэврийн багц">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Зочдын ариун цэврийн багц</span>
+                  <span class="quote-addon-card__detail">Сойз, ОО, саван, шампунь</span>
+                  <span class="quote-addon-card__price">+5,000₮ / хүн</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="sleeping_bag" data-price="10000" data-type="per-person" data-label="Sleeping bag">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Sleeping bag</span>
+                  <span class="quote-addon-card__price">+10,000₮ / хүн</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="coffee_tea_corner" data-price="5000" data-type="per-person" data-label="Coffee &amp; tea corner">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Coffee &amp; tea corner</span>
+                  <span class="quote-addon-card__detail">07:30–09:00</span>
+                  <span class="quote-addon-card__price">+5,000₮ / хүн</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="lunch_upgrade" data-price="10000" data-type="per-person" data-label="Өдрийн buffet upgrade">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Өдрийн buffet upgrade</span>
+                  <span class="quote-addon-card__price">+10,000₮ / хүн</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="dinner_upgrade" data-price="10000" data-type="per-person" data-label="Оройн buffet upgrade">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Оройн buffet upgrade</span>
+                  <span class="quote-addon-card__price">+10,000₮ / хүн</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="late_night_snacks" data-price="8000" data-type="per-person" data-label="Late night snacks">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Late night snacks</span>
+                  <span class="quote-addon-card__detail">22:00–24:00</span>
+                  <span class="quote-addon-card__price">+8,000₮ / хүн</span>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="quote-addons__group">
+            <h4 class="quote-addons__group-title">Тогтмол үнэтэй нэмэлтүүд</h4>
+            <div class="quote-addons__grid quote-addons__grid--flat">
+
+              <label class="quote-addon-card quote-addon-card--full">
+                <input type="checkbox" name="addons[]" value="dj_service" data-type="flat-dynamic" data-label="DJ service">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">DJ service</span>
+                  <div class="quote-addon-card__time-config" hidden>
+                    <div class="quote-addon-card__time-row">
+                      <label class="quote-addon-card__time-label">Эхлэх цаг:
+                        <select name="dj_start_time" class="quote-addon-card__select">
+                          <option value="18">18:00</option>
+                          <option value="19">19:00</option>
+                          <option value="20">20:00</option>
+                        </select>
+                      </label>
+                      <label class="quote-addon-card__time-label">Дуусах цаг:
+                        <select name="dj_end_time" class="quote-addon-card__select">
+                          <option value="21">21:00</option>
+                          <option value="22">22:00</option>
+                          <option value="23">23:00</option>
+                          <option value="24">24:00</option>
+                          <option value="25">01:00</option>
+                          <option value="26">02:00</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                  <span class="quote-addon-card__price" data-dj-price>+1,000,000₮</span>
+                </div>
+              </label>
+
+              <label class="quote-addon-card quote-addon-card--full">
+                <input type="checkbox" name="addons[]" value="bartender_service" data-type="flat-auto" data-label="Bartender service">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Bartender service (3 цаг)</span>
+                  <span class="quote-addon-card__detail">Хүний тооноос хамаарч bartender тоо автомат тогтоогдоно</span>
+                  <span class="quote-addon-card__price" data-bartender-price>+500,000₮ (1 bartender)</span>
+                  <small class="quote-addon-card__tooltip">1 bartender / 75 зочин стандарт. Premium event-д илүү олон bartender хэрэгтэй бол sales баг тохирно.</small>
+                </div>
+              </label>
+
+              <label class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="photographer" data-price="500000" data-type="flat" data-label="Гэрэл зургийн үйлчилгээ">
+                <div class="quote-addon-card__body">
+                  <span class="quote-addon-card__name">Гэрэл зургийн үйлчилгээ (4 цаг)</span>
+                  <span class="quote-addon-card__price">+500,000₮</span>
+                </div>
+              </label>
+
+            </div>
+          </div>
+        </div>
+        <!-- ── /НЭМЭЛТ ҮЙЛЧИЛГЭЭ ──────────────────────────────── -->
+
         <div class="quote-form__field quote-form__field--full quote-form__field--conditional" id="location-field-wrap" aria-hidden="true" style="display:none">
           <label for="location">Кемп байгуулах байршил <span class="quote-form__required" aria-hidden="true">*</span></label>
           <small class="quote-form__helper-text">Аймаг, сум эсвэл Google Maps location оруулна уу</small>
@@ -978,6 +1115,7 @@
           <label for="extra-info">Нэмэлт мэдээлэл</label>
           <textarea id="extra-info" name="extra_info" rows="4"></textarea>
         </div>
+        <div class="quote-estimate quote-form__field--full" id="quote-estimate" hidden></div>
       </div>
       <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
         <label for="field-website">Website</label>

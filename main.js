@@ -764,6 +764,14 @@
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
+      // Reset add-on UI
+      quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) { cb.checked = false; });
+      quoteForm.querySelectorAll('.quote-addon-card__time-config').forEach(function (el) { el.hidden = true; });
+      quoteForm.querySelectorAll('.quote-addon-card__sub-options').forEach(function (el) { el.hidden = true; });
+      var bartenderPriceEl = document.querySelector('[data-bartender-price]');
+      if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
+      var djPriceEl = document.querySelector('[data-dj-price]');
+      if (djPriceEl) djPriceEl.textContent = '+1,000,000₮';
     }
 
     // Clear inline errors on user input
@@ -803,12 +811,29 @@
       return n.toLocaleString('en-US') + '₮';
     }
 
+    function calculateDJPrice() {
+      var startEl = document.querySelector('[name="dj_start_time"]');
+      var endEl   = document.querySelector('[name="dj_end_time"]');
+      if (!startEl || !endEl) return 1000000;
+      var duration = parseInt(endEl.value, 10) - parseInt(startEl.value, 10);
+      if (duration <= 2) return 1000000;
+      if (duration === 3) return 1500000;
+      if (duration === 4) return 2000000;
+      if (duration === 5) return 2500000;
+      return 3000000;
+    }
+
+    function calculateBartenderPrice(guests) {
+      var count = Math.ceil(guests / 75) || 1;
+      return count * 500000;
+    }
+
     function updateEstimate() {
       if (!estimateEl) return;
-      var camp   = campSelect    ? campSelect.value              : '';
-      var tier   = tierSelect    ? tierSelect.value              : '';
-      var guests = guestInput    ? parseInt(guestInput.value, 10) : 0;
-      var shuttle = shuttleSelect ? shuttleSelect.value          : 'Сонгохгүй';
+      var camp    = campSelect    ? campSelect.value               : '';
+      var tier    = tierSelect    ? tierSelect.value               : '';
+      var guests  = guestInput    ? parseInt(guestInput.value, 10) : 0;
+      var shuttle = shuttleSelect ? shuttleSelect.value            : 'Сонгохгүй';
 
       if (!camp || !tier || !guests || guests < 1) {
         estimateEl.hidden = true;
@@ -832,12 +857,44 @@
 
       var base = perPerson * guests;
       var shuttleAmount = SHUTTLE_PRICE[shuttle] !== undefined ? SHUTTLE_PRICE[shuttle] : 0;
-      var total = base + shuttleAmount;
       var shuttleLabelText = SHUTTLE_LABEL[shuttle];
+
+      var perPersonAddonsSum = 0;
+      var flatAddonsSum = 0;
+      var addonRows = '';
+
+      document.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        var type  = cb.dataset.type;
+        var label = cb.dataset.label || cb.value;
+        if (type === 'per-person') {
+          var ppPrice = parseInt(cb.dataset.price, 10);
+          perPersonAddonsSum += ppPrice;
+          addonRows += '<p class="quote-estimate__row">' + label + ': ' + formatMNT(ppPrice) + ' × ' + guests + ' = <span class="quote-estimate__num">' + formatMNT(ppPrice * guests) + '</span></p>';
+        } else if (type === 'flat-dynamic' && cb.value === 'dj_service') {
+          var djPrice = calculateDJPrice();
+          flatAddonsSum += djPrice;
+          addonRows += '<p class="quote-estimate__row">DJ service: <span class="quote-estimate__num">+' + formatMNT(djPrice) + '</span></p>';
+        } else if (type === 'flat-auto' && cb.value === 'bartender_service') {
+          var btPrice = calculateBartenderPrice(guests);
+          var btCount = Math.ceil(guests / 75) || 1;
+          flatAddonsSum += btPrice;
+          addonRows += '<p class="quote-estimate__row">Bartender (' + btCount + '): <span class="quote-estimate__num">+' + formatMNT(btPrice) + '</span></p>';
+        } else if (type === 'flat') {
+          var flatPrice = parseInt(cb.dataset.price, 10);
+          flatAddonsSum += flatPrice;
+          addonRows += '<p class="quote-estimate__row">' + label + ': <span class="quote-estimate__num">+' + formatMNT(flatPrice) + '</span></p>';
+        }
+      });
+
+      var total = base + (perPersonAddonsSum * guests) + flatAddonsSum + shuttleAmount;
 
       var html = '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>';
       html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн</p>';
       html += '<p class="quote-estimate__row">' + guests + ' × ' + formatMNT(perPerson) + ' = <span class="quote-estimate__num">' + formatMNT(base) + '</span></p>';
+      if (addonRows) {
+        html += '<p class="quote-estimate__row quote-estimate__row--addon-section">Нэмэлт үйлчилгээ:</p>';
+        html += addonRows;
+      }
       if (shuttleLabelText) {
         html += '<p class="quote-estimate__row">' + shuttleLabelText + ': <span class="quote-estimate__num">+' + formatMNT(shuttleAmount) + '</span></p>';
       }
@@ -849,6 +906,55 @@
 
     if (guestInput)    guestInput.addEventListener('input',   updateEstimate);
     if (shuttleSelect) shuttleSelect.addEventListener('change', updateEstimate);
+
+    // ── ADD-ON LISTENERS ───────────────────────────────────────
+    document.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
+      cb.addEventListener('change', updateEstimate);
+    });
+
+    var djStartSel = document.querySelector('[name="dj_start_time"]');
+    var djEndSel   = document.querySelector('[name="dj_end_time"]');
+    if (djStartSel) djStartSel.addEventListener('change', function () {
+      updateEstimate();
+      var priceEl = document.querySelector('[data-dj-price]');
+      if (priceEl) priceEl.textContent = '+' + calculateDJPrice().toLocaleString('en-US') + '₮';
+    });
+    if (djEndSel) djEndSel.addEventListener('change', function () {
+      updateEstimate();
+      var priceEl = document.querySelector('[data-dj-price]');
+      if (priceEl) priceEl.textContent = '+' + calculateDJPrice().toLocaleString('en-US') + '₮';
+    });
+
+    var djCb = document.querySelector('input[value="dj_service"]');
+    if (djCb) {
+      djCb.addEventListener('change', function (e) {
+        var timeConfig = e.target.closest('.quote-addon-card').querySelector('.quote-addon-card__time-config');
+        if (timeConfig) timeConfig.hidden = !e.target.checked;
+      });
+    }
+
+    var welcomeDrinkCb = document.querySelector('input[value="welcome_drink"]');
+    if (welcomeDrinkCb) {
+      welcomeDrinkCb.addEventListener('change', function (e) {
+        var subOptions = e.target.closest('.quote-addon-card').querySelector('.quote-addon-card__sub-options');
+        if (subOptions) subOptions.hidden = !e.target.checked;
+      });
+    }
+
+    if (guestInput) {
+      guestInput.addEventListener('input', function () {
+        var bartenderPriceEl = document.querySelector('[data-bartender-price]');
+        if (!bartenderPriceEl) return;
+        var g = parseInt(guestInput.value, 10);
+        if (!g || g < 1) {
+          bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
+          return;
+        }
+        var btCount = Math.ceil(g / 75);
+        bartenderPriceEl.textContent = '+' + (btCount * 500000).toLocaleString('en-US') + '₮ (' + btCount + ' bartender)';
+      });
+    }
+    // ── /ADD-ON LISTENERS ──────────────────────────────────────
 
     // Open modal from any quote trigger button
     quoteOpeners.forEach(function (link) {
@@ -952,6 +1058,40 @@
       var submitBtn = quoteForm.querySelector('[type="submit"]');
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Илгээж байна…'; }
 
+      var guestsInt = parseInt(guests, 10) || 0;
+      var selectedAddons = [];
+      quoteForm.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        var item = {
+          code:  cb.value,
+          name:  cb.dataset.label || cb.value,
+          type:  cb.dataset.type  || 'unknown'
+        };
+        if (cb.value === 'dj_service') {
+          var djS = parseInt((document.querySelector('[name="dj_start_time"]') || {}).value, 10) || 18;
+          var djE = parseInt((document.querySelector('[name="dj_end_time"]')   || {}).value, 10) || 20;
+          item.start_time = djS + ':00';
+          item.end_time   = djE <= 24 ? djE + ':00' : (djE - 24) + ':00';
+          item.duration   = djE - djS;
+          item.price      = calculateDJPrice();
+        } else if (cb.value === 'bartender_service') {
+          item.bartender_count = Math.ceil(guestsInt / 75) || 1;
+          item.price           = calculateBartenderPrice(guestsInt);
+        } else if (cb.dataset.price) {
+          item.price = parseInt(cb.dataset.price, 10);
+        }
+        if (cb.value === 'welcome_drink') {
+          var drinkTypeEl = quoteForm.querySelector('input[name="welcome_drink_type"]:checked');
+          if (drinkTypeEl) item.drink_type = drinkTypeEl.value;
+        }
+        selectedAddons.push(item);
+      });
+
+      var addonEstimatedTotal = 0;
+      selectedAddons.forEach(function (a) {
+        if (a.type === 'per-person' && a.price) addonEstimatedTotal += a.price * guestsInt;
+        else if (a.price) addonEstimatedTotal += a.price;
+      });
+
       var payload = {
         camp:                  camp,
         tier:                  tier,
@@ -970,6 +1110,9 @@
         camp_name:             camp,
         package_tier:          tier,
         shuttle_service_label: (fd.get('shuttle_service') || '').trim(),
+        addons_json:           JSON.stringify(selectedAddons),
+        addon_count:           selectedAddons.length,
+        estimated_addon_total: addonEstimatedTotal,
         source:                'nomaadcamp.com'
       };
 
