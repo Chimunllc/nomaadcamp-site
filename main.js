@@ -756,8 +756,10 @@
       if (isDayProgram) {
         filterSelectOptions(campSelect, DAY_PROGRAM_OPTIONS);
         filterSelectOptions(tierSelect, DAY_PROGRAM_TIERS);
-        if (campSelect) campSelect.value = camp;
-        if (tierSelect) tierSelect.value = tier;
+        if (campSelect) { campSelect.value = camp; campSelect.required = false; }
+        if (tierSelect) { tierSelect.value = tier; tierSelect.required = false; }
+        if (campFieldWrap) campFieldWrap.style.display = 'none';
+        if (tierFieldWrap) tierFieldWrap.style.display = 'none';
         if (contextHint) {
           contextHint.textContent = 'Та Өдрийн хөтөлбөр · ' + getDayProgramLabel(camp) + ' багцын үнийн санал авах гэж байна.';
           contextHint.hidden = false;
@@ -765,8 +767,10 @@
       } else if (isCamp) {
         filterSelectOptions(campSelect, CAMP_OPTIONS);
         filterSelectOptions(tierSelect, CAMP_TIERS);
-        if (campSelect) campSelect.value = camp;
-        if (tierSelect) tierSelect.value = tier;
+        if (campSelect) { campSelect.value = camp; campSelect.required = true; }
+        if (tierSelect) { tierSelect.value = tier; tierSelect.required = true; }
+        if (campFieldWrap) campFieldWrap.style.display = '';
+        if (tierFieldWrap) tierFieldWrap.style.display = '';
         if (contextHint) {
           contextHint.textContent = 'Та ' + camp + ' · ' + tier + ' багцын үнийн санал авах гэж байна.';
           contextHint.hidden = false;
@@ -774,8 +778,10 @@
       } else {
         resetSelectOptions(campSelect);
         resetSelectOptions(tierSelect);
-        if (campSelect) campSelect.value = camp;
-        if (tierSelect) tierSelect.value = tier;
+        if (campSelect) { campSelect.value = camp; campSelect.required = true; }
+        if (tierSelect) { tierSelect.value = tier; tierSelect.required = true; }
+        if (campFieldWrap) campFieldWrap.style.display = '';
+        if (tierFieldWrap) tierFieldWrap.style.display = '';
         if (contextHint) contextHint.hidden = true;
       }
 
@@ -804,6 +810,8 @@
       resetSelectOptions(tierSelect);
       if (campSelect) { campSelect.value = ''; campSelect.required = true; }
       if (tierSelect) { tierSelect.value = ''; tierSelect.required = true; }
+      if (campFieldWrap) campFieldWrap.style.display = '';
+      if (tierFieldWrap) tierFieldWrap.style.display = '';
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
