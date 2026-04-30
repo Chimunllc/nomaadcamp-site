@@ -846,8 +846,6 @@
         'lunch_upgrade', 'dinner_upgrade',
         'moonbeam_lounge', 'dj_service', 'photo_4h',
         'amenity_kit', 'bartender_service',
-        'medical_service', 'security_service',
-        'program_design', 'onsite_coordination', 'team_activities',
         'led_screen_18m2'
       ]
     };
@@ -911,6 +909,18 @@
       return tier ? tier.price : 195000;
     }
 
+    function toggleProductionOnlySections(tier) {
+      var eventServicesSection = document.querySelector('.quote-addons__group--per-event');
+      var productionServicesSection = document.querySelector('.quote-addons__group--production');
+      if (tier === 'Production') {
+        if (eventServicesSection) eventServicesSection.style.display = '';
+        if (productionServicesSection) productionServicesSection.style.display = '';
+      } else {
+        if (eventServicesSection) eventServicesSection.style.display = 'none';
+        if (productionServicesSection) productionServicesSection.style.display = 'none';
+      }
+    }
+
     function applyTierInclusions(tier) {
       var campName = campSelect ? campSelect.value : '';
       var includedItems = getTierInclusions(campName, tier);
@@ -942,6 +952,7 @@
           if (existingBadge) existingBadge.remove();
         }
       });
+      toggleProductionOnlySections(tier);
     }
 
     function updateAutoScaleLabels(guests) {

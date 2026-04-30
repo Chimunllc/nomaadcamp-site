@@ -3461,6 +3461,45 @@ body.home-page video {
   margin-left: -1.25rem;
 }
 
+/* Info-only addon card (Production-included services shown without checkbox) */
+.quote-addon-card--info {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  cursor: default;
+  padding: 1rem 1.25rem;
+}
+.quote-addon-card--info .quote-addon-card__name {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* Production tier card sub-section */
+.pkg-features__sub-title {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.55);
+}
+.pkg-features--secondary {
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.65);
+}
+.pkg-features--secondary li {
+  font-style: italic;
+}
+.pkg-features__custom-note {
+  display: block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-left: 3px solid rgba(0, 0, 0, 0.15);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.65);
+}
+
 /* Tier upgrade nudge */
 .quote-tier-nudge {
   margin-top: 1.5rem;
