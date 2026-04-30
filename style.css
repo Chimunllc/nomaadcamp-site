@@ -3103,57 +3103,67 @@ body.home-page video {
   border: 1px solid #E0DDD5;
 }
 
+/* ============ Midweek shuttle service ============ */
 .midweek-shuttle {
-  margin-top: 48px;
-  padding: 32px;
-  border-radius: 16px;
-  background: #F5F2EA;
-  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .midweek-shuttle h3 {
-  margin: 0 0 12px;
-}
-
-.midweek-shuttle__desc {
-  margin: 0 0 24px;
-  color: var(--color-text-muted, #6B6760);
-  font-size: 0.95rem;
-}
-
-.midweek-shuttle__grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-}
-
-.midweek-shuttle__card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 20px 32px;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid #E0DDD5;
-  min-width: 200px;
-}
-
-.midweek-shuttle__card .pkg-price {
+  margin: 0 0 0.5rem;
   font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.midweek-shuttle__note {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+}
+
+.shuttle-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.shuttle-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.shuttle-option__label {
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.shuttle-option__price {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--accent, #C75D2C);
+}
+
+@media (max-width: 600px) {
+  .midweek-shuttle {
+    padding: 1.5rem;
+  }
+  .shuttle-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .midweek-shuttle {
-    padding: 24px 16px;
-  }
-
-  .midweek-shuttle__card {
-    min-width: 160px;
-    padding: 16px 24px;
-  }
-
   .midweek-addons {
     padding: 24px 16px;
   }
