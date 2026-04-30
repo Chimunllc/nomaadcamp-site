@@ -637,12 +637,8 @@
     var shuttleSelect  = document.getElementById('shuttle-service');
     var contextHint    = document.getElementById('quote-context-hint');
     var estimateEl     = document.getElementById('quote-estimate');
-    var campFieldWrap  = document.getElementById('camp-field-wrap');
-    var tierFieldWrap  = document.getElementById('tier-field-wrap');
     var modalTitleEl   = document.getElementById('quote-modal-title');
 
-    var errCamp     = document.getElementById('err-camp');
-    var errTier     = document.getElementById('err-tier');
     var errOrg      = document.getElementById('err-org');
     var errContact  = document.getElementById('err-contact');
     var errPhone    = document.getElementById('err-phone');
@@ -667,8 +663,6 @@
     }
 
     function clearAllErrors() {
-      clearFieldError(errCamp,     campSelect);
-      clearFieldError(errTier,     tierSelect);
       clearFieldError(errOrg,      orgInput);
       clearFieldError(errContact,  contactInput);
       clearFieldError(errPhone,    phoneInput);
@@ -679,28 +673,7 @@
       clearFieldError(errLocation, locationInput);
     }
 
-    var CAMP_OPTIONS       = ['A Кемп', 'B Кемп', 'C Кемп', 'Нүүдлийн кемп'];
     var DAY_PROGRAM_OPTIONS = ['Half Day хөтөлбөр', 'Full Day хөтөлбөр'];
-    var CAMP_TIERS         = ['Essential', 'Experience', 'Production'];
-    var DAY_PROGRAM_TIERS  = ['Half Day', 'Full Day'];
-
-    function filterSelectOptions(selectEl, allowedValues) {
-      if (!selectEl) return;
-      Array.from(selectEl.options).forEach(function (opt) {
-        if (opt.value === '') return;
-        var allowed = allowedValues.indexOf(opt.value) !== -1;
-        opt.hidden   = !allowed;
-        opt.disabled = !allowed;
-      });
-    }
-
-    function resetSelectOptions(selectEl) {
-      if (!selectEl) return;
-      Array.from(selectEl.options).forEach(function (opt) {
-        opt.hidden   = false;
-        opt.disabled = false;
-      });
-    }
 
     function getDayProgramLabel(campName) {
       return campName === 'Half Day хөтөлбөр' ? 'Хагас өдрийн' : 'Бүтэн өдрийн';
@@ -743,7 +716,6 @@
       var shuttle = (prefill && prefill.shuttle) || 'Сонгохгүй';
 
       var isDayProgram = DAY_PROGRAM_OPTIONS.indexOf(camp) !== -1;
-      var isCamp       = CAMP_OPTIONS.indexOf(camp) !== -1;
 
       if (modalTitleEl) {
         if (isDayProgram) {
@@ -753,36 +725,19 @@
         }
       }
 
-      if (isDayProgram) {
-        filterSelectOptions(campSelect, DAY_PROGRAM_OPTIONS);
-        filterSelectOptions(tierSelect, DAY_PROGRAM_TIERS);
-        if (campSelect) { campSelect.value = camp; campSelect.required = false; }
-        if (tierSelect) { tierSelect.value = tier; tierSelect.required = false; }
-        if (campFieldWrap) campFieldWrap.style.display = 'none';
-        if (tierFieldWrap) tierFieldWrap.style.display = 'none';
-        if (contextHint) {
+      if (campSelect) campSelect.value = camp;
+      if (tierSelect) tierSelect.value = tier;
+
+      if (contextHint) {
+        if (isDayProgram) {
           contextHint.textContent = 'Та Өдрийн хөтөлбөр · ' + getDayProgramLabel(camp) + ' багцын үнийн санал авах гэж байна.';
           contextHint.hidden = false;
-        }
-      } else if (isCamp) {
-        filterSelectOptions(campSelect, CAMP_OPTIONS);
-        filterSelectOptions(tierSelect, CAMP_TIERS);
-        if (campSelect) { campSelect.value = camp; campSelect.required = true; }
-        if (tierSelect) { tierSelect.value = tier; tierSelect.required = true; }
-        if (campFieldWrap) campFieldWrap.style.display = '';
-        if (tierFieldWrap) tierFieldWrap.style.display = '';
-        if (contextHint) {
+        } else if (camp && tier) {
           contextHint.textContent = 'Та ' + camp + ' · ' + tier + ' багцын үнийн санал авах гэж байна.';
           contextHint.hidden = false;
+        } else {
+          contextHint.hidden = true;
         }
-      } else {
-        resetSelectOptions(campSelect);
-        resetSelectOptions(tierSelect);
-        if (campSelect) { campSelect.value = camp; campSelect.required = true; }
-        if (tierSelect) { tierSelect.value = tier; tierSelect.required = true; }
-        if (campFieldWrap) campFieldWrap.style.display = '';
-        if (tierFieldWrap) tierFieldWrap.style.display = '';
-        if (contextHint) contextHint.hidden = true;
       }
 
       if (visualSelect)  visualSelect.value  = feature;
@@ -794,9 +749,7 @@
       updateEstimate();
 
       window.setTimeout(function () {
-        var firstFocus = (camp && tier) ? orgInput : campSelect;
-        if (!firstFocus) firstFocus = orgInput;
-        if (firstFocus) firstFocus.focus();
+        if (orgInput) orgInput.focus();
       }, 20);
     }
 
@@ -806,37 +759,15 @@
       document.body.classList.remove('modal-open');
       if (contextHint) contextHint.hidden = true;
       if (estimateEl) estimateEl.hidden = true;
-      resetSelectOptions(campSelect);
-      resetSelectOptions(tierSelect);
-      if (campSelect) { campSelect.value = ''; campSelect.required = true; }
-      if (tierSelect) { tierSelect.value = ''; tierSelect.required = true; }
-      if (campFieldWrap) campFieldWrap.style.display = '';
-      if (tierFieldWrap) tierFieldWrap.style.display = '';
+      if (campSelect) campSelect.value = '';
+      if (tierSelect) tierSelect.value = '';
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
     }
 
-    // Filter tier options and show/hide location field when camp select changes
-    if (campSelect) {
-      campSelect.addEventListener('change', function () {
-        var value = campSelect.value;
-        if (DAY_PROGRAM_OPTIONS.indexOf(value) !== -1) {
-          filterSelectOptions(tierSelect, DAY_PROGRAM_TIERS);
-        } else if (CAMP_OPTIONS.indexOf(value) !== -1) {
-          filterSelectOptions(tierSelect, CAMP_TIERS);
-        } else {
-          resetSelectOptions(tierSelect);
-        }
-        if (tierSelect) tierSelect.value = '';
-        applyLocationVisibility(value);
-        clearFieldError(errCamp, campSelect);
-      });
-    }
-
     // Clear inline errors on user input
     var clearOnChange = [
-      [tierSelect,    errTier,     tierSelect],
       [orgInput,      errOrg,      orgInput],
       [contactInput,  errContact,  contactInput],
       [phoneInput,    errPhone,    phoneInput],
@@ -916,8 +847,6 @@
       estimateEl.innerHTML = html;
     }
 
-    if (campSelect)    campSelect.addEventListener('change',  updateEstimate);
-    if (tierSelect)    tierSelect.addEventListener('change',  updateEstimate);
     if (guestInput)    guestInput.addEventListener('input',   updateEstimate);
     if (shuttleSelect) shuttleSelect.addEventListener('change', updateEstimate);
 
@@ -980,8 +909,6 @@
         if (!firstErrorEl) firstErrorEl = inputEl;
       }
 
-      if (!camp)    markError(errCamp,    campSelect,    'Кемп сонгоно уу.');
-      if (!tier)    markError(errTier,    tierSelect,    'Түвшин сонгоно уу.');
       if (!org)     markError(errOrg,     orgInput,      'Байгууллагын нэр оруулна уу.');
       if (!contact) markError(errContact, contactInput,  'Холбоо барих хүний нэр оруулна уу.');
 
