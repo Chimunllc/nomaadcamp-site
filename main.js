@@ -679,6 +679,33 @@
       clearFieldError(errLocation, locationInput);
     }
 
+    var CAMP_OPTIONS       = ['A Кемп', 'B Кемп', 'C Кемп', 'Нүүдлийн кемп'];
+    var DAY_PROGRAM_OPTIONS = ['Half Day хөтөлбөр', 'Full Day хөтөлбөр'];
+    var CAMP_TIERS         = ['Essential', 'Experience', 'Production'];
+    var DAY_PROGRAM_TIERS  = ['Half Day', 'Full Day'];
+
+    function filterSelectOptions(selectEl, allowedValues) {
+      if (!selectEl) return;
+      Array.from(selectEl.options).forEach(function (opt) {
+        if (opt.value === '') return;
+        var allowed = allowedValues.indexOf(opt.value) !== -1;
+        opt.hidden   = !allowed;
+        opt.disabled = !allowed;
+      });
+    }
+
+    function resetSelectOptions(selectEl) {
+      if (!selectEl) return;
+      Array.from(selectEl.options).forEach(function (opt) {
+        opt.hidden   = false;
+        opt.disabled = false;
+      });
+    }
+
+    function getDayProgramLabel(campName) {
+      return campName === 'Half Day хөтөлбөр' ? 'Хагас өдрийн' : 'Бүтэн өдрийн';
+    }
+
     function applyLocationVisibility(camp) {
       var isMobile = (camp || '').trim() === 'Нүүдлийн кемп';
       if (locationWrap) {
@@ -715,35 +742,45 @@
       var feature = (prefill && prefill.feature) || '';
       var shuttle = (prefill && prefill.shuttle) || 'Сонгохгүй';
 
-      var isDayProgram = (camp === 'Half Day хөтөлбөр' || camp === 'Full Day хөтөлбөр');
+      var isDayProgram = DAY_PROGRAM_OPTIONS.indexOf(camp) !== -1;
+      var isCamp       = CAMP_OPTIONS.indexOf(camp) !== -1;
 
       if (modalTitleEl) {
         if (isDayProgram) {
-          var dayLabel = camp === 'Half Day хөтөлбөр' ? 'Хагас өдрийн' : 'Бүтэн өдрийн';
-          modalTitleEl.textContent = 'Өдрийн хөтөлбөр · ' + dayLabel + ' багцын үнийн санал авах';
+          modalTitleEl.textContent = 'Өдрийн хөтөлбөр · ' + getDayProgramLabel(camp) + ' багцын үнийн санал авах';
         } else {
           modalTitleEl.textContent = 'Үнийн санал авах';
         }
       }
 
-      if (campFieldWrap) campFieldWrap.hidden = isDayProgram;
-      if (tierFieldWrap) tierFieldWrap.hidden = isDayProgram;
-      if (campSelect)    campSelect.required  = !isDayProgram;
-      if (tierSelect)    tierSelect.required  = !isDayProgram;
-
-      if (campSelect)    campSelect.value    = camp;
-      if (tierSelect)    tierSelect.value    = tier;
-      if (visualSelect)  visualSelect.value  = feature;
-      if (shuttleSelect) shuttleSelect.value = shuttle;
-
-      if (contextHint) {
-        if (!isDayProgram && camp && tier) {
+      if (isDayProgram) {
+        filterSelectOptions(campSelect, DAY_PROGRAM_OPTIONS);
+        filterSelectOptions(tierSelect, DAY_PROGRAM_TIERS);
+        if (campSelect) campSelect.value = camp;
+        if (tierSelect) tierSelect.value = tier;
+        if (contextHint) {
+          contextHint.textContent = 'Та Өдрийн хөтөлбөр · ' + getDayProgramLabel(camp) + ' багцын үнийн санал авах гэж байна.';
+          contextHint.hidden = false;
+        }
+      } else if (isCamp) {
+        filterSelectOptions(campSelect, CAMP_OPTIONS);
+        filterSelectOptions(tierSelect, CAMP_TIERS);
+        if (campSelect) campSelect.value = camp;
+        if (tierSelect) tierSelect.value = tier;
+        if (contextHint) {
           contextHint.textContent = 'Та ' + camp + ' · ' + tier + ' багцын үнийн санал авах гэж байна.';
           contextHint.hidden = false;
-        } else {
-          contextHint.hidden = true;
         }
+      } else {
+        resetSelectOptions(campSelect);
+        resetSelectOptions(tierSelect);
+        if (campSelect) campSelect.value = camp;
+        if (tierSelect) tierSelect.value = tier;
+        if (contextHint) contextHint.hidden = true;
       }
+
+      if (visualSelect)  visualSelect.value  = feature;
+      if (shuttleSelect) shuttleSelect.value = shuttle;
 
       applyLocationVisibility(camp);
       clearAllErrors();
@@ -752,7 +789,7 @@
 
       window.setTimeout(function () {
         var firstFocus = (camp && tier) ? orgInput : campSelect;
-        if (isDayProgram || !firstFocus) firstFocus = orgInput;
+        if (!firstFocus) firstFocus = orgInput;
         if (firstFocus) firstFocus.focus();
       }, 20);
     }
@@ -763,19 +800,28 @@
       document.body.classList.remove('modal-open');
       if (contextHint) contextHint.hidden = true;
       if (estimateEl) estimateEl.hidden = true;
-      if (campFieldWrap) campFieldWrap.hidden = false;
-      if (tierFieldWrap) tierFieldWrap.hidden = false;
-      if (campSelect) campSelect.required = true;
-      if (tierSelect) tierSelect.required = true;
+      resetSelectOptions(campSelect);
+      resetSelectOptions(tierSelect);
+      if (campSelect) { campSelect.value = ''; campSelect.required = true; }
+      if (tierSelect) { tierSelect.value = ''; tierSelect.required = true; }
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
     }
 
-    // Show/hide location field when camp select changes
+    // Filter tier options and show/hide location field when camp select changes
     if (campSelect) {
       campSelect.addEventListener('change', function () {
-        applyLocationVisibility(campSelect.value);
+        var value = campSelect.value;
+        if (DAY_PROGRAM_OPTIONS.indexOf(value) !== -1) {
+          filterSelectOptions(tierSelect, DAY_PROGRAM_TIERS);
+        } else if (CAMP_OPTIONS.indexOf(value) !== -1) {
+          filterSelectOptions(tierSelect, CAMP_TIERS);
+        } else {
+          resetSelectOptions(tierSelect);
+        }
+        if (tierSelect) tierSelect.value = '';
+        applyLocationVisibility(value);
         clearFieldError(errCamp, campSelect);
       });
     }
