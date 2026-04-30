@@ -3545,3 +3545,30 @@ body.home-page video {
 .quote-tier-nudge__cta {
   margin-top: 0.5rem;
 }
+.pkg-badge--popular {
+  background: var(--accent, #FF6A00);
+  color: #fff;
+}
+.quote-production-link {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.quote-production-link__icon {
+  font-size: 1.5rem;
+}
+.quote-production-link__body {
+  flex: 1;
+  font-size: 0.9rem;
+}
+.quote-production-link__cta {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--accent, #C75D2C);
+  font-weight: 600;
+  text-decoration: none;
+}

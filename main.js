@@ -839,13 +839,13 @@
       'Experience': [
         'welcome_drink', 'sleeping_bag', 'coffee_corner',
         'lunch_upgrade', 'dinner_upgrade',
-        'moonbeam_lounge', 'dj_service', 'photo_4h'
+        'moonbeam_lounge', 'bartender_service'
       ],
       'Production': [
         'welcome_drink', 'sleeping_bag', 'coffee_corner',
         'lunch_upgrade', 'dinner_upgrade',
-        'moonbeam_lounge', 'dj_service', 'photo_4h',
-        'amenity_kit', 'bartender_service',
+        'moonbeam_lounge', 'bartender_service',
+        'amenity_kit', 'dj_service', 'photo_4h',
         'led_screen_18m2'
       ]
     };
@@ -997,6 +997,8 @@
         estimateEl.hidden = true;
         var nudgeEl2 = document.getElementById('tier-nudge');
         if (nudgeEl2) nudgeEl2.hidden = true;
+        var prodLinkEl = document.getElementById('production-link');
+        if (prodLinkEl) prodLinkEl.hidden = true;
         return;
       }
 
@@ -1182,13 +1184,16 @@
       var currentTier = tierSelect ? tierSelect.value : '';
       var campName = campSelect ? campSelect.value : '';
       var nudge = document.getElementById('tier-nudge');
+      var productionLink = document.getElementById('production-link');
       if (!nudge || !currentTier || !campName || guests < 1) {
         if (nudge) nudge.hidden = true;
+        if (productionLink) productionLink.hidden = true;
         return;
       }
 
       if (currentTier === 'Production') {
         nudge.hidden = true;
+        if (productionLink) productionLink.hidden = true;
         return;
       }
 
@@ -1222,6 +1227,7 @@
             currentTotal: currentTotal,
             bonusItems: bonusItems
           });
+          if (productionLink) productionLink.hidden = true;
           return;
         }
       }
@@ -1243,6 +1249,7 @@
       }
 
       nudge.hidden = true;
+      if (productionLink) productionLink.hidden = false;
     }
 
     function showNudge(opts) {
