@@ -3428,3 +3428,81 @@ body.home-page video {
     align-items: flex-start;
   }
 }
+
+/* Client-supplied note on addon cards */
+.quote-addon-card__client-supplied {
+  display: block;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.55);
+  font-style: italic;
+}
+
+/* Package feature note (sub-text inside feature list item) */
+.pkg-features__note {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+/* Highlighted feature item (e.g. LED screen in Production) */
+.pkg-features__highlight {
+  background: linear-gradient(135deg, #FFF7E5 0%, #FFE8B0 100%);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  list-style: none;
+  margin-left: -1.25rem;
+}
+
+/* Tier upgrade nudge */
+.quote-tier-nudge {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #FFF7E5 0%, #FFE8B0 100%);
+  border: 2px solid var(--accent, #FF6A00);
+  border-radius: 12px;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.quote-tier-nudge__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+.quote-tier-nudge__body {
+  flex: 1;
+}
+.quote-tier-nudge__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.quote-tier-nudge__savings strong {
+  font-size: 1.2rem;
+  color: var(--accent, #C75D2C);
+}
+.quote-tier-nudge__bonus {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+}
+.quote-tier-nudge__bonus h5 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.quote-tier-nudge__bonus ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.quote-tier-nudge__cta {
+  margin-top: 0.5rem;
+}
