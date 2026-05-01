@@ -768,7 +768,9 @@
       var isCCustomOrder = (camp === 'C Кемп' && tier === 'Тусгай захиалга');
       var customOrderMsg = document.getElementById('quote-custom-order-msg');
       if (customOrderMsg) customOrderMsg.hidden = !isCCustomOrder;
-      if (isCCustomOrder) {
+      var dayProgramMsg = document.getElementById('quote-day-program-msg');
+      if (dayProgramMsg) dayProgramMsg.hidden = !isDayProgram;
+      if (isCCustomOrder || isDayProgram) {
         if (addonsSectionEl && addonsSectionEl.parentNode) addonsSectionEl.parentNode.removeChild(addonsSectionEl);
       } else {
         if (addonsSectionEl && !addonsSectionEl.parentNode && addonsSectionParent) {
@@ -808,6 +810,8 @@
       // Reset custom order message visibility and restore add-ons section to DOM if removed
       var customOrderMsgClose = document.getElementById('quote-custom-order-msg');
       if (customOrderMsgClose) customOrderMsgClose.hidden = true;
+      var dayProgramMsgClose = document.getElementById('quote-day-program-msg');
+      if (dayProgramMsgClose) dayProgramMsgClose.hidden = true;
       if (addonsSectionEl && !addonsSectionEl.parentNode && addonsSectionParent) {
         addonsSectionParent.insertBefore(addonsSectionEl, addonsSectionNextSib);
       }
