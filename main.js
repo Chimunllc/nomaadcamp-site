@@ -521,9 +521,10 @@
   });
 
   // ── CAMP DETAIL TOGGLE ───────────────────────────────────────
-  var campCards = document.querySelectorAll('[data-camp-target]');
+  var campsSection = document.getElementById('camps');
+  var campCards = campsSection ? campsSection.querySelectorAll('[data-camp-target]') : [];
   if (campCards.length > 0) {
-    var campDetails = document.querySelectorAll('.camp-detail');
+    var campDetails = campsSection ? campsSection.querySelectorAll('.camp-detail') : [];
     var resetCampState = function () {
       campCards.forEach(function (card) {
         card.classList.remove('is-active');
