@@ -888,6 +888,10 @@
       'Essential': { 'A Кемп': 180000, 'B Кемп': 180000, 'C Кемп': 280000, 'Нүүдлийн кемп': 180000 },
       'Experience': { 'A Кемп': 220000, 'B Кемп': 220000, 'C Кемп': 350000, 'Нүүдлийн кемп': 220000 }
     };
+    var DAY_PROGRAM_PRICE_TABLE = {
+      'Half Day хөтөлбөр': 100000,
+      'Full Day хөтөлбөр':  150000
+    };
     var SHUTTLE_PRICE = {
       'Сонгохгүй': 0,
       'Өдрөөр / 2 талдаа — 1,000,000₮': 1000000,
@@ -1089,8 +1093,46 @@
       var nudgeEl    = document.getElementById('tier-nudge');
       var prodLinkEl = document.getElementById('production-link');
       if (quoteModal.dataset.quoteMode === 'day-program') {
-        estimateEl.hidden = true;
-        estimateEl.innerHTML = '';
+        var dpCamp   = campSelect  ? campSelect.value                : '';
+        var dpGuests = guestInput  ? parseInt(guestInput.value, 10)  : 0;
+        var dpShuttle = shuttleSelect ? shuttleSelect.value          : 'Сонгохгүй';
+
+        if (!dpCamp || !dpGuests || dpGuests < 1) {
+          estimateEl.hidden = true;
+          estimateEl.innerHTML = '';
+          if (nudgeEl)    nudgeEl.hidden    = true;
+          if (prodLinkEl) prodLinkEl.hidden = true;
+          return;
+        }
+
+        var dpPrice = DAY_PROGRAM_PRICE_TABLE[dpCamp];
+        if (!dpPrice) {
+          estimateEl.hidden = true;
+          estimateEl.innerHTML = '';
+          if (nudgeEl)    nudgeEl.hidden    = true;
+          if (prodLinkEl) prodLinkEl.hidden = true;
+          return;
+        }
+
+        var dpBase          = dpPrice * dpGuests;
+        var dpShuttleAmt    = SHUTTLE_PRICE[dpShuttle] !== undefined ? SHUTTLE_PRICE[dpShuttle] : 0;
+        var dpShuttleLabel  = SHUTTLE_LABEL[dpShuttle];
+        var dpTotal         = dpBase + dpShuttleAmt;
+        var dpLabel         = getDayProgramLabel(dpCamp);
+
+        var dpHtml = '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>';
+        dpHtml += '<p class="quote-estimate__row">' + dpLabel + ' хөтөлбөр · ' + dpGuests + ' хүн</p>';
+        dpHtml += '<p class="quote-estimate__row">' + dpGuests + ' × ' + formatMNT(dpPrice) + ' = <span class="quote-estimate__num">' + formatMNT(dpBase) + '</span></p>';
+        dpHtml += '<p class="quote-estimate__row">Багцад багтсан үндсэн үйлчилгээ орсон.</p>';
+        if (dpShuttleLabel) {
+          dpHtml += '<p class="quote-estimate__row">' + dpShuttleLabel + ': <span class="quote-estimate__num">+' + formatMNT(dpShuttleAmt) + '</span></p>';
+        }
+        dpHtml += '<hr class="quote-estimate__divider">';
+        dpHtml += '<p class="quote-estimate__total">~<span class="quote-estimate__num">' + formatMNT(dpTotal) + '</span>-с эхлэнэ</p>';
+        dpHtml += '<p class="quote-estimate__disclaimer">Эцсийн үнэ нэмэлт үйлчилгээнээс хамааран өөрчлөгдөнө.</p>';
+
+        estimateEl.innerHTML = dpHtml;
+        estimateEl.hidden    = false;
         if (nudgeEl)    nudgeEl.hidden    = true;
         if (prodLinkEl) prodLinkEl.hidden = true;
         return;
