@@ -1249,12 +1249,20 @@
       if (productionLink) productionLink.hidden = false;
     }
 
+    function updateModalHeader(campName, tier) {
+      if (contextHint && campName) {
+        contextHint.textContent = 'Та ' + campName + ' · ' + tier + ' багцын үнийн санал авах гэж байна.';
+        contextHint.hidden = false;
+      }
+    }
+
     function handleTierSwitch() {
       var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
       var campName = campSelect ? campSelect.value : '';
       var savingsBeforeSwitch = calculateCurrentTotal() - calculateExperienceTotal(campName, currentGuests);
       if (tierSelect) tierSelect.value = 'Experience';
       applyTierInclusions('Experience');
+      updateModalHeader(campName, 'Experience');
       quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qi) {
         var card = qi.closest('.quote-addon-card');
         var cb = card ? card.querySelector('input[name="addons[]"]') : null;
