@@ -918,7 +918,7 @@
         'lunch_upgrade', 'dinner_upgrade',
         'moonbeam_lounge', 'bartender_service',
         'amenity_kit', 'dj_service', 'photo_4h',
-        'led_screen_18m2'
+        'led_screen_18m2', 'late_snacks'
       ]
     };
 
