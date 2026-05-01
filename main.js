@@ -1230,8 +1230,6 @@
       nudge.querySelector('[data-target-tier-display]').textContent = opts.targetTier;
       nudge.querySelector('[data-target-tier]').textContent = opts.targetTier;
       nudge.querySelector('[data-savings-amount]').textContent = opts.savings.toLocaleString() + '₮';
-      var pct = Math.round((opts.savings / opts.currentTotal) * 100);
-      nudge.querySelector('[data-savings-percent]').textContent = '(' + pct + '% хямд)';
       var bonusBlock = nudge.querySelector('.quote-tier-nudge__bonus');
       var bonusList  = nudge.querySelector('[data-bonus-list]');
       if (opts.bonusItems && opts.bonusItems.length > 0) {
