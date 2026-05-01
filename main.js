@@ -731,6 +731,7 @@
       var shuttle = (prefill && prefill.shuttle) || 'Сонгохгүй';
 
       var isDayProgram = (quoteMode === 'day-program');
+      quoteModal.dataset.quoteMode = quoteMode;
 
       if (modalTitleEl) {
         if (isDayProgram) {
@@ -803,8 +804,17 @@
       document.body.classList.remove('modal-open');
       if (contextHint) contextHint.hidden = true;
       if (estimateEl) estimateEl.hidden = true;
+      var nudgeElClose = document.getElementById('tier-nudge');
+      if (nudgeElClose) nudgeElClose.hidden = true;
+      var prodLinkElClose = document.getElementById('production-link');
+      if (prodLinkElClose) prodLinkElClose.hidden = true;
+      var tierSuccessElClose = document.getElementById('tier-success');
+      if (tierSuccessElClose) { tierSuccessElClose.classList.remove('fade-out'); tierSuccessElClose.hidden = true; }
       if (campSelect) campSelect.value = '';
       if (tierSelect) tierSelect.value = '';
+      if (guestInput) guestInput.value = '';
+      if (shuttleSelect) shuttleSelect.value = 'Сонгохгүй';
+      quoteModal.removeAttribute('data-quote-mode');
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
@@ -1076,6 +1086,10 @@
 
     function updateEstimate() {
       if (!estimateEl) return;
+      if (quoteModal.dataset.quoteMode === 'day-program') {
+        estimateEl.hidden = true;
+        return;
+      }
       var camp    = campSelect    ? campSelect.value               : '';
       var tier    = tierSelect    ? tierSelect.value               : '';
       var guests  = guestInput    ? parseInt(guestInput.value, 10) : 0;
@@ -1107,9 +1121,23 @@
         perPerson = getProductionPricePerPerson(guests, camp);
       } else {
         var campPrices = PRICE_TABLE[tier];
-        if (!campPrices) { estimateEl.hidden = true; return; }
+        if (!campPrices) {
+          estimateEl.hidden = true;
+          var nudgeElMiss = document.getElementById('tier-nudge');
+          if (nudgeElMiss) nudgeElMiss.hidden = true;
+          var prodLinkElMiss = document.getElementById('production-link');
+          if (prodLinkElMiss) prodLinkElMiss.hidden = true;
+          return;
+        }
         perPerson = campPrices[camp];
-        if (!perPerson) { estimateEl.hidden = true; return; }
+        if (!perPerson) {
+          estimateEl.hidden = true;
+          var nudgeElMiss2 = document.getElementById('tier-nudge');
+          if (nudgeElMiss2) nudgeElMiss2.hidden = true;
+          var prodLinkElMiss2 = document.getElementById('production-link');
+          if (prodLinkElMiss2) prodLinkElMiss2.hidden = true;
+          return;
+        }
       }
 
       var base = perPerson * guests;
