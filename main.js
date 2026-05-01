@@ -895,14 +895,12 @@
     }
 
     function toggleProductionOnlySections(tier) {
-      var eventServicesSection = document.querySelector('.quote-addons__group--per-event');
-      var productionServicesSection = document.querySelector('.quote-addons__group--production');
+      const productionIncludedSection = document.querySelector('.quote-addons__group--production-included');
+
       if (tier === 'Production') {
-        if (eventServicesSection) eventServicesSection.style.display = '';
-        if (productionServicesSection) productionServicesSection.style.display = '';
+        if (productionIncludedSection) productionIncludedSection.style.display = '';
       } else {
-        if (eventServicesSection) eventServicesSection.style.display = 'none';
-        if (productionServicesSection) productionServicesSection.style.display = 'none';
+        if (productionIncludedSection) productionIncludedSection.style.display = 'none';
       }
     }
 

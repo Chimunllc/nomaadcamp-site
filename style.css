@@ -3472,6 +3472,60 @@ body.home-page video {
   color: rgba(0, 0, 0, 0.75);
 }
 
+/* Production included compact list */
+.quote-addons__group--production-included {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.04) 0%, rgba(255, 106, 0, 0.08) 100%);
+  border: 1px solid rgba(255, 106, 0, 0.15);
+  border-radius: 10px;
+}
+
+.quote-addons__group--production-included .quote-addons__group-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent, #C75D2C);
+}
+
+.quote-production-included-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quote-production-included-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  font-size: 0.92rem;
+  color: rgba(0, 0, 0, 0.78);
+  line-height: 1.5;
+}
+
+.quote-production-included-list__check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent, #FF6A00);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+.quote-production-included-list__text strong {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.92);
+}
+
 /* Production tier card sub-section */
 .pkg-features__sub-title {
   margin-top: 1rem;
