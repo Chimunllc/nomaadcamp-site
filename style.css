@@ -3545,6 +3545,20 @@ body.home-page video {
 .quote-tier-nudge__cta {
   margin-top: 0.5rem;
 }
+.quote-tier-nudge--success {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  border-color: #4CAF50;
+}
+.quote-tier-nudge--success .quote-tier-nudge__icon {
+  color: #4CAF50;
+}
+.quote-tier-nudge--success .quote-tier-nudge__title {
+  color: #1B5E20;
+  margin: 0;
+}
+.quote-tier-nudge--success .quote-tier-nudge__title strong {
+  color: #1B5E20;
+}
 .pkg-badge--popular {
   background: var(--accent, #FF6A00);
   color: #fff;
