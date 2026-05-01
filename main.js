@@ -1093,14 +1093,10 @@
       var perPersonAddonsSum = 0;
       var flatAddonsSum = 0;
       var addonRows = '';
-      var includedRows = '';
 
       document.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
+        if (cb.disabled) { return; }
         var label = cb.dataset.label || cb.value;
-        if (cb.disabled) {
-          includedRows += '<p class="quote-estimate__row">✓ ' + label + '</p>';
-          return;
-        }
         var type = cb.dataset.type;
         if (type === 'per-person') {
           var ppPrice = parseInt(cb.dataset.price, 10);
@@ -1147,13 +1143,12 @@
         html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн</p>';
       }
       html += '<p class="quote-estimate__row">' + guests + ' × ' + formatMNT(perPerson) + ' = <span class="quote-estimate__num">' + formatMNT(base) + '</span></p>';
-      if (includedRows) {
-        html += '<p class="quote-estimate__row quote-estimate__row--addon-section">Багцад багтсан үйлчилгээ:</p>';
-        html += includedRows;
-      }
+      html += '<p class="quote-estimate__row">Багцад багтсан үндсэн үйлчилгээ орсон.</p>';
       if (addonRows) {
         html += '<p class="quote-estimate__row quote-estimate__row--addon-section">Нэмэлт үйлчилгээ:</p>';
         html += addonRows;
+      } else {
+        html += '<p class="quote-estimate__row">Нэмэлт үйлчилгээ: Сонгоогүй</p>';
       }
       if (shuttleLabelText) {
         html += '<p class="quote-estimate__row">' + shuttleLabelText + ': <span class="quote-estimate__num">+' + formatMNT(shuttleAmount) + '</span></p>';
