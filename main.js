@@ -1294,7 +1294,7 @@
         '<div class="quote-tier-nudge__icon">✓</div>',
         '<div class="quote-tier-nudge__body">',
         '  <h4 class="quote-tier-nudge__title">',
-        '    Та Experience tier-д шилжиж <strong>' + savings.toLocaleString() + '₮</strong> хэмнэлээ',
+        '    Та Experience tier-д сонгож <strong>' + savings.toLocaleString() + '₮</strong> хэмнэлээ',
         '  </h4>',
         '</div>'
       ].join('');
