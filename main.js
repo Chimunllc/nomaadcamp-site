@@ -724,12 +724,13 @@
       quoteModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
 
+      var quoteMode = (prefill && prefill.quoteMode) || 'camp';
       var camp    = (prefill && prefill.camp)    || '';
       var tier    = (prefill && prefill.tier)    || '';
       var feature = (prefill && prefill.feature) || '';
       var shuttle = (prefill && prefill.shuttle) || 'Сонгохгүй';
 
-      var isDayProgram = DAY_PROGRAM_OPTIONS.indexOf(camp) !== -1;
+      var isDayProgram = (quoteMode === 'day-program');
 
       if (modalTitleEl) {
         if (isDayProgram) {
@@ -1517,6 +1518,7 @@
     quoteOpeners.forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
+        var quoteMode   = (link.dataset.quoteMode   || 'camp').trim();
         var campName    = (link.dataset.campName    || '').trim();
         var tier        = (link.dataset.tier        || '').trim();
         var visualGroup = (link.dataset.visualGroup || '').trim();
@@ -1525,7 +1527,7 @@
           var checked = document.querySelector('input[name="' + visualGroup + '"]:checked');
           feature = checked ? checked.value : '';
         }
-        openQuoteModal(campName || tier ? { camp: campName, tier: tier, feature: feature, shuttle: 'Сонгохгүй' } : null);
+        openQuoteModal({ quoteMode: quoteMode, camp: campName, tier: tier, feature: feature, shuttle: 'Сонгохгүй' });
       });
     });
 
