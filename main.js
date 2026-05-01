@@ -1165,6 +1165,27 @@
       return base + shuttleAmt + calculateAddonSum(guests, inclusions);
     }
 
+    function calculateEssentialEquivalentTotal(campName, guests) {
+      var cp = PRICE_TABLE['Essential'];
+      if (!cp || !cp[campName]) return Infinity;
+      var basePrice = cp[campName] * guests;
+      var experienceInclusions = TIER_INCLUSIONS['Experience'];
+      var inclusionsTotal = 0;
+      experienceInclusions.forEach(function (code) {
+        var cb = quoteForm.querySelector('input[name="addons[]"][value="' + code + '"]');
+        if (!cb) return;
+        var type = cb.dataset.type;
+        if (type === 'per-person') {
+          inclusionsTotal += parseInt(cb.dataset.price, 10) * guests;
+        } else if (type === 'flat') {
+          inclusionsTotal += parseInt(cb.dataset.price, 10);
+        } else if (type === 'flat-auto') {
+          inclusionsTotal += calculateBartenderPrice(guests);
+        }
+      });
+      return basePrice + inclusionsTotal;
+    }
+
     function getSelectedAddonCodes() {
       var codes = [];
       quoteForm.querySelectorAll('input[name="addons[]"]:checked').forEach(function (cb) {
@@ -1207,16 +1228,20 @@
           if (userSelectedExperienceItems.length >= 3) {
             var experienceTotal = calculateExperienceTotal(campName, guests);
             if (experienceTotal < currentTotal) {
-              showNudge({
-                targetTier: 'Experience',
-                savings: currentTotal - experienceTotal,
-                currentTotal: currentTotal,
-                bonusItems: []
-              });
+              showUpgradeNudge(currentTotal - experienceTotal);
               if (productionLink) productionLink.hidden = false;
               return;
             }
           }
+        }
+      } else if (currentTier === 'Experience') {
+        var essentialEquivalentTotal = calculateEssentialEquivalentTotal(campName, guests);
+        var expTotal = calculateExperienceTotal(campName, guests);
+        var savings = essentialEquivalentTotal - expTotal;
+        if (savings > 0) {
+          showSavingsConfirmation(savings);
+          if (productionLink) productionLink.hidden = false;
+          return;
         }
       }
 
@@ -1224,47 +1249,57 @@
       if (productionLink) productionLink.hidden = false;
     }
 
-    function showNudge(opts) {
-      var nudge = document.getElementById('tier-nudge');
-      if (!nudge) return;
-      nudge.querySelector('[data-target-tier-display]').textContent = opts.targetTier;
-      nudge.querySelector('[data-target-tier]').textContent = opts.targetTier;
-      nudge.querySelector('[data-savings-amount]').textContent = opts.savings.toLocaleString() + '₮';
-      var bonusBlock = nudge.querySelector('.quote-tier-nudge__bonus');
-      var bonusList  = nudge.querySelector('[data-bonus-list]');
-      if (opts.bonusItems && opts.bonusItems.length > 0) {
-        bonusBlock.hidden = false;
-        bonusList.innerHTML = '';
-        opts.bonusItems.forEach(function (item) {
-          var li = document.createElement('li');
-          li.textContent = item.name;
-          bonusList.appendChild(li);
-        });
-      } else {
-        bonusBlock.hidden = true;
-      }
-      nudge.hidden = false;
+    function handleTierSwitch() {
+      var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+      var campName = campSelect ? campSelect.value : '';
+      var savingsBeforeSwitch = calculateCurrentTotal() - calculateExperienceTotal(campName, currentGuests);
+      if (tierSelect) tierSelect.value = 'Experience';
+      applyTierInclusions('Experience');
+      quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qi) {
+        var card = qi.closest('.quote-addon-card');
+        var cb = card ? card.querySelector('input[name="addons[]"]') : null;
+        if (cb && cb.disabled) return;
+        if (currentGuests > 0) { qi.value = currentGuests; qi.max = currentGuests; }
+      });
+      updateAutoScaleLabels(currentGuests);
+      updateEstimate();
+      if (savingsBeforeSwitch > 0) showTierSuccessBanner(savingsBeforeSwitch);
     }
 
-    var nudgeEl = document.getElementById('tier-nudge');
-    if (nudgeEl) {
-      nudgeEl.querySelector('[data-tier-switch]').addEventListener('click', function () {
-        var targetTier = nudgeEl.querySelector('[data-target-tier]').textContent;
-        var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
-        var campName = campSelect ? campSelect.value : '';
-        var savingsBeforeSwitch = calculateCurrentTotal() - calculateExperienceTotal(campName, currentGuests);
-        if (tierSelect) tierSelect.value = targetTier;
-        applyTierInclusions(targetTier);
-        quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qi) {
-          var card = qi.closest('.quote-addon-card');
-          var cb = card ? card.querySelector('input[name="addons[]"]') : null;
-          if (cb && cb.disabled) return;
-          if (currentGuests > 0) { qi.value = currentGuests; qi.max = currentGuests; }
-        });
-        updateAutoScaleLabels(currentGuests);
-        updateEstimate();
-        if (savingsBeforeSwitch > 0) showTierSuccessBanner(savingsBeforeSwitch);
-      });
+    function showUpgradeNudge(savings) {
+      var nudge = document.getElementById('tier-nudge');
+      if (!nudge) return;
+      nudge.innerHTML = [
+        '<div class="quote-tier-nudge__icon">💡</div>',
+        '<div class="quote-tier-nudge__body">',
+        '  <h4 class="quote-tier-nudge__title">Experience tier-руу шилжвэл хэмнэлттэй</h4>',
+        '  <div class="quote-tier-nudge__savings">',
+        '    ✓ <strong>' + savings.toLocaleString() + '₮</strong> хэмнэнэ',
+        '  </div>',
+        '  <button type="button" class="btn btn--accent quote-tier-nudge__cta" data-tier-switch>',
+        '    Experience tier-руу шилжих →',
+        '  </button>',
+        '</div>'
+      ].join('');
+      nudge.classList.remove('quote-tier-nudge--success');
+      nudge.hidden = false;
+      var switchBtn = nudge.querySelector('[data-tier-switch]');
+      if (switchBtn) switchBtn.addEventListener('click', handleTierSwitch);
+    }
+
+    function showSavingsConfirmation(savings) {
+      var nudge = document.getElementById('tier-nudge');
+      if (!nudge) return;
+      nudge.innerHTML = [
+        '<div class="quote-tier-nudge__icon">✓</div>',
+        '<div class="quote-tier-nudge__body">',
+        '  <h4 class="quote-tier-nudge__title">',
+        '    Та Experience tier-д шилжиж <strong>' + savings.toLocaleString() + '₮</strong> хэмнэлээ',
+        '  </h4>',
+        '</div>'
+      ].join('');
+      nudge.classList.add('quote-tier-nudge--success');
+      nudge.hidden = false;
     }
 
     function showTierSuccessBanner(savings) {
