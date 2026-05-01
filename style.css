@@ -3385,25 +3385,58 @@ body.home-page video {
 
 /* Tier-included state */
 .quote-addon-card--included {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(40, 140, 60, 0.07);
+  border-color: rgba(40, 140, 60, 0.25);
   cursor: not-allowed;
-  opacity: 0.85;
+  opacity: 0.95;
 }
 .quote-addon-card--included input[type="checkbox"] {
   cursor: not-allowed;
+}
+.quote-addon-card--included .quote-addon-card__price {
+  display: none;
 }
 .quote-addon-card__included-badge {
   display: inline-block;
   padding: 0.15rem 0.45rem;
   margin-left: 0.4rem;
-  background: #C65D2E;
+  background: #2a7a3b;
   color: #fff;
   font-size: 0.65rem;
   font-weight: 700;
   border-radius: 4px;
   vertical-align: middle;
   white-space: nowrap;
+}
+
+/* Production included cards section */
+.quote-addons__group--included-cards {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(40, 140, 60, 0.04) 0%, rgba(40, 140, 60, 0.09) 100%);
+  border: 1px solid rgba(40, 140, 60, 0.2);
+  border-radius: 10px;
+}
+.quote-addons__group-title--included {
+  color: #2a7a3b;
+}
+.quote-addons__included-desc {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+.quote-addons__group--included-cards .quote-production-included-list {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(40, 140, 60, 0.15);
+}
+
+/* Optional add-ons label (shown when Production is selected) */
+.quote-addons__optional-label {
+  margin: 0.5rem 0 0.25rem;
+}
+.quote-addons__optional-label .quote-addons__group-title {
+  color: rgba(0, 0, 0, 0.65);
 }
 
 /* Production pricing note */
@@ -3473,22 +3506,6 @@ body.home-page video {
 }
 
 /* Production included compact list */
-.quote-addons__group--production-included {
-  margin: 1.5rem 0;
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, rgba(255, 106, 0, 0.04) 0%, rgba(255, 106, 0, 0.08) 100%);
-  border: 1px solid rgba(255, 106, 0, 0.15);
-  border-radius: 10px;
-}
-
-.quote-addons__group--production-included .quote-addons__group-title {
-  margin: 0 0 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent, #C75D2C);
-}
 
 .quote-production-included-list {
   list-style: none;
@@ -3513,7 +3530,7 @@ body.home-page video {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent, #FF6A00);
+  background: #2a7a3b;
   color: #fff;
   border-radius: 50%;
   font-size: 0.7rem;
