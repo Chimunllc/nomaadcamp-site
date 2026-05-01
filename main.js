@@ -920,8 +920,7 @@
 
     function getTierInclusions(campName, tier) {
       var included = TIER_INCLUSIONS[tier] ? TIER_INCLUSIONS[tier].slice() : [];
-      if (tier === 'Production' &&
-          (campName === 'C Кемп' || campName === 'Нүүдлийн кемп')) {
+      if (tier === 'Production' && campName === 'C Кемп') {
         included = included.filter(function (item) { return item !== 'led_screen_18m2'; });
       }
       return included;
