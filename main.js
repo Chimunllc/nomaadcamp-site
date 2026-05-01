@@ -976,8 +976,8 @@
       var titlePerPerson   = document.getElementById('quote-addons-title-per-person');
       var titleFlat        = document.getElementById('quote-addons-title-flat');
 
-      // For non-Production tiers, restore cards to original positions and hide Production UI
-      if (tier !== 'Production') {
+      // For non-Production/non-Experience tiers, restore cards to original positions and hide included UI
+      if (tier !== 'Production' && tier !== 'Experience') {
         restoreAddonCardPositions();
         if (includedSection) includedSection.hidden = true;
         if (optionalLabel)   optionalLabel.hidden   = true;
@@ -1002,8 +1002,8 @@
             var nameEl = card.querySelector('.quote-addon-card__name');
             if (nameEl) nameEl.appendChild(badge);
           }
-          // Move included cards into the Production section grid
-          if (tier === 'Production' && includedGrid) {
+          // Move included cards into the included section grid
+          if ((tier === 'Production' || tier === 'Experience') && includedGrid) {
             includedGrid.appendChild(card);
           }
           var qtyDiv = card.querySelector('.quote-addon-card__quantity');
@@ -1019,7 +1019,7 @@
                 qtyInputEl.disabled = true;
                 if (gNow > 0) qtyInputEl.value = gNow;
               }
-              if (tier === 'Production') {
+              if (tier === 'Production' || tier === 'Experience') {
                 // Lock price display: replace unit-price text with included label
                 var qtyTextEl = qtyDiv.querySelector('.quote-addon-card__qty-text');
                 if (qtyTextEl) qtyTextEl.hidden = true;
@@ -1046,7 +1046,11 @@
         }
       });
 
-      if (tier === 'Production') {
+      if (tier === 'Production' || tier === 'Experience') {
+        var includedTitleEl = document.getElementById('quote-addons-included-title');
+        if (includedTitleEl) includedTitleEl.textContent = tier + ' багцад багтсан үйлчилгээ';
+        var productionList = document.querySelector('.quote-production-included-list');
+        if (productionList) productionList.hidden = (tier !== 'Production');
         if (includedSection) includedSection.hidden = false;
         if (optionalLabel)   optionalLabel.hidden   = false;
         // Hide original group titles — the new section labels replace them
