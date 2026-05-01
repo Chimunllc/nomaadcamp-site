@@ -1200,53 +1200,22 @@
         return;
       }
 
-      var currentTotal = calculateCurrentTotal();
-      if (currentTotal <= 0) { nudge.hidden = true; return; }
-
-      var userSelectedProductionItems = getSelectedItemsInTier('Production', campName);
-
-      if (userSelectedProductionItems.length >= 5) {
-        var productionTotal = calculateProductionTotal(campName, guests);
-        if (productionTotal < currentTotal) {
-          var userSelectedCodes = getSelectedAddonCodes();
-          var productionInclusions = getTierInclusions(campName, 'Production');
-          var bonusItems = [];
-          if (productionInclusions.indexOf('led_screen_18m2') !== -1 &&
-              userSelectedCodes.indexOf('led_screen_18m2') === -1) {
-            bonusItems.push({ name: 'LED дэлгэц 18м²' });
-          }
-          if (userSelectedCodes.indexOf('amenity_kit') === -1) {
-            bonusItems.push({ name: 'Зочдын ариун цэврийн багц' });
-          }
-          if (userSelectedCodes.indexOf('program_design') === -1) {
-            bonusItems.push({ name: 'Хөтөлбөр боловсруулах' });
-          }
-          if (userSelectedCodes.indexOf('team_activities') === -1) {
-            bonusItems.push({ name: 'Team activities' });
-          }
-          showNudge({
-            targetTier: 'Production',
-            savings: currentTotal - productionTotal,
-            currentTotal: currentTotal,
-            bonusItems: bonusItems
-          });
-          if (productionLink) productionLink.hidden = true;
-          return;
-        }
-      }
-
       if (currentTier === 'Essential') {
-        var userSelectedExperienceItems = getSelectedItemsInTier('Experience', campName);
-        if (userSelectedExperienceItems.length >= 3) {
-          var experienceTotal = calculateExperienceTotal(campName, guests);
-          if (experienceTotal < currentTotal) {
-            showNudge({
-              targetTier: 'Experience',
-              savings: currentTotal - experienceTotal,
-              currentTotal: currentTotal,
-              bonusItems: []
-            });
-            return;
+        var currentTotal = calculateCurrentTotal();
+        if (currentTotal > 0) {
+          var userSelectedExperienceItems = getSelectedItemsInTier('Experience', campName);
+          if (userSelectedExperienceItems.length >= 3) {
+            var experienceTotal = calculateExperienceTotal(campName, guests);
+            if (experienceTotal < currentTotal) {
+              showNudge({
+                targetTier: 'Experience',
+                savings: currentTotal - experienceTotal,
+                currentTotal: currentTotal,
+                bonusItems: []
+              });
+              if (productionLink) productionLink.hidden = false;
+              return;
+            }
           }
         }
       }
@@ -1283,10 +1252,11 @@
     if (nudgeEl) {
       nudgeEl.querySelector('[data-tier-switch]').addEventListener('click', function () {
         var targetTier = nudgeEl.querySelector('[data-target-tier]').textContent;
-        if (tierSelect) tierSelect.value = targetTier;
-        var cName = campSelect ? campSelect.value : '';
-        applyTierInclusions(targetTier);
         var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+        var campName = campSelect ? campSelect.value : '';
+        var savingsBeforeSwitch = calculateCurrentTotal() - calculateExperienceTotal(campName, currentGuests);
+        if (tierSelect) tierSelect.value = targetTier;
+        applyTierInclusions(targetTier);
         quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qi) {
           var card = qi.closest('.quote-addon-card');
           var cb = card ? card.querySelector('input[name="addons[]"]') : null;
@@ -1295,7 +1265,20 @@
         });
         updateAutoScaleLabels(currentGuests);
         updateEstimate();
+        if (savingsBeforeSwitch > 0) showTierSuccessBanner(savingsBeforeSwitch);
       });
+    }
+
+    function showTierSuccessBanner(savings) {
+      var banner = document.getElementById('tier-success');
+      if (!banner) return;
+      banner.querySelector('[data-saved-amount]').textContent = savings.toLocaleString() + '₮';
+      banner.hidden = false;
+      banner.classList.remove('fade-out');
+      setTimeout(function () {
+        banner.classList.add('fade-out');
+        setTimeout(function () { banner.hidden = true; }, 300);
+      }, 3000);
     }
 
     if (guestInput)    guestInput.addEventListener('input',   updateEstimate);
