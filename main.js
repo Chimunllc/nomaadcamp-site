@@ -633,6 +633,11 @@
     var errGuests   = document.getElementById('err-guests');
     var errLocation = document.getElementById('err-location');
 
+    // Capture original position of addons section for DOM removal/restore (C Кемп + Тусгай захиалга)
+    var addonsSectionEl      = document.getElementById('quote-addons-section');
+    var addonsSectionParent  = addonsSectionEl ? addonsSectionEl.parentNode : null;
+    var addonsSectionNextSib = addonsSectionEl ? addonsSectionEl.nextSibling : null;
+
     // Capture original parent/index for every addon card so we can restore them after Production view
     var addonCardOriginals = [];
     quoteForm.querySelectorAll('.quote-addon-card').forEach(function (card) {
@@ -759,12 +764,17 @@
       // Apply tier inclusions and set qty defaults based on current guest count
       applyTierInclusions(tier);
 
-      // C Кемп + Тусгай захиалга: hide add-ons, show custom order message
+      // C Кемп + Тусгай захиалга: remove add-ons from DOM entirely, show custom order message
       var isCCustomOrder = (camp === 'C Кемп' && tier === 'Тусгай захиалга');
       var customOrderMsg = document.getElementById('quote-custom-order-msg');
-      var addonsSection  = document.getElementById('quote-addons-section');
       if (customOrderMsg) customOrderMsg.hidden = !isCCustomOrder;
-      if (addonsSection)  addonsSection.hidden  = isCCustomOrder;
+      if (isCCustomOrder) {
+        if (addonsSectionEl && addonsSectionEl.parentNode) addonsSectionEl.parentNode.removeChild(addonsSectionEl);
+      } else {
+        if (addonsSectionEl && !addonsSectionEl.parentNode && addonsSectionParent) {
+          addonsSectionParent.insertBefore(addonsSectionEl, addonsSectionNextSib);
+        }
+      }
 
       var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
       quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qtyInput) {
@@ -795,11 +805,12 @@
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
-      // Reset custom order message visibility
+      // Reset custom order message visibility and restore add-ons section to DOM if removed
       var customOrderMsgClose = document.getElementById('quote-custom-order-msg');
-      var addonsSectionClose  = document.getElementById('quote-addons-section');
       if (customOrderMsgClose) customOrderMsgClose.hidden = true;
-      if (addonsSectionClose)  addonsSectionClose.hidden  = false;
+      if (addonsSectionEl && !addonsSectionEl.parentNode && addonsSectionParent) {
+        addonsSectionParent.insertBefore(addonsSectionEl, addonsSectionNextSib);
+      }
       // Reset add-on UI — restore any cards moved to the Production included section
       restoreAddonCardPositions();
       var includedSection = document.getElementById('quote-addons-included-cards');
