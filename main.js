@@ -620,6 +620,8 @@
     var locationInput  = document.getElementById('location');
     var visualSelect   = document.getElementById('visual-feature-select');
     var shuttleSelect  = document.getElementById('shuttle-service');
+    var busCountInput  = document.getElementById('bus-count');
+    var busCountWrap   = document.getElementById('bus-count-wrap');
     var contextHint    = document.getElementById('quote-context-hint');
     var estimateEl     = document.getElementById('quote-estimate');
     var modalTitleEl   = document.getElementById('quote-modal-title');
@@ -814,6 +816,8 @@
       if (tierSelect) tierSelect.value = '';
       if (guestInput) guestInput.value = '';
       if (shuttleSelect) shuttleSelect.value = 'Сонгохгүй';
+      if (busCountInput) busCountInput.value = 1;
+      if (busCountWrap)  busCountWrap.style.display = 'none';
       quoteModal.removeAttribute('data-quote-mode');
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
@@ -1114,7 +1118,8 @@
         }
 
         var dpBase          = dpPrice * dpGuests;
-        var dpShuttleAmt    = SHUTTLE_PRICE[dpShuttle] !== undefined ? SHUTTLE_PRICE[dpShuttle] : 0;
+        var dpBusCount      = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
+        var dpShuttleAmt    = (SHUTTLE_PRICE[dpShuttle] !== undefined ? SHUTTLE_PRICE[dpShuttle] : 0) * (dpShuttle !== 'Сонгохгүй' ? dpBusCount : 1);
         var dpShuttleLabel  = SHUTTLE_LABEL[dpShuttle];
         var dpTotal         = dpBase + dpShuttleAmt;
         var dpLabel         = getDayProgramLabel(dpCamp);
@@ -1124,7 +1129,7 @@
         dpHtml += '<p class="quote-estimate__row">' + dpGuests + ' × ' + formatMNT(dpPrice) + ' = <span class="quote-estimate__num">' + formatMNT(dpBase) + '</span></p>';
         dpHtml += '<p class="quote-estimate__row">Багцад багтсан үндсэн үйлчилгээ орсон.</p>';
         if (dpShuttleLabel) {
-          dpHtml += '<p class="quote-estimate__row">' + dpShuttleLabel + ': <span class="quote-estimate__num">+' + formatMNT(dpShuttleAmt) + '</span></p>';
+          dpHtml += '<p class="quote-estimate__row">' + dpShuttleLabel + ' (' + dpBusCount + ' автобус): <span class="quote-estimate__num">+' + formatMNT(dpShuttleAmt) + '</span></p>';
         }
         dpHtml += '<hr class="quote-estimate__divider">';
         dpHtml += '<p class="quote-estimate__total">~<span class="quote-estimate__num">' + formatMNT(dpTotal) + '</span>-с эхлэнэ</p>';
@@ -1178,8 +1183,9 @@
         }
       }
 
+      var busCount = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
       var base = perPerson * guests;
-      var shuttleAmount = SHUTTLE_PRICE[shuttle] !== undefined ? SHUTTLE_PRICE[shuttle] : 0;
+      var shuttleAmount = (SHUTTLE_PRICE[shuttle] !== undefined ? SHUTTLE_PRICE[shuttle] : 0) * (shuttle !== 'Сонгохгүй' ? busCount : 1);
       var shuttleLabelText = SHUTTLE_LABEL[shuttle];
 
       var perPersonAddonsSum = 0;
@@ -1243,7 +1249,7 @@
         html += '<p class="quote-estimate__row">Нэмэлт үйлчилгээ: Сонгоогүй</p>';
       }
       if (shuttleLabelText) {
-        html += '<p class="quote-estimate__row">' + shuttleLabelText + ': <span class="quote-estimate__num">+' + formatMNT(shuttleAmount) + '</span></p>';
+        html += '<p class="quote-estimate__row">' + shuttleLabelText + ' (' + busCount + ' автобус): <span class="quote-estimate__num">+' + formatMNT(shuttleAmount) + '</span></p>';
       }
       html += '<hr class="quote-estimate__divider">';
       html += '<p class="quote-estimate__total">~<span class="quote-estimate__num">' + formatMNT(total) + '</span>-с эхлэнэ</p>';
@@ -1290,6 +1296,7 @@
       var t    = tierSelect    ? tierSelect.value               : '';
       var g    = guestInput    ? (parseInt(guestInput.value, 10) || 0) : 0;
       var sh   = shuttleSelect ? shuttleSelect.value            : 'Сонгохгүй';
+      var bc   = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
       if (!c || !t || g < 1) return 0;
       var perPerson;
       if (t === 'Production') {
@@ -1299,13 +1306,14 @@
         if (!cp || !cp[c]) return 0;
         perPerson = cp[c];
       }
-      var shuttleAmt = SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0;
+      var shuttleAmt = (SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0) * (sh !== 'Сонгохгүй' ? bc : 1);
       return perPerson * g + shuttleAmt + calculateAddonSum(g, null);
     }
 
     function calculateProductionTotal(campName, guests) {
       var sh = shuttleSelect ? shuttleSelect.value : 'Сонгохгүй';
-      var shuttleAmt = SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0;
+      var bc = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
+      var shuttleAmt = (SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0) * (sh !== 'Сонгохгүй' ? bc : 1);
       var base = getProductionPricePerPerson(guests, campName) * guests;
       var inclusions = getTierInclusions(campName, 'Production');
       return base + shuttleAmt + calculateAddonSum(guests, inclusions);
@@ -1313,7 +1321,8 @@
 
     function calculateExperienceTotal(campName, guests) {
       var sh = shuttleSelect ? shuttleSelect.value : 'Сонгохгүй';
-      var shuttleAmt = SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0;
+      var bc = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
+      var shuttleAmt = (SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0) * (sh !== 'Сонгохгүй' ? bc : 1);
       var cp = PRICE_TABLE['Experience'];
       if (!cp || !cp[campName]) return Infinity;
       var base = cp[campName] * guests;
@@ -1479,7 +1488,15 @@
     }
 
     if (guestInput)    guestInput.addEventListener('input',   updateEstimate);
-    if (shuttleSelect) shuttleSelect.addEventListener('change', updateEstimate);
+    if (shuttleSelect) shuttleSelect.addEventListener('change', function () {
+      if (busCountWrap) {
+        var selected = shuttleSelect.value !== 'Сонгохгүй';
+        busCountWrap.style.display = selected ? '' : 'none';
+        if (!selected && busCountInput) busCountInput.value = 1;
+      }
+      updateEstimate();
+    });
+    if (busCountInput) busCountInput.addEventListener('input', updateEstimate);
 
     // ── ADD-ON LISTENERS ───────────────────────────────────────
     document.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
@@ -1734,6 +1751,7 @@
         tier:                  tier,
         visual_feature:        (fd.get('visual_feature')  || '').trim(),
         shuttle_service:       (fd.get('shuttle_service') || '').trim(),
+        bus_count:             (fd.get('bus_count') ? parseInt(fd.get('bus_count'), 10) : 1),
         location:              isMobile ? location : '',
         notes:                 (fd.get('extra_info')      || '').trim(),
         company:               org,
