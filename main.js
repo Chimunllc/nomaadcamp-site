@@ -1582,10 +1582,10 @@
             // Included per-person items: always track guest count
             qtyInput.value = g;
             var currentTier = tierSelect ? tierSelect.value : '';
-            if (currentTier !== 'Production') {
+            if (currentTier !== 'Production' && currentTier !== 'Experience') {
               if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
             }
-            // For Production included items the total stays as "нэмэлт төлбөр авахгүй"
+            // For Production/Experience included items the total stays as "нэмэлт төлбөр авахгүй"
           } else {
             qtyInput.max = g;
             var currentVal = parseInt(qtyInput.value, 10) || 0;
