@@ -1086,8 +1086,12 @@
 
     function updateEstimate() {
       if (!estimateEl) return;
+      var nudgeEl    = document.getElementById('tier-nudge');
+      var prodLinkEl = document.getElementById('production-link');
       if (quoteModal.dataset.quoteMode === 'day-program') {
         estimateEl.hidden = true;
+        if (nudgeEl)    nudgeEl.hidden    = true;
+        if (prodLinkEl) prodLinkEl.hidden = true;
         return;
       }
       var camp    = campSelect    ? campSelect.value               : '';
@@ -1097,9 +1101,7 @@
 
       if (!camp || !tier || !guests || guests < 1) {
         estimateEl.hidden = true;
-        var nudgeEl2 = document.getElementById('tier-nudge');
-        if (nudgeEl2) nudgeEl2.hidden = true;
-        var prodLinkEl = document.getElementById('production-link');
+        if (nudgeEl)    nudgeEl.hidden    = true;
         if (prodLinkEl) prodLinkEl.hidden = true;
         return;
       }
@@ -1107,10 +1109,8 @@
       // Strict guard: only C Кемп + Тусгай захиалга gets the custom-order treatment
       if (camp === 'C Кемп' && tier === 'Тусгай захиалга') {
         estimateEl.hidden = true;
-        var nudgeElC = document.getElementById('tier-nudge');
-        if (nudgeElC) nudgeElC.hidden = true;
-        var prodLinkElC = document.getElementById('production-link');
-        if (prodLinkElC) prodLinkElC.hidden = true;
+        if (nudgeEl)    nudgeEl.hidden    = true;
+        if (prodLinkEl) prodLinkEl.hidden = true;
         return;
       }
 
@@ -1123,19 +1123,15 @@
         var campPrices = PRICE_TABLE[tier];
         if (!campPrices) {
           estimateEl.hidden = true;
-          var nudgeElMiss = document.getElementById('tier-nudge');
-          if (nudgeElMiss) nudgeElMiss.hidden = true;
-          var prodLinkElMiss = document.getElementById('production-link');
-          if (prodLinkElMiss) prodLinkElMiss.hidden = true;
+          if (nudgeEl)    nudgeEl.hidden    = true;
+          if (prodLinkEl) prodLinkEl.hidden = true;
           return;
         }
         perPerson = campPrices[camp];
         if (!perPerson) {
           estimateEl.hidden = true;
-          var nudgeElMiss2 = document.getElementById('tier-nudge');
-          if (nudgeElMiss2) nudgeElMiss2.hidden = true;
-          var prodLinkElMiss2 = document.getElementById('production-link');
-          if (prodLinkElMiss2) prodLinkElMiss2.hidden = true;
+          if (nudgeEl)    nudgeEl.hidden    = true;
+          if (prodLinkEl) prodLinkEl.hidden = true;
           return;
         }
       }
