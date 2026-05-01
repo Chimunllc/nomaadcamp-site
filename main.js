@@ -758,6 +758,14 @@
 
       // Apply tier inclusions and set qty defaults based on current guest count
       applyTierInclusions(tier);
+
+      // C Кемп + Тусгай захиалга: hide add-ons, show custom order message
+      var isCCustomOrder = (camp === 'C Кемп' && tier === 'Тусгай захиалга');
+      var customOrderMsg = document.getElementById('quote-custom-order-msg');
+      var addonsSection  = document.getElementById('quote-addons-section');
+      if (customOrderMsg) customOrderMsg.hidden = !isCCustomOrder;
+      if (addonsSection)  addonsSection.hidden  = isCCustomOrder;
+
       var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
       quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qtyInput) {
         var card = qtyInput.closest('.quote-addon-card');
@@ -787,6 +795,11 @@
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
+      // Reset custom order message visibility
+      var customOrderMsgClose = document.getElementById('quote-custom-order-msg');
+      var addonsSectionClose  = document.getElementById('quote-addons-section');
+      if (customOrderMsgClose) customOrderMsgClose.hidden = true;
+      if (addonsSectionClose)  addonsSectionClose.hidden  = false;
       // Reset add-on UI — restore any cards moved to the Production included section
       restoreAddonCardPositions();
       var includedSection = document.getElementById('quote-addons-included-cards');
