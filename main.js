@@ -2,25 +2,9 @@
 (function () {
   'use strict';
 
-  // Future-ready config: add pricing when realtime estimation is ready
-  var PACKAGE_CONFIG = {
-    camps: {
-      'camp-a':      { name: 'A Кемп',         isMobile: false },
-      'camp-b':      { name: 'B Кемп',         isMobile: false },
-      'camp-c':      { name: 'C Кемп',         isMobile: false },
-      'camp-mobile': { name: 'Нүүдлийн кемп',  isMobile: true  }
-    },
-    tiers: {
-      'Essential':   { hasAddon: false },
-      'Experience':  { hasAddon: true  },
-      'Production':  { hasAddon: false }
-    },
-    addons: {
-      'LED Screen':     { price: null },
-      'Moonbeam Lounge':{ price: null },
-      'Тайзны эффект':  { price: null }
-    }
-  };
+  // PACKAGE_CONFIG was defined here but is never referenced — left commented out
+  // rather than removed in case future code reintroduces it.
+  // var PACKAGE_CONFIG = { camps: {…}, tiers: {…}, addons: {…} };
 
   var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E";
 
