@@ -1097,15 +1097,6 @@
 
       estimateEl.hidden = false;
 
-      // C Кемп + Тусгай захиалга: simplified estimate — no price breakdown
-      if (camp === 'C Кемп' && tier === 'Тусгай захиалга') {
-        estimateEl.innerHTML =
-          '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>' +
-          '<p class="quote-estimate__row">Тусгай захиалгын үнийн санал хэлэлцүүлгээр тогтоогдоно.</p>' +
-          '<p class="quote-estimate__disclaimer">Эцсийн үнэ байршил, нэмэлт үйлчилгээнээс хамааран өөрчлөгдөнө.</p>';
-        return;
-      }
-
       var perPerson;
       if (tier === 'Production') {
         perPerson = getProductionPricePerPerson(guests, camp);
