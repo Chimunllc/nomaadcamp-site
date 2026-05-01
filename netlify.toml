@@ -2,7 +2,6 @@
 
   [functions.emails]
   included_files = [
-    "./emails/**",
     "./emails/**"
   ]
 
@@ -25,16 +24,5 @@ pinned_version = "1"
 
       [context.deploy-preview.functions.emails]
       included_files = [
-        "./emails/**",
-        "./emails/**"
-      ]
-
-  [context."codex/find-the-error-message-u448mo"]
-
-    [context."codex/find-the-error-message-u448mo".functions]
-
-      [context."codex/find-the-error-message-u448mo".functions.emails]
-      included_files = [
-        "./emails/**",
         "./emails/**"
       ]
