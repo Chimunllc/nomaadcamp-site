@@ -2167,6 +2167,7 @@ body.modal-open { overflow: hidden; }
 .quote-field-error[hidden] { display: none; }
 /* .quote-form__field has display:flex which overrides [hidden] — force it off */
 #quote-custom-order-msg[hidden] { display: none; }
+#quote-day-program-msg[hidden]  { display: none; }
 
 .quote-form input.is-error,
 .quote-form select.is-error,
