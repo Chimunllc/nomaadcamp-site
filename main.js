@@ -648,6 +648,30 @@
     var errGuests   = document.getElementById('err-guests');
     var errLocation = document.getElementById('err-location');
 
+    // Capture original parent/index for every addon card so we can restore them after Production view
+    var addonCardOriginals = [];
+    quoteForm.querySelectorAll('.quote-addon-card').forEach(function (card) {
+      var parent = card.parentNode;
+      var index = Array.prototype.indexOf.call(parent.children, card);
+      addonCardOriginals.push({ card: card, parent: parent, index: index });
+    });
+
+    function restoreAddonCardPositions() {
+      var grouped = [];
+      addonCardOriginals.forEach(function (entry) {
+        var found = null;
+        for (var i = 0; i < grouped.length; i++) {
+          if (grouped[i].parent === entry.parent) { found = grouped[i]; break; }
+        }
+        if (!found) { found = { parent: entry.parent, entries: [] }; grouped.push(found); }
+        found.entries.push(entry);
+      });
+      grouped.forEach(function (g) {
+        g.entries.sort(function (a, b) { return a.index - b.index; });
+        g.entries.forEach(function (entry) { g.parent.appendChild(entry.card); });
+      });
+    }
+
     function showFieldError(errEl, inputEl, msg) {
       if (!errEl) return;
       errEl.textContent = msg;
@@ -778,7 +802,20 @@
       if (modalTitleEl) modalTitleEl.textContent = 'Үнийн санал авах';
       applyLocationVisibility('');
       clearAllErrors();
-      // Reset add-on UI
+      // Reset add-on UI — restore any cards moved to the Production included section
+      restoreAddonCardPositions();
+      var includedSection = document.getElementById('quote-addons-included-cards');
+      var optionalLabel   = document.getElementById('quote-addons-optional-label');
+      var titlePerPerson  = document.getElementById('quote-addons-title-per-person');
+      var titleFlat       = document.getElementById('quote-addons-title-flat');
+      var groupPerPerson  = document.getElementById('quote-addons-group-per-person');
+      var groupFlat       = document.getElementById('quote-addons-group-flat');
+      if (includedSection) includedSection.hidden = true;
+      if (optionalLabel)   optionalLabel.hidden   = true;
+      if (titlePerPerson)  titlePerPerson.hidden  = false;
+      if (titleFlat)       titleFlat.hidden       = false;
+      if (groupPerPerson)  groupPerPerson.hidden  = false;
+      if (groupFlat)       groupFlat.hidden       = false;
       quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
         cb.checked = false;
         cb.disabled = false;
@@ -894,19 +931,29 @@
       return 280000;
     }
 
-    function toggleProductionOnlySections(tier) {
-      const productionIncludedSection = document.querySelector('.quote-addons__group--production-included');
-
-      if (tier === 'Production') {
-        if (productionIncludedSection) productionIncludedSection.style.display = '';
-      } else {
-        if (productionIncludedSection) productionIncludedSection.style.display = 'none';
-      }
-    }
-
     function applyTierInclusions(tier) {
       var campName = campSelect ? campSelect.value : '';
       var includedItems = getTierInclusions(campName, tier);
+
+      var includedSection  = document.getElementById('quote-addons-included-cards');
+      var includedGrid     = document.getElementById('quote-addons-included-grid');
+      var optionalLabel    = document.getElementById('quote-addons-optional-label');
+      var groupPerPerson   = document.getElementById('quote-addons-group-per-person');
+      var groupFlat        = document.getElementById('quote-addons-group-flat');
+      var titlePerPerson   = document.getElementById('quote-addons-title-per-person');
+      var titleFlat        = document.getElementById('quote-addons-title-flat');
+
+      // For non-Production tiers, restore cards to original positions and hide Production UI
+      if (tier !== 'Production') {
+        restoreAddonCardPositions();
+        if (includedSection) includedSection.hidden = true;
+        if (optionalLabel)   optionalLabel.hidden   = true;
+        if (titlePerPerson)  titlePerPerson.hidden  = false;
+        if (titleFlat)       titleFlat.hidden       = false;
+        if (groupPerPerson)  groupPerPerson.hidden  = false;
+        if (groupFlat)       groupFlat.hidden       = false;
+      }
+
       quoteForm.querySelectorAll('input[name="addons[]"]').forEach(function (cb) {
         var card = cb.closest('.quote-addon-card');
         if (!card) return;
@@ -921,6 +968,10 @@
             badge.textContent = tier + ' багцад багтсан';
             var nameEl = card.querySelector('.quote-addon-card__name');
             if (nameEl) nameEl.appendChild(badge);
+          }
+          // Move included cards into the Production section grid
+          if (tier === 'Production' && includedGrid) {
+            includedGrid.appendChild(card);
           }
           var qtyDiv = card.querySelector('.quote-addon-card__quantity');
           if (qtyDiv) {
@@ -953,7 +1004,19 @@
           if (existingQtyInput) existingQtyInput.disabled = false;
         }
       });
-      toggleProductionOnlySections(tier);
+
+      if (tier === 'Production') {
+        if (includedSection) includedSection.hidden = false;
+        if (optionalLabel)   optionalLabel.hidden   = false;
+        // Hide original group titles — the new section labels replace them
+        if (titlePerPerson) titlePerPerson.hidden = true;
+        if (titleFlat)      titleFlat.hidden      = true;
+        // Hide flat group if all its cards were moved (nothing optional remains there)
+        if (groupFlat) {
+          var flatGrid = groupFlat.querySelector('.quote-addons__grid');
+          groupFlat.hidden = !!(flatGrid && flatGrid.children.length === 0);
+        }
+      }
     }
 
     function updateAutoScaleLabels(guests) {
