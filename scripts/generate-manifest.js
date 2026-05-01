@@ -1,7 +1,7 @@
 // scripts/generate-manifest.js
 // Auto-generates images/manifest.js by scanning image folders.
 // Run: node scripts/generate-manifest.js
-// Netlify and GitHub Actions run this automatically as the build command.
+// GitHub Actions runs this automatically as the build command.
 
 'use strict';
 
@@ -101,7 +101,7 @@ const out = [
   '//   cover image  → images/camps/<camp>/cover/<any-filename>',
   '//   gallery image → images/camps/<camp>/gallery/<any-filename>',
   '//   partner logos → logos/partners/<any-filename>',
-  '// Then commit and push — Netlify regenerates this file on every deploy.',
+  '// Then commit and push — the build step regenerates this file on every deploy.',
   'window.NOMAAD_IMAGES = ' + JSON.stringify(manifest, null, 2) + ';',
   '',
 ].join('\n');
