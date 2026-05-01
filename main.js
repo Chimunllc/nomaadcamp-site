@@ -791,6 +791,7 @@
       quoteForm.querySelectorAll('.quote-addon-card__time-config').forEach(function (el) { el.hidden = true; });
       quoteForm.querySelectorAll('.quote-addon-card__sub-options').forEach(function (el) { el.hidden = true; });
       quoteForm.querySelectorAll('.quote-addon-card__quantity').forEach(function (el) { el.hidden = true; });
+      quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (el) { el.disabled = false; });
       var bartenderPriceEl = document.querySelector('[data-bartender-price]');
       if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
       var djPriceEl = document.querySelector('[data-dj-price]');
@@ -924,7 +925,23 @@
             if (nameEl) nameEl.appendChild(badge);
           }
           var qtyDiv = card.querySelector('.quote-addon-card__quantity');
-          if (qtyDiv) qtyDiv.hidden = true;
+          if (qtyDiv) {
+            if (tier === 'Production' || cb.dataset.type !== 'per-person') {
+              qtyDiv.hidden = true;
+            } else {
+              // Experience included per-person items: show qty div with disabled auto-filled input
+              qtyDiv.hidden = false;
+              var qtyInputEl = qtyDiv.querySelector('.quote-addon-card__qty-input');
+              if (qtyInputEl) {
+                qtyInputEl.disabled = true;
+                var gNow = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+                if (gNow > 0) {
+                  qtyInputEl.value = gNow;
+                  updateQtyTotal(qtyDiv, parseInt(cb.dataset.price, 10), gNow);
+                }
+              }
+            }
+          }
           var subOpts = card.querySelector('.quote-addon-card__sub-options');
           if (subOpts) subOpts.hidden = true;
           var timeConf = card.querySelector('.quote-addon-card__time-config');
@@ -934,6 +951,8 @@
           card.classList.remove('quote-addon-card--included');
           var existingBadge = card.querySelector('.quote-addon-card__included-badge');
           if (existingBadge) existingBadge.remove();
+          var existingQtyInput = card.querySelector('.quote-addon-card__qty-input');
+          if (existingQtyInput) existingQtyInput.disabled = false;
         }
       });
       toggleProductionOnlySections(tier);
@@ -1351,18 +1370,24 @@
     if (guestInput) {
       guestInput.addEventListener('input', function () {
         var g = parseInt(guestInput.value, 10) || 0;
-        // Update all per-person qty inputs: clamp to new guest count
+        // Update all per-person qty inputs
         quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qtyInput) {
           var card = qtyInput.closest('.quote-addon-card');
           var cb = card ? card.querySelector('input[name="addons[]"]') : null;
-          if (cb && cb.disabled) return;
-          qtyInput.max = g;
-          var currentVal = parseInt(qtyInput.value, 10) || 0;
-          if (currentVal > g) {
+          var qtyDiv = qtyInput.closest('.quote-addon-card__quantity');
+          if (qtyDiv && qtyDiv.hidden) return;
+          var unitPrice = cb ? parseInt(cb.dataset.price, 10) : 0;
+          if (cb && cb.disabled) {
+            // Experience included per-person items: always track guest count
             qtyInput.value = g;
-            var unitPrice = cb ? parseInt(cb.dataset.price, 10) : 0;
-            var qtyDiv = qtyInput.closest('.quote-addon-card__quantity');
             if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+          } else {
+            qtyInput.max = g;
+            var currentVal = parseInt(qtyInput.value, 10) || 0;
+            if (currentVal > g) {
+              qtyInput.value = g;
+              if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+            }
           }
         });
         updateAutoScaleLabels(g);
