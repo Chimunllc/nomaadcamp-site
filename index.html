@@ -984,8 +984,51 @@
           <h3 class="quote-addons__title">Нэмэлт үйлчилгээ (заавал биш)</h3>
           <p class="quote-addons__subtitle">Хэрэгцээтэй сонгож, үндсэн багц дээр нэмж захиалаарай</p>
 
-          <div class="quote-addons__group">
-            <h4 class="quote-addons__group-title">Хүний тоогоор тооцох нэмэлтүүд</h4>
+          <!-- Production: included cards section (shown only when Production tier is selected) -->
+          <div class="quote-addons__group quote-addons__group--included-cards" id="quote-addons-included-cards" hidden>
+            <h4 class="quote-addons__group-title quote-addons__group-title--included">Production багцад багтсан үйлчилгээ</h4>
+            <p class="quote-addons__included-desc">Эдгээр үйлчилгээ таны багцад аль хэдийн багтсан — нэмэлт төлбөр авахгүй</p>
+            <div class="quote-addons__grid" id="quote-addons-included-grid"></div>
+            <ul class="quote-production-included-list">
+              <li>
+                <span class="quote-production-included-list__check">✓</span>
+                <span class="quote-production-included-list__text">
+                  <strong>Анхан шатны эмнэлгийн тусламж</strong> — эмч, сувилагч + анхан шатны тусламжын асар
+                </span>
+              </li>
+              <li>
+                <span class="quote-production-included-list__check">✓</span>
+                <span class="quote-production-included-list__text">
+                  <strong>Хамгаалалтын алба</strong> — багадаа 2 хамгаалалтын ажилтан
+                </span>
+              </li>
+              <li>
+                <span class="quote-production-included-list__check">✓</span>
+                <span class="quote-production-included-list__text">
+                  <strong>Хөтөлбөр боловсруулах</strong>
+                </span>
+              </li>
+              <li>
+                <span class="quote-production-included-list__check">✓</span>
+                <span class="quote-production-included-list__text">
+                  <strong>Хөтөлбөрийн дагуу үйл ажиллагааг удирдах</strong>
+                </span>
+              </li>
+              <li>
+                <span class="quote-production-included-list__check">✓</span>
+                <span class="quote-production-included-list__text">
+                  <strong>Багын уур амьсгал сайжруулах хөгжөөнт тоглоом</strong>
+                </span>
+              </li>
+            </ul>
+          </div>
+          <!-- Optional add-ons label (shown only for Production tier) -->
+          <div id="quote-addons-optional-label" class="quote-addons__optional-label" hidden>
+            <h4 class="quote-addons__group-title">Нэмэлтээр авах боломжтой</h4>
+          </div>
+
+          <div class="quote-addons__group" id="quote-addons-group-per-person">
+            <h4 class="quote-addons__group-title" id="quote-addons-title-per-person">Хүний тоогоор тооцох нэмэлтүүд</h4>
             <div class="quote-addons__grid quote-addons__grid--per-person">
 
               <label class="quote-addon-card">
@@ -1102,8 +1145,8 @@
             </div>
           </div>
 
-          <div class="quote-addons__group">
-            <h4 class="quote-addons__group-title">Тогтмол үнэтэй нэмэлтүүд</h4>
+          <div class="quote-addons__group" id="quote-addons-group-flat">
+            <h4 class="quote-addons__group-title" id="quote-addons-title-flat">Тогтмол үнэтэй нэмэлтүүд</h4>
             <div class="quote-addons__grid quote-addons__grid--flat">
 
               <label class="quote-addon-card quote-addon-card--full">
@@ -1183,41 +1226,6 @@
             </div>
           </div>
 
-          <div class="quote-addons__group quote-addons__group--production-included">
-            <h4 class="quote-addons__group-title">Production багцад багтсан үйлчилгээ</h4>
-            <ul class="quote-production-included-list">
-              <li>
-                <span class="quote-production-included-list__check">✓</span>
-                <span class="quote-production-included-list__text">
-                  <strong>Анхан шатны эмнэлгийн тусламж</strong> — эмч, сувилагч + анхан шатны тусламжын асар
-                </span>
-              </li>
-              <li>
-                <span class="quote-production-included-list__check">✓</span>
-                <span class="quote-production-included-list__text">
-                  <strong>Хамгаалалтын алба</strong> — багадаа 2 хамгаалалтын ажилтан
-                </span>
-              </li>
-              <li>
-                <span class="quote-production-included-list__check">✓</span>
-                <span class="quote-production-included-list__text">
-                  <strong>Хөтөлбөр боловсруулах</strong>
-                </span>
-              </li>
-              <li>
-                <span class="quote-production-included-list__check">✓</span>
-                <span class="quote-production-included-list__text">
-                  <strong>Хөтөлбөрийн дагуу үйл ажиллагааг удирдах</strong>
-                </span>
-              </li>
-              <li>
-                <span class="quote-production-included-list__check">✓</span>
-                <span class="quote-production-included-list__text">
-                  <strong>Багын уур амьсгал сайжруулах хөгжөөнт тоглоом</strong>
-                </span>
-              </li>
-            </ul>
-          </div>
         </div>
         <!-- ── /НЭМЭЛТ ҮЙЛЧИЛГЭЭ ──────────────────────────────── -->
 
