@@ -3383,6 +3383,9 @@ body.home-page video {
   color: var(--accent);
 }
 
+/* Ensure [hidden] is respected even when display:flex is set on the element */
+.quote-addon-card__quantity[hidden] { display: none !important; }
+
 /* Tier-included state */
 .quote-addon-card--included {
   background: rgba(40, 140, 60, 0.07);
@@ -3395,6 +3398,16 @@ body.home-page video {
 }
 .quote-addon-card--included .quote-addon-card__price {
   display: none;
+}
+.quote-addon-card--included .quote-addon-card__qty-input:disabled {
+  background: rgba(40, 140, 60, 0.06);
+  color: var(--primary-forest);
+  cursor: not-allowed;
+  border-color: rgba(40, 140, 60, 0.2);
+}
+.quote-addon-card--included .quote-addon-card__qty-total {
+  color: #2a7a3b;
+  font-style: italic;
 }
 .quote-addon-card__included-badge {
   display: inline-block;

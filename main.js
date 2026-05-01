@@ -814,6 +814,8 @@
       quoteForm.querySelectorAll('.quote-addon-card__sub-options').forEach(function (el) { el.hidden = true; });
       quoteForm.querySelectorAll('.quote-addon-card__quantity').forEach(function (el) { el.hidden = true; });
       quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (el) { el.disabled = false; });
+      quoteForm.querySelectorAll('.quote-addon-card__qty-text').forEach(function (el) { el.hidden = false; });
+      quoteForm.querySelectorAll('.quote-addon-card__qty-total').forEach(function (el) { el.textContent = '—'; });
       var bartenderPriceEl = document.querySelector('[data-bartender-price]');
       if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 bartender)';
       var djPriceEl = document.querySelector('[data-dj-price]');
@@ -960,17 +962,25 @@
           }
           var qtyDiv = card.querySelector('.quote-addon-card__quantity');
           if (qtyDiv) {
-            if (tier === 'Production' || cb.dataset.type !== 'per-person') {
+            if (cb.dataset.type !== 'per-person') {
               qtyDiv.hidden = true;
             } else {
-              // Experience included per-person items: show qty div with disabled auto-filled input
+              // Per-person included items: show qty div with disabled auto-filled input
               qtyDiv.hidden = false;
               var qtyInputEl = qtyDiv.querySelector('.quote-addon-card__qty-input');
+              var gNow = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
               if (qtyInputEl) {
                 qtyInputEl.disabled = true;
-                var gNow = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
+                if (gNow > 0) qtyInputEl.value = gNow;
+              }
+              if (tier === 'Production') {
+                // Lock price display: replace unit-price text with included label
+                var qtyTextEl = qtyDiv.querySelector('.quote-addon-card__qty-text');
+                if (qtyTextEl) qtyTextEl.hidden = true;
+                var totalEl = qtyDiv.querySelector('.quote-addon-card__qty-total');
+                if (totalEl) totalEl.textContent = '· нэмэлт төлбөр авахгүй';
+              } else {
                 if (gNow > 0) {
-                  qtyInputEl.value = gNow;
                   updateQtyTotal(qtyDiv, parseInt(cb.dataset.price, 10), gNow);
                 }
               }
@@ -1448,9 +1458,13 @@
           if (qtyDiv && qtyDiv.hidden) return;
           var unitPrice = cb ? parseInt(cb.dataset.price, 10) : 0;
           if (cb && cb.disabled) {
-            // Experience included per-person items: always track guest count
+            // Included per-person items: always track guest count
             qtyInput.value = g;
-            if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+            var currentTier = tierSelect ? tierSelect.value : '';
+            if (currentTier !== 'Production') {
+              if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+            }
+            // For Production included items the total stays as "нэмэлт төлбөр авахгүй"
           } else {
             qtyInput.max = g;
             var currentVal = parseInt(qtyInput.value, 10) || 0;
