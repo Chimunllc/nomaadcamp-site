@@ -3572,3 +3572,34 @@ body.home-page video {
   font-weight: 600;
   text-decoration: none;
 }
+
+.quote-tier-success {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  border: 1px solid #4CAF50;
+  border-radius: 8px;
+  color: #1B5E20;
+  font-size: 0.95rem;
+  text-align: center;
+  animation: tierSuccessFadeIn 0.3s ease-out;
+}
+
+.quote-tier-success strong {
+  color: #1B5E20;
+  font-size: 1.05rem;
+}
+
+@keyframes tierSuccessFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.quote-tier-success.fade-out {
+  animation: tierSuccessFadeOut 0.3s ease-out forwards;
+}
+
+@keyframes tierSuccessFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
