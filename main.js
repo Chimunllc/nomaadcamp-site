@@ -1074,6 +1074,16 @@
         return;
       }
 
+      // Strict guard: only C Кемп + Тусгай захиалга gets the custom-order treatment
+      if (camp === 'C Кемп' && tier === 'Тусгай захиалга') {
+        estimateEl.hidden = true;
+        var nudgeElC = document.getElementById('tier-nudge');
+        if (nudgeElC) nudgeElC.hidden = true;
+        var prodLinkElC = document.getElementById('production-link');
+        if (prodLinkElC) prodLinkElC.hidden = true;
+        return;
+      }
+
       estimateEl.hidden = false;
 
       var perPerson;
