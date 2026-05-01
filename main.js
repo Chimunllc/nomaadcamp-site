@@ -803,7 +803,7 @@
       quoteModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
       if (contextHint) contextHint.hidden = true;
-      if (estimateEl) estimateEl.hidden = true;
+      if (estimateEl) { estimateEl.hidden = true; estimateEl.innerHTML = ''; }
       var nudgeElClose = document.getElementById('tier-nudge');
       if (nudgeElClose) nudgeElClose.hidden = true;
       var prodLinkElClose = document.getElementById('production-link');
@@ -1090,6 +1090,7 @@
       var prodLinkEl = document.getElementById('production-link');
       if (quoteModal.dataset.quoteMode === 'day-program') {
         estimateEl.hidden = true;
+        estimateEl.innerHTML = '';
         if (nudgeEl)    nudgeEl.hidden    = true;
         if (prodLinkEl) prodLinkEl.hidden = true;
         return;
