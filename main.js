@@ -859,13 +859,6 @@
       return included;
     }
 
-    var PRODUCTION_PRICING = [
-      { min: 50,  max: 99,       price: 280000 },
-      { min: 100, max: 199,      price: 250000 },
-      { min: 200, max: 299,      price: 230000 },
-      { min: 300, max: 499,      price: 210000 },
-      { min: 500, max: Infinity, price: 195000 }
-    ];
 
     function formatMNT(n) {
       return n.toLocaleString('en-US') + '₮';
@@ -897,16 +890,7 @@
     }
 
     function getProductionPricePerPerson(guests, campName) {
-      if (campName === 'C Кемп') return 350000;
-      if (campName === 'Нүүдлийн кемп') return 220000;
-      var tier = null;
-      for (var i = 0; i < PRODUCTION_PRICING.length; i++) {
-        if (guests >= PRODUCTION_PRICING[i].min && guests <= PRODUCTION_PRICING[i].max) {
-          tier = PRODUCTION_PRICING[i];
-          break;
-        }
-      }
-      return tier ? tier.price : 195000;
+      return 280000;
     }
 
     function toggleProductionOnlySections(tier) {
