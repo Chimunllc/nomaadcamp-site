@@ -767,12 +767,13 @@
       applyTierInclusions(tier);
 
       // C Кемп + Тусгай захиалга: remove add-ons from DOM entirely, show custom order message
+      // Өдрийн хөтөлбөр дээр нэмэлт үйлчилгээ харагдана (кемпүүдтэй ижил).
       var isCCustomOrder = (camp === 'C Кемп' && tier === 'Тусгай захиалга');
       var customOrderMsg = document.getElementById('quote-custom-order-msg');
       if (customOrderMsg) customOrderMsg.hidden = !isCCustomOrder;
       var dayProgramMsg = document.getElementById('quote-day-program-msg');
       if (dayProgramMsg) dayProgramMsg.hidden = !isDayProgram;
-      if (isCCustomOrder || isDayProgram) {
+      if (isCCustomOrder) {
         if (addonsSectionEl && addonsSectionEl.parentNode) addonsSectionEl.parentNode.removeChild(addonsSectionEl);
       } else {
         if (addonsSectionEl && !addonsSectionEl.parentNode && addonsSectionParent) {
