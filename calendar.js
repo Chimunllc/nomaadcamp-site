@@ -98,12 +98,39 @@
       .catch(function () { /* ignore — keep placeholder */ });
   }
 
+  // Compute check-in / check-out defaults based on day-of-week.
+  // dow: 0=Sun, 1=Mon, ..., 6=Sat
+  function defaultsFor(iso, dow) {
+    function addDays(d, n) {
+      var x = new Date(d + 'T00:00:00');
+      x.setDate(x.getDate() + n);
+      return x.toISOString().slice(0, 10);
+    }
+    // Mon–Thu — day program 10:00–18:00 same day
+    if (dow >= 1 && dow <= 4) {
+      return { start: iso + 'T10:00', end: iso + 'T18:00', mode: 'day-program', tier: 'Хагас өдрийн' };
+    }
+    // Friday — camp slot 1: Fri 09:00 → Sat 11:00
+    if (dow === 5) {
+      return { start: iso + 'T09:00', end: addDays(iso, 1) + 'T11:00', mode: 'camp', tier: 'Үндсэн' };
+    }
+    // Saturday — camp slot 2: Sat 12:00 → Sun 15:00
+    if (dow === 6) {
+      return { start: iso + 'T12:00', end: addDays(iso, 1) + 'T15:00', mode: 'camp', tier: 'Үндсэн' };
+    }
+    // Sunday — fold into Saturday slot (already booked Sat 12:00 → Sun 15:00).
+    // We rewind to the previous Saturday for the start.
+    return { start: addDays(iso, -1) + 'T12:00', end: iso + 'T15:00', mode: 'camp', tier: 'Үндсэн' };
+  }
+
   // Click → prefill quote modal with chosen date and tier guess.
   grid.addEventListener('click', function (ev) {
     var cell = ev.target.closest && ev.target.closest('.cal-cell');
     if (!cell) return;
     var iso = cell.getAttribute('data-date');
-    var kind = cell.getAttribute('data-kind');
+    var d = new Date(iso + 'T00:00:00');
+    var dow = d.getDay();
+    var def = defaultsFor(iso, dow);
 
     var modal = document.getElementById('quote-modal');
     if (!modal) return;
@@ -111,21 +138,29 @@
     var startInput = document.getElementById('start-datetime');
     var endInput   = document.getElementById('end-datetime');
     if (startInput) {
-      startInput.value = iso + 'T10:00';
-      startInput.dispatchEvent(new Event('change', { bubbles: true }));
+      if (startInput._flatpickr) {
+        startInput._flatpickr.setDate(def.start, true);
+      } else {
+        startInput.value = def.start;
+        startInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     }
     if (endInput) {
-      endInput.value = iso + (kind === 'day' ? 'T18:00' : 'T12:00');
-      endInput.dispatchEvent(new Event('change', { bubbles: true }));
+      if (endInput._flatpickr) {
+        endInput._flatpickr.setDate(def.end, true);
+      } else {
+        endInput.value = def.end;
+        endInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     }
 
     // Open the modal via the existing trigger pathway.
     var fakeOpener = document.createElement('a');
     fakeOpener.setAttribute('href', '#quote-modal');
     fakeOpener.setAttribute('data-quote-open', 'true');
-    fakeOpener.setAttribute('data-quote-mode', kind === 'day' ? 'day-program' : 'camp');
-    fakeOpener.setAttribute('data-camp-name', kind === 'day' ? 'Хагас өдрийн хөтөлбөр' : 'NOMAAD Summit');
-    fakeOpener.setAttribute('data-tier', kind === 'day' ? 'Хагас өдрийн' : 'Үндсэн');
+    fakeOpener.setAttribute('data-quote-mode', def.mode);
+    fakeOpener.setAttribute('data-camp-name', def.mode === 'day-program' ? 'Хагас өдрийн хөтөлбөр' : 'NOMAAD Summit');
+    fakeOpener.setAttribute('data-tier', def.tier);
     fakeOpener.style.display = 'none';
     document.body.appendChild(fakeOpener);
     fakeOpener.click();
