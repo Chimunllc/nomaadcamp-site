@@ -889,8 +889,8 @@
 
     // ── PRICE ESTIMATE ─────────────────────────────────────────
     var PRICE_TABLE = {
-      'Essential': { 'NOMAAD Summit': 180000, 'NOMAAD Meadow': 180000, 'NOMAAD Grove': 280000, 'Нүүдлийн кемп': 180000 },
-      'Experience': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 350000, 'Нүүдлийн кемп': 220000 }
+      'Essential': { 'NOMAAD Summit': 180000, 'NOMAAD Meadow': 180000, 'NOMAAD Grove': 180000, 'Нүүдлийн кемп': 180000 },
+      'Experience': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000, 'Нүүдлийн кемп': 220000 }
     };
     var DAY_PROGRAM_PRICE_TABLE = {
       'Half Day хөтөлбөр': 100000,
