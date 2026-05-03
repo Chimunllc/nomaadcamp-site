@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1hKG50myN8Q87lQQ906GxEZLst2/Z5xfdbQPHihUNCU=' https://www.googletagmanager.com https://api.mapbox.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com https://api.mapbox.com; media-src 'self'; connect-src 'self' https://chimun.app.n8n.cloud https://www.google-analytics.com https://*.analytics.google.com https://api.mapbox.com https://*.tiles.mapbox.com https://events.mapbox.com https://api.open-meteo.com; worker-src 'self' blob:; child-src blob:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1hKG50myN8Q87lQQ906GxEZLst2/Z5xfdbQPHihUNCU=' https://www.googletagmanager.com https://api.mapbox.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com https://api.mapbox.com; media-src 'self'; connect-src 'self' https://chimun.app.n8n.cloud https://www.google-analytics.com https://*.analytics.google.com https://api.mapbox.com https://*.tiles.mapbox.com https://events.mapbox.com; worker-src 'self' blob:; child-src blob:">
 <title>NOMAAD Camp | Байгууллагын арга хэмжээний нэгдсэн шийдэл</title>
 <meta name="description" content="NOMAAD Camp — 10–1000 хүний байгууллагын арга хэмжээг УБ-аас 75 км-т кемп, катеринг, техник, хөтөлбөртэй нь нэг гэрээгээр зохион байгуулна.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -146,7 +146,6 @@
     <a href="#gallery">Зургийн цомог</a>
     <a href="#clients">Хамтран ажилласан байгууллагууд</a>
     <a href="#location">Байршил</a>
-    <a href="#calendar">Календарь</a>
     <a href="#contact">Холбоо барих</a>
   </div>
   <div class="nav-actions">
@@ -1013,22 +1012,6 @@
   </div>
 </section>
 
-<section class="section section--light" id="calendar" aria-labelledby="calendar-title">
-  <div class="container">
-    <div class="section-head section-head--center reveal">
-      <span class="eyebrow"><span class="eyebrow-dot"></span>Захиалгын календарь</span>
-      <h2 id="calendar-title">Ирэх 14 хоног · цаг агаартайгаар</h2>
-      <p>Огноогоо сонгож хурдан үнийн санал авах</p>
-    </div>
-    <div class="cal-legend reveal" role="list">
-      <span class="cal-legend__item" role="listitem"><span class="cal-legend__swatch cal-legend__swatch--day"></span>Өдрийн хөтөлбөр (Да–Пү)</span>
-      <span class="cal-legend__item" role="listitem"><span class="cal-legend__swatch cal-legend__swatch--camp"></span>Кэмп багц (Ба–Ня)</span>
-    </div>
-    <div class="cal-grid reveal" id="nomaad-calendar" aria-label="14 хоногийн захиалгын календарь"></div>
-    <p class="cal-hint reveal">💡 Огноо дээр дарахад үнийн санал авах форм автоматаар нээгдэнэ. Цаг агаар нь танай кэмпийн координатаар гарсан 14 хоногийн прогноз.</p>
-  </div>
-</section>
-
 <section class="section cta-final" id="contact">
   <div class="container reveal">
     <h2>Танай байгууллагад тохирсон арга хэмжээг хамтдаа зохион байгуулъя</h2>
@@ -1477,7 +1460,6 @@
 <script src="/main.js"></script>
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js" defer></script>
 <script src="/map.js" defer></script>
-<script src="/calendar.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js" defer></script>
 <script src="/datepicker.js" defer></script>
 </body>
