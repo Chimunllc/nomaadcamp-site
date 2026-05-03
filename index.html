@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1hKG50myN8Q87lQQ906GxEZLst2/Z5xfdbQPHihUNCU=' https://www.googletagmanager.com https://api.mapbox.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com https://api.mapbox.com; media-src 'self'; connect-src 'self' https://chimun.app.n8n.cloud https://www.google-analytics.com https://*.analytics.google.com https://api.mapbox.com https://*.tiles.mapbox.com https://events.mapbox.com https://api.open-meteo.com; worker-src 'self' blob:; child-src blob:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1hKG50myN8Q87lQQ906GxEZLst2/Z5xfdbQPHihUNCU=' https://www.googletagmanager.com https://api.mapbox.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com https://api.mapbox.com; media-src 'self'; connect-src 'self' https://chimun.app.n8n.cloud https://www.google-analytics.com https://*.analytics.google.com https://api.mapbox.com https://*.tiles.mapbox.com https://events.mapbox.com https://api.open-meteo.com; worker-src 'self' blob:; child-src blob:">
 <title>NOMAAD Camp | Байгууллагын арга хэмжээний нэгдсэн шийдэл</title>
 <meta name="description" content="NOMAAD Camp — 10–1000 хүний байгууллагын арга хэмжээг УБ-аас 75 км-т кемп, катеринг, техник, хөтөлбөртэй нь нэг гэрээгээр зохион байгуулна.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -31,6 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap">
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
 <!-- Structured data: business + camp products -->
 <script type="application/ld+json">
 {
@@ -1120,12 +1121,12 @@
         </div>
         <div class="quote-form__field">
           <label for="start-datetime">Эхлэх огноо, цаг <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <input id="start-datetime" name="start_datetime" type="datetime-local" required>
+          <input id="start-datetime" name="start_datetime" type="text" placeholder="Огноо ба цаг сонгох" autocomplete="off" required>
           <span class="quote-field-error" id="err-start" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
           <label for="end-datetime">Дуусах огноо, цаг <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <input id="end-datetime" name="end_datetime" type="datetime-local" required>
+          <input id="end-datetime" name="end_datetime" type="text" placeholder="Огноо ба цаг сонгох" autocomplete="off" required>
           <span class="quote-field-error" id="err-end" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
@@ -1469,5 +1470,7 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js" defer></script>
 <script src="/map.js" defer></script>
 <script src="/calendar.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js" defer></script>
+<script src="/datepicker.js" defer></script>
 </body>
 </html>
