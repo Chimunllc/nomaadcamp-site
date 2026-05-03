@@ -992,7 +992,7 @@ p  { color: var(--muted); font-size: 16px; line-height: 1.6; }
   --cream: #F5F1E8;
   --sand-bg: #EAE3D5;
   --stone: #D6CEC2;
-  --accent: #C65D2E;
+  --accent: #B14F1F;
   --text-dark: #1A1A1A;
   --text-light: #FFFFFF;
   --card-bg: #FFFCF7;
@@ -1029,7 +1029,9 @@ body.home-page .nav-links a {
 
 /* Eyebrow contrast fix: #9A9C94 on cream/sand fails WCAG AA; use #4A4D46 (6.8:1 on cream, 6.1:1 on sand) */
 body.home-page .section--light .eyebrow,
-body.home-page .section--sand .eyebrow {
+body.home-page .section--sand .eyebrow,
+body.home-page #camps .eyebrow,
+body.home-page section[id="camps"] .eyebrow {
   color: #4A4D46;
 }
 
@@ -1885,7 +1887,8 @@ body.modal-open { overflow: hidden; }
   color: var(--primary-forest);
 }
 .pkg-card--featured .pkg-tier-label { color: var(--accent); }
-.pkg-card--custom .pkg-tier-label { color: rgba(47, 62, 47, 0.65); }
+/* Contrast fix: rgba(47,62,47,0.65) on #FFFCF7 ≈ 3.9:1 fails WCAG AA for small uppercase text */
+.pkg-card--custom .pkg-tier-label { color: #4A5946; }
 .pkg-price {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(1.1rem, 1.8vw, 1.4rem);
@@ -1897,7 +1900,8 @@ body.modal-open { overflow: hidden; }
 .pkg-per {
   font-size: 0.72rem;
   font-weight: 500;
-  color: rgba(26, 26, 26, 0.52);
+  /* Contrast fix: rgba(26,26,26,0.52) ≈ 4.4:1 fails AA for small text; bump to 0.7 ≈ 6.8:1 */
+  color: rgba(26, 26, 26, 0.7);
   letter-spacing: 0;
 }
 .pkg-price--custom {
@@ -2668,12 +2672,12 @@ body.home-page .footer {
   line-height: 1.6;
   max-width: 600px;
   margin-top: 1.25rem;
-  color: var(--muted);
+  color: #DCDFD5;
 }
 
 #why-nomaad .section-head > p {
   max-width: 65ch;
-  color: rgba(154, 156, 148, 0.94);
+  color: #D8DAD3;
 }
 
 #why-nomaad .wn-cap-grid {
@@ -2707,7 +2711,7 @@ body.home-page .footer {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.12em;
-  color: rgba(200, 168, 120, 0.72);
+  color: #E0C79A;
   margin-bottom: 0.68rem;
   line-height: 1;
 }
@@ -2727,7 +2731,7 @@ body.home-page .footer {
 #why-nomaad .wn-cap-item p {
   font-size: 0.9rem;
   line-height: 1.72;
-  color: rgba(154, 156, 148, 0.92);
+  color: #D6D8D2;
   max-width: 34ch;
   letter-spacing: 0.005em;
 }
@@ -3200,7 +3204,7 @@ body.home-page video {
 }
 .quote-addons__subtitle {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #4b5563;
   margin: 0 0 1.1rem;
 }
 .quote-addons__group {
@@ -3266,7 +3270,7 @@ body.home-page video {
 }
 .quote-addon-card__detail {
   font-size: 0.76rem;
-  color: #6b7280;
+  color: #4b5563;
   line-height: 1.35;
 }
 .quote-addon-card__price {
@@ -3277,7 +3281,7 @@ body.home-page video {
 }
 .quote-addon-card__tooltip {
   font-size: 0.7rem;
-  color: #6b7280;
+  color: #4b5563;
   margin-top: 0.3rem;
   line-height: 1.45;
   font-style: italic;
@@ -3381,7 +3385,7 @@ body.home-page video {
 }
 .quote-addon-card__qty-text {
   font-size: 0.76rem;
-  color: #6b7280;
+  color: #4b5563;
 }
 .quote-addon-card__qty-total {
   font-size: 0.82rem;
