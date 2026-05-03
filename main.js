@@ -815,8 +815,8 @@
 
     // ── PRICE ESTIMATE ─────────────────────────────────────────
     var PRICE_TABLE = {
-      'Essential': { 'NOMAAD Summit': 180000, 'NOMAAD Meadow': 180000, 'NOMAAD Grove': 180000, 'Нүүдлийн кемп': 180000 },
-      'Experience': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000, 'Нүүдлийн кемп': 220000 }
+      'Үндсэн': { 'NOMAAD Summit': 180000, 'NOMAAD Meadow': 180000, 'NOMAAD Grove': 180000, 'Нүүдлийн кемп': 180000 },
+      'Стандарт': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000, 'Нүүдлийн кемп': 220000 }
     };
     var DAY_PROGRAM_PRICE_TABLE = {
       'Half Day хөтөлбөр': 100000,
@@ -833,13 +833,13 @@
     };
 
     var TIER_INCLUSIONS = {
-      'Essential': [],
-      'Experience': [
+      'Үндсэн': [],
+      'Стандарт': [
         'welcome_drink', 'sleeping_bag', 'coffee_corner',
         'lunch_upgrade', 'dinner_upgrade',
         'moonbeam_lounge', 'bartender_service'
       ],
-      'Production': [
+      'Премиум': [
         'welcome_drink', 'sleeping_bag', 'coffee_corner',
         'lunch_upgrade', 'dinner_upgrade',
         'moonbeam_lounge', 'bartender_service',
@@ -850,7 +850,7 @@
 
     function getTierInclusions(campName, tier) {
       var included = TIER_INCLUSIONS[tier] ? TIER_INCLUSIONS[tier].slice() : [];
-      if (tier === 'Production' && campName === 'NOMAAD Grove') {
+      if (tier === 'Премиум' && campName === 'NOMAAD Grove') {
         included = included.filter(function (item) { return item !== 'led_screen_18m2'; });
       }
       return included;
@@ -903,7 +903,7 @@
       var titleFlat        = document.getElementById('quote-addons-title-flat');
 
       // For non-Production/non-Experience tiers, restore cards to original positions and hide included UI
-      if (tier !== 'Production' && tier !== 'Experience') {
+      if (tier !== 'Премиум' && tier !== 'Стандарт') {
         restoreAddonCardPositions();
         if (includedSection) includedSection.hidden = true;
         if (optionalLabel)   optionalLabel.hidden   = true;
@@ -929,7 +929,7 @@
             if (nameEl) nameEl.appendChild(badge);
           }
           // Move included cards into the included section grid
-          if ((tier === 'Production' || tier === 'Experience') && includedGrid) {
+          if ((tier === 'Премиум' || tier === 'Стандарт') && includedGrid) {
             includedGrid.appendChild(card);
           }
           var qtyDiv = card.querySelector('.quote-addon-card__quantity');
@@ -945,7 +945,7 @@
                 qtyInputEl.disabled = true;
                 if (gNow > 0) qtyInputEl.value = gNow;
               }
-              if (tier === 'Production' || tier === 'Experience') {
+              if (tier === 'Премиум' || tier === 'Стандарт') {
                 // Lock price display: replace unit-price text with included label
                 var qtyTextEl = qtyDiv.querySelector('.quote-addon-card__qty-text');
                 if (qtyTextEl) qtyTextEl.hidden = true;
@@ -972,11 +972,11 @@
         }
       });
 
-      if (tier === 'Production' || tier === 'Experience') {
+      if (tier === 'Премиум' || tier === 'Стандарт') {
         var includedTitleEl = document.getElementById('quote-addons-included-title');
         if (includedTitleEl) includedTitleEl.textContent = tier + ' багцад багтсан үйлчилгээ';
         var productionList = document.querySelector('.quote-production-included-list');
-        if (productionList) productionList.hidden = (tier !== 'Production');
+        if (productionList) productionList.hidden = (tier !== 'Премиум');
         if (includedSection) includedSection.hidden = false;
         if (optionalLabel)   optionalLabel.hidden   = false;
         // Hide original group titles — the new section labels replace them
@@ -1094,7 +1094,7 @@
       estimateEl.hidden = false;
 
       var perPerson;
-      if (tier === 'Production') {
+      if (tier === 'Премиум') {
         perPerson = getProductionPricePerPerson(guests, camp);
       } else {
         var campPrices = PRICE_TABLE[tier];
@@ -1165,7 +1165,7 @@
       var total = base + perPersonAddonsSum + flatAddonsSum + shuttleAmount;
 
       var html = '<p class="quote-estimate__title">Урьдчилсан тооцоолол</p>';
-      if (tier === 'Production') {
+      if (tier === 'Премиум') {
         html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн · ' + formatMNT(perPerson) + '/хүн</p>';
       } else {
         html += '<p class="quote-estimate__row">' + tier + ' багц · ' + guests + ' хүн</p>';
@@ -1229,7 +1229,7 @@
       var bc   = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
       if (!c || !t || g < 1) return 0;
       var perPerson;
-      if (t === 'Production') {
+      if (t === 'Премиум') {
         perPerson = getProductionPricePerPerson(g, c);
       } else {
         var cp = PRICE_TABLE[t];
@@ -1245,7 +1245,7 @@
       var bc = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
       var shuttleAmt = (SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0) * (sh !== 'Сонгохгүй' ? bc : 1);
       var base = getProductionPricePerPerson(guests, campName) * guests;
-      var inclusions = getTierInclusions(campName, 'Production');
+      var inclusions = getTierInclusions(campName, 'Премиум');
       return base + shuttleAmt + calculateAddonSum(guests, inclusions);
     }
 
@@ -1253,18 +1253,18 @@
       var sh = shuttleSelect ? shuttleSelect.value : 'Сонгохгүй';
       var bc = busCountInput ? (parseInt(busCountInput.value, 10) || 1) : 1;
       var shuttleAmt = (SHUTTLE_PRICE[sh] !== undefined ? SHUTTLE_PRICE[sh] : 0) * (sh !== 'Сонгохгүй' ? bc : 1);
-      var cp = PRICE_TABLE['Experience'];
+      var cp = PRICE_TABLE['Стандарт'];
       if (!cp || !cp[campName]) return Infinity;
       var base = cp[campName] * guests;
-      var inclusions = getTierInclusions(campName, 'Experience');
+      var inclusions = getTierInclusions(campName, 'Стандарт');
       return base + shuttleAmt + calculateAddonSum(guests, inclusions);
     }
 
     function calculateEssentialEquivalentTotal(campName, guests) {
-      var cp = PRICE_TABLE['Essential'];
+      var cp = PRICE_TABLE['Үндсэн'];
       if (!cp || !cp[campName]) return Infinity;
       var basePrice = cp[campName] * guests;
-      var experienceInclusions = TIER_INCLUSIONS['Experience'];
+      var experienceInclusions = TIER_INCLUSIONS['Стандарт'];
       var inclusionsTotal = 0;
       experienceInclusions.forEach(function (code) {
         var cb = quoteForm.querySelector('input[name="addons[]"][value="' + code + '"]');
@@ -1310,16 +1310,16 @@
         return;
       }
 
-      if (currentTier === 'Production') {
+      if (currentTier === 'Премиум') {
         nudge.hidden = true;
         if (productionLink) productionLink.hidden = true;
         return;
       }
 
-      if (currentTier === 'Essential') {
+      if (currentTier === 'Үндсэн') {
         var currentTotal = calculateCurrentTotal();
         if (currentTotal > 0) {
-          var userSelectedExperienceItems = getSelectedItemsInTier('Experience', campName);
+          var userSelectedExperienceItems = getSelectedItemsInTier('Стандарт', campName);
           if (userSelectedExperienceItems.length >= 3) {
             var experienceTotal = calculateExperienceTotal(campName, guests);
             if (experienceTotal < currentTotal) {
@@ -1329,7 +1329,7 @@
             }
           }
         }
-      } else if (currentTier === 'Experience') {
+      } else if (currentTier === 'Стандарт') {
         var essentialEquivalentTotal = calculateEssentialEquivalentTotal(campName, guests);
         var expTotal = calculateExperienceTotal(campName, guests);
         var savings = essentialEquivalentTotal - expTotal;
@@ -1355,9 +1355,9 @@
       var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
       var campName = campSelect ? campSelect.value : '';
       var savingsBeforeSwitch = calculateCurrentTotal() - calculateExperienceTotal(campName, currentGuests);
-      if (tierSelect) tierSelect.value = 'Experience';
-      applyTierInclusions('Experience');
-      updateModalHeader(campName, 'Experience');
+      if (tierSelect) tierSelect.value = 'Стандарт';
+      applyTierInclusions('Стандарт');
+      updateModalHeader(campName, 'Стандарт');
       quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (qi) {
         var card = qi.closest('.quote-addon-card');
         var cb = card ? card.querySelector('input[name="addons[]"]') : null;
@@ -1375,12 +1375,12 @@
       nudge.innerHTML = [
         '<div class="quote-tier-nudge__icon">💡</div>',
         '<div class="quote-tier-nudge__body">',
-        '  <h4 class="quote-tier-nudge__title">Experience tier-руу шилжвэл хэмнэлттэй</h4>',
+        '  <h4 class="quote-tier-nudge__title">Стандарт багц руу шилжвэл хэмнэлттэй</h4>',
         '  <div class="quote-tier-nudge__savings">',
         '    ✓ <strong>' + savings.toLocaleString() + '₮</strong> хэмнэнэ',
         '  </div>',
         '  <button type="button" class="btn btn--accent quote-tier-nudge__cta" data-tier-switch>',
-        '    Experience tier-руу шилжих →',
+        '    Стандарт багц руу шилжих →',
         '  </button>',
         '</div>'
       ].join('');
@@ -1509,7 +1509,7 @@
             // Included per-person items: always track guest count
             qtyInput.value = g;
             var currentTier = tierSelect ? tierSelect.value : '';
-            if (currentTier !== 'Production' && currentTier !== 'Experience') {
+            if (currentTier !== 'Премиум' && currentTier !== 'Стандарт') {
               if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
             }
             // For Production/Experience included items the total stays as "нэмэлт төлбөр авахгүй"
