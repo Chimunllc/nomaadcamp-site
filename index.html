@@ -1120,13 +1120,21 @@
           <span class="quote-field-error" id="err-email" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="start-datetime">Эхлэх огноо, цаг <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <input id="start-datetime" name="start_datetime" type="text" placeholder="Огноо ба цаг сонгох" autocomplete="off" required>
+          <label for="start-date">Эхлэх огноо <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <div class="quote-date-row">
+            <input id="start-date" type="text" placeholder="Огноо сонгох" autocomplete="off" required>
+            <span class="quote-time-locked" aria-live="polite">Цаг: <strong id="start-time-display">—</strong></span>
+          </div>
+          <input id="start-datetime" name="start_datetime" type="hidden" required>
           <span class="quote-field-error" id="err-start" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="end-datetime">Дуусах огноо, цаг <span class="quote-form__required" aria-hidden="true">*</span></label>
-          <input id="end-datetime" name="end_datetime" type="text" placeholder="Огноо ба цаг сонгох" autocomplete="off" required>
+          <label for="end-date">Дуусах огноо <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <div class="quote-date-row">
+            <input id="end-date" type="text" placeholder="Огноо сонгох" autocomplete="off" required>
+            <span class="quote-time-locked" aria-live="polite">Цаг: <strong id="end-time-display">—</strong></span>
+          </div>
+          <input id="end-datetime" name="end_datetime" type="hidden" required>
           <span class="quote-field-error" id="err-end" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">

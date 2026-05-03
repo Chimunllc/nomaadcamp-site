@@ -3357,14 +3357,49 @@ body.home-page video {
   background: #EAE3D5 !important;
 }
 
-/* Style the underlying inputs to match site fields */
-#start-datetime,
-#end-datetime {
+/* Locked-time row: date picker on the left, locked time chip on the right */
+.quote-date-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+.quote-date-row > input[type="text"] {
+  flex: 1;
+  min-width: 0;
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%231F2A23' stroke-width='1.6'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 40px;
+}
+.quote-time-locked {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  background: #EAE3D5;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #1F2A23;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.quote-time-locked strong {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #B14F1F;
+  font-feature-settings: 'tnum';
+}
+@media (max-width: 520px) {
+  .quote-date-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .quote-time-locked {
+    padding: 0.55rem 0.85rem;
+    justify-content: center;
+  }
 }
 
 /* ── BOOKING CALENDAR ─────────────────────────────────────── */
