@@ -16,5 +16,5 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-c3nYC9/Mc4FCiE0mouIFtk01NT0KlQ/hiF3NlQVntZ8=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com; media-src 'self'; connect-src 'self' https://chimun.app.n8n.cloud https://www.google-analytics.com https://*.analytics.google.com; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-1hKG50myN8Q87lQQ906GxEZLst2/Z5xfdbQPHihUNCU=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com; media-src 'self'; connect-src 'self' https://chimun.app.n8n.cloud https://www.google-analytics.com https://*.analytics.google.com; frame-ancestors 'none'"
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
