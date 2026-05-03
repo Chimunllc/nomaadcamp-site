@@ -546,6 +546,14 @@
       addonCardOriginals.push({ card: card, parent: parent, index: index });
     });
 
+    // Stop click on quantity inputs from bubbling up to the card's checkbox toggle.
+    // Replaces inline onclick="event.stopPropagation()" handlers (CSP-friendly).
+    quoteForm.addEventListener('click', function (ev) {
+      if (ev.target && ev.target.classList && ev.target.classList.contains('quote-addon-card__qty-input')) {
+        ev.stopPropagation();
+      }
+    });
+
     function restoreAddonCardPositions() {
       var grouped = [];
       addonCardOriginals.forEach(function (entry) {

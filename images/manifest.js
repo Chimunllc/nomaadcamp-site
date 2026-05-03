@@ -3,43 +3,75 @@
 //   cover image  → images/camps/<camp>/cover/<any-filename>
 //   gallery image → images/camps/<camp>/gallery/<any-filename>
 //   partner logos → logos/partners/<any-filename>
-// Then commit and push — Netlify regenerates this file on every deploy.
+// Then commit and push — the build step regenerates this file on every deploy.
 window.NOMAAD_IMAGES = {
   "hero": [
     "/images/hero/gallery-05.jpg",
+    "/images/hero/gallery-05.webp",
     "/images/hero/gallery-17.jpg",
+    "/images/hero/gallery-17.webp",
     "/images/hero/gallery-18.jpg",
+    "/images/hero/gallery-18.webp",
     "/images/hero/gallery-19.jpg",
-    "/images/hero/hero-01.jpg"
+    "/images/hero/gallery-19.webp",
+    "/images/hero/hero-01.jpg",
+    "/images/hero/hero-01.webp"
   ],
   "gallery": [
     "/images/gallery/gallery-09.jpg",
+    "/images/gallery/gallery-09.webp",
     "/images/gallery/gallery-10.jpg",
-    "/images/gallery/gallery-20.jpg"
+    "/images/gallery/gallery-10.webp",
+    "/images/gallery/gallery-20.jpg",
+    "/images/gallery/gallery-20.webp"
   ],
   "partners": [
-    "/logos/partners/client-apu.svg",
-    "/logos/partners/client-golomt.svg",
-    "/logos/partners/client-khan.svg",
-    "/logos/partners/client-mcs.svg",
-    "/logos/partners/client-tt.svg",
-    "/logos/partners/client-unitel.svg"
+    "/logos/partners/ARD_Financial_Group_idJDS15KS__0.png",
+    "/logos/partners/Cummins_idHxZrC04J_1.png",
+    "/logos/partners/EY_idh3Sg1g92_0.svg",
+    "/logos/partners/Golomt_Bank_id6U0be-wo_1.svg",
+    "/logos/partners/Namir_Group_idg1kU9skl_0.png",
+    "/logos/partners/Sandvik_idkDUMU0T4_0.png",
+    "/logos/partners/Symbol.png",
+    "/logos/partners/id8ahsH2Qc_logos.jpeg",
+    "/logos/partners/idMeGQlQ0__1777791970117.jpeg",
+    "/logos/partners/idjNVr0-rV_1777792029924.png"
   ],
   "galleryCategories": {
     "stage": {
       "title": "Тайз ба хөтөлбөр",
       "label": "STAGE",
       "description": "Том хэмжээний outdoor арга хэмжээний тайз болон хөтөлбөрийн орчин.",
-      "cover": null,
-      "images": []
+      "cover": "/images/gallery/stage/481056384_1152247110030024_8368013185603075506_n.jpg",
+      "images": [
+        "/images/gallery/stage/481056384_1152247110030024_8368013185603075506_n.jpg",
+        "/images/gallery/stage/481056384_1152247110030024_8368013185603075506_n.webp",
+        "/images/gallery/stage/481145965_1151578476763554_5500875394514024170_n.jpg",
+        "/images/gallery/stage/481145965_1151578476763554_5500875394514024170_n.webp"
+      ]
     },
     "lounge": {
       "title": "Чөлөөт орчин",
       "label": "Чөлөөт орчин",
       "description": "Чөлөөт харилцаа, амралт болон outdoor acoustic орчны зохион байгуулалт.",
-      "cover": "/images/gallery/lounge/01.jpg",
+      "cover": "/images/gallery/lounge/481024639_1152238890030846_6226793545414696685_n.jpg",
       "images": [
-        "/images/gallery/lounge/01.jpg"
+        "/images/gallery/lounge/481024639_1152238890030846_6226793545414696685_n.jpg",
+        "/images/gallery/lounge/481024639_1152238890030846_6226793545414696685_n.webp",
+        "/images/gallery/lounge/481048760_1151578610096874_7754414950767421902_n.jpg",
+        "/images/gallery/lounge/481048760_1151578610096874_7754414950767421902_n.webp",
+        "/images/gallery/lounge/481055881_1152247236696678_5074878025190861332_n.jpg",
+        "/images/gallery/lounge/481055881_1152247236696678_5074878025190861332_n.webp",
+        "/images/gallery/lounge/481074066_1152238623364206_8034193605929060548_n.jpg",
+        "/images/gallery/lounge/481074066_1152238623364206_8034193605929060548_n.webp",
+        "/images/gallery/lounge/481079165_1152247143363354_6339986456406502712_n.jpg",
+        "/images/gallery/lounge/481079165_1152247143363354_6339986456406502712_n.webp",
+        "/images/gallery/lounge/481261911_1151578586763543_4790611935648483867_n.jpg",
+        "/images/gallery/lounge/481261911_1151578586763543_4790611935648483867_n.webp",
+        "/images/gallery/lounge/481510984_1152247123363356_776415813727773555_n.jpg",
+        "/images/gallery/lounge/481510984_1152247123363356_776415813727773555_n.webp",
+        "/images/gallery/lounge/482049701_1152238963364172_4623094402279520580_n.jpg",
+        "/images/gallery/lounge/482049701_1152238963364172_4623094402279520580_n.webp"
       ]
     },
     "dining": {
@@ -49,11 +81,17 @@ window.NOMAAD_IMAGES = {
       "cover": "/images/gallery/dining/477734850_1136988128222589_3475023461521596684_n.jpg",
       "images": [
         "/images/gallery/dining/477734850_1136988128222589_3475023461521596684_n.jpg",
+        "/images/gallery/dining/477734850_1136988128222589_3475023461521596684_n.webp",
         "/images/gallery/dining/481080072_1152247096696692_1157408756925740180_n.jpg",
+        "/images/gallery/dining/481080072_1152247096696692_1157408756925740180_n.webp",
         "/images/gallery/dining/481084542_1150137226907679_7302794082867681262_n.jpg",
+        "/images/gallery/dining/481084542_1150137226907679_7302794082867681262_n.webp",
         "/images/gallery/dining/481119357_1151578200096915_2968307237344432604_n.jpg",
+        "/images/gallery/dining/481119357_1151578200096915_2968307237344432604_n.webp",
         "/images/gallery/dining/481270158_1150900113498057_385902645609428743_n.jpg",
-        "/images/gallery/dining/481897943_1151578180096917_3016324357198583754_n.jpg"
+        "/images/gallery/dining/481270158_1150900113498057_385902645609428743_n.webp",
+        "/images/gallery/dining/481897943_1151578180096917_3016324357198583754_n.jpg",
+        "/images/gallery/dining/481897943_1151578180096917_3016324357198583754_n.webp"
       ]
     },
     "setup": {
@@ -63,28 +101,46 @@ window.NOMAAD_IMAGES = {
       "cover": "/images/gallery/setup/481023225_1152247153363353_5018493050852888482_n.jpg",
       "images": [
         "/images/gallery/setup/481023225_1152247153363353_5018493050852888482_n.jpg",
+        "/images/gallery/setup/481023225_1152247153363353_5018493050852888482_n.webp",
         "/images/gallery/setup/481084746_1150900190164716_2002492711595995957_n.jpg",
+        "/images/gallery/setup/481084746_1150900190164716_2002492711595995957_n.webp",
         "/images/gallery/setup/481216510_1150900090164726_6144427359539858322_n.jpg",
+        "/images/gallery/setup/481216510_1150900090164726_6144427359539858322_n.webp",
         "/images/gallery/setup/481475628_1150900080164727_3243613269616035992_n.jpg",
+        "/images/gallery/setup/481475628_1150900080164727_3243613269616035992_n.webp",
         "/images/gallery/setup/481475920_1150900060164729_8102678781114645058_n.jpg",
+        "/images/gallery/setup/481475920_1150900060164729_8102678781114645058_n.webp",
         "/images/gallery/setup/IMG_0499.JPG",
+        "/images/gallery/setup/IMG_0499.webp",
         "/images/gallery/setup/Screenshot 2026-04-26 at 19.01.01.png",
-        "/images/gallery/setup/gallery-20.jpg"
+        "/images/gallery/setup/Screenshot 2026-04-26 at 19.01.01.webp",
+        "/images/gallery/setup/gallery-20.jpg",
+        "/images/gallery/setup/gallery-20.webp"
       ]
     },
     "team": {
       "title": "Баг ба оролцогчид",
       "label": "TEAM",
       "description": "NOMAAD баг болон оролцогчдын хамтын ажиллагаа, тэмцэл, баяр.",
-      "cover": null,
-      "images": []
+      "cover": "/images/gallery/team/481103588_1151578333430235_4180439155675689492_n.jpg",
+      "images": [
+        "/images/gallery/team/481103588_1151578333430235_4180439155675689492_n.jpg",
+        "/images/gallery/team/481103588_1151578333430235_4180439155675689492_n.webp"
+      ]
     },
     "night": {
       "title": "Оройн хөтөлбөр",
       "label": "NIGHT",
       "description": "Орой болсон хойно — гэрэлтүүлэг, DJ, Bartender, шөнийн уур амьсгал.",
-      "cover": null,
-      "images": []
+      "cover": "/images/gallery/night/481145965_1151578476763554_5500875394514024170_n.jpg",
+      "images": [
+        "/images/gallery/night/481145965_1151578476763554_5500875394514024170_n.jpg",
+        "/images/gallery/night/481145965_1151578476763554_5500875394514024170_n.webp",
+        "/images/gallery/night/481767441_1155736679681067_1733057020225051923_n.jpg",
+        "/images/gallery/night/481767441_1155736679681067_1733057020225051923_n.webp",
+        "/images/gallery/night/481976416_1155736906347711_1687494666032244796_n.jpg",
+        "/images/gallery/night/481976416_1155736906347711_1687494666032244796_n.webp"
+      ]
     }
   },
   "camps": {
@@ -92,29 +148,48 @@ window.NOMAAD_IMAGES = {
       "cover": "/images/camps/a-camp/cover/516791132_1249324066988994_7236995618864252267_n.jpg",
       "gallery": [
         "/images/camps/a-camp/gallery/481079165_1152247143363354_6339986456406502712_n.jpg",
+        "/images/camps/a-camp/gallery/481079165_1152247143363354_6339986456406502712_n.webp",
         "/images/camps/a-camp/gallery/481216510_1150900090164726_6144427359539858322_n.jpg",
+        "/images/camps/a-camp/gallery/481216510_1150900090164726_6144427359539858322_n.webp",
         "/images/camps/a-camp/gallery/481261911_1151578586763543_4790611935648483867_n.jpg",
+        "/images/camps/a-camp/gallery/481261911_1151578586763543_4790611935648483867_n.webp",
         "/images/camps/a-camp/gallery/481290304_1150899923498076_146070325897299227_n.jpg",
+        "/images/camps/a-camp/gallery/481290304_1150899923498076_146070325897299227_n.webp",
         "/images/camps/a-camp/gallery/481475628_1150900080164727_3243613269616035992_n.jpg",
+        "/images/camps/a-camp/gallery/481475628_1150900080164727_3243613269616035992_n.webp",
         "/images/camps/a-camp/gallery/481475920_1150900060164729_8102678781114645058_n.jpg",
+        "/images/camps/a-camp/gallery/481475920_1150900060164729_8102678781114645058_n.webp",
         "/images/camps/a-camp/gallery/481677024_1152247130030022_4616486509329515100_n.jpg",
+        "/images/camps/a-camp/gallery/481677024_1152247130030022_4616486509329515100_n.webp",
         "/images/camps/a-camp/gallery/482049701_1152238963364172_4623094402279520580_n.jpg",
+        "/images/camps/a-camp/gallery/482049701_1152238963364172_4623094402279520580_n.webp",
         "/images/camps/a-camp/gallery/498673752_1211111604143574_1980107969661774275_n.jpg",
+        "/images/camps/a-camp/gallery/498673752_1211111604143574_1980107969661774275_n.webp",
         "/images/camps/a-camp/gallery/508577864_1234422215145846_5726433488358768002_n.jpg",
+        "/images/camps/a-camp/gallery/508577864_1234422215145846_5726433488358768002_n.webp",
         "/images/camps/a-camp/gallery/526782782_1269315874989813_7037524833627375972_n.jpg",
-        "/images/camps/a-camp/gallery/Screenshot 2026-04-26 at 12.27.10.png"
+        "/images/camps/a-camp/gallery/526782782_1269315874989813_7037524833627375972_n.webp",
+        "/images/camps/a-camp/gallery/Screenshot 2026-04-26 at 12.27.10.png",
+        "/images/camps/a-camp/gallery/Screenshot 2026-04-26 at 12.27.10.webp"
       ]
     },
     "b": {
       "cover": "/images/camps/b-camp/cover/DJI_20250725152844_0015_D.jpg",
       "gallery": [
         "/images/camps/b-camp/gallery/525225068_1267547411833326_6748176839399281706_n.jpg",
+        "/images/camps/b-camp/gallery/525225068_1267547411833326_6748176839399281706_n.webp",
         "/images/camps/b-camp/gallery/DJI_20250725152831_0014_D.jpg",
+        "/images/camps/b-camp/gallery/DJI_20250725152831_0014_D.webp",
         "/images/camps/b-camp/gallery/b2.jpg",
+        "/images/camps/b-camp/gallery/b2.webp",
         "/images/camps/b-camp/gallery/b3.jpg",
+        "/images/camps/b-camp/gallery/b3.webp",
         "/images/camps/b-camp/gallery/b4.jpg",
+        "/images/camps/b-camp/gallery/b4.webp",
         "/images/camps/b-camp/gallery/bcamp.jpg",
-        "/images/camps/b-camp/gallery/gallery-07.jpg"
+        "/images/camps/b-camp/gallery/bcamp.webp",
+        "/images/camps/b-camp/gallery/gallery-07.jpg",
+        "/images/camps/b-camp/gallery/gallery-07.webp"
       ]
     },
     "c": {
@@ -122,18 +197,26 @@ window.NOMAAD_IMAGES = {
       "gallery": [
         "/images/camps/c-camp/gallery/2.webp",
         "/images/camps/c-camp/gallery/c2.jpg",
-        "/images/camps/c-camp/gallery/c4.jpg"
+        "/images/camps/c-camp/gallery/c2.webp",
+        "/images/camps/c-camp/gallery/c4.jpg",
+        "/images/camps/c-camp/gallery/c4.webp"
       ]
     },
     "mobile": {
       "cover": "/images/camps/mobile-camp/cover/gallery-20.jpg",
       "gallery": [
         "/images/camps/mobile-camp/gallery/480926596_1150142873573781_120003575192392008_n.jpg",
+        "/images/camps/mobile-camp/gallery/480926596_1150142873573781_120003575192392008_n.webp",
         "/images/camps/mobile-camp/gallery/481002059_1152069033381165_4247459599491477283_n.jpg",
+        "/images/camps/mobile-camp/gallery/481002059_1152069033381165_4247459599491477283_n.webp",
         "/images/camps/mobile-camp/gallery/481153087_1150142846907117_5843438727625385537_n.jpg",
+        "/images/camps/mobile-camp/gallery/481153087_1150142846907117_5843438727625385537_n.webp",
         "/images/camps/mobile-camp/gallery/481914247_1152616986659703_5992810539030354001_n.jpg",
+        "/images/camps/mobile-camp/gallery/481914247_1152616986659703_5992810539030354001_n.webp",
         "/images/camps/mobile-camp/gallery/496846586_1205121231409278_6731493953383684426_n.jpg",
-        "/images/camps/mobile-camp/gallery/DSC07839.jpg"
+        "/images/camps/mobile-camp/gallery/496846586_1205121231409278_6731493953383684426_n.webp",
+        "/images/camps/mobile-camp/gallery/DSC07839.jpg",
+        "/images/camps/mobile-camp/gallery/DSC07839.webp"
       ]
     }
   }

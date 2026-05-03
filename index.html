@@ -30,6 +30,92 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap"></noscript>
+<!-- Structured data: business + camp products -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LodgingBusiness",
+      "@id": "https://nomaadcamp.com/#business",
+      "name": "NOMAAD Camp",
+      "alternateName": "НОМААД Кемп",
+      "url": "https://nomaadcamp.com/",
+      "logo": "https://nomaadcamp.com/nomaad-logo.svg",
+      "image": "https://nomaadcamp.com/images/camps/a-camp/cover/A-01.jpg",
+      "description": "Байгууллагын арга хэмжээний нэгдсэн зохион байгуулалт — кемп, катеринг, техник, хөтөлбөрийн гүйцэтгэл хүртэл нэг газраас.",
+      "telephone": "+976-9917-9417",
+      "email": "hello@nomaadcamp.com",
+      "priceRange": "₮₮₮",
+      "currenciesAccepted": "MNT",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "MN",
+        "addressRegion": "Төв аймаг",
+        "addressLocality": "Эрдэнэ сум"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 47.7833,
+        "longitude": 107.6500
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Mongolia"
+      },
+      "sameAs": []
+    },
+    {
+      "@type": "Product",
+      "name": "NOMAAD Summit",
+      "description": "100-аас 1000 хүний том хэмжээний байгууллагын арга хэмжээ.",
+      "brand": { "@type": "Brand", "name": "NOMAAD Camp" },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "MNT",
+        "lowPrice": "180000",
+        "highPrice": "280000",
+        "offerCount": 3,
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "NOMAAD Meadow",
+      "description": "50-аас 300 хүний дунд хэмжээний байгууллагын арга хэмжээ.",
+      "brand": { "@type": "Brand", "name": "NOMAAD Camp" },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "MNT",
+        "lowPrice": "180000",
+        "highPrice": "280000",
+        "offerCount": 3,
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "NOMAAD Grove",
+      "description": "20-оос 200 хүний дотно багийн арга хэмжээ.",
+      "brand": { "@type": "Brand", "name": "NOMAAD Camp" },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "MNT",
+        "lowPrice": "180000",
+        "highPrice": "280000",
+        "offerCount": 3,
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "NOMAAD Mobile",
+      "description": "Захиалагчийн сонгосон газарт зөөвөрлөн зохион байгуулах нүүдлийн кемп.",
+      "brand": { "@type": "Brand", "name": "NOMAAD Camp" }
+    }
+  ]
+}
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BX36FS624"></script>
 <script>
@@ -724,15 +810,15 @@
     </div>
     <div class="wn-strip reveal">
       <figure class="wn-strip-img">
-        <img src="/images/camps/a-camp/cover/A-01.jpg" alt="Тайзны бэлтгэл" loading="lazy" decoding="async">
+        <img src="/images/camps/a-camp/cover/A-01.jpg" alt="Тайзны бэлтгэл" width="1600" height="1067" loading="lazy" decoding="async">
         <figcaption>Тайзны бэлтгэл</figcaption>
       </figure>
       <figure class="wn-strip-img">
-        <img src="/images/gallery/gallery-09.jpg" alt="Хоол үйлчилгээ" loading="lazy" decoding="async">
+        <img src="/images/gallery/gallery-09.jpg" alt="Хоол үйлчилгээ" width="1600" height="1067" loading="lazy" decoding="async">
         <figcaption>Хоол үйлчилгээ</figcaption>
       </figure>
       <figure class="wn-strip-img">
-        <img src="/images/gallery/gallery-20.jpg" alt="Амралтын бүс" loading="lazy" decoding="async">
+        <img src="/images/gallery/gallery-20.jpg" alt="Амралтын бүс" width="1600" height="1067" loading="lazy" decoding="async">
         <figcaption>Амралтын бүс</figcaption>
       </figure>
     </div>
@@ -859,7 +945,7 @@
       <div class="cat-gallery__tabs" id="cat-gallery-tabs" role="tablist" aria-label="Зургийн категориуд"></div>
       <div class="cat-gallery__body">
         <div class="cat-gallery__featured-wrap" id="cat-gallery-featured-wrap">
-          <img class="cat-gallery__featured-img" id="cat-gallery-featured-img" src="" alt="" width="1600" height="900" loading="lazy" decoding="async">
+          <img class="cat-gallery__featured-img" id="cat-gallery-featured-img" src="" alt="NOMAAD Camp зураг" width="1600" height="900" loading="lazy" decoding="async">
           <div class="cat-gallery__label-wrap">
             <span class="cat-gallery__label" id="cat-gallery-label"></span>
             <span class="cat-gallery__desc" id="cat-gallery-desc"></span>
@@ -1057,7 +1143,7 @@
                   <span class="quote-addon-card__price">+5,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="welcome_drink_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="welcome_drink_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 5,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1081,7 +1167,7 @@
                   <span class="quote-addon-card__price">+5,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="amenity_kit_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="amenity_kit_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 5,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1095,7 +1181,7 @@
                   <span class="quote-addon-card__price">+15,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="sleeping_bag_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="sleeping_bag_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 15,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1110,7 +1196,7 @@
                   <span class="quote-addon-card__price">+6,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="coffee_corner_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="coffee_corner_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 6,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1124,7 +1210,7 @@
                   <span class="quote-addon-card__price">+12,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="lunch_upgrade_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="lunch_upgrade_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 12,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1138,7 +1224,7 @@
                   <span class="quote-addon-card__price">+12,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="dinner_upgrade_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="dinner_upgrade_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 12,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1153,7 +1239,7 @@
                   <span class="quote-addon-card__price">+8,000₮ / хүн</span>
                   <div class="quote-addon-card__quantity" hidden>
                     <span class="quote-addon-card__qty-label">Хэдэн хүн авах:</span>
-                    <input type="number" name="late_snacks_qty" min="1" class="quote-addon-card__qty-input" onclick="event.stopPropagation()">
+                    <input type="number" name="late_snacks_qty" min="1" class="quote-addon-card__qty-input">
                     <span class="quote-addon-card__qty-text">хүн × 8,000₮ =</span>
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
@@ -1247,7 +1333,7 @@
         </div>
         <!-- ── /НЭМЭЛТ ҮЙЛЧИЛГЭЭ ──────────────────────────────── -->
 
-        <div class="quote-form__field quote-form__field--full quote-form__field--conditional" id="location-field-wrap" aria-hidden="true" style="display:none">
+        <div class="quote-form__field quote-form__field--full quote-form__field--conditional" id="location-field-wrap" aria-hidden="true" hidden>
           <label for="location">Кемп байгуулах байршил <span class="quote-form__required" aria-hidden="true">*</span></label>
           <small class="quote-form__helper-text">Аймаг, сум эсвэл Google Maps location оруулна уу</small>
           <input id="location" name="location" type="text" placeholder="Жишээ: Архангай — Өгий нуур">
@@ -1262,7 +1348,7 @@
           </select>
           <small class="quote-form__helper-text">Нэг автобус нь 45 зочин хүртэл багтаамжтай бөгөөд зочдын зорчих хөдөлгөөнийг зохион байгуулах нэмэлт үйлчилгээ юм.</small>
         </div>
-        <div class="quote-form__field quote-form__field--full" id="bus-count-wrap" style="display:none">
+        <div class="quote-form__field quote-form__field--full" id="bus-count-wrap" hidden>
           <label for="bus-count">Автобусны тоо</label>
           <input id="bus-count" name="bus_count" type="number" min="1" value="1">
         </div>
@@ -1316,7 +1402,7 @@
   </div>
 </div>
 
-<script src="/images/manifest.js?v=f2430dd0"></script>
+<script src="/images/manifest.js?v=d4fb6e77"></script>
 <script src="/main.js"></script>
 </body>
 </html>
