@@ -463,38 +463,8 @@
     resetCampState();
   }
 
-  // ── CONTACT FORM (AJAX Netlify) ───────────────────────────────
-  var form = document.querySelector('form[data-netlify="true"]');
-  var feedback = document.querySelector('.form-feedback');
-  if (form && feedback) {
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      feedback.className = 'form-feedback';
-      feedback.textContent = '';
-      var submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) submitBtn.disabled = true;
-      try {
-        var data = new URLSearchParams(new FormData(form)).toString();
-        var res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: data,
-        });
-        if (res.ok) {
-          feedback.classList.add('is-success');
-          feedback.textContent = 'Таны хүсэлтийг хүлээн авлаа. 24 цагийн дотор үнийн санал илгээх болно.';
-          form.reset();
-        } else {
-          throw new Error('сүлжээний алдаа');
-        }
-      } catch (err) {
-        feedback.classList.add('is-error');
-        feedback.textContent = 'Илгээхэд алдаа гарлаа. Утсаар холбогдоно уу: 9917-9417.';
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  }
+  // (Legacy Netlify-form contact handler removed — site now uses the quote modal
+  // below which posts directly to n8n.)
 
   // ── QUOTE MODAL ──────────────────────────────────────────────
   var quoteModal   = document.getElementById('quote-modal');
@@ -1589,7 +1559,7 @@
       }
     });
 
-    var N8N_WEBHOOK_URL = '/.netlify/functions/submit-quote';
+    var N8N_WEBHOOK_URL = 'https://chimun.app.n8n.cloud/webhook/59124f59-5317-4fff-8632-28e14b36ff72';
 
     quoteForm.addEventListener('submit', async function (e) {
       e.preventDefault();
