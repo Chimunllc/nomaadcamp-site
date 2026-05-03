@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-c3nYC9/Mc4FCiE0mouIFtk01NT0KlQ/hiF3NlQVntZ8=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://nomaadcamp.com https://www.googletagmanager.com https://www.google-analytics.com; media-src 'self'; connect-src 'self' /.netlify/functions/ https://www.google-analytics.com https://*.analytics.google.com">
 <title>NOMAAD Camp | Байгууллагын арга хэмжээний нэгдсэн шийдэл</title>
-<meta name="description" content="NOMAAD Camp нь байгууллагын арга хэмжээг төлөвлөлт, кемпийн зохион байгуулалт, катеринг, техник, хөтөлбөрийн гүйцэтгэлтэй нь хамтад нь хэрэгжүүлэх нэгдсэн үйлчилгээ үзүүлдэг.">
+<meta name="description" content="NOMAAD Camp — 10–1000 хүний байгууллагын арга хэмжээг УБ-аас 75 км-т кемп, катеринг, техник, хөтөлбөртэй нь нэг гэрээгээр зохион байгуулна.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="mask-icon" href="favicon.svg" color="#2F3E2F">
 <meta name="theme-color" content="#2F3E2F">
@@ -28,8 +29,7 @@
 <link rel="preload" as="image" href="/images/hero/gallery-05.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Manrope:wght@500;700;800&display=swap">
 <!-- Structured data: business + camp products -->
 <script type="application/ld+json">
 {
@@ -120,13 +120,7 @@
 </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BX36FS624"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9BX36FS624');
-</script>
+<script src="/analytics.js" defer></script>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main-content">Үндсэн контент руу алгасах</a>
@@ -166,19 +160,19 @@
 
   <div class="container hero-inner">
     <span class="eyebrow"><span class="eyebrow-dot"></span>Байгууллагын арга хэмжээний нэгдсэн үйлчилгээ</span>
-    <h1>Зөвхөн танай байгууллагад зориулсан<br>кемпийн бүрэн шийдэл</h1>
-    <p class="hero-sub">10-аас 1000 хүний арга хэмжээг бэлтгэлээс гүйцэтгэл хүртэл нэгдсэн байдлаар зохион байгуулна. Хаалттай, зөвхөн танай байгууллагад зориулсан орчин.</p>
+    <h1>10–1000 хүний байгууллагын арга хэмжээг<br>УБ-аас 75 км-т нэг гэрээгээр</h1>
+    <p class="hero-sub">Кемп, катеринг, техник, хөтөлбөрийн гүйцэтгэл хүртэл нэг баг хариуцна. Хаалттай, зөвхөн танай байгууллагад зориулсан орчин. <strong>24 цагийн дотор хариу өгнө.</strong></p>
     <div class="hero-actions">
       <a class="btn btn--accent btn--lg" href="#camps">Кемпүүд үзэх</a>
-      <a class="btn btn--ghost-light btn--lg" href="#midweek">Өдрийн хөтөлбөр үзэх</a>
+      <a class="btn btn--ghost-light btn--lg" href="tel:+97699179417">📞 9917-9417</a>
     </div>
 
     <div class="hero-meta">
       <span>УБ-аас 75 км</span>
       <span aria-hidden="true">·</span>
-      <span>10–1000 хүн</span>
+      <span>4 кэмп · 10–1000 хүн</span>
       <span aria-hidden="true">·</span>
-      <span>Бүрэн зохион байгуулалт</span>
+      <span>130+ амжилттай арга хэмжээ</span>
     </div>
   </div>
 </header>
@@ -1141,7 +1135,7 @@
             <h4 class="quote-addons__group-title" id="quote-addons-title-per-person">Хүний тоогоор тооцох нэмэлтүүд</h4>
             <div class="quote-addons__grid quote-addons__grid--per-person">
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="welcome_drink" data-price="5000" data-type="per-person" data-label="Угтах ундаа">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Угтах ундаа</span>
@@ -1163,9 +1157,9 @@
                     <label class="quote-addon-card__radio"><input type="radio" name="welcome_drink_type" value="mint"> Гаатай мөстэй ус</label>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="amenity_kit" data-price="5000" data-type="per-person" data-label="Зочдын ариун цэврийн багц">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Зочдын ариун цэврийн багц</span>
@@ -1178,9 +1172,9 @@
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="sleeping_bag" data-price="15000" data-type="per-person" data-label="Унтлагын уут (мишок)">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Унтлагын уут (мишок)</span>
@@ -1192,9 +1186,9 @@
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="coffee_corner" data-price="6000" data-type="per-person" data-label="Кофе/цайны цэг">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Кофе/цайны цэг</span>
@@ -1207,9 +1201,9 @@
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="lunch_upgrade" data-price="12000" data-type="per-person" data-label="Өдрийн буфет (сайжруулсан)">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Өдрийн буфет (сайжруулсан)</span>
@@ -1221,9 +1215,9 @@
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="dinner_upgrade" data-price="12000" data-type="per-person" data-label="Оройн буфет (сайжруулсан)">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Оройн буфет (сайжруулсан)</span>
@@ -1235,9 +1229,9 @@
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="late_snacks" data-price="8000" data-type="per-person" data-label="Оройн зууш">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Оройн зууш</span>
@@ -1250,7 +1244,7 @@
                     <span class="quote-addon-card__qty-total">—</span>
                   </div>
                 </div>
-              </label>
+              </div>
 
             </div>
           </div>
@@ -1325,13 +1319,13 @@
                 </div>
               </label>
 
-              <label class="quote-addon-card">
+              <div class="quote-addon-card">
                 <input type="checkbox" name="addons[]" value="photo_4h" data-price="500000" data-type="flat" data-label="Гэрэл зургийн үйлчилгээ">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Гэрэл зургийн үйлчилгээ (4 цаг)</span>
                   <span class="quote-addon-card__price">+500,000₮</span>
                 </div>
-              </label>
+              </div>
 
             </div>
           </div>
@@ -1397,7 +1391,7 @@
           ✓ Та <strong data-saved-amount>0₮</strong> хэмнэлттэй сонголт хийлээ
         </div>
       </div>
-      <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+      <div class="visually-hidden" aria-hidden="true">
         <label for="field-website">Website</label>
         <input id="field-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
