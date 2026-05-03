@@ -3232,6 +3232,126 @@ body.home-page video {
   }
 }
 
+/* ── BOOKING CALENDAR ─────────────────────────────────────── */
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+  margin: 1.5rem 0 1.25rem;
+  font-size: 0.86rem;
+  color: #5F5E5A;
+}
+.cal-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cal-legend__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.cal-legend__swatch--day  { background: #4A5E3E; }
+.cal-legend__swatch--camp { background: #C8A878; }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin: 0 auto;
+  max-width: 980px;
+}
+.cal-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 96px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+.cal-cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(28, 37, 31, 0.12);
+}
+.cal-cell:focus-visible {
+  outline: 2px solid #B14F1F;
+  outline-offset: 2px;
+}
+.cal-cell--day {
+  background: #4A5E3E;
+  color: #F5F1E8;
+}
+.cal-cell--camp {
+  background: #C8A878;
+  color: #1F2A23;
+}
+.cal-cell__dow {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  font-weight: 500;
+}
+.cal-cell--camp .cal-cell__dow { color: #6A4D2E; opacity: 1; }
+.cal-cell__date {
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  line-height: 1;
+  margin-top: 2px;
+}
+.cal-cell__weather {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+}
+.cal-cell__icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.cal-cell__temp {
+  font-size: 0.74rem;
+  opacity: 0.88;
+  font-feature-settings: 'tnum';
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.cal-cell--camp .cal-cell__temp { color: #6A4D2E; opacity: 1; }
+.cal-hint {
+  text-align: center;
+  font-size: 0.86rem;
+  color: #6A6C65;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 760px) {
+  .cal-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .cal-cell {
+    min-height: 84px;
+    padding: 8px 6px;
+  }
+  .cal-cell__date {
+    font-size: 1.15rem;
+  }
+}
+@media (max-width: 460px) {
+  .cal-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* ── QUOTE MODAL ADD-ON SELECTOR ──────────────────────────── */
 .quote-addons-wrap {
   padding: 0;
