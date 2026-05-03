@@ -2,10 +2,6 @@
 (function () {
   'use strict';
 
-  // PACKAGE_CONFIG was defined here but is never referenced — left commented out
-  // rather than removed in case future code reintroduces it.
-  // var PACKAGE_CONFIG = { camps: {…}, tiers: {…}, addons: {…} };
-
   var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E";
 
   // ── HERO SLIDER ──────────────────────────────────────────────
@@ -618,7 +614,6 @@
     var guestInput     = document.getElementById('guest-count');
     var locationWrap   = document.getElementById('location-field-wrap');
     var locationInput  = document.getElementById('location');
-    var visualSelect   = document.getElementById('visual-feature-select');
     var shuttleSelect  = document.getElementById('shuttle-service');
     var busCountInput  = document.getElementById('bus-count');
     var busCountWrap   = document.getElementById('bus-count-wrap');
@@ -758,7 +753,6 @@
         }
       }
 
-      if (visualSelect)  visualSelect.value  = feature;
       if (shuttleSelect) shuttleSelect.value = shuttle;
 
       applyLocationVisibility(camp);
@@ -960,7 +954,7 @@
       return Math.max(2, Math.ceil(guests / 100)) * 500000;
     }
 
-    function getProductionPricePerPerson(guests, campName) {
+    function getProductionPricePerPerson() {
       return 280000;
     }
 
