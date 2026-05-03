@@ -570,6 +570,23 @@
       }
     });
 
+    // Card-now-div: clicking anywhere on the card body toggles the checkbox.
+    // (Previously the parent <label> handled this, but we converted it to <div>
+    // so number inputs and radios don't bubble up incorrectly.)
+    quoteForm.querySelectorAll('.quote-addon-card').forEach(function (card) {
+      card.addEventListener('click', function (ev) {
+        var t = ev.target;
+        if (!t) return;
+        // Don't toggle when clicking interactive controls inside the card.
+        if (t.matches('input, label, button, a, select, textarea')) return;
+        if (t.closest('.quote-addon-card__quantity, .quote-addon-card__sub-options, .quote-addon-card__time-config')) return;
+        var cb = card.querySelector('input[name="addons[]"]');
+        if (!cb || cb.disabled) return;
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+
     function restoreAddonCardPositions() {
       var grouped = [];
       addonCardOriginals.forEach(function (entry) {
