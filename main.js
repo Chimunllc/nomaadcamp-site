@@ -769,7 +769,7 @@
       applyTierInclusions(tier);
 
       // C Кемп + Тусгай захиалга: remove add-ons from DOM entirely, show custom order message
-      var isCCustomOrder = (camp === 'C Кемп' && tier === 'Тусгай захиалга');
+      var isCCustomOrder = (camp === 'NOMAAD Grove' && tier === 'Тусгай захиалга');
       var customOrderMsg = document.getElementById('quote-custom-order-msg');
       if (customOrderMsg) customOrderMsg.hidden = !isCCustomOrder;
       var dayProgramMsg = document.getElementById('quote-day-program-msg');
@@ -889,8 +889,8 @@
 
     // ── PRICE ESTIMATE ─────────────────────────────────────────
     var PRICE_TABLE = {
-      'Essential': { 'A Кемп': 180000, 'B Кемп': 180000, 'C Кемп': 280000, 'Нүүдлийн кемп': 180000 },
-      'Experience': { 'A Кемп': 220000, 'B Кемп': 220000, 'C Кемп': 350000, 'Нүүдлийн кемп': 220000 }
+      'Essential': { 'NOMAAD Summit': 180000, 'NOMAAD Meadow': 180000, 'NOMAAD Grove': 280000, 'Нүүдлийн кемп': 180000 },
+      'Experience': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 350000, 'Нүүдлийн кемп': 220000 }
     };
     var DAY_PROGRAM_PRICE_TABLE = {
       'Half Day хөтөлбөр': 100000,
@@ -924,7 +924,7 @@
 
     function getTierInclusions(campName, tier) {
       var included = TIER_INCLUSIONS[tier] ? TIER_INCLUSIONS[tier].slice() : [];
-      if (tier === 'Production' && campName === 'C Кемп') {
+      if (tier === 'Production' && campName === 'NOMAAD Grove') {
         included = included.filter(function (item) { return item !== 'led_screen_18m2'; });
       }
       return included;
@@ -1158,7 +1158,7 @@
       }
 
       // Strict guard: only C Кемп + Тусгай захиалга gets the custom-order treatment
-      if (camp === 'C Кемп' && tier === 'Тусгай захиалга') {
+      if (camp === 'NOMAAD Grove' && tier === 'Тусгай захиалга') {
         estimateEl.hidden = true;
         if (nudgeEl)    nudgeEl.hidden    = true;
         if (prodLinkEl) prodLinkEl.hidden = true;
