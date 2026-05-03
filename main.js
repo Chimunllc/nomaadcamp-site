@@ -601,10 +601,10 @@
       'Нүүдлийн кемп':  { min: 10,   max: 1000 }
     };
 
-    var DAY_PROGRAM_OPTIONS = ['Half Day хөтөлбөр', 'Full Day хөтөлбөр'];
+    var DAY_PROGRAM_OPTIONS = ['Хагас өдрийн хөтөлбөр', 'Бүтэн өдрийн хөтөлбөр'];
 
     function getDayProgramLabel(campName) {
-      return campName === 'Half Day хөтөлбөр' ? 'Хагас өдрийн' : 'Бүтэн өдрийн';
+      return campName === 'Хагас өдрийн хөтөлбөр' ? 'Хагас өдрийн' : 'Бүтэн өдрийн';
     }
 
     function applyLocationVisibility(camp) {
@@ -819,8 +819,8 @@
       'Стандарт': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000, 'Нүүдлийн кемп': 220000 }
     };
     var DAY_PROGRAM_PRICE_TABLE = {
-      'Half Day хөтөлбөр': 100000,
-      'Full Day хөтөлбөр':  150000
+      'Хагас өдрийн хөтөлбөр': 100000,
+      'Бүтэн өдрийн хөтөлбөр':  150000
     };
     var SHUTTLE_PRICE = {
       'Сонгохгүй': 0,
