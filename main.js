@@ -212,7 +212,7 @@
       tabsEl.querySelectorAll('.cat-gallery__tab').forEach(function (tab) {
         var isActive = tab.dataset.cat === key;
         tab.classList.toggle('is-active', isActive);
-        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
 
       if (labelEl) labelEl.textContent = cat.label || key.toUpperCase();
@@ -268,8 +268,7 @@
       tab.type = 'button';
       tab.className = 'cat-gallery__tab';
       tab.dataset.cat = key;
-      tab.setAttribute('role', 'tab');
-      tab.setAttribute('aria-selected', 'false');
+      tab.setAttribute('aria-pressed', 'false');
       tab.textContent = cat.title || key;
       tab.addEventListener('click', function () { activateCategory(key); });
       tabsEl.appendChild(tab);
@@ -1409,7 +1408,8 @@
     function showTierSuccessBanner(savings) {
       var banner = document.getElementById('tier-success');
       if (!banner) return;
-      banner.querySelector('[data-saved-amount]').textContent = savings.toLocaleString() + '₮';
+      var savedEl = banner.querySelector('[data-saved-amount]');
+      if (savedEl) savedEl.textContent = savings.toLocaleString() + '₮';
       banner.hidden = false;
       banner.classList.remove('fade-out');
       setTimeout(function () {
