@@ -9,25 +9,25 @@
   // Public token. Restricted to nomaadcamp.com via Mapbox dashboard.
   mapboxgl.accessToken = 'pk.eyJ1Ijoibm9tYWFkY2FtcCIsImEiOiJjbW9weGk4M2ExZGN5MnBxeXhhazg4ZW9rIn0.eiNhSnD2NiSTQQiUuz5kAg';
 
-  // Camp pins. Coordinates are placeholder approximations within Эрдэнэ сум —
-  // update each `coords` to the precise GPS of the camp once measured on site.
+  // Camp pins. Mapbox uses [lng, lat] order (longitude first).
+  // Mobile camp is intentionally omitted — it operates wherever the client
+  // selects, so a fixed pin would be misleading.
   var CAMPS = [
-    { id: 'a',      name: 'NOMAAD Summit', size: '100–1000 хүн',  coords: [107.3329, 47.8140], color: '#B14F1F' },
-    { id: 'b',      name: 'NOMAAD Meadow', size: '50–300 хүн',    coords: [107.3460, 47.8110], color: '#C8A878' },
-    { id: 'c',      name: 'NOMAAD Grove',  size: '20–200 хүн',    coords: [107.3215, 47.8205], color: '#C8A878' },
-    { id: 'mobile', name: 'NOMAAD Mobile', size: 'Сонгосон газарт', coords: [107.3329, 47.8050], color: '#9A9C94' }
+    { id: 'a', name: 'NOMAAD Summit', size: '100–1000 хүн', coords: [107.659422, 47.727926], color: '#B14F1F' },
+    { id: 'b', name: 'NOMAAD Meadow', size: '50–300 хүн',   coords: [107.664493, 47.730607], color: '#C8A878' },
+    { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.649126, 47.723300], color: '#4A5E3E' }
   ];
 
-  // Center point — average of camp coords roughly.
-  var center = [107.3329, 47.8140];
+  // Center point — geometric mean of camp coordinates.
+  var center = [107.657680, 47.727278];
 
   var map = new mapboxgl.Map({
     container: 'nomaad-map',
     style: 'mapbox://styles/mapbox/outdoors-v12',
     center: center,
-    zoom: 12.2,
+    zoom: 14,
     minZoom: 8,
-    maxZoom: 16,
+    maxZoom: 17,
     cooperativeGestures: true,
     attributionControl: true
   });
