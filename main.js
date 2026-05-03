@@ -17,6 +17,23 @@
     return src.replace(/\.(jpg|jpeg|png)(\?.*)?$/i, '.webp$2');
   }
 
+  // ── HERO VIDEO: skip on mobile / slow connections ─────────────
+  // Saves significant LCP time on phones — poster image is sufficient.
+  (function () {
+    var video = document.querySelector('.hero-video');
+    if (!video) return;
+    var isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    var slowNet = navigator.connection && /^(slow-2g|2g|3g)$/.test(navigator.connection.effectiveType || '');
+    if (isSmallScreen || saveData || slowNet) {
+      video.removeAttribute('autoplay');
+      video.preload = 'none';
+      // Also remove inner <source> tags so the browser doesn't issue any video request.
+      while (video.firstChild) video.removeChild(video.firstChild);
+      try { video.pause(); } catch (e) {}
+    }
+  })();
+
   // ── CAMP CAROUSELS ───────────────────────────────────────────
   // Sets camp card thumbnails and populates carousel tracks from manifest.camps
   function initCampCarousels(camps) {
