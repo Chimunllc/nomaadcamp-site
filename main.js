@@ -4,57 +4,6 @@
 
   var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E";
 
-  // ── HERO SLIDER ──────────────────────────────────────────────
-  // Loads images from NOMAAD_IMAGES.hero, crossfades every 5 s
-  function initHeroSlider(images) {
-    var container = document.getElementById('hero-slides');
-    if (!container || !images || images.length === 0) return;
-
-    images.forEach(function (src, i) {
-      var div = document.createElement('div');
-      div.className = 'hero-slide' + (i === 0 ? ' is-active' : '');
-      div.style.backgroundImage = 'url("' + src + '")';
-      container.appendChild(div);
-    });
-
-    var slides = container.querySelectorAll('.hero-slide');
-    var current = 0;
-    setInterval(function () {
-      slides[current].classList.remove('is-active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('is-active');
-    }, 5000);
-  }
-
-  // ── GALLERY ──────────────────────────────────────────────────
-  // Renders gallery cards from NOMAAD_IMAGES.gallery into #gallery-grid
-  // Applies wide/tall pattern to first 6 images; rest are uniform
-  function initGallery(images) {
-    var grid = document.getElementById('gallery-grid');
-    if (!grid || !images || images.length === 0) return;
-
-    // Layout classes applied by position within each group of 6
-    var pattern = ['gallery-card gallery-card--wide', 'gallery-card', 'gallery-card',
-                   'gallery-card gallery-card--tall', 'gallery-card', 'gallery-card gallery-card--wide'];
-
-    images.forEach(function (src, i) {
-      var cls = i < pattern.length ? pattern[i] : 'gallery-card';
-      var figure = document.createElement('figure');
-      figure.className = cls;
-
-      var img = document.createElement('img');
-      img.src = PLACEHOLDER;
-      img.setAttribute('data-src', src);
-      img.alt = 'NOMAAD кемп';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.className = 'defer-img';
-
-      figure.appendChild(img);
-      grid.appendChild(figure);
-    });
-  }
-
   // ── CAMP CAROUSELS ───────────────────────────────────────────
   // Sets camp card thumbnails and populates carousel tracks from manifest.camps
   function initCampCarousels(camps) {
@@ -347,8 +296,6 @@
   // ── INIT FROM MANIFEST ───────────────────────────────────────
   // Must run before deferred-img observer and carousel init
   var manifest = window.NOMAAD_IMAGES || {};
-  initHeroSlider(manifest.hero);
-  initGallery(manifest.gallery);
   initPartners(manifest.partners);
   initCampCarousels(manifest.camps);
   initCampDetailGalleries(manifest.camps);
@@ -441,80 +388,6 @@
   } else {
     deferredImages.forEach(loadImage);
   }
-
-  // Carousel
-  document.querySelectorAll('[data-carousel]').forEach((root) => {
-    const track = root.querySelector('.carousel-track');
-    const slides = root.querySelectorAll('.carousel-slide');
-    const dotsWrap = root.querySelector('.carousel-dots');
-    const prevBtn = root.querySelector('.carousel-arrow--prev');
-    const nextBtn = root.querySelector('.carousel-arrow--next');
-    if (!track || slides.length === 0) return;
-
-    var total = slides.length;
-    var autoplay = root.dataset.autoplay === 'true';
-    var interval = parseInt(root.dataset.interval, 10) || 4000;
-    var index = 0;
-    var timer = null;
-    var isHover = false;
-
-    if (dotsWrap) {
-      for (var i = 0; i < total; i++) {
-        (function (idx) {
-          var d = document.createElement('button');
-          d.type = 'button';
-          d.className = 'carousel-dot';
-          d.setAttribute('aria-label', 'Зураг ' + (idx + 1));
-          d.addEventListener('click', function () { go(idx, true); });
-          dotsWrap.appendChild(d);
-        })(i);
-      }
-    }
-    var dots = dotsWrap ? dotsWrap.querySelectorAll('.carousel-dot') : [];
-
-    function render() {
-      track.style.transform = 'translateX(-' + (index * 100) + '%)';
-      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === index); });
-    }
-    function go(n, userAction) {
-      index = (n + total) % total;
-      render();
-      if (userAction && autoplay) restart();
-    }
-    function next() { go(index + 1); }
-    function prev() { go(index - 1); }
-    function start() {
-      if (!autoplay || timer) return;
-      timer = setInterval(function () { if (!isHover) next(); }, interval);
-    }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function restart() { stop(); start(); }
-
-    if (prevBtn) prevBtn.addEventListener('click', function () { go(index - 1, true); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { go(index + 1, true); });
-
-    root.addEventListener('mouseenter', function () { isHover = true; });
-    root.addEventListener('mouseleave', function () { isHover = false; });
-
-    var touchX = null;
-    var touchY = null;
-    root.addEventListener('touchstart', function (e) {
-      touchX = e.touches[0].clientX;
-      touchY = e.touches[0].clientY;
-    }, { passive: true });
-    root.addEventListener('touchend', function (e) {
-      if (touchX === null) return;
-      var dx = e.changedTouches[0].clientX - touchX;
-      var dy = e.changedTouches[0].clientY - touchY;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) go(index + 1, true); else go(index - 1, true);
-      }
-      touchX = null; touchY = null;
-    }, { passive: true });
-
-    render();
-    start();
-  });
 
   // ── CAMP DETAIL TOGGLE ───────────────────────────────────────
   var campsSection = document.getElementById('camps');
@@ -684,6 +557,13 @@
       clearFieldError(errLocation, locationInput);
     }
 
+    var CAMP_CAPACITY = {
+      'NOMAAD Summit':  { min: 100,  max: 1000 },
+      'NOMAAD Meadow':  { min: 50,   max: 300  },
+      'NOMAAD Grove':   { min: 20,   max: 200  },
+      'Нүүдлийн кемп':  { min: 10,   max: 1000 }
+    };
+
     var DAY_PROGRAM_OPTIONS = ['Half Day хөтөлбөр', 'Full Day хөтөлбөр'];
 
     function getDayProgramLabel(campName) {
@@ -740,6 +620,11 @@
 
       if (campSelect) campSelect.value = camp;
       if (tierSelect) tierSelect.value = tier;
+      if (guestInput) {
+        var cap = CAMP_CAPACITY[camp];
+        guestInput.min = cap ? cap.min : 1;
+        guestInput.max = cap ? cap.max : '';
+      }
 
       if (contextHint) {
         if (isDayProgram) {
@@ -1684,6 +1569,16 @@
 
       if (!guests || parseInt(guests, 10) < 1) {
         markError(errGuests, guestInput, 'Хүний тоо оруулна уу.');
+      } else {
+        var guestsNum = parseInt(guests, 10);
+        var campCap = CAMP_CAPACITY[camp];
+        if (campCap) {
+          if (guestsNum < campCap.min) {
+            markError(errGuests, guestInput, 'Энэ кемпийн хамгийн бага хүний тоо ' + campCap.min + ' байна.');
+          } else if (guestsNum > campCap.max) {
+            markError(errGuests, guestInput, 'Энэ кемпийн хамгийн их хүний тоо ' + campCap.max + ' байна.');
+          }
+        }
       }
 
       if (isMobile && !location) {
