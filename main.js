@@ -1716,13 +1716,33 @@
         source:                'nomaadcamp.com'
       };
 
+      // Submit to n8n webhook. We send as form-urlencoded (a "simple request") +
+      // mode:'no-cors' so the browser skips both the OPTIONS preflight and the
+      // CORS-on-response check. n8n cloud's response sometimes omits the
+      // Access-Control-Allow-Origin header on the actual POST, which would
+      // otherwise cause a CORS error even though the data arrives. With no-cors
+      // the response is opaque (we can't inspect status), so a non-thrown fetch
+      // is treated as success. The Webhook node parses urlencoded fields the
+      // same way as JSON ($json.contact_name etc.).
+      var formBody = new URLSearchParams();
+      Object.keys(payload).forEach(function (k) {
+        formBody.append(k, String(payload[k] == null ? '' : payload[k]));
+      });
+      var submitOk = false;
       try {
-        var res = await fetch(N8N_WEBHOOK_URL, {
+        await fetch(N8N_WEBHOOK_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          mode: 'no-cors',
+          body: formBody,
+          keepalive: true
         });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
+        submitOk = true;
+      } catch (_) {
+        // True network failure (offline, DNS, etc.) — show error.
+        submitOk = false;
+      }
+
+      if (submitOk) {
         if (quoteMessage) {
           quoteMessage.textContent = 'Таны хүсэлт амжилттай илгээгдлээ. Манай баг 24 цагийн дотор холбогдоно.';
           quoteMessage.className = 'quote-form__message quote-form__message--success';
@@ -1730,14 +1750,13 @@
         quoteForm.reset();
         applyLocationVisibility('');
         window.setTimeout(function () { closeQuoteModal(); }, 3000);
-      } catch (_) {
+      } else {
         if (quoteMessage) {
           quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдох эсвэл 9917-9417 дугаарт залгана уу.';
           quoteMessage.className = 'quote-form__message quote-form__message--error';
         }
-      } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Урьдчилсан санал авах'; }
       }
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Урьдчилсан санал авах'; }
     });
   }
 
