@@ -3178,6 +3178,49 @@ body.home-page video {
   margin-top: auto;
   text-align: center;
 }
+.map-info__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(31, 42, 35, 0.07);
+}
+.map-info__nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.map-info__nav-btn {
+  background: #2F3E2F;
+  color: #F2F1EC;
+  text-align: center;
+  padding: 0.55rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.map-info__nav-grid > .map-info__nav-btn:nth-child(3) {
+  grid-column: 1 / -1;
+}
+.map-info__nav-btn:hover {
+  background: #1F2A23;
+  transform: translateY(-1px);
+}
+.map-info__lost {
+  margin-top: auto;
+  background: #B14F1F;
+  color: #fff;
+  text-align: center;
+  padding: 0.85rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: filter 0.2s;
+}
+.map-info__lost:hover { filter: brightness(0.92); }
 .nomaad-marker {
   position: relative;
   width: 28px;

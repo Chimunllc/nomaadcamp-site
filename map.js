@@ -1,33 +1,29 @@
-// NOMAAD Camp — Mapbox map initialisation
-// Custom dark-forest style aligned with the brand palette.
+// NOMAAD Camp — Mapbox map with satellite view + driving directions overlay.
+// Shows the actual paved route from Ulaanbaatar plus the dirt-road final leg
+// imported from the team's Google My Map export.
 (function () {
   'use strict';
   if (typeof mapboxgl === 'undefined') return;
   var container = document.getElementById('nomaad-map');
   if (!container) return;
 
-  // Public token. Restricted to nomaadcamp.com via Mapbox dashboard.
   mapboxgl.accessToken = 'pk.eyJ1Ijoibm9tYWFkY2FtcCIsImEiOiJjbW9weGk4M2ExZGN5MnBxeXhhazg4ZW9rIn0.eiNhSnD2NiSTQQiUuz5kAg';
 
-  // Camp pins. Mapbox uses [lng, lat] order (longitude first).
-  // Mobile camp is intentionally omitted — it operates wherever the client
-  // selects, so a fixed pin would be misleading.
   var CAMPS = [
     { id: 'a', name: 'NOMAAD Summit', size: '100–1000 хүн', coords: [107.659422, 47.727926], color: '#B14F1F' },
     { id: 'b', name: 'NOMAAD Meadow', size: '50–300 хүн',   coords: [107.664493, 47.730607], color: '#C8A878' },
     { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.649126, 47.723300], color: '#4A5E3E' }
   ];
 
-  // Center point — geometric mean of camp coordinates.
   var center = [107.657680, 47.727278];
 
   var map = new mapboxgl.Map({
     container: 'nomaad-map',
-    style: 'mapbox://styles/mapbox/outdoors-v12',
+    style: 'mapbox://styles/mapbox/satellite-streets-v12',
     center: center,
-    zoom: 14,
-    minZoom: 8,
-    maxZoom: 17,
+    zoom: 13.5,
+    minZoom: 7,
+    maxZoom: 18,
     cooperativeGestures: true,
     attributionControl: true
   });
@@ -35,9 +31,84 @@
   map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
   map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
 
-  map.on('load', function () {
+  // Fit bounds button — shows the whole UB → camp picture.
+  var fitBtn = document.createElement('button');
+  fitBtn.type = 'button';
+  fitBtn.className = 'mapboxgl-ctrl-icon nomaad-fit-btn';
+  fitBtn.setAttribute('aria-label', 'Бүх замыг харах');
+  fitBtn.textContent = '⤢';
+  fitBtn.style.cssText = 'background:#fff;border:none;width:30px;height:30px;border-radius:4px;font-size:18px;line-height:1;cursor:pointer;box-shadow:0 0 0 2px rgba(0,0,0,0.1);margin-top:6px;';
+
+  function loadRoute() {
+    fetch('/route.geo.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (geo) {
+        if (!geo || !geo.features) return;
+
+        // Identify the dirt-road and main-road features by name.
+        var dirtFeature = geo.features.find(function (f) {
+          return f.properties && /шороон/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
+        });
+        var mainFeature = geo.features.find(function (f) {
+          return f.properties && /directions/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
+        });
+
+        if (mainFeature) {
+          map.addSource('nomaad-main-road', { type: 'geojson', data: mainFeature });
+          map.addLayer({
+            id: 'nomaad-main-road-casing',
+            type: 'line',
+            source: 'nomaad-main-road',
+            layout: { 'line-cap': 'round', 'line-join': 'round' },
+            paint: { 'line-color': '#1F2A23', 'line-width': 6 }
+          });
+          map.addLayer({
+            id: 'nomaad-main-road',
+            type: 'line',
+            source: 'nomaad-main-road',
+            layout: { 'line-cap': 'round', 'line-join': 'round' },
+            paint: { 'line-color': '#F2F1EC', 'line-width': 3 }
+          });
+        }
+
+        if (dirtFeature) {
+          map.addSource('nomaad-dirt-road', { type: 'geojson', data: dirtFeature });
+          map.addLayer({
+            id: 'nomaad-dirt-road-casing',
+            type: 'line',
+            source: 'nomaad-dirt-road',
+            layout: { 'line-cap': 'round', 'line-join': 'round' },
+            paint: { 'line-color': '#1F2A23', 'line-width': 7 }
+          });
+          map.addLayer({
+            id: 'nomaad-dirt-road',
+            type: 'line',
+            source: 'nomaad-dirt-road',
+            layout: { 'line-cap': 'round', 'line-join': 'round' },
+            paint: {
+              'line-color': '#FFB347',
+              'line-width': 4,
+              'line-dasharray': [2, 1.5]
+            }
+          });
+        }
+
+        // Compute bounds covering camps + main route.
+        var bounds = new mapboxgl.LngLatBounds();
+        CAMPS.forEach(function (c) { bounds.extend(c.coords); });
+        if (mainFeature) {
+          mainFeature.geometry.coordinates.forEach(function (p) { bounds.extend(p); });
+        }
+        // Fit-button shows whole route. Default view stays on the camp cluster.
+        fitBtn.addEventListener('click', function () {
+          map.fitBounds(bounds, { padding: 60, duration: 900 });
+        });
+      })
+      .catch(function () { /* keep going without route */ });
+  }
+
+  function addMarkers() {
     CAMPS.forEach(function (c) {
-      // Custom marker DOM element
       var el = document.createElement('div');
       el.className = 'nomaad-marker';
       el.setAttribute('aria-label', c.name);
@@ -61,5 +132,14 @@
         .setPopup(popup)
         .addTo(map);
     });
+  }
+
+  map.on('load', function () {
+    addMarkers();
+    loadRoute();
+
+    // Inject the fit-bounds button into the navigation control group.
+    var navGroup = container.querySelector('.mapboxgl-ctrl-top-right .mapboxgl-ctrl');
+    if (navGroup) navGroup.appendChild(fitBtn);
   });
 })();
