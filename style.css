@@ -2080,7 +2080,7 @@ body.modal-open { overflow: hidden; }
   border-radius: 12px;
   overflow: hidden;
   background: #1a1f1a;
-  aspect-ratio: 2600 / 1733;
+  aspect-ratio: 3 / 2;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
 }
 .welcome-drink-banner picture,
