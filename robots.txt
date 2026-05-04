@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /netlify/functions/
+Disallow: /go
+Disallow: /program/
 
 Host: nomaadcamp.com
 Sitemap: https://nomaadcamp.com/sitemap.xml
