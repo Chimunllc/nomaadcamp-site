@@ -2074,6 +2074,23 @@ body.modal-open { overflow: hidden; }
   }
 }
 
+/* ── WELCOME DRINK BANNER ────────────────────────────────── */
+.welcome-drink-banner {
+  margin: 0.5rem 0 0.85rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1f1a;
+  aspect-ratio: 2600 / 1733;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+.welcome-drink-banner picture,
+.welcome-drink-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ── VISUAL FEATURE SELECTOR ─────────────────────────────── */
 .pkg-visual-selector {
   display: flex;
