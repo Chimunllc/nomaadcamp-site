@@ -2074,6 +2074,67 @@ body.modal-open { overflow: hidden; }
   }
 }
 
+/* ── 2026 NEXT STAGE ─────────────────────────────────────── */
+.next-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin: 2.5rem 0 2rem;
+}
+@media (max-width: 900px) {
+  .next-stage-grid { grid-template-columns: 1fr; gap: 1rem; }
+}
+.next-stage-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(31, 42, 35, 0.08);
+  border-radius: 14px;
+  padding: 1.6rem 1.45rem 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+.next-stage-card h3 {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin: 0 0 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(177, 79, 31, 0.18);
+}
+.next-stage-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.next-stage-card li {
+  position: relative;
+  padding-left: 1.05rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text-dark);
+}
+.next-stage-card li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+.next-stage-tagline {
+  text-align: center;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--primary-forest);
+  margin: 1.75rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(31, 42, 35, 0.12);
+}
+
 /* ── WELCOME DRINK BANNER ────────────────────────────────── */
 .welcome-drink-banner {
   margin: 0.5rem 0 0.85rem;
