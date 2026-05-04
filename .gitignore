@@ -20,3 +20,7 @@ Thumbs.db
 .lighthouseci/
 lhr-*.json
 lhr-*.html
+
+# Working files (audit, copy variants, etc.)
+*.xlsx
+.~lock.*#
