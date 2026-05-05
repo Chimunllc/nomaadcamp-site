@@ -1329,6 +1329,14 @@ body.home-page .nav-cta {
   filter: brightness(1.08) saturate(1.04);
   z-index: 0;
 }
+
+/* Mobile/Desktop hero швитч — JS биш, CSS */
+.hero-photo--mobile { display: none; }
+.hero-video--desktop { display: block; }
+@media (max-width: 760px) {
+  .hero-photo--mobile { display: block; }
+  .hero-video--desktop { display: none; }
+}
 .hero-overlay {
   position: absolute;
   inset: 0;
