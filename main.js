@@ -172,8 +172,48 @@
     featImg.loading = 'lazy';
     featImg.decoding = 'async';
 
-    var activeKey   = null;
-    var fadeTimer   = null;
+    var activeKey     = null;
+    var fadeTimer     = null;
+    var currentImages = [];
+    var currentLabel  = '';
+    var currentIndex  = 0;
+
+    // Swipe gesture для featured image (mobile)
+    function navigateImage(delta) {
+      if (!currentImages.length) return;
+      var newIndex = currentIndex + delta;
+      if (newIndex < 0) newIndex = currentImages.length - 1;
+      if (newIndex >= currentImages.length) newIndex = 0;
+      currentIndex = newIndex;
+      setFeaturedSrc(currentImages[newIndex], currentLabel);
+      setActiveThumb(newIndex);
+      // Идэвхтэй thumb-ыг харагдуулахаар scroll
+      var thumbBtns = thumbsEl.querySelectorAll('.cat-gallery__thumb');
+      if (thumbBtns[newIndex]) {
+        thumbBtns[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    if (featWrap) {
+      var touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+      featWrap.addEventListener('touchstart', function (e) {
+        var t = e.touches[0];
+        touchStartX = t.clientX;
+        touchStartY = t.clientY;
+        touchStartTime = Date.now();
+      }, { passive: true });
+      featWrap.addEventListener('touchend', function (e) {
+        var t = e.changedTouches[0];
+        var dx = t.clientX - touchStartX;
+        var dy = t.clientY - touchStartY;
+        var dt = Date.now() - touchStartTime;
+        // Horizontal swipe — > 50px зайтай, vertical биш, 600ms-н дотор
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 600) {
+          if (dx > 0) navigateImage(-1);  // swipe right → prev
+          else navigateImage(1);           // swipe left → next
+        }
+      }, { passive: true });
+    }
 
     function setFeaturedSrc(src, alt) {
       if (fadeTimer) clearTimeout(fadeTimer);
@@ -220,6 +260,11 @@
       if (featWrap) featWrap.classList.remove('cat-gallery__featured-wrap--empty');
       setFeaturedSrc(images[0], cat.label || key);
 
+      // Currently displayed image index (used by swipe navigation)
+      currentImages = images;
+      currentLabel = cat.label || key;
+      currentIndex = 0;
+
       images.forEach(function (src, i) {
         var btn = document.createElement('button');
         btn.type = 'button';
@@ -242,6 +287,7 @@
         btn.addEventListener('click', function () {
           setFeaturedSrc(src, cat.label || key);
           setActiveThumb(i);
+          currentIndex = i;
         });
         thumbsEl.appendChild(btn);
       });
@@ -396,12 +442,14 @@
   var campCards = campsSection ? campsSection.querySelectorAll('[data-camp-target]') : [];
   if (campCards.length > 0) {
     var campDetails = campsSection ? campsSection.querySelectorAll('.camp-detail') : [];
+    var CTA_CLOSED = 'Дэлгэрэнгүй ↓';
+    var CTA_OPEN   = 'Хаах ↑';
     var resetCampState = function () {
       campCards.forEach(function (card) {
         card.classList.remove('is-active');
         card.setAttribute('aria-expanded', 'false');
         var cta = card.querySelector('[data-camp-cta]');
-        if (cta) cta.textContent = 'Багц үзэх →';
+        if (cta) cta.textContent = CTA_CLOSED;
       });
       campDetails.forEach(function (detail) { detail.classList.remove('is-open'); });
     };
@@ -412,7 +460,7 @@
         card.classList.toggle('is-active', isTarget);
         card.setAttribute('aria-expanded', isTarget ? 'true' : 'false');
         var cta = card.querySelector('[data-camp-cta]');
-        if (cta) cta.textContent = isTarget ? 'Хаах ↑' : 'Багц үзэх →';
+        if (cta) cta.textContent = isTarget ? CTA_OPEN : CTA_CLOSED;
       });
       campDetails.forEach(function (detail) {
         var isTarget = detail.id === targetId;
@@ -421,8 +469,13 @@
       });
       if (targetDetail) {
         window.setTimeout(function () {
-          targetDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 120);
+          // Sticky nav-ийн өндрөөс хүрсэн зайтайгаар scroll хийнэ
+          var navEl = document.querySelector('.nav');
+          var navOffset = navEl ? navEl.offsetHeight + 16 : 80;
+          var rect = targetDetail.getBoundingClientRect();
+          var targetTop = rect.top + window.pageYOffset - navOffset;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        }, 200);
       }
     };
     campCards.forEach(function (card) {
