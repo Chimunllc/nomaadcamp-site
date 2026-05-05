@@ -1803,6 +1803,237 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
   .footer-channel__phone { font-size: 0.85rem !important; }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE PREMIUM REFINE — гоо мэдрэмж нэмэх (≤760px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 760px) {
+  /* === HERO — premium pill buttons + breathing ============= */
+  .hero {
+    padding: 6rem 0 3.5rem !important;
+    text-align: center !important;
+  }
+  .hero-inner {
+    text-align: center !important;
+    align-items: center !important;
+  }
+  .hero h1 {
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+  .hero-sub {
+    text-align: center !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    color: rgba(242, 241, 236, 0.82) !important;
+  }
+  .hero-sub strong { color: var(--sand) !important; font-weight: 600 !important; }
+
+  /* Premium accent button — solid sand */
+  .hero-actions .btn--accent {
+    background: var(--sand) !important;
+    color: var(--bg) !important;
+    border: none !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em !important;
+    box-shadow: 0 4px 14px rgba(200, 168, 120, 0.25) !important;
+  }
+  .hero-actions .btn--ghost-light {
+    background: transparent !important;
+    border: 1.5px solid rgba(242, 241, 236, 0.4) !important;
+    color: var(--text) !important;
+    font-weight: 500 !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
+
+  /* Hero meta — refined inline */
+  .hero-meta {
+    color: rgba(242, 241, 236, 0.6) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  /* === SECTION EYEBROW — visible, premium ================= */
+  .section-head .eyebrow {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .section-head .eyebrow-dot {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: var(--accent) !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Dark section eyebrow uses sand */
+  .section--dark .eyebrow,
+  .footer--premium .eyebrow {
+    color: var(--sand) !important;
+  }
+  .section--dark .eyebrow-dot,
+  .footer--premium .eyebrow-dot {
+    background: var(--sand) !important;
+  }
+
+  /* H2 weight нэмэх premium feel */
+  .section-head h2 {
+    font-weight: 700 !important;
+  }
+
+  /* === STATS — Premium inline strip with sand glow ======== */
+  #why-nomaad .wn-stats {
+    background: rgba(200, 168, 120, 0.04) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(200, 168, 120, 0.12) !important;
+    border-top: 1px solid rgba(200, 168, 120, 0.12) !important;
+    border-bottom: 1px solid rgba(200, 168, 120, 0.12) !important;
+    padding: 1rem 0.5rem !important;
+  }
+  #why-nomaad .wn-stat {
+    padding: 0 0.4rem !important;
+    gap: 0.2rem !important;
+  }
+  #why-nomaad .wn-stat + .wn-stat {
+    border-left: 1px solid rgba(200, 168, 120, 0.18) !important;
+  }
+  #why-nomaad .wn-stat-num {
+    color: var(--sand) !important;
+    font-weight: 700 !important;
+  }
+
+  /* === CAMP CARDS — visual punch ========================== */
+  .camp-card {
+    border: 1px solid rgba(31, 42, 35, 0.1) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  }
+  .camp-card:active {
+    transform: scale(0.99) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+  }
+  .camp-card h3 {
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+  }
+  .camp-card-body {
+    padding: 1rem !important;
+  }
+  .camp-card-cta {
+    color: var(--accent) !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* === 2026 NEXT-STAGE — refined ========================== */
+  .next-stage-card {
+    border: 1px solid rgba(31, 42, 35, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+  }
+  .next-stage-card h3 {
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.18em !important;
+  }
+  .next-stage-tagline {
+    color: var(--primary-forest) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  /* === PKG CARD (camps + midweek packages) ================ */
+  .pkg-card {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+  }
+  .pkg-card--featured {
+    border: 2px solid var(--sand) !important;
+    box-shadow: 0 6px 20px rgba(200, 168, 120, 0.18) !important;
+  }
+  .pkg-tier-label {
+    font-weight: 700 !important;
+    letter-spacing: 0.2em !important;
+    color: var(--accent) !important;
+  }
+  .pkg-price {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* === FOOTER MAP — better visual integration ============= */
+  .footer-location #nomaad-map.map-canvas {
+    border: 1px solid rgba(200, 168, 120, 0.15) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+  }
+  .footer-map-cta {
+    background: var(--sand) !important;
+    color: var(--bg) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 700 !important;
+  }
+
+  /* === FOOTER CONTACT — premium hierarchy ================= */
+  .footer-channel__primary {
+    color: var(--text) !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.01em !important;
+  }
+  .footer-channel__email {
+    color: var(--sand) !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 3px !important;
+  }
+  .footer-social-link {
+    background: rgba(200, 168, 120, 0.06) !important;
+    border-color: rgba(200, 168, 120, 0.25) !important;
+  }
+  .footer-social-link:active {
+    background: var(--sand) !important;
+    color: var(--bg) !important;
+  }
+
+  /* === SECTION SUBTLE DIVIDER between sections =========== */
+  .section + .section {
+    position: relative !important;
+  }
+
+  /* === MIDWEEK ADDON GRID — better mobile == */
+  .midweek-addon-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.4rem !important;
+  }
+  .midweek-addon-grid > span {
+    font-size: 0.8rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  /* === GALLERY TABS — horizontal scroll smooth ========== */
+  .cat-gallery__tabs {
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .cat-gallery__tab {
+    scroll-snap-align: start !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* === Quote modal mobile — tighter ===================== */
+  .quote-modal__dialog {
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 92vh !important;
+  }
+}
+
 body.modal-open { overflow: hidden; }
 .quote-modal {
   position: fixed;
