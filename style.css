@@ -1668,10 +1668,28 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
   }
 
   /* Cards — нягт padding */
-  .camp-card, .pkg-card, .next-stage-card {
+  .pkg-card, .next-stage-card {
     padding: 1.1rem !important;
   }
-  .camp-grid { gap: 0.85rem !important; }
+  .camp-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+  }
+  .camp-card-body {
+    padding: 0.75rem 0.85rem 0.9rem !important;
+  }
+  .camp-card h3 {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+  .camp-card p {
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+  }
+  .camp-card-cta {
+    font-size: 0.78rem !important;
+    padding-top: 0.7rem !important;
+  }
 
   /* Why-NOMAAD STATS — Force 3-col compact */
   #why-nomaad .wn-stats {
@@ -2444,7 +2462,10 @@ body.modal-open { overflow: hidden; }
 }
 
 @media (max-width: 760px) {
-  .camp-grid,
+  .camp-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
   .process-grid--five {
     grid-template-columns: 1fr;
   }
