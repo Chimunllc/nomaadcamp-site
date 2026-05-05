@@ -444,6 +444,9 @@
     var campDetails = campsSection ? campsSection.querySelectorAll('.camp-detail') : [];
     var CTA_CLOSED = 'Дэлгэрэнгүй ↓';
     var CTA_OPEN   = 'Хаах ↑';
+    var isMobileView = function () {
+      return window.matchMedia('(max-width: 760px)').matches;
+    };
     var resetCampState = function () {
       campCards.forEach(function (card) {
         card.classList.remove('is-active');
@@ -452,6 +455,17 @@
         if (cta) cta.textContent = CTA_CLOSED;
       });
       campDetails.forEach(function (detail) { detail.classList.remove('is-open'); });
+      document.body.classList.remove('camp-detail-open');
+    };
+    var ensureCloseButton = function (detailEl) {
+      if (detailEl.querySelector('.camp-detail-close')) return;
+      var btn = document.createElement('button');
+      btn.className = 'camp-detail-close';
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Хаах');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      btn.addEventListener('click', resetCampState);
+      detailEl.insertBefore(btn, detailEl.firstChild);
     };
     var showCampDetail = function (targetId) {
       var targetDetail = null;
@@ -468,16 +482,29 @@
         if (isTarget) targetDetail = detail;
       });
       if (targetDetail) {
-        window.setTimeout(function () {
-          // Sticky nav-ийн өндрөөс хүрсэн зайтайгаар scroll хийнэ
-          var navEl = document.querySelector('.nav');
-          var navOffset = navEl ? navEl.offsetHeight + 16 : 80;
-          var rect = targetDetail.getBoundingClientRect();
-          var targetTop = rect.top + window.pageYOffset - navOffset;
-          window.scrollTo({ top: targetTop, behavior: 'smooth' });
-        }, 200);
+        ensureCloseButton(targetDetail);
+        if (isMobileView()) {
+          // Mobile — bottom-sheet modal style
+          document.body.classList.add('camp-detail-open');
+          targetDetail.scrollTop = 0;
+        } else {
+          // Desktop — smooth scroll to detail
+          window.setTimeout(function () {
+            var navEl = document.querySelector('.nav');
+            var navOffset = navEl ? navEl.offsetHeight + 16 : 80;
+            var rect = targetDetail.getBoundingClientRect();
+            var targetTop = rect.top + window.pageYOffset - navOffset;
+            window.scrollTo({ top: targetTop, behavior: 'smooth' });
+          }, 200);
+        }
       }
     };
+    // ESC key — modal-ыг хаах
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('camp-detail-open')) {
+        resetCampState();
+      }
+    });
     campCards.forEach(function (card) {
       card.addEventListener('click', function () {
         if (card.classList.contains('is-active')) {
