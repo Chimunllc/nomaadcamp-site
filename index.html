@@ -11,6 +11,13 @@
 <meta name="theme-color" content="#2F3E2F">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://nomaadcamp.com/">
+
+<!-- ── PWA: Progressive Web App ──────────────────────────────── -->
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NOMAAD">
 <meta property="og:type" content="website">
 <meta property="og:title" content="NOMAAD Camp — Байгууллагын арга хэмжээний бүрэн зохион байгуулалт">
 <meta property="og:description" content="Байгууллагын арга хэмжээ, багийн идэвхжүүлэлт, удирдлагын уулзалт, том хэмжээний эвентийг төлөвлөлтөөс гүйцэтгэл хүртэл нэгдсэн байдлаар хэрэгжүүлнэ.">
@@ -1522,5 +1529,35 @@
 <script src="/map.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js" defer></script>
 <script src="/datepicker.js" defer></script>
+
+<!-- ── PWA: Service Worker ─────────────────────────────────────── -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js')
+        .then(function (reg) {
+          // Шинэ хувилбар олдсон бол шууд идэвхжүүлэх
+          if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          reg.addEventListener('updatefound', function () {
+            var sw = reg.installing;
+            if (!sw) return;
+            sw.addEventListener('statechange', function () {
+              if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+                sw.postMessage({ type: 'SKIP_WAITING' });
+              }
+            });
+          });
+        })
+        .catch(function () { /* SW registration failed — silently */ });
+      // Шинэ SW идэвхжсэн үед нэг л удаа reload
+      var refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+    });
+  }
+</script>
 </body>
 </html>
