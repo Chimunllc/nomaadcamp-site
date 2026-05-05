@@ -1567,6 +1567,13 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
 /* ═══════════════════════════════════════════════════════════════
    TAGLINE H — "Нэг баг · Нэг гэрээ · Нэг хариуцлага" хэлбэр
    ═══════════════════════════════════════════════════════════════ */
+.hero-tagline-h .t-word,
+.hero-tagline-h .t-sep {
+  background: none !important;
+  color: inherit !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
 .hero-tagline-h .t-word { white-space: nowrap; }
 .hero-tagline-h .t-sep { padding: 0 0.45em; opacity: 0.85; }
 
