@@ -158,16 +158,28 @@
 <main id="main-content">
 <header class="hero hero--corporate" id="top">
   <div class="hero-media">
-    <video class="hero-video" id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true" poster="/images/hero/gallery-05.jpg" disablepictureinpicture disableremoteplayback></video>
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true" poster="/images/hero/hero-01.webp" disablepictureinpicture disableremoteplayback></video>
     <script>
     (function () {
       var v = document.getElementById('hero-video');
       if (!v) return;
       var isMobile = window.matchMedia('(max-width: 760px)').matches;
-      var src = isMobile ? '/videos/hero-mobile' : '/videos/hero';
+      if (isMobile) {
+        // Mobile-д бичлэг ачаалахгүй — зураг ашиглах
+        var img = document.createElement('img');
+        img.src = '/images/hero/hero-01.webp';
+        img.className = 'hero-photo';
+        img.alt = '';
+        img.decoding = 'async';
+        img.setAttribute('aria-hidden', 'true');
+        img.setAttribute('fetchpriority', 'high');
+        v.parentNode.replaceChild(img, v);
+        return;
+      }
+      // Desktop — full HD видеог ачаалах
       v.innerHTML =
-        '<source src="' + src + '.webm" type="video/webm">' +
-        '<source src="' + src + '.mp4"  type="video/mp4">';
+        '<source src="/videos/hero.webm" type="video/webm">' +
+        '<source src="/videos/hero.mp4"  type="video/mp4">';
       v.load();
       var p = v.play();
       if (p && typeof p.catch === 'function') p.catch(function () { /* autoplay blocked */ });
