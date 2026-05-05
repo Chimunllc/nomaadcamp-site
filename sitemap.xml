@@ -3,53 +3,59 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
   <url>
     <loc>https://nomaadcamp.com/</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://nomaadcamp.com/images/camps/a-camp/cover/A-01.jpg</image:loc>
-      <image:title>NOMAAD Camp - Байгууллагын арга хэмжээний нэгдсэн шийдэл</image:title>
+      <image:title>NOMAAD Camp — Корпорат арга хэмжээний нэгдсэн шийдэл</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://nomaadcamp.com/#camps</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nomaadcamp.com/#midweek</loc>
-    <lastmod>2026-05-03</lastmod>
+    <loc>https://nomaadcamp.com/#why-nomaad</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://nomaadcamp.com/#next-stage</loc>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nomaadcamp.com/#workflow</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://nomaadcamp.com/#why-nomaad</loc>
-    <lastmod>2026-05-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://nomaadcamp.com/#gallery</loc>
-    <lastmod>2026-05-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://nomaadcamp.com/#clients</loc>
-    <lastmod>2026-05-03</lastmod>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://nomaadcamp.com/#midweek</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nomaadcamp.com/#gallery</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://nomaadcamp.com/#map</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
