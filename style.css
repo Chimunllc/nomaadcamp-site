@@ -1727,6 +1727,19 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
     max-width: 100% !important;
     overflow: visible !important;
   }
+  /* Урт feature list-ыг 2 баганаар хатгаж карт-ын өндрийг багасгах */
+  .camp-detail .pkg-card .pkg-features {
+    column-count: 2 !important;
+    column-gap: 1rem !important;
+  }
+  .camp-detail .pkg-card .pkg-features li {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  /* Хагас өргөнтэй (icon биш) текст хэт давчуу болохоос сэргийлэх */
+  .camp-detail .pkg-card .pkg-features--secondary {
+    column-count: 1 !important;
+  }
   /* Modal дотор pkg карт padding-ыг тохируулах */
   .camp-detail.is-open .camp-packages {
     margin: 0 !important;
