@@ -1727,18 +1727,54 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
     max-width: 100% !important;
     overflow: visible !important;
   }
-  /* Урт feature list-ыг 2 баганаар хатгаж карт-ын өндрийг багасгах */
+  /* Урт feature list-ыг 2 баганаар (grid) хатгаж карт-ын өндрийг багасгах */
   .camp-detail .pkg-card .pkg-features {
-    column-count: 2 !important;
-    column-gap: 1rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: 0.85rem !important;
+    row-gap: 0 !important;
   }
   .camp-detail .pkg-card .pkg-features li {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
+    padding: 0.4rem 0 !important;
   }
-  /* Хагас өргөнтэй (icon биш) текст хэт давчуу болохоос сэргийлэх */
+  /* Тусдаа тооцогдох богино жагсаалт — 1 баганаар л үлдэх */
   .camp-detail .pkg-card .pkg-features--secondary {
-    column-count: 1 !important;
+    display: block !important;
+  }
+  .camp-detail .pkg-card .pkg-features--secondary li {
+    padding: 0.35rem 0 !important;
+  }
+  /* "Үнийн санал авах" товчийг илүү тод гаргах */
+  .camp-detail .pkg-card .pkg-cta {
+    margin-top: 0.85rem !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0.95rem !important;
+    font-size: 1rem !important;
+  }
+  /* Premium card-ийн доод зайг багасгаж */
+  .camp-detail .pkg-card {
+    padding: 1rem 0.95rem 1.1rem !important;
+    gap: 0.45rem !important;
+  }
+  .camp-detail .pkg-note {
+    font-size: 0.84rem !important;
+    line-height: 1.45 !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .camp-detail .pkg-divider {
+    margin: 0.5rem 0 !important;
+  }
+  .camp-detail .pkg-features__sub-title {
+    font-size: 0.78rem !important;
+    margin-top: 0.4rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+  .camp-detail .pkg-features__custom-note {
+    font-size: 0.72rem !important;
+    margin-top: 0.2rem !important;
   }
   /* Modal дотор pkg карт padding-ыг тохируулах */
   .camp-detail.is-open .camp-packages {
