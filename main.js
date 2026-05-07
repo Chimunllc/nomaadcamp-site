@@ -1605,7 +1605,7 @@
         // Mongolian phone: 8 digits, optionally prefixed with +976 or 976
         var cleanPhone = phone.replace(/[\s\-\(\)\+]/g, '').replace(/^976/, '');
         if (!/^\d{8}$/.test(cleanPhone)) {
-          markError(errPhone, phoneInput, 'Монгол утасны дугаар буруу байна. (жишээ: 99179417)');
+          markError(errPhone, phoneInput, 'Монгол утасны дугаар буруу байна. (жишээ: 77006790)');
         }
       }
 
@@ -1750,7 +1750,7 @@
         window.setTimeout(function () { closeQuoteModal(); }, 3000);
       } else {
         if (quoteMessage) {
-          quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдох эсвэл 9917-9417 дугаарт залгана уу.';
+          quoteMessage.textContent = 'Алдаа гарлаа. Дахин оролдох эсвэл 7700-6790 дугаарт залгана уу.';
           quoteMessage.className = 'quote-form__message quote-form__message--error';
         }
       }
