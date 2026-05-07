@@ -483,20 +483,14 @@
       });
       if (targetDetail) {
         ensureCloseButton(targetDetail);
-        if (isMobileView()) {
-          // Mobile — bottom-sheet modal style
-          document.body.classList.add('camp-detail-open');
-          targetDetail.scrollTop = 0;
-        } else {
-          // Desktop — smooth scroll to detail
-          window.setTimeout(function () {
-            var navEl = document.querySelector('.nav');
-            var navOffset = navEl ? navEl.offsetHeight + 16 : 80;
-            var rect = targetDetail.getBoundingClientRect();
-            var targetTop = rect.top + window.pageYOffset - navOffset;
-            window.scrollTo({ top: targetTop, behavior: 'smooth' });
-          }, 200);
-        }
+        // Smooth-scroll to the open detail on every viewport (mobile + desktop).
+        window.setTimeout(function () {
+          var navEl = document.querySelector('.nav');
+          var navOffset = navEl ? navEl.offsetHeight + 16 : 80;
+          var rect = targetDetail.getBoundingClientRect();
+          var targetTop = rect.top + window.pageYOffset - navOffset;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        }, 100);
       }
     };
     // ESC key — modal-ыг хаах

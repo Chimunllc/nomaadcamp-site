@@ -1677,9 +1677,7 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
   }
 
   /* Camp detail — энгийн inline scroll (modal биш). */
-  .camp-detail-close { display: none !important; }
   .camp-detail.is-open {
-    /* Default desktop styling-ийг хэрэгжүүлж inline scroll харагдалт */
     position: static !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -1689,6 +1687,45 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
   }
   body.camp-detail-open {
     overflow: auto !important;
+  }
+  /* Inline-аар харагдах хаах товч (modal биш ч хэрэглэгчид зохицсон) */
+  .camp-detail .camp-detail-close {
+    display: inline-flex !important;
+    position: static !important;
+    align-self: flex-end !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.4rem !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 0 1rem auto !important;
+    padding: 0.55rem 1rem !important;
+    border-radius: 999px !important;
+    background: rgba(31, 42, 35, 0.08) !important;
+    color: #1F2A23 !important;
+    border: none !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+  }
+  .camp-detail .camp-detail-close::after {
+    content: 'Хаах';
+  }
+  .camp-detail .camp-detail-close:active {
+    background: rgba(31, 42, 35, 0.16) !important;
+  }
+  /* Багцын картууд бүх content багтах */
+  .camp-detail .camp-packages {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    overflow: visible !important;
+  }
+  .camp-detail .pkg-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
   }
   /* Modal дотор pkg карт padding-ыг тохируулах */
   .camp-detail.is-open .camp-packages {
