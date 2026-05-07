@@ -5356,31 +5356,46 @@ body.home-page video {
   }
 }
 
-/* 16. PREMIUM CARD — force ALL bottom content visible on mobile */
+/* 16. PREMIUM CARD — force ALL bottom content visible (all viewports) */
+.pkg-card .pkg-features--secondary,
+.pkg-card .pkg-features__sub-title,
+.pkg-card .pkg-features__custom-note,
+.pkg-card .pkg-accordion,
+.pkg-card .pkg-cta,
+.pkg-card .pkg-divider {
+  display: revert !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+.pkg-card .pkg-features--secondary {
+  display: flex !important;
+  flex-direction: column !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0.4rem 0 0 !important;
+}
+.pkg-card .pkg-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 @media (max-width: 760px) {
-  .camp-detail .pkg-card > * {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  .camp-detail .pkg-card .pkg-header { display: flex !important; }
-  .camp-detail .pkg-card .pkg-features { display: grid !important; }
-  .camp-detail .pkg-card .pkg-features--secondary { display: flex !important; flex-direction: column !important; }
   .camp-detail .pkg-card .pkg-cta {
-    display: flex !important;
+    width: 100% !important;
     margin-top: 1rem !important;
     background: var(--accent) !important;
     color: #fff !important;
-    width: 100% !important;
-    text-align: center !important;
-    justify-content: center !important;
     padding: 1rem !important;
     font-size: 1.02rem !important;
     font-weight: 600 !important;
     border-radius: 10px !important;
     box-shadow: 0 6px 18px rgba(177, 79, 31, 0.3) !important;
   }
-  /* Visual cue that there's more content below (small chevron at bottom of card) */
+  /* Subtle distinguishing band for "Тусдаа тооцогдоно" so user notices the section change */
   .camp-detail .pkg-card .pkg-features__sub-title {
     background: rgba(74, 89, 70, 0.06);
     margin: 0.6rem -0.95rem 0.4rem !important;
