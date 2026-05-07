@@ -838,7 +838,7 @@
       quoteForm.querySelectorAll('.quote-addon-card__qty-text').forEach(function (el) { el.hidden = false; });
       quoteForm.querySelectorAll('.quote-addon-card__qty-total').forEach(function (el) { el.textContent = '—'; });
       var bartenderPriceEl = document.querySelector('[data-bartender-price]');
-      if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 бармэн)';
+      if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 Bartender)';
       var djPriceEl = document.querySelector('[data-dj-price]');
       if (djPriceEl) djPriceEl.textContent = '+1,000,000₮';
     }
@@ -1036,9 +1036,9 @@
       var bartenderPriceEl = document.querySelector('[data-bartender-price]');
       if (bartenderPriceEl) {
         if (g < 1) {
-          bartenderPriceEl.textContent = '+500,000₮ (1 бармэн)';
+          bartenderPriceEl.textContent = '+500,000₮ (1 Bartender)';
         } else {
-          bartenderPriceEl.textContent = '+' + (bartenderCount * 500000).toLocaleString('en-US') + '₮ (' + bartenderCount + ' бармэн, ' + g + ' хүний арга хэмжээнд)';
+          bartenderPriceEl.textContent = '+' + (bartenderCount * 500000).toLocaleString('en-US') + '₮ (' + bartenderCount + ' Bartender, ' + g + ' хүний арга хэмжээнд)';
         }
       }
     }
@@ -1164,7 +1164,7 @@
           var btPrice = calculateBartenderPrice(guests);
           var btCount = Math.ceil(guests / 75) || 1;
           flatAddonsSum += btPrice;
-          addonRows += '<p class="quote-estimate__row">Бармэн (' + btCount + '): <span class="quote-estimate__num">+' + formatMNT(btPrice) + '</span></p>';
+          addonRows += '<p class="quote-estimate__row">Bartender (' + btCount + '): <span class="quote-estimate__num">+' + formatMNT(btPrice) + '</span></p>';
         } else if (type === 'flat' && cb.dataset.price) {
           var flatPrice = parseInt(cb.dataset.price, 10);
           flatAddonsSum += flatPrice;
