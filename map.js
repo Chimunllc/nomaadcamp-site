@@ -1,13 +1,68 @@
 // NOMAAD Camp — Mapbox map with satellite view + driving directions overlay.
 // Shows the actual paved route from Ulaanbaatar plus the dirt-road final leg
 // imported from the team's Google My Map export.
+//
+// Mapbox GL JS (~700KB) and its CSS are loaded LAZILY — only when the user
+// scrolls near the #nomaad-map container. This keeps initial mobile load fast.
 (function () {
   'use strict';
-  if (typeof mapboxgl === 'undefined') return;
   var container = document.getElementById('nomaad-map');
   if (!container) return;
 
-  mapboxgl.accessToken = 'pk.eyJ1Ijoibm9tYWFkY2FtcCIsImEiOiJjbW9weGk4M2ExZGN5MnBxeXhhazg4ZW9rIn0.eiNhSnD2NiSTQQiUuz5kAg';
+  var TOKEN  = 'pk.eyJ1Ijoibm9tYWFkY2FtcCIsImEiOiJjbW9weGk4M2ExZGN5MnBxeXhhazg4ZW9rIn0.eiNhSnD2NiSTQQiUuz5kAg';
+  var MAP_VERSION = '3.7.0';
+  var loaded = false;
+
+  function loadStylesheet(href) {
+    return new Promise(function (resolve, reject) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.onload = resolve;
+      link.onerror = reject;
+      document.head.appendChild(link);
+    });
+  }
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureMapboxLoaded() {
+    if (loaded) return Promise.resolve();
+    loaded = true;
+    return Promise.all([
+      loadStylesheet('https://api.mapbox.com/mapbox-gl-js/v' + MAP_VERSION + '/mapbox-gl.css'),
+      loadScript('https://api.mapbox.com/mapbox-gl-js/v' + MAP_VERSION + '/mapbox-gl.js')
+    ]);
+  }
+
+  function startWhenVisible() {
+    if (!('IntersectionObserver' in window)) {
+      ensureMapboxLoaded().then(initMap);
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          io.disconnect();
+          ensureMapboxLoaded().then(initMap);
+        }
+      });
+    }, { rootMargin: '300px' });
+    io.observe(container);
+  }
+
+  function initMap() {
+    if (typeof mapboxgl === 'undefined') return;
+    mapboxgl.accessToken = TOKEN;
 
   var CAMPS = [
     { id: 'a', name: 'NOMAAD Summit', size: '100–1000 хүн', coords: [107.659422, 47.727926], color: '#B14F1F' },
@@ -142,4 +197,7 @@
     var navGroup = container.querySelector('.mapboxgl-ctrl-top-right .mapboxgl-ctrl');
     if (navGroup) navGroup.appendChild(fitBtn);
   });
+  } // end initMap
+
+  startWhenVisible();
 })();

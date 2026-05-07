@@ -4,9 +4,32 @@
 //   Friday   →  Fri 09:00 → Sat 11:00 (кэмп · 1 шөнө)
 //   Saturday →  Sat 12:00 → Sun 15:00 (кэмп · 1 шөнө)
 //   Sunday   →  Sat 12:00 → Sun 15:00 (Sat slot-той хослоно)
+//
+// flatpickr (~30KB JS + ~5KB CSS) is loaded LAZILY on first focus of either
+// date input. This keeps initial mobile load fast for users who never open
+// the quote modal.
 (function () {
   'use strict';
-  if (typeof flatpickr === 'undefined') return;
+
+  var FP_VERSION = '4.6.13';
+  var fpLoading = null;
+  function loadFlatpickr() {
+    if (typeof flatpickr !== 'undefined') return Promise.resolve();
+    if (fpLoading) return fpLoading;
+    fpLoading = new Promise(function (resolve, reject) {
+      var css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'https://cdn.jsdelivr.net/npm/flatpickr@' + FP_VERSION + '/dist/flatpickr.min.css';
+      document.head.appendChild(css);
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/flatpickr@' + FP_VERSION + '/dist/flatpickr.min.js';
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return fpLoading;
+  }
 
   var mnLocale = {
     weekdays: {
@@ -91,24 +114,40 @@
     disableMobile: false
   };
 
-  flatpickr(startDateInput, Object.assign({}, commonOptions, {
-    onChange: function (sel) {
-      if (!sel || !sel[0]) return;
-      applySlot(sel[0]);
+  function initPickers() {
+    if (typeof flatpickr === 'undefined') return;
+    if (startDateInput._flatpickr || endDateInput._flatpickr) return;
+    flatpickr(startDateInput, Object.assign({}, commonOptions, {
+      onChange: function (sel) { if (sel && sel[0]) applySlot(sel[0]); }
+    }));
+    flatpickr(endDateInput, Object.assign({}, commonOptions, {
+      onChange: function (sel) {
+        if (!sel || !sel[0]) return;
+        var d = sel[0];
+        var slot = slotFor(d);
+        var endStr = isoDate(d) + 'T' + pad(slot.endHour) + ':00';
+        if (endHidden) endHidden.value = endStr;
+        if (endTimeEl) endTimeEl.textContent = pad(slot.endHour) + ':00';
+      }
+    }));
+    // Auto-open the picker the user just focused so the very first focus
+    // doesn't feel "broken" while the script is downloading.
+    if (document.activeElement === startDateInput && startDateInput._flatpickr) {
+      startDateInput._flatpickr.open();
+    } else if (document.activeElement === endDateInput && endDateInput._flatpickr) {
+      endDateInput._flatpickr.open();
     }
-  }));
+  }
 
-  flatpickr(endDateInput, Object.assign({}, commonOptions, {
-    onChange: function (sel) {
-      if (!sel || !sel[0]) return;
-      // Manually picking the end date overrides only its display + the hidden value;
-      // the time follows day-of-week of THAT date but as a check-out.
-      var d = sel[0];
-      var slot = slotFor(d);
-      // Use the slot's endHour for this date; keep the start untouched.
-      var endStr = isoDate(d) + 'T' + pad(slot.endHour) + ':00';
-      if (endHidden) endHidden.value = endStr;
-      if (endTimeEl) endTimeEl.textContent = pad(slot.endHour) + ':00';
-    }
-  }));
+  function lazyAttach(input) {
+    var trigger = function () {
+      input.removeEventListener('focus', trigger);
+      input.removeEventListener('click', trigger);
+      loadFlatpickr().then(initPickers);
+    };
+    input.addEventListener('focus', trigger);
+    input.addEventListener('click', trigger);
+  }
+  lazyAttach(startDateInput);
+  lazyAttach(endDateInput);
 })();
