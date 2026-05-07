@@ -2059,6 +2059,9 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
     height: auto !important;
     aspect-ratio: 16 / 10 !important;
     width: 100% !important;
+    min-height: 120px !important;
+    background: #EAE3D5 !important;
+    display: block !important;
   }
   .camp-card:active {
     transform: scale(0.99) !important;
@@ -2409,7 +2412,10 @@ body.modal-open { overflow: hidden; }
 .camp-card img {
   width: 100%;
   height: 170px;
+  min-height: 120px;
+  background: #EAE3D5;
   object-fit: cover;
+  display: block;
   transition: transform 0.35s var(--ease);
 }
 .camp-card::after { display: none; }
