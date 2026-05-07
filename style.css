@@ -5321,15 +5321,71 @@ body.home-page video {
   margin-top: 0.5rem !important;
 }
 
-/* 12. MOBILE: increase tap-target on hero stat chips */
+/* 12. MOBILE HERO — clean, less glass, no awkward separators */
 @media (max-width: 760px) {
-  .hero-meta > span:not([aria-hidden]) {
-    padding: 0.4rem 0.7rem !important;
-    font-size: 0.72rem !important;
-  }
   .hero--corporate .eyebrow {
-    font-size: 0.66rem !important;
-    padding: 0.35rem 0.85rem !important;
+    font-size: 0.6rem !important;
+    padding: 0.3rem 0.75rem !important;
+    letter-spacing: 0.12em !important;
+    line-height: 1.4 !important;
+  }
+  .hero-meta {
+    gap: 0.4rem !important;
+    margin-top: 1rem !important;
+  }
+  .hero-meta > span:not([aria-hidden]) {
+    padding: 0.35rem 0.65rem !important;
+    font-size: 0.68rem !important;
+    background: rgba(11, 13, 11, 0.6) !important;
+  }
+  /* Hide ugly "·" separators between chips on mobile */
+  .hero-meta > span[aria-hidden="true"] { display: none !important; }
+  /* Solid (no glass) ghost button on mobile so it's readable over video */
+  .hero--corporate .btn--ghost-light {
+    background: rgba(11, 13, 11, 0.55) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(245, 245, 240, 0.35) !important;
+    color: #F2F1EC !important;
+  }
+  .hero-actions {
+    gap: 0.5rem !important;
+  }
+  .hero-sub {
+    line-height: 1.55 !important;
+  }
+}
+
+/* 16. PREMIUM CARD — force ALL bottom content visible on mobile */
+@media (max-width: 760px) {
+  .camp-detail .pkg-card > * {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .camp-detail .pkg-card .pkg-header { display: flex !important; }
+  .camp-detail .pkg-card .pkg-features { display: grid !important; }
+  .camp-detail .pkg-card .pkg-features--secondary { display: flex !important; flex-direction: column !important; }
+  .camp-detail .pkg-card .pkg-cta {
+    display: flex !important;
+    margin-top: 1rem !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 1rem !important;
+    font-size: 1.02rem !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 6px 18px rgba(177, 79, 31, 0.3) !important;
+  }
+  /* Visual cue that there's more content below (small chevron at bottom of card) */
+  .camp-detail .pkg-card .pkg-features__sub-title {
+    background: rgba(74, 89, 70, 0.06);
+    margin: 0.6rem -0.95rem 0.4rem !important;
+    padding: 0.5rem 0.95rem !important;
+    border-left: 3px solid var(--accent);
   }
 }
 
