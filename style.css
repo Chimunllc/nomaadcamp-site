@@ -5161,3 +5161,199 @@ body.home-page video {
   color: rgba(31, 42, 35, 0.34);
   line-height: 1.5;
 }
+
+/* ════════════════════════════════════════════════════════════════
+   DESIGN POLISH PASS — May 2026
+   Comprehensive refinements: hero contrast, skeleton, chips,
+   logo treatment, premium card pop, CTA hover, vertical rhythm.
+   ════════════════════════════════════════════════════════════════ */
+
+/* 1. HERO STAT ROW — pill chips for readability over busy video bg */
+.hero-meta {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.5rem !important;
+  margin-top: 1.25rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+.hero-meta > span:not([aria-hidden]) {
+  background: rgba(11, 13, 11, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #F2F1EC;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 245, 240, 0.14);
+  font-weight: 500;
+}
+.hero-meta > span[aria-hidden] { display: none; }
+
+/* 2. HERO EYEBROW — pill badge style */
+.hero--corporate .eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(200, 168, 120, 0.18);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #E0C79A !important;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 168, 120, 0.35);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+}
+.hero--corporate .eyebrow .eyebrow-dot {
+  background: #C8A878;
+  box-shadow: 0 0 0 4px rgba(200, 168, 120, 0.22);
+}
+
+/* 3. CAMP CARD SKELETON SHIMMER — image area before load */
+.camp-card img.defer-img:not([src*="camps/"]),
+.camp-card img[src*="data:image/svg"] {
+  background: linear-gradient(
+    100deg,
+    #EAE3D5 30%,
+    #F5F1E8 50%,
+    #EAE3D5 70%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: nomaad-shimmer 1.6s linear infinite !important;
+}
+@keyframes nomaad-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* 4. ADDON CHIP GRID — desktop styling missing previously */
+.midweek-addon-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+.midweek-addon-grid > span {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(74, 89, 70, 0.08);
+  border: 1px solid rgba(74, 89, 70, 0.18);
+  color: #2F3E2F;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+.pkg-choice-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6A6C65;
+  margin-bottom: 0.25rem;
+}
+
+/* 5. PARTNER LOGOS — uniform grayscale w/ hover */
+.trust-grid .trust-item img,
+.trust-grid img {
+  filter: grayscale(100%);
+  opacity: 0.72;
+  transition: filter 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.trust-grid .trust-item:hover img,
+.trust-grid img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* 6. PREMIUM CAMP CARD — stand out with stronger border + shadow + badge */
+.pkg-card:nth-child(3):not(.pkg-card--featured),
+.pkg-card[class*="--premium"] {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px rgba(177, 79, 31, 0.12), 0 18px 40px rgba(31, 42, 35, 0.14) !important;
+}
+
+/* 7. PRICE /хүн — bolder secondary text */
+.pkg-per {
+  font-weight: 600 !important;
+  color: rgba(31, 42, 35, 0.7) !important;
+  font-size: 0.86em !important;
+}
+
+/* 8. CTA BUTTON HOVER — lift + shadow */
+.btn--accent {
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s var(--ease);
+}
+.btn--accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(177, 79, 31, 0.32);
+  filter: brightness(1.04);
+}
+.btn--accent:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(177, 79, 31, 0.22);
+}
+
+/* 9. PKG-CARD HOVER — gentle lift */
+.pkg-card {
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease) !important;
+}
+.pkg-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(31, 42, 35, 0.14) !important;
+}
+
+/* 10. SECTION VERTICAL RHYTHM — unify spacing */
+@media (min-width: 761px) {
+  .section { padding: 5rem 0 !important; }
+  .section--cta-final { padding: 4.5rem 0 !important; }
+}
+
+/* 11. WHY NOMAAD numbers — bigger, more confident */
+.wn-cap-num {
+  font-size: 0.82rem !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 600 !important;
+}
+#why-nomaad .wn-cap-item h3 {
+  font-size: 1.08rem !important;
+  margin-top: 0.5rem !important;
+}
+
+/* 12. MOBILE: increase tap-target on hero stat chips */
+@media (max-width: 760px) {
+  .hero-meta > span:not([aria-hidden]) {
+    padding: 0.4rem 0.7rem !important;
+    font-size: 0.72rem !important;
+  }
+  .hero--corporate .eyebrow {
+    font-size: 0.66rem !important;
+    padding: 0.35rem 0.85rem !important;
+  }
+}
+
+/* 13. PRICING — make 280,000+ price look "premium" */
+.pkg-card .pkg-price {
+  font-feature-settings: 'tnum';
+}
+
+/* 14. Image-loading fade-in (when src actually loads) */
+.camp-card img.is-loaded,
+.camp-card img:not([src^="data:"]) {
+  animation: nomaad-fadein 0.4s ease-out;
+}
+@keyframes nomaad-fadein {
+  from { opacity: 0.4; }
+  to   { opacity: 1; }
+}
+
+/* 15. Subtle bottom border on nav for depth on light scroll */
+.nav {
+  border-bottom: 1px solid rgba(31, 42, 35, 0.06);
+}
+.nav.is-scrolled {
+  background: rgba(245, 241, 232, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
