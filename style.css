@@ -3200,6 +3200,12 @@ body.modal-open { overflow: hidden; }
   color: rgba(26, 26, 26, 0.52);
   font-weight: 400;
 }
+.quote-form__optional {
+  color: rgba(26, 26, 26, 0.42);
+  font-weight: 400;
+  font-size: 0.78em;
+  margin-left: 0.25rem;
+}
 
 /* ── QUOTE CONTEXT HINT ───────────────────────────────────── */
 .quote-context-hint {
