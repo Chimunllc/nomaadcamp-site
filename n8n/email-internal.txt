@@ -1,0 +1,27 @@
+NOMAAD Camp · Internal notification
+====================================
+
+This is the plain-text body for the n8n Gmail node "To internal team"
+(Г.Мөнх-Учрал + Б.Дэлгэрбат + Н.Анужин).
+
+Subject:  🆕 Шинэ үнийн санал {{quote_number}} · {{company}} · {{grand_total_fmt}}₮
+
+Body (uses {{internal_summary}} from the Code node):
+
+────────────────────────────────────────
+{{internal_summary}}
+
+📎 PDF: {{pdf_filename}}
+🔗 Sheets row: {{sheets_row_url}}
+
+— Захиалагчид PDF автоматаар илгээгдсэн.
+  Холбоо барих хариу 24 цагийн дотор очиж бай.
+────────────────────────────────────────
+
+Recipients (BCC each so replies don't fan out):
+  - gmunkhuchral@gmail.com  (CEO)
+  - <delgerbat email>       (Менежер)
+  - <anuzhin email>         (Менежер)
+
+Reply-To header: {{customer_email}}
+  → so anyone clicks "Reply" replies straight to the customer.

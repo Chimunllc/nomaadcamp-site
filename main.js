@@ -896,12 +896,126 @@
       ]
     };
 
+    // Per-person and flat values used for the "Үнэ цэнийн харьцуулалт"
+    // (value anchor) block in the generated PDF quote. Mirrors the prices
+    // shown in the optional add-on grid above.
+    var ADDON_STANDALONE_PRICE = {
+      welcome_drink:    { type: 'pp',   value: 5000    },
+      sleeping_bag:     { type: 'pp',   value: 15000   },
+      coffee_corner:    { type: 'pp',   value: 6000    },
+      lunch_upgrade:    { type: 'pp',   value: 12000   },
+      dinner_upgrade:   { type: 'pp',   value: 12000   },
+      amenity_kit:      { type: 'pp',   value: 5000    },
+      late_snacks:      { type: 'pp',   value: 8000    },
+      moonbeam_lounge:  { type: 'flat', value: 500000  },
+      dj_service:       { type: 'flat', value: 1000000 },
+      photo_4h:         { type: 'flat', value: 500000  },
+      led_screen_18m2:  { type: 'flat', value: 1728000 }
+    };
+
+    // Mongolian display labels for each tier inclusion (shown in PDF "✓ ..."
+    // bullets under the package line). Keep wording identical to site copy.
+    var INCLUSION_LABEL = {
+      welcome_drink:     'Welcome drink',
+      sleeping_bag:      'Sleeping bag',
+      coffee_corner:     'Кофе/цайны цэг',
+      lunch_upgrade:     'Өдрийн буфет (сайжруулсан)',
+      dinner_upgrade:    'Оройн буфет (сайжруулсан)',
+      moonbeam_lounge:   'Moonbeam Lounge',
+      bartender_service: 'Bartender үйлчилгээ (3 цаг)',
+      amenity_kit:       'Зочдын ариун цэврийн багц',
+      dj_service:        'DJ үйлчилгээ',
+      photo_4h:          'Гэрэл зургийн үйлчилгээ',
+      led_screen_18m2:   'LED дэлгэц 18м²',
+      late_snacks:       'Оройн зууш'
+    };
+
+    var TIER_BASE_PRICE = {
+      'Үндсэн':       180000,
+      'Стандарт':     220000,
+      'Премиум':      280000,
+      'Хагас өдрийн': 100000,
+      'Бүтэн өдрийн': 150000
+    };
+
+    function getTierBasePrice(tier) {
+      return TIER_BASE_PRICE[tier] || 0;
+    }
+
     function getTierInclusions(campName, tier) {
       var included = TIER_INCLUSIONS[tier] ? TIER_INCLUSIONS[tier].slice() : [];
       if (tier === 'Премиум' && campName === 'NOMAAD Grove') {
         included = included.filter(function (item) { return item !== 'led_screen_18m2'; });
       }
       return included;
+    }
+
+    // Returns the value-anchor breakdown used in the PDF's
+    // "★ ҮНЭ ЦЭНИЙН ХАРЬЦУУЛАЛТ" block. Each item carries its
+    // standalone price so the customer sees what they would pay if
+    // they bought every included service separately.
+    function buildValueAnchor(campName, tier, guests) {
+      var basePerPerson = getTierBasePrice(tier);
+      // Underlying base for tier comparison: Стандарт + Премиум both anchor
+      // off the Үндсэн price (180,000) since "what you save vs base + items".
+      var anchorBase = (tier === 'Үндсэн') ? basePerPerson : 180000;
+      var lines = [
+        { label: 'Үндсэн багц (' + anchorBase.toLocaleString('en-US') + '₮ × ' + guests + ')',
+          amount: anchorBase * guests }
+      ];
+
+      var inclusions = getTierInclusions(campName, tier);
+      var sumStandalone = anchorBase * guests;
+
+      inclusions.forEach(function (code) {
+        if (code === 'bartender_service') {
+          var btCount = Math.ceil(guests / 75) || 1;
+          var btTotal = btCount * 500000;
+          lines.push({ label: '+ Bartender (' + btCount + ' × 500,000)', amount: btTotal });
+          sumStandalone += btTotal;
+          return;
+        }
+        var spec = ADDON_STANDALONE_PRICE[code];
+        if (!spec) return;
+        var label = INCLUSION_LABEL[code] || code;
+        if (spec.type === 'pp') {
+          var ppTotal = spec.value * guests;
+          lines.push({ label: '+ ' + label + ' (' + spec.value.toLocaleString('en-US') + ' × ' + guests + ')',
+                       amount: ppTotal });
+          sumStandalone += ppTotal;
+        } else {
+          lines.push({ label: '+ ' + label, amount: spec.value });
+          sumStandalone += spec.value;
+        }
+      });
+
+      var packagePrice = basePerPerson * guests;
+      var savings      = sumStandalone - packagePrice;
+      var savingsPct   = sumStandalone > 0 ? (savings / sumStandalone * 100) : 0;
+
+      return {
+        lines:           lines,
+        standalone_total: sumStandalone,
+        package_total:    packagePrice,
+        savings:          savings,
+        savings_pct:      Number(savingsPct.toFixed(1))
+      };
+    }
+
+    // Returns "1 шөнө" / "2 шөнө" / "8 цаг" / "11 цаг" depending on the
+    // booking window length (used for the PDF "Хугацаа" row).
+    function getDurationLabel(startStr, endStr) {
+      try {
+        var s = new Date(startStr);
+        var e = new Date(endStr);
+        if (isNaN(s.getTime()) || isNaN(e.getTime())) return '';
+        var ms = e - s;
+        if (ms <= 0) return '';
+        var hours = ms / (1000 * 60 * 60);
+        var nights = Math.round(hours / 24);
+        if (nights >= 1 && hours >= 22) return nights + ' шөнө';
+        return Math.round(hours) + ' цаг';
+      } catch (_) { return ''; }
     }
 
 
@@ -1575,16 +1689,17 @@
 
       if ((fd.get('website') || '').trim()) return;
 
-      var camp     = (fd.get('camp_name')      || '').trim();
-      var tier     = (fd.get('package_tier')   || '').trim();
-      var org      = (fd.get('organization')   || '').trim();
-      var contact  = (fd.get('contact_name')   || '').trim();
-      var phone    = (fd.get('phone')          || '').trim();
-      var email    = (fd.get('email')          || '').trim();
-      var startDt  = (fd.get('start_datetime') || '').trim();
-      var endDt    = (fd.get('end_datetime')   || '').trim();
-      var guests   = (fd.get('guest_count')    || '').trim();
-      var location = (fd.get('location')       || '').trim();
+      var camp     = (fd.get('camp_name')        || '').trim();
+      var tier     = (fd.get('package_tier')     || '').trim();
+      var org      = (fd.get('organization')     || '').trim();
+      var taxId    = (fd.get('customer_tax_id')  || '').trim();
+      var contact  = (fd.get('contact_name')     || '').trim();
+      var phone    = (fd.get('phone')            || '').trim();
+      var email    = (fd.get('email')            || '').trim();
+      var startDt  = (fd.get('start_datetime')   || '').trim();
+      var endDt    = (fd.get('end_datetime')     || '').trim();
+      var guests   = (fd.get('guest_count')      || '').trim();
+      var location = (fd.get('location')         || '').trim();
       var isMobile = camp === 'Нүүдлийн кемп';
 
       var hasError = false;
@@ -1689,28 +1804,92 @@
         if (!a.tier_included && a.price) addonEstimatedTotal += a.price;
       });
 
+      // ── PRE-CALCULATE EVERYTHING THE PDF NEEDS ────────────────
+      // The n8n workflow renders an HTML template populated from these
+      // fields. Doing the math here keeps the workflow simple and ensures
+      // the customer sees the same numbers as the on-page estimate.
+      var tierBasePrice = getTierBasePrice(tier);
+      var tierSubtotal  = tierBasePrice * guestsInt;
+
+      var shuttleLabel  = (fd.get('shuttle_service') || '').trim();
+      var shuttleUnit   = SHUTTLE_PRICE[shuttleLabel] || 0;
+      var busCount      = fd.get('bus_count') ? (parseInt(fd.get('bus_count'), 10) || 1) : 1;
+      // The site stores "Сонгохгүй" as the no-shuttle value; bus_count only
+      // counts when an actual shuttle option is picked.
+      var shuttleSubtotal = (shuttleUnit > 0) ? shuttleUnit * busCount : 0;
+
+      var grandTotal  = tierSubtotal + addonEstimatedTotal + shuttleSubtotal;
+      // Mongolian VAT (НӨАТ) is 10% included — extracted as total / 11.
+      var vatIncluded = Math.round(grandTotal / 11);
+      var deposit30   = Math.round(grandTotal * 0.30);
+      var balance70   = grandTotal - deposit30;
+
+      // Inclusion label list rendered as the Стандарт/Премиум checklist.
+      var includedCodes  = getTierInclusions(camp, tier);
+      var includedLabels = includedCodes.map(function (c) {
+        return INCLUSION_LABEL[c] || c;
+      });
+
+      // Value-anchor breakdown (only meaningful for Стандарт/Премиум).
+      var valueAnchor = (tier === 'Стандарт' || tier === 'Премиум')
+        ? buildValueAnchor(camp, tier, guestsInt)
+        : null;
+
+      var durationLabel = getDurationLabel(startDt, endDt);
+
       var payload = {
-        camp:                  camp,
-        tier:                  tier,
-        visual_feature:        (fd.get('visual_feature')  || '').trim(),
-        shuttle_service:       (fd.get('shuttle_service') || '').trim(),
-        bus_count:             (fd.get('bus_count') ? parseInt(fd.get('bus_count'), 10) : 1),
-        location:              isMobile ? location : '',
-        notes:                 (fd.get('extra_info')      || '').trim(),
+        // ── Customer ──────────────────────────────────────
         company:               org,
+        customer_tax_id:       taxId,
         contact_name:          contact,
         phone:                 phone,
         email:                 email,
+
+        // ── Event ─────────────────────────────────────────
+        camp:                  camp,
+        camp_name:             camp,
+        tier:                  tier,
+        package_tier:          tier,
+        visual_feature:        (fd.get('visual_feature')  || '').trim(),
+        location:              isMobile ? location : '',
         start_datetime:        startDt,
         end_datetime:          endDt,
         event_date:            startDt,
+        duration_label:        durationLabel,
         guest_count:           guests,
-        camp_name:             camp,
-        package_tier:          tier,
-        shuttle_service_label: (fd.get('shuttle_service') || '').trim(),
+
+        // ── Tier base ─────────────────────────────────────
+        tier_base_price:       tierBasePrice,
+        tier_subtotal:         tierSubtotal,
+        tier_inclusions_json:  JSON.stringify(includedLabels),
+
+        // ── Add-ons ───────────────────────────────────────
         addons_json:           JSON.stringify(selectedAddons),
         addon_count:           selectedAddons.length,
+        addons_subtotal:       addonEstimatedTotal,
         estimated_addon_total: addonEstimatedTotal,
+
+        // ── Transport ─────────────────────────────────────
+        shuttle_service:       shuttleLabel,
+        shuttle_service_label: shuttleLabel,
+        shuttle_unit_price:    shuttleUnit,
+        bus_count:             busCount,
+        shuttle_subtotal:      shuttleSubtotal,
+
+        // ── Totals ────────────────────────────────────────
+        grand_total:           grandTotal,
+        vat_included:          vatIncluded,
+        deposit_30:            deposit30,
+        balance_70:            balance70,
+
+        // ── Value anchor ──────────────────────────────────
+        value_anchor_json:     valueAnchor ? JSON.stringify(valueAnchor) : '',
+        standalone_equivalent: valueAnchor ? valueAnchor.standalone_total : 0,
+        package_savings:       valueAnchor ? valueAnchor.savings        : 0,
+        package_savings_pct:   valueAnchor ? valueAnchor.savings_pct    : 0,
+
+        // ── Misc ──────────────────────────────────────────
+        notes:                 (fd.get('extra_info')      || '').trim(),
         source:                'nomaadcamp.com'
       };
 

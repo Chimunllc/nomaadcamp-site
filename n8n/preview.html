@@ -1,0 +1,120 @@
+<!--
+  NOMAAD Camp · Quote PDF — local preview
+  ----------------------------------------
+  Open this file in a browser to see the PDF template populated with
+  sample data. Useful for tweaking design before pushing to n8n.
+
+  This file fetches `quote-template.html` and replaces variables with
+  the example payload from the bottom of this script. Edit the payload
+  to test different scenarios (Үндсэн / Стандарт / Премиум, different
+  guest counts, etc.).
+
+  To export a PDF:
+    1. Open this file in Chrome.
+    2. ⌘P → Save as PDF → "More settings" → Margins: None → Save.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NOMAAD Quote — Preview</title>
+<style>
+  body { margin: 0; font-family: sans-serif; background: #E8E2D2; }
+  .preview-bar {
+    position: sticky; top: 0; z-index: 99;
+    background: #1F2A23; color: #C8A878;
+    padding: 8px 16px; font-size: 12px; letter-spacing: 1px;
+  }
+  .preview-bar code { color: #FFFFFF; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 2px; }
+  .preview-frame {
+    margin: 20px auto;
+    width: 210mm;
+    min-height: 297mm;
+    background: #FFFFFF;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  }
+</style>
+</head>
+<body>
+<div class="preview-bar">
+  Preview · Edit <code>SAMPLE_PAYLOAD</code> in <code>preview.html</code> to test other scenarios
+</div>
+<iframe id="frame" class="preview-frame" frameborder="0" style="width: 210mm; height: 297mm;"></iframe>
+
+<script>
+// Edit this payload to test different scenarios.
+const SAMPLE_PAYLOAD = {
+  quote_number:       'NC-2026-0142',
+  issue_date:         '2026.05.08',
+  valid_until:        '2026.05.22',
+  company:            'Таван богд финанс ХХК',
+  customer_tax_id:    '5012345',
+  contact_name:       'Н. Тамир',
+  phone:              '+976 9500-1061',
+  email:              'tamir.n@tavanbogd.com',
+  camp:               'NOMAAD Meadow',
+  tier:               'Стандарт',
+  guests:             '200',
+  start_display:      '2026.06.12 · 09:00',
+  end_display:        '2026.06.13 · 11:00',
+  duration_label:     '1 шөнө',
+  tier_base_price_fmt: '220,000',
+  tier_subtotal_fmt:  '44,000,000',
+  addons_subtotal_fmt: '4,828,000',
+  shuttle_subtotal_fmt: '6,000,000',
+  vat_included_fmt:   '4,984,364',
+  grand_total_fmt:    '54,828,000',
+  deposit_30_fmt:     '16,448,400',
+  balance_70_fmt:     '38,379,600',
+  inclusions_html:
+    '<span class="check">✓</span> Майхан кемп · Өглөөний цай · Өдөр болон оройн хоол<br>' +
+    '<span class="check">✓</span> Тайз, хөгжмийн үндсэн тохижилт · Үндсэн гэрэлтүүлэг<br>' +
+    '<span class="check">✓</span> Welcome drink (Iced Tea) · Sleeping bag · Кофе/цайны цэг<br>' +
+    '<span class="check">✓</span> Өдрийн буфет (сайжруулсан) · Оройн буфет (сайжруулсан)<br>' +
+    '<span class="check">✓</span> Moonbeam Lounge · Bartender үйлчилгээ (3 цаг)',
+  addon_section_html: `
+    <tr class="section"><td colspan="4">НЭМЭЛТ ҮЙЛЧИЛГЭЭ</td></tr>
+    <tr class="line"><td><div class="name">Зочдын ариун цэврийн багц</div><div class="desc">Сойз, ОО, саван, шампунь</div></td><td class="qty">200</td><td class="unit">5,000</td><td class="amt">1,000,000</td></tr>
+    <tr class="line"><td><div class="name">Оройн зууш</div><div class="desc">22:00–24:00</div></td><td class="qty">200</td><td class="unit">8,000</td><td class="amt">1,600,000</td></tr>
+    <tr class="line"><td><div class="name">DJ үйлчилгээ</div><div class="desc">20:00–24:00 · 4 цаг</div></td><td class="qty">1</td><td class="unit">1,000,000</td><td class="amt">1,000,000</td></tr>
+    <tr class="line"><td><div class="name">LED дэлгэц 18м²</div><div class="desc">6м × 3м тайзны дэвсгэр</div></td><td class="qty">1</td><td class="unit">1,728,000</td><td class="amt">1,728,000</td></tr>
+    <tr class="line"><td><div class="name">Гэрэл зургийн үйлчилгээ</div><div class="desc">4 цаг</div></td><td class="qty">1</td><td class="unit">500,000</td><td class="amt">500,000</td></tr>`,
+  shuttle_section_html: `
+    <tr class="section"><td colspan="4">ТЭЭВРИЙН ҮЙЛЧИЛГЭЭ</td></tr>
+    <tr class="line"><td><div class="name">Хоног / 2 талдаа</div><div class="desc">45 хүний автобус · УБ ↔ NOMAAD кемп</div></td><td class="qty">5</td><td class="unit">1,200,000</td><td class="amt">6,000,000</td></tr>`,
+  value_anchor_html: `
+    <div class="anchor">
+      <div class="anchor__head">
+        <div class="anchor__title">★ ҮНЭ ЦЭНИЙН ХАРЬЦУУЛАЛТ</div>
+        <div class="anchor__sub">Стандарт багцын давуу тал</div>
+      </div>
+      <table>
+        <tr><td class="lbl">Үндсэн багц (180,000₮ × 200)</td><td class="v">36,000,000</td></tr>
+        <tr><td class="lbl">+ Welcome drink (5,000 × 200)</td><td class="v">1,000,000</td></tr>
+        <tr><td class="lbl">+ Sleeping bag (15,000 × 200)</td><td class="v">3,000,000</td></tr>
+        <tr><td class="lbl">+ Кофе/цайны цэг (6,000 × 200)</td><td class="v">1,200,000</td></tr>
+        <tr><td class="lbl">+ Өдрийн буфет (сайжруулсан) (12,000 × 200)</td><td class="v">2,400,000</td></tr>
+        <tr><td class="lbl">+ Оройн буфет (сайжруулсан) (12,000 × 200)</td><td class="v">2,400,000</td></tr>
+        <tr><td class="lbl">+ Moonbeam Lounge</td><td class="v">500,000</td></tr>
+        <tr><td class="lbl">+ Bartender (3 × 500,000)</td><td class="v">1,500,000</td></tr>
+        <tr class="standalone"><td class="lbl">Тус тусдаа авбал нийт</td><td class="v">48,000,000 ₮</td></tr>
+        <tr class="package"><td class="lbl">Стандарт багцаар авбал</td><td class="v">44,000,000 ₮</td></tr>
+        <tr class="savings"><td class="lbl">★ Хэмнэлт</td><td class="v">−4,000,000 ₮ · 8.3%</td></tr>
+      </table>
+    </div>`,
+  addons_summary_clause:  ', 5 нэмэлт үйлчилгээ',
+  shuttle_summary_clause: ' болон 5 автобусны тээврийн үйлчилгээтэй'
+};
+
+(async () => {
+  const html = await fetch('quote-template.html').then(r => r.text());
+  let out = html;
+  Object.keys(SAMPLE_PAYLOAD).forEach(k => {
+    out = out.split('{{' + k + '}}').join(SAMPLE_PAYLOAD[k]);
+  });
+  const frame = document.getElementById('frame');
+  frame.srcdoc = out;
+})();
+</script>
+</body>
+</html>
