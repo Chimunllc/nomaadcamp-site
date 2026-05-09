@@ -1,4 +1,4 @@
-// NOMAAD Camp — date pickers with locked check-in/check-out times.
+// NOMAAD Camp, date pickers with locked check-in/check-out times.
 // User picks only the date; the time is auto-set based on day of week:
 //   Mon–Thu  →  10:00 → 18:00 (өдрийн хөтөлбөр)
 //   Friday   →  Fri 09:00 → Sat 11:00 (кэмп · 1 шөнө)
@@ -67,7 +67,7 @@
     if (dow === 5) {
       return { startHour: 9,  endHour: 11, endDayOffset: 1, label: 'Кэмп · 1 шөнө' };
     }
-    // dow === 6 (Saturday) or dow === 0 (Sunday) — fold Sunday into Saturday slot.
+    // dow === 6 (Saturday) or dow === 0 (Sunday), fold Sunday into Saturday slot.
     var startDate = (dow === 0) ? addDays(date, -1) : date;
     return { startHour: 12, endHour: 15, endDayOffset: 1, label: 'Кэмп · 1 шөнө', startDate: startDate };
   }

@@ -14,7 +14,7 @@ Body (uses {{internal_summary}} from the Code node):
 📎 PDF: {{pdf_filename}}
 🔗 Sheets row: {{sheets_row_url}}
 
-— Захиалагчид PDF автоматаар илгээгдсэн.
+ Захиалагчид PDF автоматаар илгээгдсэн.
   Холбоо барих хариу 24 цагийн дотор очиж бай.
 ────────────────────────────────────────
 

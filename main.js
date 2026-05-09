@@ -1,4 +1,4 @@
-// NOMAAD Camp — shared site scripts
+// NOMAAD Camp, shared site scripts
 (function () {
   'use strict';
 
@@ -18,7 +18,7 @@
   }
 
   // ── HERO VIDEO: skip on mobile / slow connections ─────────────
-  // Saves significant LCP time on phones — poster image is sufficient.
+  // Saves significant LCP time on phones, poster image is sufficient.
   (function () {
     var video = document.querySelector('.hero-video');
     if (!video) return;
@@ -53,7 +53,7 @@
 
   // ── CAMP DETAIL GALLERIES ────────────────────────────────────
   // Populates the horizontal scroll gallery shown when "Багц үзэх" is clicked.
-  // Reads all images from manifest.camps[key].gallery — supports unlimited images.
+  // Reads all images from manifest.camps[key].gallery, supports unlimited images.
   // Shows placeholder state if gallery is empty.
   function initCampDetailGalleries(camps) {
     if (!camps) return;
@@ -207,7 +207,7 @@
         var dx = t.clientX - touchStartX;
         var dy = t.clientY - touchStartY;
         var dt = Date.now() - touchStartTime;
-        // Horizontal swipe — > 50px зайтай, vertical биш, 600ms-н дотор
+        // Horizontal swipe, > 50px зайтай, vertical биш, 600ms-н дотор
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 600) {
           if (dx > 0) navigateImage(-1);  // swipe right → prev
           else navigateImage(1);           // swipe left → next
@@ -493,7 +493,7 @@
         }, 100);
       }
     };
-    // ESC key — modal-ыг хаах
+    // ESC key, modal-ыг хаах
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && document.body.classList.contains('camp-detail-open')) {
         resetCampState();
@@ -511,7 +511,7 @@
     resetCampState();
   }
 
-  // (Legacy Netlify-form contact handler removed — site now uses the quote modal
+  // (Legacy Netlify-form contact handler removed, site now uses the quote modal
   // below which posts directly to n8n.)
 
   // ── QUOTE MODAL ──────────────────────────────────────────────
@@ -808,7 +808,7 @@
       if (addonsSectionEl && !addonsSectionEl.parentNode && addonsSectionParent) {
         addonsSectionParent.insertBefore(addonsSectionEl, addonsSectionNextSib);
       }
-      // Reset add-on UI — restore any cards moved to the Production included section
+      // Reset add-on UI, restore any cards moved to the Production included section
       restoreAddonCardPositions();
       var includedSection = document.getElementById('quote-addons-included-cards');
       var optionalLabel   = document.getElementById('quote-addons-optional-label');
@@ -836,7 +836,7 @@
       quoteForm.querySelectorAll('.quote-addon-card__quantity').forEach(function (el) { el.hidden = true; });
       quoteForm.querySelectorAll('.quote-addon-card__qty-input').forEach(function (el) { el.disabled = false; });
       quoteForm.querySelectorAll('.quote-addon-card__qty-text').forEach(function (el) { el.hidden = false; });
-      quoteForm.querySelectorAll('.quote-addon-card__qty-total').forEach(function (el) { el.textContent = '—'; });
+      quoteForm.querySelectorAll('.quote-addon-card__qty-total').forEach(function (el) { el.textContent = ''; });
       var bartenderPriceEl = document.querySelector('[data-bartender-price]');
       if (bartenderPriceEl) bartenderPriceEl.textContent = '+500,000₮ (1 Bartender)';
       var djPriceEl = document.querySelector('[data-dj-price]');
@@ -872,12 +872,12 @@
     };
     var SHUTTLE_PRICE = {
       'Сонгохгүй': 0,
-      'Өдрөөр / 2 талдаа — 1,000,000₮': 1000000,
-      'Хоног / 2 талдаа — 1,200,000₮': 1200000
+      'Өдрөөр / 2 талдаа, 1,000,000₮': 1000000,
+      'Хоног / 2 талдаа, 1,200,000₮': 1200000
     };
     var SHUTTLE_LABEL = {
-      'Өдрөөр / 2 талдаа — 1,000,000₮': 'Тээвэр (өдрөөр)',
-      'Хоног / 2 талдаа — 1,200,000₮': 'Тээвэр (хоногоор)'
+      'Өдрөөр / 2 талдаа, 1,000,000₮': 'Тээвэр (өдрөөр)',
+      'Хоног / 2 талдаа, 1,200,000₮': 'Тээвэр (хоногоор)'
     };
 
     var TIER_INCLUSIONS = {
@@ -1133,7 +1133,7 @@
         if (productionList) productionList.hidden = (tier !== 'Премиум');
         if (includedSection) includedSection.hidden = false;
         if (optionalLabel)   optionalLabel.hidden   = false;
-        // Hide original group titles — the new section labels replace them
+        // Hide original group titles, the new section labels replace them
         if (titlePerPerson) titlePerPerson.hidden = true;
         if (titleFlat)      titleFlat.hidden      = true;
         // Hide flat group if all its cards were moved (nothing optional remains there)
@@ -1819,7 +1819,7 @@
       var shuttleSubtotal = (shuttleUnit > 0) ? shuttleUnit * busCount : 0;
 
       var grandTotal  = tierSubtotal + addonEstimatedTotal + shuttleSubtotal;
-      // Mongolian VAT (НӨАТ) is 10% included — extracted as total / 11.
+      // Mongolian VAT (НӨАТ) is 10% included, extracted as total / 11.
       var vatIncluded = Math.round(grandTotal / 11);
       var deposit30   = Math.round(grandTotal * 0.30);
       var balance70   = grandTotal - deposit30;
@@ -1915,7 +1915,7 @@
         });
         submitOk = true;
       } catch (_) {
-        // True network failure (offline, DNS, etc.) — show error.
+        // True network failure (offline, DNS, etc.), show error.
         submitOk = false;
       }
 
@@ -1937,7 +1937,7 @@
     });
   }
 
-  // Package card accordions — wire up aria-controls/id pairs and click handlers
+  // Package card accordions, wire up aria-controls/id pairs and click handlers
   document.querySelectorAll('.pkg-accordion__toggle').forEach(function (btn, idx) {
     var accordion = btn.closest('.pkg-accordion');
     var body = accordion ? accordion.querySelector('.pkg-accordion__body') : null;
@@ -1950,7 +1950,7 @@
     });
   });
 
-  // Camp card buttons — wire up aria-controls to the camp detail sections
+  // Camp card buttons, wire up aria-controls to the camp detail sections
   document.querySelectorAll('.camp-card[data-camp-target]').forEach(function (btn) {
     btn.setAttribute('aria-controls', btn.dataset.campTarget);
   });

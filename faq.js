@@ -1,4 +1,4 @@
-// NOMAAD Camp · FAQ page — sticky tab filter + smooth anchor scroll.
+// NOMAAD Camp · FAQ page, sticky tab filter + smooth anchor scroll.
 // Native <details> already handles open/close, so this script is small.
 (function () {
   'use strict';
@@ -47,7 +47,7 @@
   applyFilter(initial);
 
   // ── Anchor scroll: open the targeted FAQ + scroll into view ───
-  // Supports /faq.html#tent-size — opens the matching <details>.
+  // Supports /faq.html#tent-size, opens the matching <details>.
   function openTargeted() {
     var id = location.hash.replace('#', '');
     if (!id || id.indexOf('cat=') === 0) return;

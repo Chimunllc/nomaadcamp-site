@@ -1,8 +1,8 @@
-// NOMAAD Camp — Mapbox map with satellite view + driving directions overlay.
+// NOMAAD Camp, Mapbox map with satellite view + driving directions overlay.
 // Shows the actual paved route from Ulaanbaatar plus the dirt-road final leg
 // imported from the team's Google My Map export.
 //
-// Mapbox GL JS (~700KB) and its CSS are loaded LAZILY — only when the user
+// Mapbox GL JS (~700KB) and its CSS are loaded LAZILY, only when the user
 // scrolls near the #nomaad-map container. This keeps initial mobile load fast.
 (function () {
   'use strict';
@@ -86,7 +86,7 @@
   map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
   map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
 
-  // Fit bounds button — shows the whole UB → camp picture.
+  // Fit bounds button, shows the whole UB → camp picture.
   var fitBtn = document.createElement('button');
   fitBtn.type = 'button';
   fitBtn.className = 'mapboxgl-ctrl-icon nomaad-fit-btn';

@@ -1,13 +1,13 @@
 // =====================================================================
-// NOMAAD Camp · n8n Code node — Quote PDF Renderer
+// NOMAAD Camp · n8n Code node, Quote PDF Renderer
 // ---------------------------------------------------------------------
 // Drop this entire file into an n8n "Code" node (Run Once for Each Item).
 // It receives the webhook payload from the website and produces:
-//   $json.quote_number      — sequential quote number (NC-YYYY-NNNN)
-//   $json.html              — fully populated HTML string
-//   $json.pdf_filename      — suggested filename
-//   $json.summary_for_email — short text used in customer email body
-//   $json.internal_summary  — text used in internal Slack/Gmail notify
+//   $json.quote_number     , sequential quote number (NC-YYYY-NNNN)
+//   $json.html             , fully populated HTML string
+//   $json.pdf_filename     , suggested filename
+//   $json.summary_for_email, short text used in customer email body
+//   $json.internal_summary , text used in internal Slack/Gmail notify
 //
 // Wire-up sequence in the n8n workflow (see SETUP.md for screenshots):
 //   Webhook  →  Sheets "read counter"  →  THIS Code node
@@ -23,7 +23,7 @@
 
 // ---------- 1. Pull the webhook input. ----------
 // The website posts urlencoded form data; n8n exposes it as $json.
-// Numeric fields arrive as strings — coerce as needed.
+// Numeric fields arrive as strings, coerce as needed.
 const p = $input.item.json;
 
 const num = (v, d = 0) => {
@@ -46,7 +46,7 @@ const deposit30        = num(p.deposit_30);
 const balance70        = num(p.balance_70);
 
 const company          = str(p.company);
-const customerTaxId    = str(p.customer_tax_id) || '—';
+const customerTaxId    = str(p.customer_tax_id) || '';
 const contactName      = str(p.contact_name);
 const phone            = str(p.phone);
 const email            = str(p.email);
@@ -56,7 +56,7 @@ const tier             = str(p.package_tier) || str(p.tier);
 const visualFeature    = str(p.visual_feature);
 const startDt          = str(p.start_datetime);
 const endDt            = str(p.end_datetime);
-const durationLabel    = str(p.duration_label) || '—';
+const durationLabel    = str(p.duration_label) || '';
 
 const shuttleLabel     = str(p.shuttle_service);
 const tierInclusions   = (() => {
@@ -77,8 +77,8 @@ const fmt = n => Number(n).toLocaleString('en-US');
 
 const monthsShort = ['1-р','2-р','3-р','4-р','5-р','6-р','7-р','8-р','9-р','10-р','11-р','12-р'];
 function fmtDateTime(s) {
-  if (!s) return '—';
-  // Input arrives as "2026-06-12T09:00" (no timezone) — parse manually.
+  if (!s) return '';
+  // Input arrives as "2026-06-12T09:00" (no timezone), parse manually.
   const m = s.match(/(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/);
   if (!m) return s;
   const [, y, mo, d, hh, mm] = m;
@@ -97,7 +97,7 @@ function fmtDateOnly(s) {
 // counter is missing during testing.
 let counter = num(p.next_counter, 0);
 if (counter <= 0) {
-  // Fallback during dev/testing — uses minutes-of-year so collisions are rare.
+  // Fallback during dev/testing, uses minutes-of-year so collisions are rare.
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 1);
   counter = Math.floor((now - start) / 60000) % 10000;
@@ -201,9 +201,9 @@ function addonRowsHtml(items) {
 
 function shuttleRowsHtml(label, unit, count, subtotal) {
   if (subtotal <= 0) return '';
-  // The site stores labels like "Хоног / 2 талдаа — 1,200,000₮"; strip the
+  // The site stores labels like "Хоног / 2 талдаа, 1,200,000₮"; strip the
   // price suffix so the PDF stays clean.
-  const cleanLabel = label.replace(/\s—.*$/, '').replace(/\s-.*$/, '');
+  const cleanLabel = label.replace(/\s.*$/, '').replace(/\s-.*$/, '');
   return `
     <tr class="section"><td colspan="4">ТЭЭВРИЙН ҮЙЛЧИЛГЭЭ</td></tr>
     <tr class="line">
@@ -248,7 +248,7 @@ const shuttleClause = shuttleSubtotal > 0
   : '';
 
 // ---------- 9. Build the final HTML. ----------
-// The HTML template lives at the workflow level — paste the contents of
+// The HTML template lives at the workflow level, paste the contents of
 // quote-template.html into a "Set" or "HTML" node above this one, and
 // expose it as $('TemplateNode').first().json.template. Or fall back to
 // the inline copy below (kept in sync with quote-template.html).
@@ -267,7 +267,7 @@ const variables = {
   '{{customer_tax_id}}':      customerTaxId,
   '{{contact_name}}':         contactName,
   '{{phone}}':                phone,
-  '{{email}}':                email || '—',
+  '{{email}}':                email || '',
   '{{camp}}':                 camp,
   '{{tier}}':                 tier,
   '{{guests}}':               String(guests),
@@ -311,8 +311,8 @@ const summaryForEmail =
 
 const internalSummary =
   `🆕 Шинэ үнийн санал ${quoteNumber}\n` +
-  `Компани: ${company}${customerTaxId !== '—' ? ' (РД ' + customerTaxId + ')' : ''}\n` +
-  `Холбоо: ${contactName} · ${phone} · ${email || '—'}\n` +
+  `Компани: ${company}${customerTaxId !== '' ? ' (РД ' + customerTaxId + ')' : ''}\n` +
+  `Холбоо: ${contactName} · ${phone} · ${email || ''}\n` +
   `Кемп: ${camp} · ${tier} · ${guests} хүн · ${durationLabel}\n` +
   `Огноо: ${fmtDateOnly(startDt)} → ${fmtDateOnly(endDt)}\n` +
   `Багц: ${fmt(tierSubtotal)}₮\n` +

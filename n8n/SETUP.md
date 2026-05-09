@@ -1,4 +1,4 @@
-# NOMAAD Camp · n8n Quote Workflow — Setup Guide
+# NOMAAD Camp · n8n Quote Workflow, Setup Guide
 
 End-to-end setup for the website → n8n → PDF → Email pipeline.
 Allow ~45 minutes for the first-time setup.
@@ -46,7 +46,7 @@ customer      internal
 ## Prerequisites
 
 1. **n8n cloud** account (you already have `chimun.app.n8n.cloud`).
-2. **Browserless.io** account — sign up at https://www.browserless.io/.
+2. **Browserless.io** account, sign up at https://www.browserless.io/.
    - Free plan: 1,000 PDFs/month (plenty for a quote pipeline).
    - Note your API token from `https://account.browserless.io/account/api-keys`.
 3. **Google Sheet** named **"NOMAAD Quote Log"** with these columns in row 1:
@@ -78,7 +78,7 @@ customer      internal
 
 ---
 
-## Workflow nodes — step by step
+## Workflow nodes, step by step
 
 ### 1. Webhook (already exists)
 
@@ -86,7 +86,7 @@ customer      internal
 - Method: **POST**
 - Response Mode: "Immediately" (we don't wait for PDF)
 
-### 2. Google Sheets — Read counter
+### 2. Google Sheets, Read counter
 
 - Resource: **Sheet Within Document**
 - Operation: **Read Rows**
@@ -98,7 +98,7 @@ customer      internal
 > Tip: Use a "Set" node right after to extract `next_counter = max(counter) + 1`
 > if reading multiple rows. Or simpler: read just the last row.
 
-### 3. Set node — load HTML template
+### 3. Set node, load HTML template
 
 - Add a node: **Set**
 - Name it: **Quote Template**
@@ -106,20 +106,20 @@ customer      internal
   of `quote-template.html`** (from this folder).
 - Disable "Keep Only Set" so the previous data passes through.
 
-### 4. Code node — quote-pdf-renderer.js
+### 4. Code node, quote-pdf-renderer.js
 
 - Add a node: **Code** (JavaScript, run once for each item).
 - Paste the entire contents of `quote-pdf-renderer.js` into the editor.
-- The script references `$('Quote Template').first().json.template` —
+- The script references `$('Quote Template').first().json.template` 
   make sure the Set node above is named exactly `Quote Template`.
 - Outputs:
-  - `$json.html` — full populated HTML
-  - `$json.quote_number` — `NC-2026-0142`
-  - `$json.pdf_filename` — `NC-2026-0142_Tavan-Bogd-Finance.pdf`
-  - `$json.summary_for_email` — customer email body
-  - `$json.internal_summary` — internal Slack/email body
+  - `$json.html`, full populated HTML
+  - `$json.quote_number`, `NC-2026-0142`
+  - `$json.pdf_filename`, `NC-2026-0142_Tavan-Bogd-Finance.pdf`
+  - `$json.summary_for_email`, customer email body
+  - `$json.internal_summary`, internal Slack/email body
 
-### 5. HTTP Request — Browserless PDF
+### 5. HTTP Request, Browserless PDF
 
 - Method: **POST**
 - URL: `https://chrome.browserless.io/pdf?token=YOUR_BROWSERLESS_TOKEN`
@@ -142,7 +142,7 @@ customer      internal
 
 After this node, the binary PDF is at `$binary.data`.
 
-### 6. Google Sheets — Append row
+### 6. Google Sheets, Append row
 
 - Resource: **Sheet Within Document**
 - Operation: **Append**
@@ -168,18 +168,18 @@ After this node, the binary PDF is at `$binary.data`.
   counter          = {{ $json.next_counter_value }}
   ```
 
-### 7. Gmail — Customer email
+### 7. Gmail, Customer email
 
 - To: `={{ $json.email }}`
 - (Skip this branch if `email` is empty: add an IF node before it
-  — `$json.email !== ""`.)
+ , `$json.email !== ""`.)
 - Subject: `NOMAAD Camp · Үнийн санал {{ $json.quote_number }}`
 - HTML body: paste the contents of `email-customer.html`
 - Attachments:
   - Property name: `data` (matches the Browserless output)
   - Filename: `={{ $json.pdf_filename }}`
 
-### 8. Gmail — Internal notification
+### 8. Gmail, Internal notification
 
 - To: `gmunkhuchral@gmail.com`
 - BCC: Б.Дэлгэрбат, Н.Анужин email addresses
@@ -197,13 +197,13 @@ After this node, the binary PDF is at `$binary.data`.
    - Webhook should show all `tier_subtotal`, `addons_subtotal`, etc.
    - Code node output should have `html`, `quote_number`, etc.
    - HTTP Request returned a binary file? Check its size > 50 KB.
-3. Check your inbox — both customer + internal emails should arrive.
-4. Open the PDF — verify:
+3. Check your inbox, both customer + internal emails should arrive.
+4. Open the PDF, verify:
    - Quote number matches
    - Pricing matches the on-site estimate
    - Customer details correct
    - Bank info correct
-5. Check the Google Sheet — new row appended with `counter` incremented.
+5. Check the Google Sheet, new row appended with `counter` incremented.
 
 ---
 
@@ -230,7 +230,7 @@ After this node, the binary PDF is at `$binary.data`.
   (after user drops `nomaad-logo-black.png` into `/assets/`).
 - Replace the dashed "ТАМГА + ГАРЫН ҮСЭГ" box with the actual
   stamp + signature PNGs once provided.
-- Add a "validity reminder" cron — send a follow-up 3 days before the
+- Add a "validity reminder" cron, send a follow-up 3 days before the
   quote expires.
 - Switch quote numbering from sheet-based to DB-based if you outgrow
   Sheets (n8n + Postgres).
