@@ -2222,16 +2222,6 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
     position: relative !important;
   }
 
-  /* === MIDWEEK ADDON GRID — better mobile == */
-  .midweek-addon-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.4rem !important;
-  }
-  .midweek-addon-grid > span {
-    font-size: 0.8rem !important;
-    padding: 0.5rem 0.75rem !important;
-  }
-
   /* === GALLERY TABS — horizontal scroll smooth ========== */
   .cat-gallery__tabs {
     -webkit-overflow-scrolling: touch !important;
@@ -5250,25 +5240,7 @@ body.home-page video {
   100% { background-position: -100% 0; }
 }
 
-/* 4. ADDON CHIP GRID — desktop styling missing previously */
-.midweek-addon-grid {
-  display: flex !important;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.85rem;
-}
-.midweek-addon-grid > span {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(74, 89, 70, 0.08);
-  border: 1px solid rgba(74, 89, 70, 0.18);
-  color: #2F3E2F;
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-}
+/* 4. ADDON CHIP GRID — removed (day program addons no longer shown as chips) */
 .pkg-choice-label {
   font-size: 0.72rem;
   font-weight: 600;
