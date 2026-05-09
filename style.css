@@ -1573,7 +1573,7 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TAGLINE H — "Нэг баг · Нэг гэрээ · Нэг хариуцлага" хэлбэр
+   TAGLINE H — "Нэг баг · Нэг систем · Нэг хариуцлага" хэлбэр
    ═══════════════════════════════════════════════════════════════ */
 .hero-tagline-h .t-word,
 .hero-tagline-h .t-sep {
@@ -1593,15 +1593,33 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
   opacity: 0.55;
 }
 
-/* Mobile: stack tagline phrases, hide last meta item */
+/* Mobile: keep tagline phrases inline on a single line */
 @media (max-width: 600px) {
-  .hero-tagline-h { line-height: 1.18 !important; }
-  .hero-tagline-h .t-word {
-    display: block !important;
+  .hero h1.hero-tagline-h {
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
     text-align: center !important;
+    font-size: clamp(0.86rem, 4vw, 1.15rem) !important;
+    letter-spacing: -0.01em !important;
   }
-  .hero-tagline-h .t-sep { display: none !important; }
+  .hero h1.hero-tagline-h .t-word {
+    display: inline !important;
+    white-space: nowrap !important;
+  }
+  .hero h1.hero-tagline-h .t-sep {
+    display: inline !important;
+    padding: 0 0.28em !important;
+    opacity: 0.7;
+  }
   .hero-meta__item--mobile-hide { display: none !important; }
+}
+@media (max-width: 380px) {
+  .hero h1.hero-tagline-h {
+    font-size: clamp(0.78rem, 4vw, 0.95rem) !important;
+  }
+  .hero h1.hero-tagline-h .t-sep {
+    padding: 0 0.18em !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -5195,18 +5213,18 @@ body.home-page video {
 }
 .hero-meta > span[aria-hidden] { display: none; }
 
-/* 2. HERO EYEBROW — pill badge style */
+/* 2. HERO EYEBROW — clean text style (yellow pill removed per user request) */
 .hero--corporate .eyebrow {
   display: inline-flex !important;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(200, 168, 120, 0.18);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   color: #E0C79A !important;
-  padding: 0.4rem 0.95rem;
-  border-radius: 999px;
-  border: 1px solid rgba(200, 168, 120, 0.35);
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
   font-size: 0.74rem;
   letter-spacing: 0.18em;
 }
@@ -5331,7 +5349,7 @@ body.home-page video {
 @media (max-width: 760px) {
   .hero--corporate .eyebrow {
     font-size: 0.6rem !important;
-    padding: 0.3rem 0.75rem !important;
+    padding: 0 !important;
     letter-spacing: 0.12em !important;
     line-height: 1.4 !important;
   }
