@@ -10,7 +10,7 @@
  * <script>navigator.serviceWorker.register('/sw.js')</script> хэсгийг арилгана.
  */
 
-const CACHE_VERSION = 'nomaad-v1.3.0-faq-cleanup';
+const CACHE_VERSION = 'nomaad-v1.4.0-premium-mobile';
 const STATIC_CACHE  = `nomaad-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `nomaad-runtime-${CACHE_VERSION}`;
 

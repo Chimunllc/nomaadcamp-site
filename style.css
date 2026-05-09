@@ -5704,18 +5704,25 @@ body.home-page video {
      11 .pkg-divider      (3rd)  → push DOWN
      12 .pkg-cta          →  promote to order 5 (right after primary)
   */
+  /* Default: any direct child not matched below sits at the bottom */
+  .camp-detail .pkg-card--custom > * { order: 20; }
+
   .camp-detail .pkg-card--custom > .pkg-header             { order: 1; }
   .camp-detail .pkg-card--custom > .pkg-note               { order: 2; }
   .camp-detail .pkg-card--custom > .pkg-features:not(.pkg-features--secondary) { order: 3; }
-  .camp-detail .pkg-card--custom > .pkg-divider:nth-of-type(1) { order: 4; }
+  /* First divider: the one immediately after the primary features */
+  .camp-detail .pkg-card--custom > .pkg-features:not(.pkg-features--secondary) + .pkg-divider { order: 4; }
+  /* Promote CTA to right after primary features */
   .camp-detail .pkg-card--custom > .pkg-cta                { order: 5; margin-top: 1.2rem !important; }
 
   .camp-detail .pkg-card--custom > .pkg-features__sub-title { order: 6; margin-top: 1.6rem !important; }
   .camp-detail .pkg-card--custom > .pkg-features--secondary { order: 7; }
   .camp-detail .pkg-card--custom > .pkg-features__custom-note { order: 8; }
-  .camp-detail .pkg-card--custom > .pkg-divider:nth-of-type(2) { order: 9; }
+  /* Second divider: the one immediately after the custom note */
+  .camp-detail .pkg-card--custom > .pkg-features__custom-note + .pkg-divider { order: 9; }
   .camp-detail .pkg-card--custom > .pkg-accordion          { order: 10; }
-  .camp-detail .pkg-card--custom > .pkg-divider:nth-of-type(3) { order: 11; }
+  /* Third divider: the one immediately after the accordion */
+  .camp-detail .pkg-card--custom > .pkg-accordion + .pkg-divider { order: 11; }
 
   /* Compact spacing for secondary content on mobile (post-CTA) */
   .camp-detail .pkg-card--custom > .pkg-features--secondary li {
