@@ -121,7 +121,7 @@ window.NOMAAD_IMAGES = {
     "team": {
       "title": "Баг ба оролцогчид",
       "label": "TEAM",
-      "description": "NOMAAD баг болон оролцогчдын хамтын ажиллагаа, тэмцэл, баяр.",
+      "description": "Зочид оролцогчдын хамтын ажиллагаа, баяр хөөр.",
       "cover": "/images/gallery/team/481103588_1151578333430235_4180439155675689492_n.jpg",
       "images": [
         "/images/gallery/team/481103588_1151578333430235_4180439155675689492_n.jpg",
