@@ -1,5 +1,5 @@
 /**
- * NOMAAD Camp — Service Worker
+ * NOMAAD Camp, Service Worker
  *
  * Conservative caching strategy:
  *  - HTML (navigation): NETWORK-FIRST  (always fresh, fallback to cache offline)
@@ -10,7 +10,7 @@
  * <script>navigator.serviceWorker.register('/sw.js')</script> хэсгийг арилгана.
  */
 
-const CACHE_VERSION = 'nomaad-v1.2.0-faq';
+const CACHE_VERSION = 'nomaad-v1.3.0-faq-cleanup';
 const STATIC_CACHE  = `nomaad-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `nomaad-runtime-${CACHE_VERSION}`;
 
@@ -103,7 +103,7 @@ self.addEventListener('fetch', (event) => {
           .catch(() => {});
         return cached;
       }
-      // Not in cache — fetch and store
+      // Not in cache, fetch and store
       return fetch(req)
         .then((response) => {
           if (response && response.status === 200) {

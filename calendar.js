@@ -1,4 +1,4 @@
-// NOMAAD Camp — booking-availability calendar with live weather.
+// NOMAAD Camp, booking-availability calendar with live weather.
 // Mon–Thu = өдрийн хөтөлбөр (day program). Fri–Sun = кэмп багц.
 // Weather is fetched from Open-Meteo for the geometric center of the 3 camps.
 (function () {
@@ -56,14 +56,14 @@
       cell.className = 'cal-cell cal-cell--' + kind;
       cell.setAttribute('data-date', iso);
       cell.setAttribute('data-kind', kind);
-      cell.setAttribute('aria-label', formatDate(d) + ' — ' + (kind === 'day' ? 'Өдрийн хөтөлбөр' : 'Кэмп багц'));
+      cell.setAttribute('aria-label', formatDate(d) + ', ' + (kind === 'day' ? 'Өдрийн хөтөлбөр' : 'Кэмп багц'));
 
       cell.innerHTML =
         '<span class="cal-cell__dow">' + DOW_LABELS[dow] + '</span>' +
         '<span class="cal-cell__date">' + d.getDate() + '</span>' +
         '<span class="cal-cell__weather" data-weather>' +
         '  <span class="cal-cell__icon" data-icon>·</span>' +
-        '  <span class="cal-cell__temp" data-temp>—</span>' +
+        '  <span class="cal-cell__temp" data-temp></span>' +
         '</span>';
 
       grid.appendChild(cell);
@@ -95,7 +95,7 @@
           cell.setAttribute('title', info.label + ' · өндөр +' + tMax + '°, доод ' + tMin + '°');
         }
       })
-      .catch(function () { /* ignore — keep placeholder */ });
+      .catch(function () { /* ignore, keep placeholder */ });
   }
 
   // Compute check-in / check-out defaults based on day-of-week.
@@ -106,19 +106,19 @@
       x.setDate(x.getDate() + n);
       return x.toISOString().slice(0, 10);
     }
-    // Mon–Thu — day program 10:00–18:00 same day
+    // Mon–Thu, day program 10:00–18:00 same day
     if (dow >= 1 && dow <= 4) {
       return { start: iso + 'T10:00', end: iso + 'T18:00', mode: 'day-program', tier: 'Хагас өдрийн' };
     }
-    // Friday — camp slot 1: Fri 09:00 → Sat 11:00
+    // Friday, camp slot 1: Fri 09:00 → Sat 11:00
     if (dow === 5) {
       return { start: iso + 'T09:00', end: addDays(iso, 1) + 'T11:00', mode: 'camp', tier: 'Үндсэн' };
     }
-    // Saturday — camp slot 2: Sat 12:00 → Sun 15:00
+    // Saturday, camp slot 2: Sat 12:00 → Sun 15:00
     if (dow === 6) {
       return { start: iso + 'T12:00', end: addDays(iso, 1) + 'T15:00', mode: 'camp', tier: 'Үндсэн' };
     }
-    // Sunday — fold into Saturday slot (already booked Sat 12:00 → Sun 15:00).
+    // Sunday, fold into Saturday slot (already booked Sat 12:00 → Sun 15:00).
     // We rewind to the previous Saturday for the start.
     return { start: addDays(iso, -1) + 'T12:00', end: iso + 'T15:00', mode: 'camp', tier: 'Үндсэн' };
   }
