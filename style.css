@@ -5673,3 +5673,54 @@ body.home-page video {
   font-size: 0.8rem;
   color: rgba(31, 42, 35, 0.6);
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PREMIUM CARD — MOBILE ERGONOMIC FIX
+   ═══════════════════════════════════════════════════════════════════
+   Premium card has 10+ primary features, then "Тусдаа тооцогдоно" 4
+   items, then a custom note, then an M EVENT accordion, then the CTA.
+   On mobile this pushed the CTA below 1500px scroll. Solution: use
+   flexbox `order:` to surface the CTA right after the primary features,
+   and move the secondary information below the CTA. Desktop keeps
+   source order (no flex). =================================================== */
+@media (max-width: 760px) {
+  .camp-detail .pkg-card--custom {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Source order:
+     1 .pkg-header        →  order 1
+     2 .pkg-note          →  order 2  (1st)
+     3 .pkg-note          →  order 2  (2nd)
+     4 .pkg-features      →  order 3  (primary)
+     5 .pkg-divider       →  order 4  (1st)
+     6 .pkg-features__sub-title  → push DOWN
+     7 .pkg-features--secondary  → push DOWN
+     8 .pkg-features__custom-note → push DOWN
+     9 .pkg-divider       (2nd)  → push DOWN
+     10 .pkg-accordion           → push DOWN
+     11 .pkg-divider      (3rd)  → push DOWN
+     12 .pkg-cta          →  promote to order 5 (right after primary)
+  */
+  .camp-detail .pkg-card--custom > .pkg-header             { order: 1; }
+  .camp-detail .pkg-card--custom > .pkg-note               { order: 2; }
+  .camp-detail .pkg-card--custom > .pkg-features:not(.pkg-features--secondary) { order: 3; }
+  .camp-detail .pkg-card--custom > .pkg-divider:nth-of-type(1) { order: 4; }
+  .camp-detail .pkg-card--custom > .pkg-cta                { order: 5; margin-top: 1.2rem !important; }
+
+  .camp-detail .pkg-card--custom > .pkg-features__sub-title { order: 6; margin-top: 1.6rem !important; }
+  .camp-detail .pkg-card--custom > .pkg-features--secondary { order: 7; }
+  .camp-detail .pkg-card--custom > .pkg-features__custom-note { order: 8; }
+  .camp-detail .pkg-card--custom > .pkg-divider:nth-of-type(2) { order: 9; }
+  .camp-detail .pkg-card--custom > .pkg-accordion          { order: 10; }
+  .camp-detail .pkg-card--custom > .pkg-divider:nth-of-type(3) { order: 11; }
+
+  /* Compact spacing for secondary content on mobile (post-CTA) */
+  .camp-detail .pkg-card--custom > .pkg-features--secondary li {
+    padding: 0.18rem 0 !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+  }
+}
