@@ -131,7 +131,7 @@ window.NOMAAD_IMAGES = {
     "night": {
       "title": "Оройн хөтөлбөр",
       "label": "NIGHT",
-      "description": "Орой болсон хойно, гэрэлтүүлэг, DJ, Bartender, шөнийн уур амьсгал.",
+      "description": "Оройн арга хэмжээ, гэрэлтүүлэг, DJ, Bartender, шөнийн уур амьсгал.",
       "cover": "/images/gallery/night/481145965_1151578476763554_5500875394514024170_n.jpg",
       "images": [
         "/images/gallery/night/481145965_1151578476763554_5500875394514024170_n.jpg",
