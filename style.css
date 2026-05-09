@@ -5600,7 +5600,89 @@ body.home-page video {
 .faq-text p { margin: 0 0 0.75rem; }
 .faq-text p:last-child { margin-bottom: 0; }
 .faq-text ul { margin: 0.5rem 0; padding-left: 1.25rem; }
+
+/* Inline accent link — brand-coloured, animated arrow */
+.faq-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  color: #8A6B3A;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(200, 168, 120, 0.55);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+.faq-inline-link:hover,
+.faq-inline-link:focus-visible {
+  color: #6E552C;
+  text-decoration-color: #C8A878;
+}
+.faq-inline-link__arrow {
+  display: inline-block;
+  transition: transform 0.18s ease;
+  font-weight: 700;
+}
+.faq-inline-link:hover .faq-inline-link__arrow,
+.faq-inline-link:focus-visible .faq-inline-link__arrow {
+  transform: translateX(3px);
+}
 .faq-text li { margin: 0.25rem 0; }
+
+/* Numbered booking steps — premium card-style each step */
+.booking-steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+.booking-steps > li {
+  counter-increment: step;
+  position: relative;
+  padding: 0.95rem 1rem 0.95rem 3rem;
+  margin: 0 0 0.7rem;
+  background: rgba(74, 89, 70, 0.04);
+  border: 1px solid rgba(74, 89, 70, 0.1);
+  border-radius: 8px;
+}
+.booking-steps > li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 999px;
+  background: #4A5946;
+  color: #F2F1EC;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+.booking-steps > li > p:first-of-type {
+  margin: 0 0 0.35rem;
+  color: #1F2A23;
+  font-size: 0.96rem;
+}
+.booking-steps > li p {
+  margin: 0 0 0.45rem;
+}
+.booking-steps > li p:last-child {
+  margin-bottom: 0;
+}
+.booking-steps > li ul {
+  margin: 0.3rem 0 0.5rem;
+  padding-left: 1.15rem;
+}
+.booking-steps > li ul li {
+  margin: 0.1rem 0;
+  font-size: 0.92rem;
+}
 .faq-text em {
   display: block;
   padding: 0.65rem 0.9rem;
