@@ -408,17 +408,68 @@ const internalSummary =
   `Урьдчилгаа 30%: ${fmt(deposit30)}₮\n` +
   (str(p.notes) ? `\nТэмдэглэл: ${str(p.notes)}\n` : '');
 
+// ---------- 10b. Email subjects + HTML body (Gmail node references). ----------
+const emailSubjectCustomer = `NOMAAD Camp · Үнийн санал ${quoteNumber}`;
+const emailSubjectInternal = `🆕 ${quoteNumber} · ${company} · ${fmt(grandTotal)}₮`;
+
+// Customer HTML email (premium B2B feel)
+const customerEmailHtml = `
+<!DOCTYPE html>
+<html lang="mn">
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#F5F1E8;font-family:'Helvetica Neue',Arial,sans-serif;color:#1F2A23;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F1E8;padding:24px 12px;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:8px;padding:32px 28px;max-width:600px;">
+      <tr><td style="border-top:3px solid #2E3A28;padding-top:8px;">
+        <p style="font-size:11px;color:#C8A878;letter-spacing:2px;margin:0 0 4px;">NOMAAD CAMP</p>
+        <h1 style="font-size:18px;color:#1F2A23;margin:0 0 24px;letter-spacing:1px;">ҮНИЙН САНАЛ</h1>
+      </td></tr>
+      <tr><td>
+        <p style="font-size:14px;line-height:1.6;color:#1F2A23;margin:0 0 16px;">Сайн байна уу <strong>${contactName}</strong>,</p>
+        <p style="font-size:14px;line-height:1.6;color:#1F2A23;margin:0 0 20px;">Хүсэлтийг чинь хүлээж авлаа. Танай <strong>${company}</strong>-ийн арга хэмжээнд зориулсан дэлгэрэнгүй үнийн саналыг хавсаргасан PDF-р илгээж байна.</p>
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F1E8;border-radius:6px;border-left:3px solid #C8A878;padding:14px 16px;margin:0 0 20px;">
+          <tr><td style="font-size:13px;line-height:1.7;color:#1F2A23;">
+            <strong>Кемп:</strong> ${camp}<br>
+            <strong>Багц:</strong> ${tier} · ${guests} хүн<br>
+            <strong>Хугацаа:</strong> ${durationLabel}<br>
+            <strong>Нийт:</strong> ${fmt(grandTotal)}₮ <span style="color:#888780;">(НӨАТ багтсан)</span><br>
+            <strong>Урьдчилгаа:</strong> 30% · ${fmt(deposit30)}₮<br>
+            <strong>Дугаар:</strong> ${quoteNumber}<br>
+            <strong>Хүчинтэй:</strong> ${validUntil} хүртэл
+          </td></tr>
+        </table>
+        <p style="font-size:13px;line-height:1.6;color:#5F5E5A;margin:0 0 8px;">Асуух зүйл байвал утсаар холбогдоорой:</p>
+        <p style="font-size:13px;line-height:1.7;color:#1F2A23;margin:0 0 20px;">
+          <strong>7700-6790</strong> · Захиалга<br>
+          <strong>9917-9417</strong> · Б. Дэлгэрбат, Менежер<br>
+          <strong>8802-8216</strong> · Н. Анужин, Менежер
+        </p>
+        <p style="font-size:13px;color:#5F5E5A;line-height:1.6;margin:24px 0 0;border-top:1px solid #E8E2D2;padding-top:16px;">
+          Хүндэтгэсэн,<br>
+          <strong style="color:#1F2A23;">NOMAAD Camp</strong> · Чимун ХХК<br>
+          <a href="https://nomaadcamp.com" style="color:#C8A878;text-decoration:none;">nomaadcamp.com</a>
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body></html>`;
+
 // ---------- 11. Return everything for the next nodes. ----------
 return {
   json: {
     ...p,
-    quote_number:        quoteNumber,
-    issue_date:          issueDate,
-    valid_until:         validUntil,
-    html:                html,
-    pdf_filename:        `${quoteNumber}_${company.replace(/\s+/g, '-')}.pdf`,
-    summary_for_email:   summaryForEmail,
-    internal_summary:    internalSummary,
-    next_counter_value:  counter + 1   // for the Sheets append step
+    quote_number:            quoteNumber,
+    issue_date:              issueDate,
+    valid_until:             validUntil,
+    html:                    html,
+    pdf_filename:            `${quoteNumber}_${company.replace(/\s+/g, '-')}.pdf`,
+    summary_for_email:       summaryForEmail,
+    internal_summary:        internalSummary,
+    email_subject_customer:  emailSubjectCustomer,
+    email_subject_internal:  emailSubjectInternal,
+    customer_email_html:     customerEmailHtml,
+    next_counter_value:      counter + 1   // for the Sheets append step
   }
 };
