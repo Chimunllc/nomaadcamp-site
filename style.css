@@ -1699,32 +1699,25 @@ body.home-page .cta-final p { color: rgba(255, 255, 255, 0.96); }
   body.camp-detail-open {
     overflow: auto !important;
   }
-  /* Inline-аар харагдах хаах товч (modal биш ч хэрэглэгчид зохицсон) */
+  /* Mobile close — absolute top-right, slightly larger touch target */
   .camp-detail .camp-detail-close {
-    display: inline-flex !important;
-    position: static !important;
-    align-self: flex-end !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0.4rem !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 0 1rem auto !important;
-    padding: 0.55rem 1rem !important;
-    border-radius: 999px !important;
-    background: rgba(31, 42, 35, 0.08) !important;
-    color: #1F2A23 !important;
-    border: none !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    box-shadow: none !important;
+    position: absolute !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: var(--radius-pill) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    color: rgba(31, 42, 35, 0.7) !important;
+    border: 1px solid rgba(31, 42, 35, 0.1) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    font-size: 0 !important;
+    z-index: 10 !important;
   }
   .camp-detail .camp-detail-close::after {
-    content: 'Хаах';
-  }
-  .camp-detail .camp-detail-close:active {
-    background: rgba(31, 42, 35, 0.16) !important;
+    content: none !important;
   }
   /* Багцын картууд бүх content багтах */
   .camp-detail .camp-packages {
@@ -5795,4 +5788,58 @@ body.home-page video {
     font-size: 0.88rem !important;
     line-height: 1.5 !important;
   }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMP DETAIL · CLOSE BUTTON — minimal floating × icon
+   Premium B2B feel: small, top-right, no text, clear hover
+   ═══════════════════════════════════════════════════════════════ */
+.camp-detail.is-open {
+  position: relative;
+}
+.camp-detail-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(31, 42, 35, 0.6);
+  border: 1px solid rgba(31, 42, 35, 0.08);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background 0.18s ease, color 0.18s ease,
+              border-color 0.18s ease, transform 0.18s ease;
+  z-index: 10;
+  font-size: 0;
+}
+.camp-detail-close::after {
+  content: none;
+}
+.camp-detail-close svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.camp-detail-close:hover {
+  background: #1F2A23;
+  color: #FFFFFF;
+  border-color: #1F2A23;
+  transform: scale(1.05);
+}
+.camp-detail-close:active {
+  transform: scale(0.98);
+}
+.camp-detail-close:focus-visible {
+  outline: 2px solid #C8A878;
+  outline-offset: 3px;
 }

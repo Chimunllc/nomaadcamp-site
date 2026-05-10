@@ -10,7 +10,7 @@
  * <script>navigator.serviceWorker.register('/sw.js')</script> хэсгийг арилгана.
  */
 
-const CACHE_VERSION = 'nomaad-v2.4.1-tagline-revert';
+const CACHE_VERSION = 'nomaad-v2.5.0-close-button';
 const STATIC_CACHE  = `nomaad-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `nomaad-runtime-${CACHE_VERSION}`;
 
