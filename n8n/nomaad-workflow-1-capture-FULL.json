@@ -127,7 +127,8 @@
             "Тэмдэглэл": "={{ $('Code · Render HTML').item.json.notes }}",
             "Дугаарлалт": "={{ $('Code · Render HTML').item.json.next_counter_value }}",
             "Төлөв": "ШИНЭ",
-            "Илгээсэн огноо": ""
+            "Илгээсэн огноо": "",
+            "Анхны өгөгдөл": "={{ JSON.stringify($('Webhook').first().json.body) }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -296,6 +297,15 @@
             {
               "id": "Илгээсэн огноо",
               "displayName": "Илгээсэн огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Анхны өгөгдөл",
+              "displayName": "Анхны өгөгдөл",
               "required": false,
               "defaultMatch": false,
               "display": true,
