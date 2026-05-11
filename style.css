@@ -5843,3 +5843,54 @@ body.home-page video {
   outline: 2px solid #C8A878;
   outline-offset: 3px;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMP GALLERY · HEADER — clearly label which camp the photos are from
+   ═══════════════════════════════════════════════════════════════ */
+.camp-gallery__header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(31, 42, 35, 0.08);
+}
+.camp-gallery__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C8A878;
+  margin-bottom: 0.4rem;
+}
+.camp-gallery__eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: #C8A878;
+}
+.camp-gallery__title {
+  font-family: 'Inter Tight', 'Inter', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: #1F2A23;
+  margin: 0;
+  line-height: 1.3;
+}
+@media (max-width: 760px) {
+  .camp-gallery__header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.65rem;
+  }
+  .camp-gallery__eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+  }
+  .camp-gallery__title {
+    font-size: 0.95rem;
+  }
+}
