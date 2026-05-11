@@ -2909,6 +2909,23 @@ body.modal-open { overflow: hidden; }
   background: var(--accent);
   opacity: 0.6;
 }
+.pkg-features--zoned .pkg-zone-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0.6rem;
+  margin-bottom: 0.1rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(200, 168, 120, 0.25);
+}
+.pkg-features--zoned .pkg-zone-label::before {
+  display: none;
+}
+.pkg-features--zoned > li:first-child {
+  margin-top: 0;
+}
 .pkg-divider {
   width: 100%;
   height: 1px;
