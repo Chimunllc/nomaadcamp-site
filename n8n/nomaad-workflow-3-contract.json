@@ -1,0 +1,450 @@
+{
+  "name": "NOMAAD Quote · 3. Contract Confirmed",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "nomaad-contract-confirm",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "wh3-trigger",
+      "name": "Webhook Contract",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1280,
+        -80
+      ],
+      "webhookId": "nomaad-wh3-contract-22381e10"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "mode": "list",
+          "cachedResultName": "nomaad_quote_log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 529201537,
+          "mode": "list",
+          "cachedResultName": "Quote Log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Үнийн саналын дугаар",
+              "lookupValue": "={{ $json.query.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wh3-find",
+      "name": "Sheets · Find quote row",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1040,
+        -80
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GOOGLE_SHEETS_CRED_ID",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// ====================================================================\n// NOMAAD Camp · Workflow 3 · Гэрээ батлагдсаны Code node\n// ====================================================================\n// Input: Quote Log-ийн нэг мөр (бүх 27 баганатай)\n// Output: Финанс Sheet-д бичих өгөгдөл + ажилтанд явуулах HTML email + \n//         даалгаврын PDF render-хийх HTML\n\nconst row = $input.first().json;\n\n// ─── 1. Анхны өгөгдөл JSON-аас payload унших ───\nlet p;\ntry { p = JSON.parse(row[\"Анхны өгөгдөл\"] || \"{}\"); }\ncatch (e) { p = {}; }\n\nconst num = (v, d = 0) => {\n  if (v === undefined || v === null || v === '') return d;\n  const cleaned = String(v).replace(/[₮,$,\\s]/g, '');\n  const n = Number(cleaned);\n  return Number.isFinite(n) ? n : d;\n};\nconst str = (v, d = '') => (v === undefined || v === null) ? d : String(v).trim();\n\n// ─── 2. Үндсэн дата ───\nconst quoteNumber  = str(row[\"Үнийн саналын дугаар\"]);\nconst company      = str(row[\"Компанийн нэр\"]) || str(p.company);\nconst taxId        = str(row[\"Регистрийн дугаар\"]) || str(p.customer_tax_id);\nconst contactName  = str(row[\"Холбоо барих хүн\"]) || str(p.contact_name);\nconst phone        = str(row[\"Утас\"]) || str(p.phone);\nconst email        = str(row[\"И-мэйл\"]) || str(p.email);\nconst camp         = str(row[\"Кемп\"]) || str(p.camp_name);\nconst tier         = str(row[\"Багц\"]) || str(p.package_tier);\nconst guests       = num(row[\"Хүний тоо\"]) || num(p.guest_count);\nconst startDt      = str(row[\"Эхлэх огноо\"]) || str(p.start_datetime);\nconst endDt        = str(row[\"Дуусах огноо\"]) || str(p.end_datetime);\n\nconst listPrice    = num(row[\"Нийт дүн\"]);\nconst discount     = num(row[\"Хямдрал ₮\"]);\nconst finalAmount  = num(row[\"Эцсийн гэрээний дүн\"]) || (listPrice - discount);\nconst deposit30    = Math.round(finalAmount * 0.30);\nconst balance70    = finalAmount - deposit30;\nconst vatIncluded  = Math.round(finalAmount / 11); // 10% VAT included\n\nconst meetingDate  = str(row[\"Уулзалтын огноо\"]);\nconst meetingNote  = str(row[\"Уулзалтын тэмдэглэл\"]);\nconst signDate     = str(row[\"Гэрээ зурсан огноо\"]);\n\n// Addons + shuttle from JSON\nconst addons = (() => {\n  try { return JSON.parse(str(p.addons_json) || '[]'); }\n  catch (_) { return []; }\n})();\nconst shuttleLabel  = str(p.shuttle_service);\nconst shuttleAmount = num(p.shuttle_subtotal);\nconst busCount      = num(p.bus_count);\n\n// ─── 3. Хэлбэрчилсэн ─── \nconst fmt = n => Number(n).toLocaleString('en-US');\nfunction fmtDate(s) {\n  const m = String(s).match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  return m ? `${m[1]}.${m[2]}.${m[3]}` : s;\n}\nfunction fmtDateTime(s) {\n  const m = String(s).match(/(\\d{4})-(\\d{2})-(\\d{2})(?:[T ](\\d{2}):(\\d{2}))?/);\n  if (!m) return s;\n  const [, y, mo, d, hh, mm] = m;\n  return `${y}.${mo}.${d}${hh && mm ? ' · ' + hh + ':' + mm : ''}`;\n}\n\n// ─── 4. Addons-ын хүний унших жагсаалт ───\nconst billableAddons = addons.filter(a => !a.tier_included);\nconst addonsLines = billableAddons.length \n  ? billableAddons.map(a => `<li>${a.name}${a.quantity ? ` × ${a.quantity}` : ''}${a.price ? ` — ${fmt(a.price)}₮` : ''}</li>`).join('')\n  : '<li><em>Зөвхөн үндсэн багц</em></li>';\n\n// ─── 5. Staff email HTML ───\nconst staffEmailHtml = `\n<!DOCTYPE html>\n<html lang=\"mn\"><head><meta charset=\"utf-8\"><title>Шинэ гэрээ ${quoteNumber}</title>\n<style>\n  body { font-family: Arial, sans-serif; color: #1a1a1a; max-width: 720px; margin: 0 auto; padding: 24px; }\n  .header { background: #0B1F1A; color: #C9A86A; padding: 20px 24px; }\n  .header h1 { margin: 0; font-size: 22px; }\n  .header p { margin: 4px 0 0; font-size: 12px; opacity: 0.7; }\n  .section { padding: 20px 24px; border-bottom: 1px solid #e8e2d5; }\n  .section h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: #6b6b6b; margin: 0 0 12px; }\n  table { width: 100%; border-collapse: collapse; }\n  td { padding: 6px 0; vertical-align: top; font-size: 14px; }\n  td:first-child { width: 40%; color: #6b6b6b; }\n  td:last-child { font-weight: 600; }\n  .money { color: #0B1F1A; font-size: 16px; }\n  ul { margin: 8px 0 0 16px; padding: 0; }\n  li { padding: 2px 0; font-size: 14px; }\n  .task { background: #f5f2ec; padding: 14px 16px; margin: 10px 0; border-left: 3px solid #C9A86A; }\n  .task strong { display: block; color: #0B1F1A; margin-bottom: 4px; }\n  .footer { padding: 16px 24px; font-size: 11px; color: #6b6b6b; text-align: center; }\n</style></head>\n<body>\n  <div class=\"header\">\n    <h1>ШИНЭ ГЭРЭЭ БАТЛАГДЛАА · ${quoteNumber}</h1>\n    <p>Гэрээ зурсан: ${fmtDate(signDate)} · Компани: ${company}</p>\n  </div>\n\n  <div class=\"section\">\n    <h2>Арга хэмжээ</h2>\n    <table>\n      <tr><td>Кемп</td><td>${camp}</td></tr>\n      <tr><td>Багц</td><td>${tier}</td></tr>\n      <tr><td>Хүний тоо</td><td>${fmt(guests)}</td></tr>\n      <tr><td>Эхлэх</td><td>${fmtDateTime(startDt)}</td></tr>\n      <tr><td>Дуусах</td><td>${fmtDateTime(endDt)}</td></tr>\n    </table>\n  </div>\n\n  <div class=\"section\">\n    <h2>Үйлчлүүлэгч</h2>\n    <table>\n      <tr><td>Компани</td><td>${company}</td></tr>\n      <tr><td>Регистрийн дугаар</td><td>${taxId}</td></tr>\n      <tr><td>Холбоо барих</td><td>${contactName}</td></tr>\n      <tr><td>Утас</td><td>${phone}</td></tr>\n      <tr><td>И-мэйл</td><td>${email}</td></tr>\n    </table>\n  </div>\n\n  <div class=\"section\">\n    <h2>Нэмэлт үйлчилгээ</h2>\n    <ul>${addonsLines}</ul>\n    ${shuttleAmount ? `<p style=\"margin-top: 12px; font-size: 14px;\"><strong>Тээвэр:</strong> ${shuttleLabel} (${fmt(shuttleAmount)}₮)</p>` : ''}\n  </div>\n\n  <div class=\"section\">\n    <h2>Санхүү (НӨАТ багтсан)</h2>\n    <table>\n      <tr><td>Жагсаалтын үнэ</td><td>${fmt(listPrice)}₮</td></tr>\n      <tr><td>Хямдрал</td><td style=\"color: ${discount > 0 ? '#C00000' : '#6b6b6b'};\">${discount > 0 ? '−' + fmt(discount) + '₮' : 'байхгүй'}</td></tr>\n      <tr><td><strong>Эцсийн гэрээний дүн</strong></td><td class=\"money\">${fmt(finalAmount)}₮</td></tr>\n      <tr><td>30% урьдчилгаа</td><td>${fmt(deposit30)}₮</td></tr>\n      <tr><td>70% үлдэгдэл</td><td>${fmt(balance70)}₮</td></tr>\n      <tr><td>НӨАТ (10%)</td><td>${fmt(vatIncluded)}₮</td></tr>\n    </table>\n    ${meetingNote ? `<p style=\"margin-top: 12px; padding: 10px; background: #fff8e1; font-size: 13px;\"><strong>Уулзалтын тэмдэглэл:</strong> ${meetingNote}</p>` : ''}\n  </div>\n\n  <div class=\"section\">\n    <h2>Ажилтан тус бүрийн даалгавар</h2>\n    <div class=\"task\"><strong>002 · Борлуулалт</strong>Гэрээ зурагдсан тул акт үүсгэх (1-р дамжлага), Booqable-д захиалга нээх. 30% урьдчилгааны нэхэмжлэх илгээх.</div>\n    <div class=\"task\"><strong>003 · Нярав</strong>Тоног нөөц шалгах. Зочдын тоо ${fmt(guests)}-д хүрэлцэх эсэхийг баталгаажуулна.</div>\n    <div class=\"task\"><strong>004 · Засвар / Агуулахын ахлах</strong>Арга хэмжээний 48 цагийн өмнө тоног тест хийгээд 2-р дамжлага хаах.</div>\n    <div class=\"task\"><strong>005 · Логистик</strong>Хүргэх маршрут, цаг гаргах. Автобус: ${busCount > 0 ? busCount + ' ширхэг (' + shuttleLabel + ')' : 'хэрэггүй'}.</div>\n    <div class=\"task\"><strong>006 · Цэврэлгээ</strong>Буцаалт авах өдрөө тоног цэвэрлэх, чанарын шалгалт.</div>\n  </div>\n\n  <div class=\"footer\">\n    Чимун ХХК · NOMAAD Camp · ${quoteNumber}<br>\n    Энэ автомат мэдэгдэл NOMAAD Quote System-ээс илгээгдсэн.\n  </div>\n</body></html>`;\n\n// ─── 6. Финанс Sheet-д бичих өгөгдөл ───\nconst financePayload = {\n  contract_num: 1, // auto-increment\n  contract_id: quoteNumber.replace('NC', 'CT'),\n  sign_date: signDate,\n  company: company,\n  tax_id: taxId,\n  contact_name: contactName,\n  phone: phone,\n  email: email,\n  camp_name: camp,\n  package_tier: tier,\n  guest_count: guests,\n  start_dt: startDt,\n  end_dt: endDt,\n  list_price: listPrice,\n  discount_pct: listPrice > 0 ? (discount / listPrice) : 0,\n  final_amount: finalAmount,\n  deposit_30: deposit30,\n  balance_70: balance70,\n  status: 'ИДЭВХТЭЙ',\n  notes: meetingNote || ''\n};\n\nreturn [{\n  json: {\n    quote_number: quoteNumber,\n    contract_id: financePayload.contract_id,\n    company: company,\n    email: email,\n    final_amount: finalAmount,\n    staff_email_html: staffEmailHtml,\n    staff_email_subject: `🟢 ШИНЭ ГЭРЭЭ ${quoteNumber} · ${company} · ${fmt(finalAmount)}₮ · ${camp} ${tier}`,\n    ...financePayload\n  }\n}];\n"
+      },
+      "id": "wh3-code",
+      "name": "Code · Build contract data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -800,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SH1u4nlGH61U-5FWWTm2c5BwooboMRFhdTSp4uNunhs",
+          "mode": "list",
+          "cachedResultName": "Чимун ХХК · Санхүүгийн бүртгэл 2026",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SH1u4nlGH61U-5FWWTm2c5BwooboMRFhdTSp4uNunhs/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "📝 Гэрээ",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Гэрээний дугаар": "={{ $json.contract_id }}",
+            "Гарын үсэгз огноо": "={{ $json.sign_date }}",
+            "Компани": "={{ $json.company }}",
+            "РД": "={{ $json.tax_id }}",
+            "Холбоо барих": "={{ $json.contact_name }}",
+            "Утас": "={{ $json.phone }}",
+            "И-мэйл": "={{ $json.email }}",
+            "Кемп": "={{ $json.camp_name }}",
+            "Багц": "={{ $json.package_tier }}",
+            "Хүний тоо": "={{ $json.guest_count }}",
+            "Эхлэх": "={{ $json.start_dt }}",
+            "Дуусах": "={{ $json.end_dt }}",
+            "Жагсаалтын үнэ ₮": "={{ $json.list_price }}",
+            "Хямдрал %": "={{ $json.discount_pct }}",
+            "Эцсийн дүн ₮ (НӨАТ-тай)": "={{ $json.final_amount }}",
+            "30% урьдчилгаа ₮": "={{ $json.deposit_30 }}",
+            "70% үлдэгдэл ₮": "={{ $json.balance_70 }}",
+            "Төлөв": "={{ $json.status }}",
+            "Тэмдэглэл": "={{ $json.notes }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Гэрээний дугаар",
+              "displayName": "Гэрээний дугаар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Гарын үсэгз огноо",
+              "displayName": "Гарын үсэгз огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Компани",
+              "displayName": "Компани",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "РД",
+              "displayName": "РД",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Холбоо барих",
+              "displayName": "Холбоо барих",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Утас",
+              "displayName": "Утас",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "И-мэйл",
+              "displayName": "И-мэйл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Кемп",
+              "displayName": "Кемп",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Багц",
+              "displayName": "Багц",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Хүний тоо",
+              "displayName": "Хүний тоо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Эхлэх",
+              "displayName": "Эхлэх",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Дуусах",
+              "displayName": "Дуусах",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Жагсаалтын үнэ ₮",
+              "displayName": "Жагсаалтын үнэ ₮",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Хямдрал %",
+              "displayName": "Хямдрал %",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Эцсийн дүн ₮ (НӨАТ-тай)",
+              "displayName": "Эцсийн дүн ₮ (НӨАТ-тай)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "30% урьдчилгаа ₮",
+              "displayName": "30% урьдчилгаа ₮",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "70% үлдэгдэл ₮",
+              "displayName": "70% үлдэгдэл ₮",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Төлөв",
+              "displayName": "Төлөв",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Тэмдэглэл",
+              "displayName": "Тэмдэглэл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wh3-finance",
+      "name": "Sheets · Append to Finance",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -560,
+        -200
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GOOGLE_SHEETS_CRED_ID",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "emailType": "html",
+        "sendTo": "team@nomaadcamp.com",
+        "subject": "={{ $('Code · Build contract data').item.json.staff_email_subject }}",
+        "message": "={{ $('Code · Build contract data').item.json.staff_email_html }}",
+        "options": {
+          "appendAttribution": false,
+          "replyTo": "hello@nomaadcamp.com",
+          "ccList": "hello@nomaadcamp.com"
+        }
+      },
+      "id": "wh3-gmail",
+      "name": "Gmail · Notify staff",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -560,
+        40
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GMAIL_CRED_ID",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "mode": "list",
+          "cachedResultName": "nomaad_quote_log"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 529201537,
+          "mode": "list",
+          "cachedResultName": "Quote Log"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Үнийн саналын дугаар": "={{ $('Sheets · Find quote row').item.json['Үнийн саналын дугаар'] }}",
+            "Төлөв": "ГЭРЭЭ БАТЛАГДСАН"
+          },
+          "matchingColumns": [
+            "Үнийн саналын дугаар"
+          ],
+          "schema": [
+            {
+              "id": "Үнийн саналын дугаар",
+              "displayName": "Үнийн саналын дугаар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Төлөв",
+              "displayName": "Төлөв",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wh3-status",
+      "name": "Sheets · Update quote status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -320,
+        -80
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GOOGLE_SHEETS_CRED_ID",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Contract": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Find quote row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets · Find quote row": {
+      "main": [
+        [
+          {
+            "node": "Code · Build contract data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Build contract data": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Append to Finance",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail · Notify staff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail · Notify staff": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Update quote status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}
