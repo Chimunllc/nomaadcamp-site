@@ -4591,6 +4591,45 @@ body.home-page video {
   gap: 0.55rem;
 }
 
+/* Collapsible addon groups (<details>) — keeps the form compact */
+.quote-addons__group--collapsible {
+  margin-bottom: 0.8rem;
+  border: 1px solid rgba(31, 42, 35, 0.08);
+  border-radius: 8px;
+  background: rgba(245, 241, 232, 0.4);
+  overflow: hidden;
+}
+.quote-addons__group--collapsible > summary.quote-addons__group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  opacity: 1;
+  user-select: none;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.15s ease;
+}
+.quote-addons__group--collapsible > summary.quote-addons__group-title::-webkit-details-marker {
+  display: none;
+}
+.quote-addons__group--collapsible > summary.quote-addons__group-title:hover {
+  background: rgba(200, 168, 120, 0.08);
+}
+.quote-addons__group-arrow {
+  font-size: 0.9rem;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+.quote-addons__group--collapsible[open] > summary .quote-addons__group-arrow {
+  transform: rotate(180deg);
+}
+.quote-addons__group--collapsible > .quote-addons__grid {
+  padding: 0.8rem 1rem 1rem;
+}
+
 /* Individual addon card */
 .quote-addon-card {
   display: flex;

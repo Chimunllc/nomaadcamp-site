@@ -1361,8 +1361,11 @@
             <h4 class="quote-addons__group-title">Нэмэлтээр авах боломжтой</h4>
           </div>
 
-          <div class="quote-addons__group" id="quote-addons-group-per-person">
-            <h4 class="quote-addons__group-title" id="quote-addons-title-per-person">Хүний тоогоор тооцох нэмэлтүүд</h4>
+          <details class="quote-addons__group quote-addons__group--collapsible" id="quote-addons-group-per-person" open>
+            <summary class="quote-addons__group-title" id="quote-addons-title-per-person">
+              <span>Хүний тоогоор тооцох нэмэлтүүд</span>
+              <span class="quote-addons__group-arrow" aria-hidden="true">▾</span>
+            </summary>
             <div class="quote-addons__grid quote-addons__grid--per-person">
 
               <div class="quote-addon-card">
@@ -1477,10 +1480,13 @@
               </div>
 
             </div>
-          </div>
+          </details>
 
-          <div class="quote-addons__group" id="quote-addons-group-flat">
-            <h4 class="quote-addons__group-title" id="quote-addons-title-flat">Тогтмол үнэтэй нэмэлтүүд</h4>
+          <details class="quote-addons__group quote-addons__group--collapsible" id="quote-addons-group-flat">
+            <summary class="quote-addons__group-title" id="quote-addons-title-flat">
+              <span>Тогтмол үнэтэй нэмэлтүүд</span>
+              <span class="quote-addons__group-arrow" aria-hidden="true">▾</span>
+            </summary>
             <div class="quote-addons__grid quote-addons__grid--flat">
 
               <label class="quote-addon-card quote-addon-card--full">
@@ -1657,7 +1663,7 @@
               </div>
 
             </div>
-          </div>
+          </details>
 
         </div>
         <!-- ── /НЭМЭЛТ ҮЙЛЧИЛГЭЭ ──────────────────────────────── -->
