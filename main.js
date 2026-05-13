@@ -893,7 +893,7 @@
         'moonbeam_lounge', 'bartender_service',
         'amenity_kit', 'dj_service',
         'led_screen_18m2', 'late_snacks',
-        'open_mic', 'asar_decor', 'forest_lights',
+        'open_mic', 'asar_decor',
         'extra_tents', 'extra_lighting', 'team_games',
         'program_consulting', 'event_director',
         'medical_support', 'security_service'
@@ -917,14 +917,15 @@
       led_screen_18m2:    { type: 'flat', value: 1728000 },
       open_mic:           { type: 'flat', value: 500000  },
       asar_decor:         { type: 'flat', value: 2000000 },
-      forest_lights:      { type: 'flat', value: 2000000 },
       extra_tents:        { type: 'flat', value: 1300000 },
-      extra_lighting:     { type: 'flat', value: 4000000 },
+      extra_lighting:     { type: 'flat', value: 5000000 },
       team_games:         { type: 'flat', value: 1000000 },
       program_consulting: { type: 'flat', value: 1000000 },
       event_director:     { type: 'flat', value: 1800000 },
       medical_support:    { type: 'flat', value: 1200000 },
-      security_service:   { type: 'flat', value: 1500000 }
+      security_service:   { type: 'flat', value: 1500000 },
+      yoga:               { type: 'flat', value: 1300000 },
+      canvas_art:         { type: 'flat', value: 1500000 }
     };
 
     // Mongolian display labels for each tier inclusion (shown in PDF "✓ ..."
@@ -944,14 +945,15 @@
       late_snacks:        'Оройн зууш',
       open_mic:           'Open mic · mini stage',
       asar_decor:         'Үндсэн асар нэмэлт тохижилт',
-      forest_lights:      'Ой мод гэрлийн эффект',
       extra_tents:        'Нэмэлт асар 4×4, 4×8 · 4 ширхэг',
-      extra_lighting:     'Нэмэлт гэрэлтүүлэг багц',
+      extra_lighting:     'Орчины гэрэлтүүлэг, тайзны эффект багц',
       team_games:         'Team activities тоглоом · 5 ширхэг',
       program_consulting: 'Хөтөлбөр хамтран боловсруулах',
       event_director:     'Арга хэмжээний хөтөлбөр удирдах',
       medical_support:    'Эмнэлгийн тусламж + тусламжийн асар',
-      security_service:   'Хамгаалалтын алба'
+      security_service:   'Хамгаалалтын алба',
+      yoga:               'Ёог хичээл',
+      canvas_art:         'Канвас арт'
     };
 
     var TIER_BASE_PRICE = {
