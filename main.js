@@ -891,8 +891,12 @@
         'welcome_drink', 'sleeping_bag', 'coffee_corner',
         'lunch_upgrade', 'dinner_upgrade',
         'moonbeam_lounge', 'bartender_service',
-        'amenity_kit', 'dj_service', 'photo_4h',
-        'led_screen_18m2', 'late_snacks'
+        'amenity_kit', 'dj_service',
+        'led_screen_18m2', 'late_snacks',
+        'open_mic', 'asar_decor', 'forest_lights',
+        'extra_tents', 'extra_lighting', 'team_games',
+        'program_consulting', 'event_director',
+        'medical_support', 'security_service'
       ]
     };
 
@@ -900,34 +904,54 @@
     // (value anchor) block in the generated PDF quote. Mirrors the prices
     // shown in the optional add-on grid above.
     var ADDON_STANDALONE_PRICE = {
-      welcome_drink:    { type: 'pp',   value: 5000    },
-      sleeping_bag:     { type: 'pp',   value: 15000   },
-      coffee_corner:    { type: 'pp',   value: 6000    },
-      lunch_upgrade:    { type: 'pp',   value: 12000   },
-      dinner_upgrade:   { type: 'pp',   value: 12000   },
-      amenity_kit:      { type: 'pp',   value: 5000    },
-      late_snacks:      { type: 'pp',   value: 8000    },
-      moonbeam_lounge:  { type: 'flat', value: 500000  },
-      dj_service:       { type: 'flat', value: 1000000 },
-      photo_4h:         { type: 'flat', value: 500000  },
-      led_screen_18m2:  { type: 'flat', value: 1728000 }
+      welcome_drink:      { type: 'pp',   value: 5000    },
+      sleeping_bag:       { type: 'pp',   value: 15000   },
+      coffee_corner:      { type: 'pp',   value: 6000    },
+      lunch_upgrade:      { type: 'pp',   value: 12000   },
+      dinner_upgrade:     { type: 'pp',   value: 12000   },
+      amenity_kit:        { type: 'pp',   value: 5000    },
+      late_snacks:        { type: 'pp',   value: 8000    },
+      moonbeam_lounge:    { type: 'flat', value: 500000  },
+      dj_service:         { type: 'flat', value: 1000000 },
+      photo_4h:           { type: 'flat', value: 500000  },
+      led_screen_18m2:    { type: 'flat', value: 1728000 },
+      open_mic:           { type: 'flat', value: 500000  },
+      asar_decor:         { type: 'flat', value: 2000000 },
+      forest_lights:      { type: 'flat', value: 2000000 },
+      extra_tents:        { type: 'flat', value: 1300000 },
+      extra_lighting:     { type: 'flat', value: 4000000 },
+      team_games:         { type: 'flat', value: 1000000 },
+      program_consulting: { type: 'flat', value: 1000000 },
+      event_director:     { type: 'flat', value: 1800000 },
+      medical_support:    { type: 'flat', value: 1200000 },
+      security_service:   { type: 'flat', value: 1500000 }
     };
 
     // Mongolian display labels for each tier inclusion (shown in PDF "✓ ..."
     // bullets under the package line). Keep wording identical to site copy.
     var INCLUSION_LABEL = {
-      welcome_drink:     'Welcome drink',
-      sleeping_bag:      'Sleeping bag',
-      coffee_corner:     'Кофе/цайны цэг',
-      lunch_upgrade:     'Өдрийн буфет (сайжруулсан)',
-      dinner_upgrade:    'Оройн буфет (сайжруулсан)',
-      moonbeam_lounge:   'Moonbeam Lounge',
-      bartender_service: 'Bartender үйлчилгээ (3 цаг)',
-      amenity_kit:       'Зочдын ариун цэврийн багц',
-      dj_service:        'DJ үйлчилгээ',
-      photo_4h:          'Гэрэл зургийн үйлчилгээ',
-      led_screen_18m2:   'LED дэлгэц 18м²',
-      late_snacks:       'Оройн зууш'
+      welcome_drink:      'Welcome drink',
+      sleeping_bag:       'Sleeping bag',
+      coffee_corner:      'Sunrise Coffee Corner',
+      lunch_upgrade:      'Өдрийн буфет',
+      dinner_upgrade:     'Оройн буфет',
+      moonbeam_lounge:    'Moonbeam Lounge',
+      bartender_service:  'Bartender үйлчилгээ (3 цаг)',
+      amenity_kit:        'Зочдын ариун цэврийн багц',
+      dj_service:         'DJ үйлчилгээ',
+      photo_4h:           'Гэрэл зургийн үйлчилгээ',
+      led_screen_18m2:    'LED дэлгэц 18м²',
+      late_snacks:        'Оройн зууш',
+      open_mic:           'Open mic · mini stage',
+      asar_decor:         'Үндсэн асар нэмэлт тохижилт',
+      forest_lights:      'Ой мод гэрлийн эффект',
+      extra_tents:        'Нэмэлт асар 4×4, 4×8 · 4 ширхэг',
+      extra_lighting:     'Нэмэлт гэрэлтүүлэг багц',
+      team_games:         'Team activities тоглоом · 5 ширхэг',
+      program_consulting: 'Хөтөлбөр хамтран боловсруулах',
+      event_director:     'Арга хэмжээний хөтөлбөр удирдах',
+      medical_support:    'Эмнэлгийн тусламж + тусламжийн асар',
+      security_service:   'Хамгаалалтын алба'
     };
 
     var TIER_BASE_PRICE = {
