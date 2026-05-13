@@ -1193,15 +1193,6 @@
           bartenderPriceEl.textContent = '+' + (bartenderCount * 500000).toLocaleString('en-US') + '₮ (' + bartenderCount + ' Bartender, ' + g + ' хүний арга хэмжээнд)';
         }
       }
-      var platterCount = Math.ceil(g / 15) || 1;
-      var platterPriceEl = document.querySelector('[data-platter-price]');
-      if (platterPriceEl) {
-        if (g < 1) {
-          platterPriceEl.textContent = '+250,000₮ (1 platter)';
-        } else {
-          platterPriceEl.textContent = '+' + (platterCount * 250000).toLocaleString('en-US') + '₮ (' + platterCount + ' platter, ' + g + ' хүний арга хэмжээнд)';
-        }
-      }
     }
 
     function updateEstimate() {
@@ -1313,10 +1304,12 @@
           var ppPrice = parseInt(cb.dataset.price, 10);
           var card = cb.closest('.quote-addon-card');
           var qtyInput = card ? card.querySelector('.quote-addon-card__qty-input') : null;
-          var qty = qtyInput ? (parseInt(qtyInput.value, 10) || guests) : guests;
+          var defaultQty = (cb.value === 'late_snacks') ? (Math.ceil(guests / 15) || 1) : guests;
+          var qty = qtyInput && qtyInput.value ? parseInt(qtyInput.value, 10) : defaultQty;
           var ppTotal = ppPrice * qty;
           perPersonAddonsSum += ppTotal;
-          addonRows += '<p class="quote-estimate__row">' + label + ': ' + formatMNT(ppPrice) + ' × ' + qty + ' = <span class="quote-estimate__num">' + formatMNT(ppTotal) + '</span></p>';
+          var unitLabel = (cb.value === 'late_snacks') ? ' platter' : '';
+          addonRows += '<p class="quote-estimate__row">' + label + ': ' + formatMNT(ppPrice) + ' × ' + qty + unitLabel + ' = <span class="quote-estimate__num">' + formatMNT(ppTotal) + '</span></p>';
         } else if (type === 'flat-dynamic' && cb.value === 'dj_service') {
           var djPrice = calculateDJPrice();
           flatAddonsSum += djPrice;
@@ -1326,11 +1319,6 @@
           var btCount = Math.ceil(guests / 75) || 1;
           flatAddonsSum += btPrice;
           addonRows += '<p class="quote-estimate__row">Bartender (' + btCount + '): <span class="quote-estimate__num">+' + formatMNT(btPrice) + '</span></p>';
-        } else if (type === 'flat-auto' && cb.value === 'late_snacks') {
-          var plPrice = calculatePlatterPrice(guests);
-          var plCount = Math.ceil(guests / 15) || 1;
-          flatAddonsSum += plPrice;
-          addonRows += '<p class="quote-estimate__row">Fruit &amp; snack platter (' + plCount + '): <span class="quote-estimate__num">+' + formatMNT(plPrice) + '</span></p>';
         } else if (type === 'flat' && cb.dataset.price) {
           var flatPrice = parseInt(cb.dataset.price, 10);
           flatAddonsSum += flatPrice;
@@ -1373,14 +1361,13 @@
         var ppPrice = parseInt(cb.dataset.price, 10);
         var card = cb.closest('.quote-addon-card');
         var qtyInput = card ? card.querySelector('.quote-addon-card__qty-input') : null;
-        var qty = qtyInput ? (parseInt(qtyInput.value, 10) || guests) : guests;
+        var defaultQty = (cb.value === 'late_snacks') ? (Math.ceil(guests / 15) || 1) : guests;
+        var qty = qtyInput && qtyInput.value ? parseInt(qtyInput.value, 10) : defaultQty;
         return ppPrice * qty;
       } else if (type === 'flat-dynamic' && cb.value === 'dj_service') {
         return calculateDJPrice();
       } else if (type === 'flat-auto' && cb.value === 'bartender_service') {
         return calculateBartenderPrice(guests);
-      } else if (type === 'flat-auto' && cb.value === 'late_snacks') {
-        return calculatePlatterPrice(guests);
       } else if (type === 'flat' && cb.dataset.price) {
         return parseInt(cb.dataset.price, 10);
       }
@@ -1447,7 +1434,8 @@
         if (!cb) return;
         var type = cb.dataset.type;
         if (type === 'per-person') {
-          inclusionsTotal += parseInt(cb.dataset.price, 10) * guests;
+          var perPersonQty = (cb.value === 'late_snacks') ? (Math.ceil(guests / 15) || 1) : guests;
+          inclusionsTotal += parseInt(cb.dataset.price, 10) * perPersonQty;
         } else if (type === 'flat') {
           inclusionsTotal += parseInt(cb.dataset.price, 10);
         } else if (type === 'flat-auto' && cb.value === 'late_snacks') {
@@ -1621,9 +1609,15 @@
               var qtyInput = qtyDiv.querySelector('.quote-addon-card__qty-input');
               var currentGuests = guestInput ? (parseInt(guestInput.value, 10) || 1) : 1;
               if (qtyInput) {
-                qtyInput.value = currentGuests;
-                qtyInput.max = currentGuests;
-                updateQtyTotal(qtyDiv, parseInt(cb.dataset.price, 10), currentGuests);
+                if (cb.value === 'late_snacks') {
+                  qtyInput.value = Math.ceil(currentGuests / 15) || 1;
+                  qtyInput.removeAttribute('max');
+                  updateQtyTotal(qtyDiv, 250000, qtyInput.value);
+                } else {
+                  qtyInput.value = currentGuests;
+                  qtyInput.max = currentGuests;
+                  updateQtyTotal(qtyDiv, parseInt(cb.dataset.price, 10), currentGuests);
+                }
               }
             }
           }
@@ -1832,7 +1826,8 @@
         };
         if (cb.dataset.type === 'per-person' && !cb.disabled) {
           var qtyInput = card ? card.querySelector('.quote-addon-card__qty-input') : null;
-          item.quantity   = qtyInput ? (parseInt(qtyInput.value, 10) || guestsInt) : guestsInt;
+          var fallbackQty = (cb.value === 'late_snacks') ? (Math.ceil(guestsInt / 15) || 1) : guestsInt;
+          item.quantity   = qtyInput && qtyInput.value ? parseInt(qtyInput.value, 10) : fallbackQty;
           item.unit_price = parseInt(cb.dataset.price, 10) || 0;
           item.price      = item.unit_price * item.quantity;
         } else if (cb.value === 'dj_service' && !cb.disabled) {
@@ -1845,9 +1840,6 @@
         } else if (cb.value === 'bartender_service' && !cb.disabled) {
           item.bartender_count = Math.ceil(guestsInt / 75) || 1;
           item.price           = calculateBartenderPrice(guestsInt);
-        } else if (cb.value === 'late_snacks' && !cb.disabled) {
-          item.platter_count = Math.ceil(guestsInt / 15) || 1;
-          item.price         = calculatePlatterPrice(guestsInt);
         } else if (cb.dataset.price && !cb.disabled) {
           item.price = parseInt(cb.dataset.price, 10);
         }

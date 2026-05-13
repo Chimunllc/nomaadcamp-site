@@ -1305,15 +1305,20 @@
                 </div>
               </div>
 
-              <label class="quote-addon-card quote-addon-card--full">
-                <input type="checkbox" name="addons[]" value="late_snacks" data-type="flat-auto" data-label="Fruit & snack platter">
+              <div class="quote-addon-card">
+                <input type="checkbox" name="addons[]" value="late_snacks" data-price="250000" data-type="per-person" data-label="Fruit & snack platter">
                 <div class="quote-addon-card__body">
                   <span class="quote-addon-card__name">Fruit &amp; snack platter</span>
-                  <span class="quote-addon-card__detail">Хүний тооноос хамаарч platter тоо автомат тогтоогдоно</span>
-                  <span class="quote-addon-card__price" data-platter-price>+250,000₮ (1 platter)</span>
-                  <small class="quote-addon-card__tooltip">1 platter / 15 зочин стандарт · 250,000₮ / ширхэг</small>
+                  <span class="quote-addon-card__detail">Санал болгох: 1 platter / 15 зочин</span>
+                  <span class="quote-addon-card__price">+250,000₮ / platter</span>
+                  <div class="quote-addon-card__quantity" hidden>
+                    <span class="quote-addon-card__qty-label">Хэдэн platter авах:</span>
+                    <input type="number" name="late_snacks_qty" min="1" class="quote-addon-card__qty-input">
+                    <span class="quote-addon-card__qty-text">platter × 250,000₮ =</span>
+                    <span class="quote-addon-card__qty-total"></span>
+                  </div>
                 </div>
-              </label>
+              </div>
 
             </div>
           </details>
