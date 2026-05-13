@@ -906,7 +906,7 @@
     var ADDON_STANDALONE_PRICE = {
       welcome_drink:      { type: 'pp',   value: 5000    },
       sleeping_bag:       { type: 'pp',   value: 15000   },
-      coffee_corner:      { type: 'pp',   value: 6000    },
+      coffee_corner:      { type: 'flat', value: 0       },
       lunch_upgrade:      { type: 'pp',   value: 12000   },
       dinner_upgrade:     { type: 'pp',   value: 12000   },
       amenity_kit:        { type: 'pp',   value: 5000    },
