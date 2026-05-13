@@ -947,7 +947,7 @@
       asar_decor:         'Үндсэн асар нэмэлт чимэглэл, тохижилт',
       extra_tents:        'Нэмэлт асар 4×4, 4×8 · 4 ширхэг',
       extra_lighting:     'Орчны гэрэлтүүлэг, тайзны эффект багц',
-      team_games:         'Team activities тоглоом · 5 ширхэг',
+      team_games:         'Team activities тоглоом · 4 ширхэг',
       program_consulting: 'Хөтөлбөр хамтран боловсруулах',
       event_director:     'Арга хэмжээний хөтөлбөр удирдах',
       medical_support:    'Эмнэлгийн тусламж + тусламжийн асар',
