@@ -891,7 +891,7 @@
         'welcome_drink', 'sleeping_bag', 'coffee_corner',
         'lunch_upgrade', 'dinner_upgrade',
         'moonbeam_lounge', 'bartender_service',
-        'amenity_kit', 'dj_service',
+        'dj_service',
         'led_screen_18m2', 'late_snacks',
         'open_mic', 'asar_decor',
         'extra_tents', 'extra_lighting', 'team_games',
@@ -910,10 +910,10 @@
       lunch_upgrade:      { type: 'pp',   value: 12000   },
       dinner_upgrade:     { type: 'pp',   value: 12000   },
       amenity_kit:        { type: 'pp',   value: 5000    },
-      late_snacks:        { type: 'pp',   value: 8000    },
+      late_snacks:        { type: 'pp',   value: 16667   },
       moonbeam_lounge:    { type: 'flat', value: 500000  },
       dj_service:         { type: 'flat', value: 1000000 },
-      photo_4h:           { type: 'flat', value: 500000  },
+      after_movie:        { type: 'flat', value: 1000000 },
       led_screen_18m2:    { type: 'flat', value: 1728000 },
       open_mic:           { type: 'flat', value: 500000  },
       asar_decor:         { type: 'flat', value: 2000000 },
@@ -940,9 +940,9 @@
       bartender_service:  'Bartender үйлчилгээ (3 цаг)',
       amenity_kit:        'Зочдын ариун цэврийн багц',
       dj_service:         'DJ үйлчилгээ',
-      photo_4h:           'Гэрэл зургийн үйлчилгээ',
+      after_movie:        'Арга хэмжээний after movie',
       led_screen_18m2:    'LED дэлгэц 18 м²',
-      late_snacks:        'Оройн зууш',
+      late_snacks:        'Fruit & snack platter',
       open_mic:           'Open mic · mini stage',
       asar_decor:         'Үндсэн асар нэмэлт тохижилт',
       extra_tents:        'Нэмэлт асар 4×4, 4×8 · 4 ширхэг',
@@ -952,7 +952,7 @@
       event_director:     'Арга хэмжээний хөтөлбөр удирдах',
       medical_support:    'Эмнэлгийн тусламж + тусламжийн асар',
       security_service:   'Хамгаалалтын алба',
-      yoga:               'Иог хичээл',
+      yoga:               'Иог багц',
       canvas_art:         'Канвас арт'
     };
 
@@ -999,6 +999,13 @@
           var btTotal = btCount * 500000;
           lines.push({ label: '+ Bartender (' + btCount + ' × 500,000)', amount: btTotal });
           sumStandalone += btTotal;
+          return;
+        }
+        if (code === 'late_snacks') {
+          var plCount = Math.ceil(guests / 15) || 1;
+          var plTotal = plCount * 250000;
+          lines.push({ label: '+ Fruit & snack platter (' + plCount + ' × 250,000)', amount: plTotal });
+          sumStandalone += plTotal;
           return;
         }
         var spec = ADDON_STANDALONE_PRICE[code];
@@ -1064,6 +1071,11 @@
     function calculateBartenderPrice(guests) {
       var count = Math.ceil(guests / 75) || 1;
       return count * 500000;
+    }
+
+    function calculatePlatterPrice(guests) {
+      var count = Math.ceil(guests / 15) || 1;
+      return count * 250000;
     }
 
     function getProductionPricePerPerson() {
@@ -1179,6 +1191,15 @@
           bartenderPriceEl.textContent = '+500,000₮ (1 Bartender)';
         } else {
           bartenderPriceEl.textContent = '+' + (bartenderCount * 500000).toLocaleString('en-US') + '₮ (' + bartenderCount + ' Bartender, ' + g + ' хүний арга хэмжээнд)';
+        }
+      }
+      var platterCount = Math.ceil(g / 15) || 1;
+      var platterPriceEl = document.querySelector('[data-platter-price]');
+      if (platterPriceEl) {
+        if (g < 1) {
+          platterPriceEl.textContent = '+250,000₮ (1 platter)';
+        } else {
+          platterPriceEl.textContent = '+' + (platterCount * 250000).toLocaleString('en-US') + '₮ (' + platterCount + ' platter, ' + g + ' хүний арга хэмжээнд)';
         }
       }
     }
@@ -1305,6 +1326,11 @@
           var btCount = Math.ceil(guests / 75) || 1;
           flatAddonsSum += btPrice;
           addonRows += '<p class="quote-estimate__row">Bartender (' + btCount + '): <span class="quote-estimate__num">+' + formatMNT(btPrice) + '</span></p>';
+        } else if (type === 'flat-auto' && cb.value === 'late_snacks') {
+          var plPrice = calculatePlatterPrice(guests);
+          var plCount = Math.ceil(guests / 15) || 1;
+          flatAddonsSum += plPrice;
+          addonRows += '<p class="quote-estimate__row">Fruit &amp; snack platter (' + plCount + '): <span class="quote-estimate__num">+' + formatMNT(plPrice) + '</span></p>';
         } else if (type === 'flat' && cb.dataset.price) {
           var flatPrice = parseInt(cb.dataset.price, 10);
           flatAddonsSum += flatPrice;
@@ -1353,6 +1379,8 @@
         return calculateDJPrice();
       } else if (type === 'flat-auto' && cb.value === 'bartender_service') {
         return calculateBartenderPrice(guests);
+      } else if (type === 'flat-auto' && cb.value === 'late_snacks') {
+        return calculatePlatterPrice(guests);
       } else if (type === 'flat' && cb.dataset.price) {
         return parseInt(cb.dataset.price, 10);
       }
@@ -1422,6 +1450,8 @@
           inclusionsTotal += parseInt(cb.dataset.price, 10) * guests;
         } else if (type === 'flat') {
           inclusionsTotal += parseInt(cb.dataset.price, 10);
+        } else if (type === 'flat-auto' && cb.value === 'late_snacks') {
+          inclusionsTotal += calculatePlatterPrice(guests);
         } else if (type === 'flat-auto') {
           inclusionsTotal += calculateBartenderPrice(guests);
         }
@@ -1815,6 +1845,9 @@
         } else if (cb.value === 'bartender_service' && !cb.disabled) {
           item.bartender_count = Math.ceil(guestsInt / 75) || 1;
           item.price           = calculateBartenderPrice(guestsInt);
+        } else if (cb.value === 'late_snacks' && !cb.disabled) {
+          item.platter_count = Math.ceil(guestsInt / 15) || 1;
+          item.price         = calculatePlatterPrice(guestsInt);
         } else if (cb.dataset.price && !cb.disabled) {
           item.price = parseInt(cb.dataset.price, 10);
         }
