@@ -1002,7 +1002,7 @@
           return;
         }
         if (code === 'late_snacks') {
-          var plCount = Math.ceil(guests / 15) || 1;
+          var plCount = 5;
           var plTotal = plCount * 250000;
           lines.push({ label: '+ Fruit & snack platter (' + plCount + ' × 250,000)', amount: plTotal });
           sumStandalone += plTotal;
@@ -1434,7 +1434,7 @@
         if (!cb) return;
         var type = cb.dataset.type;
         if (type === 'per-person') {
-          var perPersonQty = (cb.value === 'late_snacks') ? (Math.ceil(guests / 15) || 1) : guests;
+          var perPersonQty = (cb.value === 'late_snacks') ? 5 : guests;
           inclusionsTotal += parseInt(cb.dataset.price, 10) * perPersonQty;
         } else if (type === 'flat') {
           inclusionsTotal += parseInt(cb.dataset.price, 10);
