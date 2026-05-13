@@ -944,7 +944,7 @@
       led_screen_18m2:    'LED дэлгэц 18 м²',
       late_snacks:        'Fruit & snack platter',
       open_mic:           'Open mic · mini stage',
-      asar_decor:         'Үндсэн асар нэмэлт тохижилт',
+      asar_decor:         'Үндсэн асар нэмэлт чимэглэл, тохижилт',
       extra_tents:        'Нэмэлт асар 4×4, 4×8 · 4 ширхэг',
       extra_lighting:     'Орчны гэрэлтүүлэг, тайзны эффект багц',
       team_games:         'Team activities тоглоом · 5 ширхэг',
