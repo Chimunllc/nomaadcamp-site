@@ -941,18 +941,18 @@
       amenity_kit:        'Зочдын ариун цэврийн багц',
       dj_service:         'DJ үйлчилгээ',
       photo_4h:           'Гэрэл зургийн үйлчилгээ',
-      led_screen_18m2:    'LED дэлгэц 18м²',
+      led_screen_18m2:    'LED дэлгэц 18 м²',
       late_snacks:        'Оройн зууш',
       open_mic:           'Open mic · mini stage',
       asar_decor:         'Үндсэн асар нэмэлт тохижилт',
       extra_tents:        'Нэмэлт асар 4×4, 4×8 · 4 ширхэг',
-      extra_lighting:     'Орчины гэрэлтүүлэг, тайзны эффект багц',
+      extra_lighting:     'Орчны гэрэлтүүлэг, тайзны эффект багц',
       team_games:         'Team activities тоглоом · 5 ширхэг',
       program_consulting: 'Хөтөлбөр хамтран боловсруулах',
       event_director:     'Арга хэмжээний хөтөлбөр удирдах',
       medical_support:    'Эмнэлгийн тусламж + тусламжийн асар',
       security_service:   'Хамгаалалтын алба',
-      yoga:               'Ёог хичээл',
+      yoga:               'Иог хичээл',
       canvas_art:         'Канвас арт'
     };
 
