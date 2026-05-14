@@ -1135,7 +1135,11 @@
               var gNow = guestInput ? (parseInt(guestInput.value, 10) || 0) : 0;
               if (qtyInputEl) {
                 qtyInputEl.disabled = true;
-                if (gNow > 0) qtyInputEl.value = gNow;
+                if (cb.value === 'late_snacks') {
+                  qtyInputEl.value = 5;
+                } else if (gNow > 0) {
+                  qtyInputEl.value = gNow;
+                }
               }
               if (tier === 'Премиум' || tier === 'Стандарт') {
                 // Lock price display: replace unit-price text with included label
