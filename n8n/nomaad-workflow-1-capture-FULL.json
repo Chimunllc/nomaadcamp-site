@@ -407,14 +407,14 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "1jnHDJmN6C_4jBmjuwmYhntQBx3MFIkYo2ePAxmiYadA",
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
           "mode": "list",
-          "cachedResultName": "nomaad_quote_items",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jnHDJmN6C_4jBmjuwmYhntQBx3MFIkYo2ePAxmiYadA/edit"
+          "cachedResultName": "nomaad_quote_log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
         },
         "sheetName": {
           "__rl": true,
-          "value": "Sheet1",
+          "value": "Quote Items",
           "mode": "name"
         },
         "columns": {
