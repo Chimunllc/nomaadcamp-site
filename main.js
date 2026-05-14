@@ -1683,10 +1683,15 @@
           var unitPrice = cb ? parseInt(cb.dataset.price, 10) : 0;
           if (cb && cb.disabled) {
             // Included per-person items: always track guest count
-            qtyInput.value = g;
-            var currentTier = tierSelect ? tierSelect.value : '';
-            if (currentTier !== 'Премиум' && currentTier !== 'Стандарт') {
-              if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+            // Exception: late_snacks (Fruit & snack platter) — Premium is fixed at 5
+            if (cb.value === 'late_snacks') {
+              qtyInput.value = 5;
+            } else {
+              qtyInput.value = g;
+              var currentTier = tierSelect ? tierSelect.value : '';
+              if (currentTier !== 'Премиум' && currentTier !== 'Стандарт') {
+                if (qtyDiv) updateQtyTotal(qtyDiv, unitPrice, g);
+              }
             }
             // For Production/Experience included items the total stays as "нэмэлт төлбөр авахгүй"
           } else {
