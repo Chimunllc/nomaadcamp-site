@@ -541,6 +541,37 @@
           "name": "Google Sheets OAuth2 API"
         }
       }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://chatapi.viber.com/pa/send_message",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Viber-Auth-Token",
+              "value": "REPLACE_WITH_VIBER_BOT_TOKEN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"receiver\": \"REPLACE_WITH_YOUR_VIBER_USER_ID\",\n  \"min_api_version\": 1,\n  \"sender\": {\n    \"name\": \"NOMAAD Bot\"\n  },\n  \"type\": \"text\",\n  \"text\": \"🆕 Шинэ үнийн санал\\n\\nДугаар: {{ $('Code · Render HTML').first().json.quote_number }}\\nКомпани: {{ $('Code · Render HTML').first().json.company }}\\nХолбоо: {{ $('Code · Render HTML').first().json.contact_name }} · {{ $('Code · Render HTML').first().json.phone }}\\nКемп: {{ $('Code · Render HTML').first().json.camp_name || $('Code · Render HTML').first().json.camp }}\\nБагц: {{ $('Code · Render HTML').first().json.package_tier || $('Code · Render HTML').first().json.tier }} · {{ $('Code · Render HTML').first().json.guest_count }} хүн\\nХугацаа: {{ $('Code · Render HTML').first().json.duration_label }}\\nНийт: {{ Number($('Code · Render HTML').first().json.grand_total || 0).toLocaleString('en-US') }}₮\"\n}",
+        "options": {}
+      },
+      "id": "viber-notify-001",
+      "name": "Viber · Notify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1480,
+        600
+      ]
     }
   ],
   "pinData": {
@@ -679,6 +710,11 @@
           },
           {
             "node": "Code · Decompose items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Viber · Notify",
             "type": "main",
             "index": 0
           }
