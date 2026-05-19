@@ -3,50 +3,20 @@
   "nodes": [
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {
-              "mode": "everyMinute"
-            }
-          ]
-        },
-        "event": "rowUpdate",
-        "documentId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
-          "cachedResultName": "nomaad_quote_log",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
-        },
-        "sheetName": {
-          "__rl": true,
-          "mode": "list",
-          "value": 529201537,
-          "cachedResultName": "Quote Log",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
-        },
-        "options": {
-          "valueRender": "FORMATTED_VALUE",
-          "dateTimeRenderOption": "FORMATTED_STRING",
-          "columnsToWatch": [
-            "Төлөв"
-          ]
-        }
+        "httpMethod": "POST",
+        "path": "nomaad-quote-send",
+        "responseMode": "lastNode",
+        "options": {}
       },
-      "id": "sheets-trigger-wf2-001",
-      "name": "Sheets Trigger · Төлөв update",
-      "type": "n8n-nodes-base.googleSheetsTrigger",
-      "typeVersion": 1,
+      "id": "webhook-trigger-nomaad-quote-send",
+      "name": "Webhook · Төлөв trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
       "position": [
         240,
         300
       ],
-      "credentials": {
-        "googleSheetsTriggerOAuth2Api": {
-          "id": "REPLACE_IF_NEEDED",
-          "name": "Google Sheets Trigger account"
-        }
-      }
+      "webhookId": "nomaad-quote-send"
     },
     {
       "parameters": {
@@ -60,7 +30,7 @@
           "conditions": [
             {
               "id": "if-toluv-ilgeeh",
-              "leftValue": "={{ $json['Төлөв'] }}",
+              "leftValue": "={{ $json.body['Төлөв'] }}",
               "rightValue": "ИЛГЭЭХ",
               "operator": {
                 "type": "string",
@@ -101,7 +71,7 @@
           "values": [
             {
               "lookupColumn": "Үнийн саналын дугаар",
-              "lookupValue": "={{ $json['Үнийн саналын дугаар'] }}"
+              "lookupValue": "={{ $json.body['Үнийн саналын дугаар'] }}"
             }
           ]
         },
@@ -675,22 +645,22 @@
         ]
       ]
     },
-    "Sheets Trigger · Төлөв update": {
+    "IF · Төлөв = ИЛГЭЭХ": {
       "main": [
         [
           {
-            "node": "IF · Төлөв = ИЛГЭЭХ",
+            "node": "Sheets · Find row",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF · Төлөв = ИЛГЭЭХ": {
+    "Webhook · Төлөв trigger": {
       "main": [
         [
           {
-            "node": "Sheets · Find row",
+            "node": "IF · Төлөв = ИЛГЭЭХ",
             "type": "main",
             "index": 0
           }

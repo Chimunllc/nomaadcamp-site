@@ -225,7 +225,8 @@
             "Төлөв": "ШИНЭ",
             "Нэмэлт үйлчилгээ": "={{ $('Code · Render HTML').item.json.addons_summary }}",
             "Тээвэр": "={{ $('Code · Render HTML').item.json.shuttle_summary }}",
-            "Анхны өгөгдөл": "={{ JSON.stringify($('Code · Render HTML').item.json.original_payload) }}"
+            "Анхны өгөгдөл": "={{ JSON.stringify($('Code · Render HTML').item.json.original_payload) }}",
+            "Байршил": "={{ $('Code · Render HTML').item.json.location }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -476,6 +477,15 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
+            },
+            {
+              "id": "Байршил",
+              "displayName": "Байршил",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
