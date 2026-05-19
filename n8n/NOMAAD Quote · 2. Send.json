@@ -27,7 +27,10 @@
         },
         "options": {
           "valueRender": "FORMATTED_VALUE",
-          "dateTimeRenderOption": "FORMATTED_STRING"
+          "dateTimeRenderOption": "FORMATTED_STRING",
+          "columnsToWatch": [
+            "Төлөв"
+          ]
         }
       },
       "id": "sheets-trigger-wf2-001",

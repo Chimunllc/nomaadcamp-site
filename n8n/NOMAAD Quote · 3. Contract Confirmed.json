@@ -10,7 +10,6 @@
             }
           ]
         },
-        "event": "rowUpdate",
         "documentId": {
           "__rl": true,
           "mode": "list",
@@ -25,23 +24,25 @@
           "cachedResultName": "Quote Log",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
         },
+        "event": "rowUpdate",
         "options": {
-          "valueRender": "FORMATTED_VALUE",
-          "dateTimeRenderOption": "FORMATTED_STRING"
+          "columnsToWatch": [
+            "Төлөв"
+          ]
         }
       },
-      "id": "sheets-trigger-wf3-001",
+      "id": "e8581bf5-1889-480b-8f9d-d35883b12b91",
       "name": "Sheets Trigger · Төлөв update",
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "typeVersion": 1,
       "position": [
-        240,
-        300
+        5232,
+        7104
       ],
       "credentials": {
         "googleSheetsTriggerOAuth2Api": {
-          "id": "REPLACE_IF_NEEDED",
-          "name": "Google Sheets Trigger account"
+          "id": "lG2qrSU3DBfbYp0K",
+          "name": "Google Sheets Trigger OAuth2 API"
         }
       }
     },
@@ -69,13 +70,13 @@
         },
         "options": {}
       },
-      "id": "f5e9be22-7cdf-4a8d-9bb5-dc8422605ceb",
+      "id": "71306bb7-ee45-4b0d-bacd-6b9df5f7dd7a",
       "name": "IF · Төлөв = ГЭРЭЭ",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        460,
-        300
+        5456,
+        7104
       ]
     },
     {
@@ -104,37 +105,75 @@
         },
         "options": {}
       },
-      "id": "ec0266ba-3c33-490c-a1bb-f46fbed15bdd",
+      "id": "82fe23f1-7505-4dbe-8573-a01f6a433818",
       "name": "Sheets · Find quote row",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        680,
-        300
+        5680,
+        7104
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "k4p4OIdOAsaZgnRH",
+          "id": "tZSfYfxkpH5L34wG",
           "name": "Google Sheets OAuth2 API"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// =====================================================================\n// NOMAAD Camp · Workflow 3 · Contract Confirmed (Code node, fixed v2)\n// =====================================================================\n// Input: Quote Log-ийн нэг мөр\n// Output: Гэрээний placeholder бүх утга + finance log + staff email\n\nconst row = $input.first().json;\n\nlet p;\ntry { p = JSON.parse(row[\"Анхны өгөгдөл\"] || \"{}\"); }\ncatch (e) { p = {}; }\n\nconst num = (v, d = 0) => {\n  if (v === undefined || v === null || v === '') return d;\n  const cleaned = String(v).replace(/[₮,$,\\s]/g, '');\n  const n = Number(cleaned);\n  return Number.isFinite(n) ? n : d;\n};\nconst str = (v, d = '') => (v === undefined || v === null) ? d : String(v).trim();\nconst fmt = n => Number(n).toLocaleString('en-US');\n\n// ---- Mongolian number → words (simple cyrillic) ----\nfunction numberToMongolWords(n) {\n  if (!n || n === 0) return 'тэг';\n  const units = ['', 'нэг', 'хоёр', 'гурван', 'дөрвөн', 'таван', 'зургаан', 'долоон', 'найман', 'есөн'];\n  const tens  = ['', 'арван', 'хорин', 'гучин', 'дөчин', 'тавин', 'жаран', 'далан', 'наян', 'ерэн'];\n  const hundreds = ['', 'нэг зуун', 'хоёр зуун', 'гурван зуун', 'дөрвөн зуун', 'таван зуун', 'зургаан зуун', 'долоон зуун', 'найман зуун', 'есөн зуун'];\n\n  function under1000(x) {\n    if (x === 0) return '';\n    const h = Math.floor(x / 100);\n    const t = Math.floor((x % 100) / 10);\n    const u = x % 10;\n    let parts = [];\n    if (h) parts.push(hundreds[h]);\n    if (t) parts.push(tens[t]);\n    if (u) parts.push(units[u]);\n    return parts.join(' ');\n  }\n\n  let result = '';\n  const billions = Math.floor(n / 1000000000);\n  const millions = Math.floor((n % 1000000000) / 1000000);\n  const thousands = Math.floor((n % 1000000) / 1000);\n  const rest = n % 1000;\n\n  if (billions) result += under1000(billions) + ' тэрбум ';\n  if (millions) result += under1000(millions) + ' сая ';\n  if (thousands) result += under1000(thousands) + ' мянган ';\n  if (rest) result += under1000(rest);\n  return result.trim();\n}\n\n// ---- Дата ----\nconst quoteNumber  = str(row[\"Үнийн саналын дугаар\"]);\nconst company      = str(row[\"Компанийн нэр\"]) || str(p.company);\nconst taxId        = str(row[\"Регистрийн дугаар\"]) || str(p.customer_tax_id);\nconst contactName  = str(row[\"Холбоо барих хүн\"]) || str(p.contact_name);\nconst phone        = str(row[\"Утас\"]) || str(p.phone);\nconst email        = str(row[\"И-мэйл\"]) || str(p.email);\nconst campFull     = str(row[\"Кемп\"]) || str(p.camp_name);\nconst tier         = str(row[\"Багц\"]) || str(p.package_tier);\nconst guests       = num(row[\"Хүний тоо\"]) || num(p.guest_count) || 0;\nconst startDt      = row[\"Эхлэх огноо\"] || p.start_datetime || '';\nconst endDt        = row[\"Дуусах огноо\"] || p.end_datetime || '';\n\n// NOMAAD Grove → \"Grove\" (after \"NOMAAD \")\nconst campShort = campFull.replace(/^NOMAAD\\s+/i, '');\n\n// ---- Дүн тооцоолол ----\nconst listPrice    = num(row[\"Нийт дүн\"]) || num(p.grand_total);\nconst discount     = num(row[\"Хямдрал ₮\"]);\nconst finalAmount  = num(row[\"Эцсийн гэрээний дүн\"]) || (listPrice - discount);\nconst deposit30    = Math.round(finalAmount * 0.30);\nconst balance70    = finalAmount - deposit30;\nconst vatIncluded  = Math.round(finalAmount / 11);\n\n// Нэг хүний үнэ (per-person)\nconst perPersonPrice = guests > 0 ? Math.round((num(p.tier_subtotal) || finalAmount) / guests) : 0;\nconst addonsSubtotal = num(p.addons_subtotal) + num(p.shuttle_subtotal);\n\n// ---- Огноо задлах — Google Sheets serial number + ISO string хоёуланг нь танина ----\nfunction parseDt(s) {\n  if (s === null || s === undefined || s === '') {\n    return { year: '', month: '', day: '', time: '' };\n  }\n\n  // 1) Sheets-ийн огнооны serial number (1899-12-30-аас хойших өдөр)\n  //    зарим тохиолдолд string \"46185.375\" хэлбэрээр ирж болно.\n  let asNum;\n  if (typeof s === 'number') {\n    asNum = s;\n  } else if (typeof s === 'string' && /^\\d+(\\.\\d+)?$/.test(s.trim())) {\n    asNum = Number(s.trim());\n  }\n  if (Number.isFinite(asNum) && asNum > 25569 /* 1970-01-01 */ && asNum < 80000) {\n    // Sheets epoch: 1899-12-30 (Lotus 1-2-3 bug-тай адил)\n    const ms = Math.round((asNum - 25569) * 86400000);\n    const d = new Date(ms);\n    if (!isNaN(d.getTime())) {\n      return {\n        year:  String(d.getUTCFullYear()),\n        month: String(d.getUTCMonth() + 1),\n        day:   String(d.getUTCDate()),\n        time:  String(d.getUTCHours()).padStart(2,'0') + ':' + String(d.getUTCMinutes()).padStart(2,'0')\n      };\n    }\n  }\n\n  // 2) ISO эсвэл \"YYYY-MM-DD\" string\n  const m = String(s).match(/(\\d{4})-(\\d{2})-(\\d{2})(?:[T ](\\d{2}):(\\d{2}))?/);\n  if (m) {\n    return {\n      year:  m[1],\n      month: String(parseInt(m[2], 10)),\n      day:   String(parseInt(m[3], 10)),\n      time:  (m[4] && m[5]) ? `${m[4]}:${m[5]}` : ''\n    };\n  }\n\n  // 3) Үлдсэн бүх case-д JS Date парсингаар оролдох\n  const d2 = new Date(s);\n  if (!isNaN(d2.getTime())) {\n    return {\n      year:  String(d2.getFullYear()),\n      month: String(d2.getMonth() + 1),\n      day:   String(d2.getDate()),\n      time:  String(d2.getHours()).padStart(2,'0') + ':' + String(d2.getMinutes()).padStart(2,'0')\n    };\n  }\n\n  return { year: '', month: '', day: '', time: '' };\n}\nconst startParts = parseDt(startDt);\nconst endParts   = parseDt(endDt);\n\n// Contract date = today\nconst today = new Date();\nconst contractYear  = String(today.getFullYear());\nconst contractMonth = String(today.getMonth() + 1);\nconst contractDay   = String(today.getDate());\n\n\n// ────────────────────────────────────────────────────────────\n// Хавсралт №1 — динамик жагсаалт үүсгэх\n// ────────────────────────────────────────────────────────────\nfunction parseJSONSafe(s, d) {\n  if (!s) return d;\n  if (typeof s !== 'string') return s;\n  try { return JSON.parse(s); } catch (e) { return d; }\n}\n\nconst tierInclusions = parseJSONSafe(p.tier_inclusions_json, []);\nconst addonsList     = parseJSONSafe(p.addons_json, []);\n\n// Багцад орсон үйлчилгээ — bullet list\nlet appendixInclusions;\nif (Array.isArray(tierInclusions) && tierInclusions.length > 0) {\n  appendixInclusions = tierInclusions.map(x => '• ' + String(x)).join('\\n');\n} else {\n  appendixInclusions = '(Багцад үндсэн зүйлс орсон)';\n}\n\n// Нэмэлт төлбөрт үйлчилгээ — нэр, тоо, нэгж үнэ, нийт\nconst PRICES_FLAT = {\n  welcome_drink: 5000, sleeping_bag: 15000, coffee_corner: 6000,\n  lunch_upgrade: 12000, dinner_upgrade: 12000, late_snacks: 8000,\n  amenity_kit: 5000,\n  moonbeam_lounge: 500000, led_screen_18m2: 1728000,\n  photo_4h: 500000, dj_service: 1000000\n};\nconst UNIT_LABELS = { 'per-person': 'хүн', 'flat': 'ширхэг', 'flat-auto': 'ажилтан', 'flat-dynamic': 'ширхэг' };\n\nlet appendixAddons;\nconst paidAddons = (Array.isArray(addonsList) ? addonsList : []).filter(a => !a.tier_included);\nif (paidAddons.length === 0) {\n  appendixAddons = '(Нэмэлт төлбөртэй үйлчилгээ сонгоогүй)';\n} else {\n  appendixAddons = paidAddons.map(a => {\n    const name = a.name || a.code || 'Үйлчилгээ';\n    let qty, unit, unitPrice, total;\n    if (a.code === 'bartender_service') {\n      qty = a.bartender_count || Math.ceil(guests/75) || 1;\n      unit = 'ажилтан'; unitPrice = 500000;\n    } else if (a.code === 'late_snacks') {\n      qty = a.quantity || Math.ceil(guests/15) || 1;\n      unit = 'platter'; unitPrice = 250000;\n    } else if (a.code === 'dj_service') {\n      qty = 1; unit = (a.duration || 3) + ' цаг';\n      unitPrice = a.price || 1000000;\n    } else if (a.type === 'per-person') {\n      qty = a.quantity || guests; unit = 'хүн';\n      unitPrice = a.unit_price || PRICES_FLAT[a.code] || 0;\n    } else {\n      qty = 1; unit = UNIT_LABELS[a.type] || 'ширхэг';\n      unitPrice = a.price || PRICES_FLAT[a.code] || 0;\n    }\n    total = qty * unitPrice;\n    return `• ${name} — ${qty} ${unit} × ${fmt(unitPrice)}₮ = ${fmt(total)}₮`;\n  }).join('\\n');\n}\n\n// Тээвэр\nconst shuttleLabel = str(p.shuttle_service) || 'Сонгохгүй';\nlet appendixShuttle;\nif (!shuttleLabel || shuttleLabel === 'Сонгохгүй') {\n  appendixShuttle = '(Тээврийн үйлчилгээ сонгоогүй)';\n} else {\n  const busCount = num(p.bus_count) || 1;\n  const shuttleUnit = num(p.shuttle_unit_price);\n  const shuttleTotal = num(p.shuttle_subtotal);\n  appendixShuttle = `• ${shuttleLabel} — ${busCount} автобус × ${fmt(shuttleUnit)}₮ = ${fmt(shuttleTotal)}₮`;\n}\n\n// Кемпийн бүтэн нэр (NOMAAD Summit гэх мэт)\nconst campFullName = campFull;\n\n// ---- Placeholder map (Google Docs Replace nodes ашиглах) ----\nconst placeholders = {\n  // Гарчиг + БАТЛАВ блок\n  contract_year:        contractYear,\n  contract_month:       contractMonth,\n  contract_day:         contractDay,\n\n  // 1.1 Захиалагч\n  customer_tax_id:      taxId,\n  company_name:         company,\n  contact_position:     'Гүйцэтгэх захирал',\n  contact_name:         contactName,\n\n  // 2.1 Хугацаа\n  start_year:           startParts.year,\n  start_month:          startParts.month,\n  start_day:            startParts.day,\n  start_time:           startParts.time,\n  end_year:             endParts.year,\n  end_month:            endParts.month,\n  end_day:              endParts.day,\n  end_time:             endParts.time,\n\n  // 2.2 Үнэ\n  guest_count:          String(guests),\n  camp_short_name:      campShort,\n  tier:                 tier,\n  per_person_price:     fmt(perPersonPrice),\n  per_person_price_words: numberToMongolWords(perPersonPrice),\n  addons_subtotal:      fmt(addonsSubtotal),\n  addons_subtotal_words: numberToMongolWords(addonsSubtotal),\n  grand_total:          fmt(finalAmount),\n  grand_total_words:    numberToMongolWords(finalAmount),\n\n  // 2.3 — 2.4 Төлбөр\n  deposit_30:           fmt(deposit30),\n  deposit_30_words:     numberToMongolWords(deposit30),\n  balance_70:           fmt(balance70),\n  balance_70_words:     numberToMongolWords(balance70),\n\n  // 4.4 1 цагийн сунгах төлбөр (default = 300,000₮)\n  hourly_extension_fee:       '300,000',\n  hourly_extension_fee_words: numberToMongolWords(300000),\n\n  // Хавсралт №1 — динамик\n  camp_full_name:           campFullName,\n  appendix_1_inclusions:    appendixInclusions,\n  appendix_1_addons:        appendixAddons,\n  appendix_1_shuttle:       appendixShuttle,\n  appendix_1_total:         fmt(finalAmount) + '₮'\n};\n\n// ---- Staff email subject + HTML (Gmail · Notify staff ашигладаг) ----\nconst staffEmailSubject = `[Гэрээ] ${quoteNumber} · ${company} · ${fmt(finalAmount)}₮`;\n\nconst staffEmailHtml = `<!DOCTYPE html><html><body style=\"font-family:Helvetica,Arial,sans-serif;background:#F5F1E8;padding:24px;color:#1a1a1a;\">\n<table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" align=\"center\" style=\"background:#fff;border-radius:8px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,0.08);\">\n  <tr><td>\n    <h2 style=\"margin:0 0 8px;font-size:20px;color:#0c2e1f;\">📄 Гэрээ үүсэхэд бэлэн боллоо</h2>\n    <p style=\"margin:0 0 18px;color:#4a4a4a;font-size:14px;\">${company}-н гэрээний draft автоматаар Google Drive дотор үүссэн. Шалгаад зочин руу илгээнэ үү.</p>\n    <table cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:13px;line-height:1.6;border-top:1px solid #e5e0d4;border-bottom:1px solid #e5e0d4;width:100%;\">\n      <tr><td style=\"color:#777;width:140px;\">Дугаар</td><td><b>${quoteNumber}</b></td></tr>\n      <tr><td style=\"color:#777;\">Компани</td><td>${company}${taxId ? ' · РД ' + taxId : ''}</td></tr>\n      <tr><td style=\"color:#777;\">Холбоо</td><td>${contactName}${phone ? ' · ' + phone : ''}${email ? ' · ' + email : ''}</td></tr>\n      <tr><td style=\"color:#777;\">Кемп</td><td>${campFull} · ${tier} · ${guests} хүн</td></tr>\n      <tr><td style=\"color:#777;\">Огноо</td><td>${startParts.year}-${startParts.month}-${startParts.day} ${startParts.time} → ${endParts.year}-${endParts.month}-${endParts.day} ${endParts.time}</td></tr>\n    </table>\n    <table cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:13px;line-height:1.6;margin-top:14px;width:100%;\">\n      <tr><td style=\"color:#777;width:140px;\">Нийт дүн</td><td><b style=\"color:#0c2e1f;\">${fmt(finalAmount)}₮</b></td></tr>\n      <tr><td style=\"color:#777;\">Урьдчилгаа 30%</td><td>${fmt(deposit30)}₮</td></tr>\n      <tr><td style=\"color:#777;\">Үлдэгдэл 70%</td><td>${fmt(balance70)}₮</td></tr>\n      <tr><td style=\"color:#777;\">НӨАТ (10% багтсан)</td><td>${fmt(vatIncluded)}₮</td></tr>\n    </table>\n    <p style=\"margin:22px 0 0;font-size:13px;color:#4a4a4a;\">\n      Drive хавтас: <a href=\"https://drive.google.com/drive/folders/1Av7YxSOr-ei182NQpcHp5FlsJOSiQIGb\" style=\"color:#0c2e1f;\">NOMAAD · Гэрээ Үүсгэсэн</a><br>\n      Үүсгэсэн: ${today.toLocaleString('mn-MN')}\n    </p>\n  </td></tr>\n</table>\n</body></html>`;\n\n// ---- Финанс мөр (Sheets · Append to Finance node-д шууд map хийдэг) ----\nconst financeRow = {\n  quote_number: quoteNumber,\n  company: company,\n  contact_name: contactName,\n  camp: campFull,\n  tier: tier,\n  guests: guests,\n  final_amount: finalAmount,\n  deposit_30: deposit30,\n  balance_70: balance70,\n  vat_included: vatIncluded,\n  start_dt: String(startDt),\n  end_dt: String(endDt),\n  created_at: today.toISOString()\n};\n\nreturn {\n  json: {\n    // Bulk placeholders for Google Docs Replace\n    ...placeholders,\n    // Meta\n    quote_number: quoteNumber,\n    company: company,\n    contact_name: contactName,\n    email: email,\n    phone: phone,\n    camp_full: campFull,\n    final_amount_num: finalAmount,\n    deposit_30_num: deposit30,\n    balance_70_num: balance70,\n    vat_included_num: vatIncluded,\n    // Staff email (Gmail · Notify staff үүнийг ашигладаг)\n    staff_email_subject: staffEmailSubject,\n    staff_email_html: staffEmailHtml,\n    // Финанс ажилбар бүх талбараар\n    finance_row: financeRow,\n    fin_quote_number: financeRow.quote_number,\n    fin_company: financeRow.company,\n    fin_contact_name: financeRow.contact_name,\n    fin_camp: financeRow.camp,\n    fin_tier: financeRow.tier,\n    fin_guests: financeRow.guests,\n    fin_final_amount: financeRow.final_amount,\n    fin_deposit_30: financeRow.deposit_30,\n    fin_balance_70: financeRow.balance_70,\n    fin_vat_included: financeRow.vat_included,\n    fin_start_dt: financeRow.start_dt,\n    fin_end_dt: financeRow.end_dt,\n    fin_created_at: financeRow.created_at,\n    contract_filename: `${quoteNumber} · ${company} · Гэрээ`,\n    generated_at: today.toLocaleString('mn-MN')\n  }\n};"
+        "documentId": {
+          "__rl": true,
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "mode": "list",
+          "cachedResultName": "nomaad_quote_log"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Quote Items",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Үнийн саналын дугаар",
+              "lookupValue": "={{ $('Sheets · Find quote row').item.json['Үнийн саналын дугаар'] }}"
+            }
+          ]
+        },
+        "options": {}
       },
-      "id": "80617873-4a3f-4ce9-b39a-022952f3a48f",
+      "id": "sheets-read-items-wf3-001",
+      "name": "Sheets · Read items",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        900,
+        460
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================================================================\n// NOMAAD Camp · Workflow 3 · Contract Confirmed (Code node, fixed v3)\n// =====================================================================\n// Input:\n//   $input.all()                            → Quote Items (нэг квот = олон items)\n//   $('Sheets · Find quote row').first()    → Quote Log-ийн нэг мөр\n\nconst row = $('Sheets · Find quote row').first().json;\nconst items = $input.all().map(i => i.json);\n\nlet p;\ntry { p = JSON.parse(row[\"Анхны өгөгдөл\"] || \"{}\"); }\ncatch (e) { p = {}; }\n\nconst num = (v, d = 0) => {\n  if (v === undefined || v === null || v === '') return d;\n  const cleaned = String(v).replace(/[₮,$,\\s]/g, '');\n  const n = Number(cleaned);\n  return Number.isFinite(n) ? n : d;\n};\nconst str = (v, d = '') => (v === undefined || v === null) ? d : String(v).trim();\nconst fmt = n => Number(n).toLocaleString('en-US');\n\n// ---- Mongolian number → words (simple cyrillic) ----\nfunction numberToMongolWords(n) {\n  if (!n || n === 0) return 'тэг';\n  const units = ['', 'нэг', 'хоёр', 'гурван', 'дөрвөн', 'таван', 'зургаан', 'долоон', 'найман', 'есөн'];\n  const tens  = ['', 'арван', 'хорин', 'гучин', 'дөчин', 'тавин', 'жаран', 'далан', 'наян', 'ерэн'];\n  const hundreds = ['', 'нэг зуун', 'хоёр зуун', 'гурван зуун', 'дөрвөн зуун', 'таван зуун', 'зургаан зуун', 'долоон зуун', 'найман зуун', 'есөн зуун'];\n\n  function under1000(x) {\n    if (x === 0) return '';\n    const h = Math.floor(x / 100);\n    const t = Math.floor((x % 100) / 10);\n    const u = x % 10;\n    let parts = [];\n    if (h) parts.push(hundreds[h]);\n    if (t) parts.push(tens[t]);\n    if (u) parts.push(units[u]);\n    return parts.join(' ');\n  }\n\n  let result = '';\n  const billions = Math.floor(n / 1000000000);\n  const millions = Math.floor((n % 1000000000) / 1000000);\n  const thousands = Math.floor((n % 1000000) / 1000);\n  const rest = n % 1000;\n\n  if (billions) result += under1000(billions) + ' тэрбум ';\n  if (millions) result += under1000(millions) + ' сая ';\n  if (thousands) result += under1000(thousands) + ' мянган ';\n  if (rest) result += under1000(rest);\n  return result.trim();\n}\n\n// ---- Дата ----\nconst quoteNumber  = str(row[\"Үнийн саналын дугаар\"]);\nconst company      = str(row[\"Компанийн нэр\"]) || str(p.company);\nconst taxId        = str(row[\"Регистрийн дугаар\"]) || str(p.customer_tax_id);\nconst contactName  = str(row[\"Холбоо барих хүн\"]) || str(p.contact_name);\nconst phone        = str(row[\"Утас\"]) || str(p.phone);\nconst email        = str(row[\"И-мэйл\"]) || str(p.email);\nconst campFull     = str(row[\"Кемп\"]) || str(p.camp_name);\nconst tier         = str(row[\"Багц\"]) || str(p.package_tier);\nconst guests       = num(row[\"Хүний тоо\"]) || num(p.guest_count) || 0;\nconst startDt      = row[\"Эхлэх огноо\"] || p.start_datetime || '';\nconst endDt        = row[\"Дуусах огноо\"] || p.end_datetime || '';\n\nconst campShort = campFull.replace(/^NOMAAD\\s+/i, '');\n\n// ---- Дүн тооцоолол (Quote Items-аас бүхэлд нь нийлбэрлэнэ) ----\n// Ажилтан гэрээний дүнг Quote Items таб дотор засдаг (мөр нэмж/хасч, тоо/үнэ өөрчилж).\n// Тиймээс manual \"Эцсийн гэрээний дүн\" багана ашиглахгүй.\nfunction isItemIncluded(it) {\n  const v = String(it[\"Багцад орсон уу?\"] || '').trim();\n  return v === 'Тийм' || v === 'TRUE' || v === 'true' || v === '✓';\n}\n\nlet _tierSubtotal = 0;\nlet _addonsSubtotal = 0;\nlet _shuttleSubtotal = 0;\nfor (const it of items) {\n  const total = num(it[\"Дүн ₮\"]);\n  const cat = String(it[\"Ангилал\"] || '').trim();\n  if (cat === 'Үндсэн багц') _tierSubtotal += total;\n  else if (cat === 'Тээвэр')  _shuttleSubtotal += total;\n  else if (!isItemIncluded(it)) _addonsSubtotal += total;\n}\n\nconst tierSubtotal  = _tierSubtotal;\nconst addonsSubtotal = _addonsSubtotal + _shuttleSubtotal;\nconst finalAmount   = tierSubtotal + _addonsSubtotal + _shuttleSubtotal;\nconst deposit30     = Math.round(finalAmount * 0.30);\nconst balance70     = finalAmount - deposit30;\nconst vatIncluded   = Math.round(finalAmount / 11);\n\nconst perPersonPrice = guests > 0 ? Math.round(tierSubtotal / guests) : 0;\n\n// ---- Огноо задлах ----\nfunction parseDt(s) {\n  if (s === null || s === undefined || s === '') {\n    return { year: '', month: '', day: '', time: '' };\n  }\n  let asNum;\n  if (typeof s === 'number') {\n    asNum = s;\n  } else if (typeof s === 'string' && /^\\d+(\\.\\d+)?$/.test(s.trim())) {\n    asNum = Number(s.trim());\n  }\n  if (Number.isFinite(asNum) && asNum > 25569 && asNum < 80000) {\n    const ms = Math.round((asNum - 25569) * 86400000);\n    const d = new Date(ms);\n    if (!isNaN(d.getTime())) {\n      return {\n        year:  String(d.getUTCFullYear()),\n        month: String(d.getUTCMonth() + 1),\n        day:   String(d.getUTCDate()),\n        time:  String(d.getUTCHours()).padStart(2,'0') + ':' + String(d.getUTCMinutes()).padStart(2,'0')\n      };\n    }\n  }\n  const m = String(s).match(/(\\d{4})-(\\d{2})-(\\d{2})(?:[T ](\\d{2}):(\\d{2}))?/);\n  if (m) {\n    return {\n      year:  m[1],\n      month: String(parseInt(m[2], 10)),\n      day:   String(parseInt(m[3], 10)),\n      time:  (m[4] && m[5]) ? `${m[4]}:${m[5]}` : ''\n    };\n  }\n  const d2 = new Date(s);\n  if (!isNaN(d2.getTime())) {\n    return {\n      year:  String(d2.getFullYear()),\n      month: String(d2.getMonth() + 1),\n      day:   String(d2.getDate()),\n      time:  String(d2.getHours()).padStart(2,'0') + ':' + String(d2.getMinutes()).padStart(2,'0')\n    };\n  }\n  return { year: '', month: '', day: '', time: '' };\n}\nconst startParts = parseDt(startDt);\nconst endParts   = parseDt(endDt);\n\nconst today = new Date();\nconst contractYear  = String(today.getFullYear());\nconst contractMonth = String(today.getMonth() + 1);\nconst contractDay   = String(today.getDate());\n\n// ────────────────────────────────────────────────────────────\n// Хавсралт №1 — items array-аас динамик үүсгэх\n// items: { Ангилал, Зүйл, Тоо, Нэгж, \"Нэгж үнэ ₮\", \"Дүн ₮\", \"Багцад орсон уу?\" }\n// ────────────────────────────────────────────────────────────\nconst isIncluded = isItemIncluded;\n\nconst baseTier   = items.filter(it => it[\"Ангилал\"] === 'Үндсэн багц');\nconst inclusions = items.filter(it => isIncluded(it) && it[\"Ангилал\"] !== 'Үндсэн багц' && it[\"Ангилал\"] !== 'Тээвэр');\nconst paidAddons = items.filter(it => !isIncluded(it) && it[\"Ангилал\"] !== 'Үндсэн багц' && it[\"Ангилал\"] !== 'Тээвэр');\nconst shuttleItems = items.filter(it => it[\"Ангилал\"] === 'Тээвэр');\n\n// Багцад орсон үйлчилгээ — категориор бүлэглэх\nconst groupedIncl = {};\nfor (const it of inclusions) {\n  const cat = it[\"Ангилал\"] || 'Бусад';\n  if (!groupedIncl[cat]) groupedIncl[cat] = [];\n  const name = str(it[\"Зүйл\"]);\n  const qty = num(it[\"Тоо\"]);\n  const unit = str(it[\"Нэгж\"]);\n  let line = '• ' + name;\n  if (qty > 1 && unit) line += ` · ${qty} ${unit}`;\n  else if (qty > 1) line += ` · ${qty}`;\n  groupedIncl[cat].push(line);\n}\nconst inclusionLines = [];\nfor (const cat of Object.keys(groupedIncl)) {\n  inclusionLines.push('— ' + cat + ' —');\n  inclusionLines.push(...groupedIncl[cat]);\n}\nconst appendixInclusions = inclusionLines.length > 0\n  ? inclusionLines.join('\\n')\n  : '(Багцад үндсэн зүйлс орсон)';\n\n// Нэмэлт төлбөртэй үйлчилгээ\nconst addonLines = paidAddons.map(it => {\n  const name = str(it[\"Зүйл\"]);\n  const qty  = num(it[\"Тоо\"]);\n  const unit = str(it[\"Нэгж\"]);\n  const up   = num(it[\"Нэгж үнэ ₮\"]);\n  const tot  = num(it[\"Дүн ₮\"]);\n  if (up > 0 && qty > 0) {\n    return `• ${name} — ${qty} ${unit} × ${fmt(up)}₮ = ${fmt(tot)}₮`;\n  }\n  return `• ${name} — ${fmt(tot)}₮`;\n});\nconst appendixAddons = addonLines.length > 0\n  ? addonLines.join('\\n')\n  : '(Нэмэлт төлбөртэй үйлчилгээ сонгоогүй)';\n\n// Тээвэр\nconst shuttleLines = shuttleItems.map(it => {\n  const name = str(it[\"Зүйл\"]);\n  const qty  = num(it[\"Тоо\"]);\n  const unit = str(it[\"Нэгж\"]);\n  const up   = num(it[\"Нэгж үнэ ₮\"]);\n  const tot  = num(it[\"Дүн ₮\"]);\n  if (up > 0 && qty > 0) {\n    return `• ${name} — ${qty} ${unit} × ${fmt(up)}₮ = ${fmt(tot)}₮`;\n  }\n  return `• ${name}`;\n});\nconst appendixShuttle = shuttleLines.length > 0\n  ? shuttleLines.join('\\n')\n  : '(Тээврийн үйлчилгээ сонгоогүй)';\n\n// ---- Placeholder map ----\nconst placeholders = {\n  contract_year:        contractYear,\n  contract_month:       contractMonth,\n  contract_day:         contractDay,\n\n  customer_tax_id:      taxId,\n  company_name:         company,\n  contact_position:     'Гүйцэтгэх захирал',\n  contact_name:         contactName,\n\n  start_year:           startParts.year,\n  start_month:          startParts.month,\n  start_day:            startParts.day,\n  start_time:           startParts.time,\n  end_year:             endParts.year,\n  end_month:            endParts.month,\n  end_day:              endParts.day,\n  end_time:             endParts.time,\n\n  guest_count:          String(guests),\n  camp_short_name:      campShort,\n  tier:                 tier,\n  per_person_price:     fmt(perPersonPrice),\n  per_person_price_words: numberToMongolWords(perPersonPrice),\n  addons_subtotal:      fmt(addonsSubtotal),\n  addons_subtotal_words: numberToMongolWords(addonsSubtotal),\n  grand_total:          fmt(finalAmount),\n  grand_total_words:    numberToMongolWords(finalAmount),\n\n  deposit_30:           fmt(deposit30),\n  deposit_30_words:     numberToMongolWords(deposit30),\n  balance_70:           fmt(balance70),\n  balance_70_words:     numberToMongolWords(balance70),\n\n  hourly_extension_fee:       '300,000',\n  hourly_extension_fee_words: numberToMongolWords(300000),\n\n  camp_full_name:           campFull,\n  appendix_1_inclusions:    appendixInclusions,\n  appendix_1_addons:        appendixAddons,\n  appendix_1_shuttle:       appendixShuttle,\n  appendix_1_total:         fmt(finalAmount) + '₮'\n};\n\n// ---- Staff email ----\nconst staffEmailSubject = `[Гэрээ] ${quoteNumber} · ${company} · ${fmt(finalAmount)}₮`;\n\nconst staffEmailHtml = `<!DOCTYPE html><html><body style=\"font-family:Helvetica,Arial,sans-serif;background:#F5F1E8;padding:24px;color:#1a1a1a;\">\n<table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" align=\"center\" style=\"background:#fff;border-radius:8px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,0.08);\">\n  <tr><td>\n    <h2 style=\"margin:0 0 8px;font-size:20px;color:#0c2e1f;\">📄 Гэрээ үүсэхэд бэлэн боллоо</h2>\n    <p style=\"margin:0 0 18px;color:#4a4a4a;font-size:14px;\">${company}-н гэрээний draft автоматаар Google Drive дотор үүссэн. Шалгаад зочин руу илгээнэ үү.</p>\n    <table cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:13px;line-height:1.6;border-top:1px solid #e5e0d4;border-bottom:1px solid #e5e0d4;width:100%;\">\n      <tr><td style=\"color:#777;width:140px;\">Дугаар</td><td><b>${quoteNumber}</b></td></tr>\n      <tr><td style=\"color:#777;\">Компани</td><td>${company}${taxId ? ' · РД ' + taxId : ''}</td></tr>\n      <tr><td style=\"color:#777;\">Холбоо</td><td>${contactName}${phone ? ' · ' + phone : ''}${email ? ' · ' + email : ''}</td></tr>\n      <tr><td style=\"color:#777;\">Кемп</td><td>${campFull} · ${tier} · ${guests} хүн</td></tr>\n      <tr><td style=\"color:#777;\">Огноо</td><td>${startParts.year}-${startParts.month}-${startParts.day} ${startParts.time} → ${endParts.year}-${endParts.month}-${endParts.day} ${endParts.time}</td></tr>\n    </table>\n    <table cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:13px;line-height:1.6;margin-top:14px;width:100%;\">\n      <tr><td style=\"color:#777;width:140px;\">Нийт дүн</td><td><b style=\"color:#0c2e1f;\">${fmt(finalAmount)}₮</b></td></tr>\n      <tr><td style=\"color:#777;\">Урьдчилгаа 30%</td><td>${fmt(deposit30)}₮</td></tr>\n      <tr><td style=\"color:#777;\">Үлдэгдэл 70%</td><td>${fmt(balance70)}₮</td></tr>\n      <tr><td style=\"color:#777;\">НӨАТ (10% багтсан)</td><td>${fmt(vatIncluded)}₮</td></tr>\n    </table>\n    <p style=\"margin:22px 0 0;font-size:13px;color:#4a4a4a;\">\n      Drive хавтас: <a href=\"https://drive.google.com/drive/folders/1Av7YxSOr-ei182NQpcHp5FlsJOSiQIGb\" style=\"color:#0c2e1f;\">NOMAAD · Гэрээ Үүсгэсэн</a><br>\n      Үүсгэсэн: ${today.toLocaleString('mn-MN')}\n    </p>\n  </td></tr>\n</table>\n</body></html>`;\n\nreturn {\n  json: {\n    ...placeholders,\n    quote_number: quoteNumber,\n    company: company,\n    contact_name: contactName,\n    email: email,\n    phone: phone,\n    camp_full: campFull,\n    final_amount_num: finalAmount,\n    deposit_30_num: deposit30,\n    balance_70_num: balance70,\n    vat_included_num: vatIncluded,\n    staff_email_subject: staffEmailSubject,\n    staff_email_html: staffEmailHtml,\n    contract_filename: `${quoteNumber} · ${company} · Гэрээ`,\n    generated_at: today.toLocaleString('mn-MN')\n  }\n};"
+      },
+      "id": "385d21d1-9e50-4258-ba92-b56393826c0a",
       "name": "Code · Build contract data",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        900,
-        300
+        5904,
+        7104
       ]
     },
     {
       "parameters": {
-        "sendTo": "team@nomaadcamp.com",
+        "sendTo": "hello@nomaadcamp.com",
         "subject": "={{ $('Code · Build contract data').item.json.staff_email_subject }}",
         "message": "={{ $('Code · Build contract data').item.json.staff_email_html }}",
         "options": {
@@ -143,18 +182,18 @@
           "replyTo": "hello@nomaadcamp.com"
         }
       },
-      "id": "d8e46569-44e9-4645-a070-68fea8b77124",
+      "id": "f581308e-b364-4368-ad04-12caecd2edae",
       "name": "Gmail · Notify staff",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1620,
-        220
+        6576,
+        7104
       ],
       "webhookId": "8329fd92-aa49-428e-b388-f39b014eb649",
       "credentials": {
         "gmailOAuth2": {
-          "id": "hov8yK7CZxzJScr3",
+          "id": "bDzHksZFFiNLk9gC",
           "name": "Gmail OAuth2 API"
         }
       }
@@ -206,17 +245,17 @@
         },
         "options": {}
       },
-      "id": "a05ec8d9-27f6-437d-9b78-a8ef73769e98",
+      "id": "9d1e6af5-a3e9-44fa-b567-74b389952461",
       "name": "Sheets · Update quote status",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        1840,
-        220
+        6800,
+        7104
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "k4p4OIdOAsaZgnRH",
+          "id": "tZSfYfxkpH5L34wG",
           "name": "Google Sheets OAuth2 API"
         }
       }
@@ -226,24 +265,26 @@
         "operation": "copy",
         "fileId": {
           "__rl": true,
-          "mode": "id",
-          "value": "12Ks-tTEovApXlSgfFHvi7zrtpJcNiby6WQtpeOeEFX0"
+          "value": "107mUlM2bWTXAYQufxmQSIcBgTYtyvSaSiaDNBoB7vS8",
+          "mode": "id"
         },
         "name": "={{ $('Code · Build contract data').item.json.contract_filename }}",
-        "options": {
-          "parents": [
-            "1Av7YxSOr-ei182NQpcHp5FlsJOSiQIGb"
-          ]
-        }
+        "options": {}
       },
-      "id": "drive-copy-001",
+      "id": "e407c48b-fadd-4a31-9da3-6be6d06f1aed",
       "name": "Drive · Copy template",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1180,
-        220
-      ]
+        6128,
+        7104
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "lOdlEFcOQRw2l14x",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
     },
     {
       "parameters": {
@@ -252,263 +293,273 @@
         "actionsUi": {
           "actionFields": [
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{contract_year}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contract_year || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{contract_month}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contract_month || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{contract_day}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contract_day || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{customer_tax_id}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.customer_tax_id || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{company_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.company_name || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{contact_position}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contact_position || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{contact_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contact_name || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{start_year}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_year || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{start_month}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_month || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{start_day}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_day || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{start_time}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_time || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{end_year}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_year || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{end_month}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_month || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{end_day}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_day || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{end_time}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_time || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{guest_count}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.guest_count || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{camp_short_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.camp_short_name || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{tier}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.tier || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{per_person_price}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.per_person_price || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{per_person_price_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.per_person_price_words || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{addons_subtotal}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.addons_subtotal || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{addons_subtotal_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.addons_subtotal_words || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{grand_total}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.grand_total || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{grand_total_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.grand_total_words || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{deposit_30}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.deposit_30 || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{deposit_30_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.deposit_30_words || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{balance_70}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.balance_70 || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{balance_70_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.balance_70_words || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{hourly_extension_fee}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.hourly_extension_fee || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{hourly_extension_fee_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.hourly_extension_fee_words || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{camp_full_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.camp_full_name || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{appendix_1_inclusions}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.appendix_1_inclusions || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{appendix_1_addons}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.appendix_1_addons || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{appendix_1_shuttle}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.appendix_1_shuttle || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             },
             {
-              "action": "replaceAll",
+              "action": "=replaceAll",
               "text": "{{appendix_1_total}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.appendix_1_total || '' }}",
-              "matchCase": true,
-              "object": "text"
+              "matchCase": true
             }
           ]
         }
       },
-      "id": "docs-replace-001",
+      "id": "19ced3a0-df31-4faf-b77d-220223e2148a",
       "name": "Docs · Replace placeholders",
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        1400,
-        220
-      ]
+        6352,
+        7104
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "Zp7IKjRi9OlMlY5F",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
     }
   ],
+  "pinData": {
+    "Sheets Trigger · Төлөв update": [
+      {
+        "json": {
+          "row_number": 6,
+          "Бүртгэлийн огноо": "2026-05-19T15:50:07.227+08:00",
+          "Үнийн саналын дугаар": "NC-2026-0029",
+          "Компанийн нэр": "turshilt",
+          "Регистрийн дугаар": "",
+          "Холбоо барих хүн": "Munkhuchral Ganbat",
+          "Утас": 88006790,
+          "И-мэйл": "ceo@nomaadcamp.com",
+          "Кемп": "NOMAAD Summit",
+          "Багц": "Үндсэн",
+          "Хүний тоо": 123,
+          "Эхлэх огноо": 46172.5,
+          "Дуусах огноо": 46173.625,
+          "Нийт дүн": 28990000,
+          "Урьдчилгаа 30%": 8697000,
+          "PDF файл": "NC-2026-0029_turshilt.pdf",
+          "Тэмдэглэл": "",
+          "Дугаарлалт": 30,
+          "Төлөв": "ГЭРЭЭ",
+          "Илгээсэн огноо": "",
+          "Нэмэлт үйлчилгээ": "Fruit & snack platter · Хөтөлбөр хамтран боловсруулах",
+          "Тээвэр": "Хоног / 2 талдаа · 3 автобус · 3,600,000₮",
+          "Анхны өгөгдөл": "{\"company\":\"turshilt\",\"customer_tax_id\":\"\",\"contact_name\":\"Munkhuchral Ganbat\",\"phone\":\"88006790\",\"email\":\"ceo@nomaadcamp.com\",\"camp\":\"NOMAAD Summit\",\"camp_name\":\"NOMAAD Summit\",\"tier\":\"Үндсэн\",\"package_tier\":\"Үндсэн\",\"visual_feature\":\"\",\"location\":\"\",\"start_datetime\":\"2026-05-30T12:00\",\"end_datetime\":\"2026-05-31T15:00\",\"event_date\":\"2026-05-30T12:00\",\"duration_label\":\"1 шөнө\",\"guest_count\":\"123\",\"tier_base_price\":\"180000\",\"tier_subtotal\":\"22140000\",\"tier_inclusions_json\":\"[]\",\"addons_json\":\"[{\\\"code\\\":\\\"late_snacks\\\",\\\"name\\\":\\\"Fruit & snack platter\\\",\\\"type\\\":\\\"per-person\\\",\\\"tier_included\\\":false,\\\"quantity\\\":9,\\\"unit_price\\\":250000,\\\"price\\\":2250000},{\\\"code\\\":\\\"program_consulting\\\",\\\"name\\\":\\\"Хөтөлбөр хамтран боловсруулах\\\",\\\"type\\\":\\\"flat\\\",\\\"tier_included\\\":false,\\\"price\\\":1000000}]\",\"addon_count\":\"2\",\"addons_subtotal\":\"3250000\",\"estimated_addon_total\":\"3250000\",\"shuttle_service\":\"Хоног / 2 талдаа, 1,200,000₮\",\"shuttle_service_label\":\"Хоног / 2 талдаа, 1,200,000₮\",\"shuttle_unit_price\":\"1200000\",\"bus_count\":\"3\",\"shuttle_subtotal\":\"3600000\",\"grand_total\":\"28990000\",\"vat_included\":\"2635455\",\"deposit_30\":\"8697000\",\"balance_70\":\"20293000\",\"value_anchor_json\":\"\",\"standalone_equivalent\":\"0\",\"package_savings\":\"0\",\"package_savings_pct\":\"0\",\"notes\":\"\",\"source\":\"nomaadcamp.com\",\"next_counter\":29}",
+          "Уулзалтын огноо": "",
+          "Хямдрал ₮": "",
+          "Уулзалтын тэмдэглэл": "",
+          "Эцсийн гэрээний дүн": 22160000,
+          "Гэрээ зурсан огноо": ""
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
   "connections": {
     "IF · Төлөв = ГЭРЭЭ": {
       "main": [
@@ -525,7 +576,7 @@
       "main": [
         [
           {
-            "node": "Code · Build contract data",
+            "node": "Sheets · Read items",
             "type": "main",
             "index": 0
           }
@@ -586,25 +637,35 @@
           }
         ]
       ]
+    },
+    "Sheets · Read items": {
+      "main": [
+        [
+          {
+            "node": "Code · Build contract data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate",
-    "availableInMCP": false
+    "binaryMode": "separate"
   },
-  "versionId": "b3c1836a-a888-4342-bb08-c2ac526dc6d8",
+  "versionId": "5aa5502c-c51d-4afb-80e6-0900aedec227",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "f638da819297acbd6e4f4271a24c6826d03f971863c6ffa42183ae0805d3cea1"
+    "instanceId": "7c325a625299bdce7c411e07485d3fffbeed3847cf9944810a5b59006dbc5928"
   },
-  "id": "d3SUnOfPCRqxYYu0",
+  "id": "6xudvdZ9AOcmKLkv",
   "tags": [
     {
-      "updatedAt": "2026-04-06T05:37:11.533Z",
-      "createdAt": "2026-04-06T05:37:11.533Z",
-      "id": "OhVVLbAUdZtvBgg4",
+      "updatedAt": "2026-05-19T00:27:45.245Z",
+      "createdAt": "2026-05-19T00:27:45.245Z",
+      "id": "U3NuAKguDk87uLz4",
       "name": "M event"
     }
   ]
