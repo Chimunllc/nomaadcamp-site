@@ -1736,7 +1736,7 @@
       }
     });
 
-    var N8N_WEBHOOK_URL = 'https://chimun.app.n8n.cloud/webhook/nomaad-quote';
+    var N8N_WEBHOOK_URL = 'https://chimunllc.app.n8n.cloud/webhook/nomaad-quote';
 
     quoteForm.addEventListener('submit', async function (e) {
       e.preventDefault();
