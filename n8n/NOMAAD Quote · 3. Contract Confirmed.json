@@ -252,184 +252,214 @@
         "actionsUi": {
           "actionFields": [
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{contract_year}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contract_year || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{contract_month}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contract_month || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{contract_day}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contract_day || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{customer_tax_id}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.customer_tax_id || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{company_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.company_name || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{contact_position}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contact_position || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{contact_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.contact_name || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{start_year}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_year || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{start_month}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_month || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{start_day}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_day || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{start_time}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.start_time || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{end_year}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_year || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{end_month}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_month || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{end_day}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_day || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{end_time}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.end_time || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{guest_count}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.guest_count || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{camp_short_name}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.camp_short_name || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{tier}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.tier || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{per_person_price}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.per_person_price || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{per_person_price_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.per_person_price_words || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{addons_subtotal}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.addons_subtotal || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{addons_subtotal_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.addons_subtotal_words || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{grand_total}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.grand_total || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{grand_total_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.grand_total_words || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{deposit_30}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.deposit_30 || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{deposit_30_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.deposit_30_words || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{balance_70}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.balance_70 || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{balance_70_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.balance_70_words || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{hourly_extension_fee}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.hourly_extension_fee || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             },
             {
-              "action": "replaceText",
+              "action": "replaceAll",
               "text": "{{hourly_extension_fee_words}}",
               "replaceText": "={{ $('Code · Build contract data').item.json.hourly_extension_fee_words || '' }}",
-              "matchCase": true
+              "matchCase": true,
+              "object": "text"
             }
           ]
         }
