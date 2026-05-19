@@ -3,20 +3,80 @@
   "nodes": [
     {
       "parameters": {
-        "path": "nomaad-quote-send",
-        "responseMode": "lastNode",
-        "options": {},
-        "httpMethod": "GET"
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "event": "rowUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "cachedResultName": "nomaad_quote_log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": 529201537,
+          "cachedResultName": "Quote Log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
+        },
+        "options": {
+          "valueRender": "FORMATTED_VALUE",
+          "dateTimeRenderOption": "FORMATTED_STRING"
+        }
       },
-      "id": "7eee6a03-b18c-4bdf-ac9e-880f4a20d6aa",
-      "name": "Webhook Send",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1.1,
+      "id": "sheets-trigger-wf2-001",
+      "name": "Sheets Trigger · Төлөв update",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
       "position": [
-        3680,
-        8960
+        240,
+        300
       ],
-      "webhookId": "b183bac1-e571-497a-ad44-668c92a22710"
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "REPLACE_IF_NEEDED",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "if-toluv-ilgeeh",
+              "leftValue": "={{ $json['Төлөв'] }}",
+              "rightValue": "ИЛГЭЭХ",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-toluv-ilgeeh-001",
+      "name": "IF · Төлөв = ИЛГЭЭХ",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
     },
     {
       "parameters": {
@@ -38,7 +98,7 @@
           "values": [
             {
               "lookupColumn": "Үнийн саналын дугаар",
-              "lookupValue": "={{ $json.query.id }}"
+              "lookupValue": "={{ $json['Үнийн саналын дугаар'] }}"
             }
           ]
         },
@@ -531,17 +591,6 @@
     ]
   },
   "connections": {
-    "Webhook Send": {
-      "main": [
-        [
-          {
-            "node": "Sheets · Find row",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Sheets · Find row": {
       "main": [
         [
@@ -617,6 +666,28 @@
         [
           {
             "node": "Code · Rename PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets Trigger · Төлөв update": {
+      "main": [
+        [
+          {
+            "node": "IF · Төлөв = ИЛГЭЭХ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF · Төлөв = ИЛГЭЭХ": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Find row",
             "type": "main",
             "index": 0
           }
