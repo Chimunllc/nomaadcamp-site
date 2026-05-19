@@ -1,0 +1,631 @@
+{
+  "name": "NOMAAD Quote · 1. Capture (slim, no PDF)",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "mode": "list",
+          "cachedResultName": "nomaad_quote_log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Quote Items",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Үнийн саналын дугаар": "={{ $json.quote_id }}",
+            "Мөр №": "={{ $json.row_num }}",
+            "Ангилал": "={{ $json.category }}",
+            "Зүйл": "={{ $json.name }}",
+            "Тоо": "={{ $json.qty }}",
+            "Нэгж": "={{ $json.unit }}",
+            "Нэгж үнэ ₮": "={{ $json.unit_price }}",
+            "Дүн ₮": "={{ $json.total }}",
+            "Багцад орсон уу?": "={{ $json.included }}",
+            "Тэмдэглэл": "={{ $json.note }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Үнийн саналын дугаар",
+              "displayName": "Үнийн саналын дугаар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Мөр №",
+              "displayName": "Мөр №",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Ангилал",
+              "displayName": "Ангилал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Зүйл",
+              "displayName": "Зүйл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Тоо",
+              "displayName": "Тоо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Нэгж",
+              "displayName": "Нэгж",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Нэгж үнэ ₮",
+              "displayName": "Нэгж үнэ ₮",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Дүн ₮",
+              "displayName": "Дүн ₮",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Багцад орсон уу?",
+              "displayName": "Багцад орсон уу?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "Тэмдэглэл",
+              "displayName": "Тэмдэглэл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "932a8972-10ef-458d-a350-c35c7fc394f3",
+      "name": "Sheets · Append items",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        14096,
+        14448
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "k4p4OIdOAsaZgnRH",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// =====================================================================\n// NOMAAD Camp · Workflow 1 · Decompose into Quote Items (FULL)\n// =====================================================================\n// Output: All line items including camp-specific base zone items +\n//         tier inclusions + billable addons + shuttle\n// =====================================================================\n\nconst p = $('Code · Build metadata').first().json;\nconst quoteNum = p.quote_number;\nconst guests   = Number(p.guest_count) || 0;\nconst tier     = p.package_tier || '';\nconst items    = [];\nlet rowNum = 1;\n\nconst CAMP_BASE = {\n  'NOMAAD Summit': {\n    asar:     '540 м² үндсэн асар (өргөтгөл 1,500 м² хүртэл)',\n    stage:    'Тайз каркас 8×4 м (32 м²)',\n    sound:    'Хөгжмийн систем 16,000W',\n    wc_count: 8,\n    smoking_count: 3\n  },\n  'NOMAAD Meadow': {\n    asar:     '300 м² үндсэн асар',\n    stage:    'Тайз каркас 6×4 м (24 м²)',\n    sound:    'Хөгжмийн систем 5,000W',\n    wc_count: 6,\n    smoking_count: 2\n  },\n  'NOMAAD Grove': {\n    asar:     '200 м² үндсэн асар',\n    stage:    'Тайз каркас 4×3 м (12 м²)',\n    sound:    'Хөгжмийн систем 5,000W',\n    wc_count: 4,\n    smoking_count: 2\n  }\n};\n\nconst PRICES_FLAT = {\n  moonbeam_lounge: 500000, led_screen_18m2: 1728000, open_mic: 500000,\n  asar_decor: 2000000, extra_tents: 1300000, extra_lighting: 5000000,\n  team_games: 1000000, program_consulting: 1000000, event_director: 1800000,\n  medical_support: 1200000, security_service: 1500000,\n  after_movie: 1000000, yoga: 1300000, canvas_art: 1500000\n};\n\nconst UNIT_OVERRIDES = {\n  asar_decor:         'багц',\n  extra_tents:        'багц',\n  extra_lighting:     'багц',\n  team_games:         'багц',\n  program_consulting: 'багц',\n  event_director:     'багц',\n  security_service:   'алба',\n  yoga:               'багш',\n  canvas_art:         'багш',\n  medical_support:    'байршил',\n  open_mic:           'багц',\n  moonbeam_lounge:    'байршил',\n  led_screen_18m2:    'ширхэг',\n  after_movie:        'after movie'\n};\n\nconst CATEGORY_MAP = {\n  welcome_drink:      'Хоол, ресторан',\n  sleeping_bag:       'Кемп',\n  coffee_corner:      'Хоол, ресторан',\n  lunch_upgrade:      'Хоол, ресторан',\n  dinner_upgrade:     'Хоол, ресторан',\n  moonbeam_lounge:    'Хоол, ресторан',\n  bartender_service:  'Хоол, ресторан',\n  late_snacks:        'Хоол, ресторан',\n  dj_service:         'Энтертайнмент',\n  led_screen_18m2:    'Энтертайнмент',\n  open_mic:           'Энтертайнмент',\n  asar_decor:         'Хоол, ресторан',\n  extra_tents:        'Амралт',\n  extra_lighting:     'Энтертайнмент',\n  team_games:         'Спорт',\n  program_consulting: 'Энтертайнмент',\n  event_director:     'Энтертайнмент',\n  medical_support:    'Ариун цэвэр',\n  security_service:   'Ариун цэвэр',\n  yoga:               'Спорт',\n  canvas_art:         'Энтертайнмент',\n  after_movie:        'Энтертайнмент'\n};\n\nfunction pushRow(category, name, qty, unit, unitPrice, total, included, note) {\n  items.push({\n    quote_id: quoteNum, row_num: rowNum++, category: category,\n    name: name, qty: qty, unit: unit,\n    unit_price: unitPrice || 0, total: total || 0,\n    included: included ? 'Тийм' : 'Үгүй', note: note || ''\n  });\n}\n\nconst camp = CAMP_BASE[p.camp_name] || CAMP_BASE['NOMAAD Meadow'];\n\n// Parse addons\nlet addons = [];\ntry { addons = JSON.parse(p.addons_json || '[]'); } catch (_) { addons = []; }\nconst includedCodes = new Set(addons.filter(a => a.tier_included).map(a => a.code));\nconst skipLunch  = includedCodes.has('lunch_upgrade');\nconst skipDinner = includedCodes.has('dinner_upgrade');\n\n// ── 1. Tier base lump sum ──\npushRow('Үндсэн багц', `${p.camp_name} · ${tier}`, guests, 'хүн',\n  Number(p.tier_base_price), Number(p.tier_subtotal), false, 'Багцын суурь үнэ');\n\n// ── 2. Camp-specific base zone items (no unit price — included) ──\npushRow('Хоол, ресторан', camp.asar, 1, 'ширхэг', 0, 0, true, '');\npushRow('Хоол, ресторан', 'Ширээ сандал', guests, 'хүн', 0, 0, true, '');\npushRow('Хоол, ресторан', 'Асарын энгийн тохижилт', 1, 'багц', 0, 0, true, '');\npushRow('Хоол, ресторан', 'Өглөөний цай', guests, 'порц', 0, 0, true, '');\nif (!skipLunch)  pushRow('Хоол, ресторан', 'Өдрийн хоол', guests, 'порц', 0, 0, true, '');\nif (!skipDinner) pushRow('Хоол, ресторан', 'Оройн хоол',  guests, 'порц', 0, 0, true, '');\n\npushRow('Энтертайнмент', camp.stage, 1, 'ширхэг', 0, 0, true, '');\npushRow('Энтертайнмент', camp.sound, 1, 'багц',   0, 0, true, '');\npushRow('Энтертайнмент', 'Микрофон',  2, 'ширхэг', 0, 0, true, '');\npushRow('Энтертайнмент', 'Сүүдрэвч',  4, 'ширхэг', 0, 0, true, '');\n\npushRow('Амралт', '3×6 м асар',        1, 'ширхэг', 0, 0, true, '');\npushRow('Амралт', 'Түүдэг галын хэсэг', 1, 'ширхэг', 0, 0, true, '');\npushRow('Амралт', 'Дүүжин ор', 15, 'ширхэг', 0, 0, true, '');\n\npushRow('Спорт', 'Гар бөмбөг, хөлбөмбөг, cornhole, олс таталт', 1, 'багц', 0, 0, true, '');\n\npushRow('Ариун цэвэр', 'Ариун цэврийн өрөө', camp.wc_count, 'ширхэг', 0, 0, true, '');\npushRow('Ариун цэвэр', 'Тамхины цэг', camp.smoking_count, 'байршил', 0, 0, true, '');\n\npushRow('Кемп', 'Майхан 6 хүний', Math.ceil(guests/6) || 1, 'ширхэг', 0, 0, true, '');\n\n// ── 3. Tier inclusion addons (Стандарт/Премиум-аас ирсэн) ──\nfor (const a of addons) {\n  if (!a.tier_included) continue;\n  if (a.code === 'coffee_corner') {\n    pushRow('Хоол, ресторан', 'Sunrise Coffee Corner', 1, 'байршил', 0, 0, true, '07:30–09:00');\n    continue;\n  }\n  let qty, unit, total;\n  if (a.code === 'bartender_service') {\n    qty = a.bartender_count || Math.ceil(guests/75) || 1;\n    unit = 'ажилтан'; total = 0;\n  } else if (a.code === 'late_snacks') {\n    qty = a.quantity || (tier === 'Премиум' ? 5 : Math.ceil(guests/15) || 1);\n    unit = 'platter'; total = 0;\n  } else if (a.code === 'dj_service') {\n    qty = 1; unit = '3 цаг'; total = 0;\n  } else if (a.type === 'per-person') {\n    qty = a.quantity || guests; unit = 'хүн'; total = 0;\n  } else {\n    qty = 1; unit = UNIT_OVERRIDES[a.code] || 'ширхэг'; total = 0;\n  }\n  const cat3 = CATEGORY_MAP[a.code] || 'Багцад орсон';\n  pushRow(cat3, a.name, qty, unit, 0, 0, true, '');\n}\n\n// ── 4. Billable (customer-added) addons ──\nfor (const a of addons) {\n  if (a.tier_included) continue;\n  if (a.code === 'coffee_corner') continue;\n\n  let qty, unit, unitPrice, total;\n  if (a.code === 'bartender_service') {\n    qty = a.bartender_count || Math.ceil(guests/75) || 1;\n    unit = 'ажилтан'; unitPrice = 500000; total = qty * unitPrice;\n  } else if (a.code === 'late_snacks') {\n    qty = a.quantity || Math.ceil(guests/15) || 1;\n    unit = 'platter'; unitPrice = 250000; total = qty * unitPrice;\n  } else if (a.code === 'dj_service') {\n    qty = 1; unit = a.duration ? (a.duration + ' цаг') : '3 цаг';\n    unitPrice = a.price || 1000000; total = unitPrice;\n  } else if (a.type === 'per-person') {\n    qty = a.quantity || guests; unit = 'хүн';\n    unitPrice = a.unit_price || 0; total = qty * unitPrice;\n  } else {\n    qty = 1; unit = UNIT_OVERRIDES[a.code] || 'ширхэг';\n    unitPrice = a.price || PRICES_FLAT[a.code] || 0; total = unitPrice;\n  }\n  const cat4 = CATEGORY_MAP[a.code] || 'Нэмэлт';\n  pushRow(cat4, a.name, qty, unit, unitPrice, total, false, '');\n}\n\n// ── 5. Shuttle ──\nconst shuttleSubtotal = Number(p.shuttle_subtotal) || 0;\nif (shuttleSubtotal > 0) {\n  pushRow('Тээвэр', p.shuttle_service || 'Тээврийн үйлчилгээ',\n    Number(p.bus_count) || 1, 'автобус',\n    Number(p.shuttle_unit_price), shuttleSubtotal, false, '');\n}\n\nreturn items.map(i => ({ json: i }));\n"
+      },
+      "id": "5ddc5165-064c-4405-a82d-89a3b9a5dc4b",
+      "name": "Code · Decompose items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        13904,
+        14448
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "hello@nomaadcamp.com",
+        "subject": "={{ $('Code · Build metadata').item.json.email_subject_internal }}",
+        "message": "={{ $('Code · Build metadata').item.json.email_body_internal }}",
+        "options": {
+          "appendAttribution": false,
+          "replyTo": "hello@nomaadcamp.com"
+        }
+      },
+      "id": "4cd77c0f-16fd-470d-8545-721d52db96c9",
+      "name": "Gmail · Internal",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        13904,
+        14672
+      ],
+      "webhookId": "eda2ff00-529d-4b95-8b4c-98187f2ed270",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hov8yK7CZxzJScr3",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "mode": "list",
+          "cachedResultName": "nomaad_quote_log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 529201537,
+          "mode": "list",
+          "cachedResultName": "Quote Log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Бүртгэлийн огноо": "={{ $now.toISO() }}",
+            "Үнийн саналын дугаар": "={{ $('Code · Build metadata').item.json.quote_number }}",
+            "Компанийн нэр": "={{ $('Code · Build metadata').item.json.company }}",
+            "Регистрийн дугаар": "={{ $('Code · Build metadata').item.json.customer_tax_id }}",
+            "Холбоо барих хүн": "={{ $('Code · Build metadata').item.json.contact_name }}",
+            "Утас": "={{ $('Code · Build metadata').item.json.phone }}",
+            "И-мэйл": "={{ $('Code · Build metadata').item.json.email }}",
+            "Кемп": "={{ $('Code · Build metadata').item.json.camp_name }}",
+            "Багц": "={{ $('Code · Build metadata').item.json.package_tier }}",
+            "Хүний тоо": "={{ $('Code · Build metadata').item.json.guest_count }}",
+            "Эхлэх огноо": "={{ $('Code · Build metadata').item.json.start_datetime }}",
+            "Дуусах огноо": "={{ $('Code · Build metadata').item.json.end_datetime }}",
+            "Нийт дүн": "={{ $('Code · Build metadata').item.json.grand_total }}",
+            "Урьдчилгаа 30%": "={{ $('Code · Build metadata').item.json.deposit_30 }}",
+            "Тэмдэглэл": "={{ $('Code · Build metadata').item.json.notes }}",
+            "Дугаарлалт": "={{ $('Code · Build metadata').item.json.next_counter_value }}",
+            "Төлөв": "ШИНЭ",
+            "Нэмэлт үйлчилгээ": "={{ $('Code · Build metadata').item.json.addons_summary }}",
+            "Тээвэр": "={{ $('Code · Build metadata').item.json.shuttle_summary }}",
+            "Анхны өгөгдөл": "={{ JSON.stringify($('Code · Build metadata').item.json.original_payload) }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Бүртгэлийн огноо",
+              "displayName": "Бүртгэлийн огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Үнийн саналын дугаар",
+              "displayName": "Үнийн саналын дугаар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Компанийн нэр",
+              "displayName": "Компанийн нэр",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Регистрийн дугаар",
+              "displayName": "Регистрийн дугаар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Холбоо барих хүн",
+              "displayName": "Холбоо барих хүн",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Утас",
+              "displayName": "Утас",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "И-мэйл",
+              "displayName": "И-мэйл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Кемп",
+              "displayName": "Кемп",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Багц",
+              "displayName": "Багц",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Хүний тоо",
+              "displayName": "Хүний тоо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Эхлэх огноо",
+              "displayName": "Эхлэх огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дуусах огноо",
+              "displayName": "Дуусах огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Нийт дүн",
+              "displayName": "Нийт дүн",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Урьдчилгаа 30%",
+              "displayName": "Урьдчилгаа 30%",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PDF файл",
+              "displayName": "PDF файл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Тэмдэглэл",
+              "displayName": "Тэмдэглэл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дугаарлалт",
+              "displayName": "Дугаарлалт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Төлөв",
+              "displayName": "Төлөв",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Илгээсэн огноо",
+              "displayName": "Илгээсэн огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Нэмэлт үйлчилгээ",
+              "displayName": "Нэмэлт үйлчилгээ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Тээвэр",
+              "displayName": "Тээвэр",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Анхны өгөгдөл",
+              "displayName": "Анхны өгөгдөл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Уулзалтын огноо",
+              "displayName": "Уулзалтын огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Хямдрал ₮",
+              "displayName": "Хямдрал ₮",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Уулзалтын тэмдэглэл",
+              "displayName": "Уулзалтын тэмдэглэл",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Эцсийн гэрээний дүн",
+              "displayName": "Эцсийн гэрээний дүн",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Гэрээ зурсан огноо",
+              "displayName": "Гэрээ зурсан огноо",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "d3bdfd86-8efc-40c0-968f-7a5078fa9016",
+      "name": "Sheets · Append log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        13904,
+        14256
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "k4p4OIdOAsaZgnRH",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+          "mode": "list",
+          "cachedResultName": "nomaad_quote_log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 529201537,
+          "mode": "list",
+          "cachedResultName": "Quote Log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
+        },
+        "filtersUI": {
+          "values": []
+        },
+        "options": {}
+      },
+      "id": "73d2220c-c60e-4c1e-bc36-d512f744aa34",
+      "name": "Sheets · Read counter",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        13168,
+        14400
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "k4p4OIdOAsaZgnRH",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "nomaad-quote",
+        "options": {}
+      },
+      "id": "c8af0700-a5af-40ce-a4bd-8cb6284855cc",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        12960,
+        14400
+      ],
+      "webhookId": "30c5f7cb-23e1-4e8a-ada5-257bd63ac388"
+    },
+    {
+      "id": "code-build-metadata-2026",
+      "name": "Code · Build metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        400
+      ],
+      "parameters": {
+        "jsCode": "// Capture quote metadata — Render HTML-ийн оронд жижиг helper\n// Зөвхөн Sheet-д хадгалах, Gmail subject-д хэрэгтэй талбаруудыг бэлдэнэ.\n// PDF биш — энэ нь Send workflow-н ажил.\n\nconst body = $('Webhook').first().json.body || {};\nconst counter = $('Sheets · Read counter').first().json;\n\n// Counter Sheet-ээс өнөөгийн утгыг авна\nconst currentCounter = parseInt(counter['Тоолуур'] || counter['counter'] || counter['next'] || 0, 10) || 0;\nconst nextCounter = currentCounter + 1;\nconst quoteNumber = 'NQ-' + String(nextCounter).padStart(4, '0');\n\n// Addons summary string бэлдэх\nlet addonsSummary = '';\ntry {\n  const addons = JSON.parse(body.addons_json || '[]');\n  if (Array.isArray(addons) && addons.length) {\n    addonsSummary = addons.map(a => `${a.name || a.label || ''}×${a.qty || 1}`).join(', ');\n  }\n} catch(e) { addonsSummary = ''; }\n\n// Shuttle summary\nconst shuttleLabel = body.shuttle_service_label || body.shuttle_service || 'Сонгохгүй';\nconst busCount = body.bus_count || 1;\nconst shuttleSummary = shuttleLabel === 'Сонгохгүй' ? 'Тээвэр сонгоогүй' : `${shuttleLabel} · ${busCount} автобус`;\n\n// Internal email subject\nconst emailSubjectInternal = `🆕 Шинэ үнийн санал ${quoteNumber} · ${body.company || body.contact_name || 'Үл мэдэгдэх'} · ${Number(body.grand_total || 0).toLocaleString('mn-MN')}₮`;\n\n// Internal email body (HTML, гэхдээ маш богино — quote info-г нийлүүлж бэлдэх)\nconst emailBodyInternal = `<!DOCTYPE html><html><body style=\"font-family:Helvetica,Arial,sans-serif;background:#F5F1E8;padding:24px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" align=\"center\" style=\"background:#fff;border-radius:8px;padding:28px 24px;border-top:3px solid #2E3A28;\">\n<tr><td>\n<p style=\"font-size:11px;color:#C8A878;letter-spacing:2px;margin:0 0 4px;\">NOMAAD CAMP · INTERNAL</p>\n<h2 style=\"font-size:18px;color:#1F2A23;margin:0 0 16px;\">🆕 Шинэ үнийн санал ${quoteNumber}</h2>\n<p style=\"font-size:13px;color:#5F5E5A;margin:0 0 16px;\">Шинэ зочин квот авах хүсэлт илгээсэн байна. Доорх мэдээллийг шалгаад зочны email хайрцаг руу <strong>Send</strong> workflow-аар явуулна уу.</p>\n<table cellpadding=\"6\" cellspacing=\"0\" width=\"100%\" style=\"background:#F5F1E8;border-radius:6px;border-left:3px solid #C8A878;font-size:13px;color:#3D3C39;\">\n<tr><td width=\"40%\"><strong>Компани</strong></td><td>${body.company || '—'}</td></tr>\n<tr><td><strong>Холбоо барих</strong></td><td>${body.contact_name || '—'}</td></tr>\n<tr><td><strong>Утас</strong></td><td>${body.phone || '—'}</td></tr>\n<tr><td><strong>И-мэйл</strong></td><td>${body.email || '—'}</td></tr>\n<tr><td><strong>Кемп</strong></td><td>${body.camp_name || '—'} · ${body.package_tier || '—'}</td></tr>\n<tr><td><strong>Огноо</strong></td><td>${body.start_datetime || '—'} → ${body.end_datetime || '—'}</td></tr>\n<tr><td><strong>Хүний тоо</strong></td><td>${body.guest_count || '—'}</td></tr>\n<tr><td><strong>Нийт дүн</strong></td><td><strong>${Number(body.grand_total || 0).toLocaleString('mn-MN')}₮</strong></td></tr>\n<tr><td><strong>Урьдчилгаа 30%</strong></td><td>${Number(body.deposit_30 || 0).toLocaleString('mn-MN')}₮</td></tr>\n${addonsSummary ? `<tr><td><strong>Нэмэлт</strong></td><td>${addonsSummary}</td></tr>` : ''}\n${body.notes ? `<tr><td><strong>Тэмдэглэл</strong></td><td>${body.notes}</td></tr>` : ''}\n</table>\n<p style=\"font-size:11px;color:#9A9A95;margin:18px 0 0;\">Source: ${body.source || 'nomaadcamp.com'} · Огноо: ${new Date().toLocaleString('mn-MN')}</p>\n</td></tr></table></body></html>`;\n\nreturn [{ json: {\n  ...body,\n  quote_number: quoteNumber,\n  next_counter_value: nextCounter,\n  addons_summary: addonsSummary,\n  shuttle_summary: shuttleSummary,\n  email_subject_internal: emailSubjectInternal,\n  email_body_internal: emailBodyInternal,\n  original_payload: body,\n} }];\n"
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Read counter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets · Read counter": {
+      "main": [
+        [
+          {
+            "node": "Code · Build metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Build metadata": {
+      "main": [
+        [
+          {
+            "node": "Code · Decompose items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail · Internal",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sheets · Append log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Decompose items": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Append items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1ee1cd01-1fc4-4bec-ab2a-c5f986bd5ffb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f638da819297acbd6e4f4271a24c6826d03f971863c6ffa42183ae0805d3cea1"
+  },
+  "id": "rxFC79qcPRRv6F95",
+  "tags": []
+}
