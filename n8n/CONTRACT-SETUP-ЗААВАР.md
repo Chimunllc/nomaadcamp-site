@@ -1,146 +1,110 @@
-# Гэрээ Auto-fill Setup заавар
+# Гэрээ Auto-fill Setup заавар (v2 — албан ёсны шаблон)
 
-## 1. Drive хавтсуудыг бэлдэх
-
-### 1.1. Template Doc хадгалах хавтас
-
-[Google Drive](https://drive.google.com) → New → Folder → нэр: **`NOMAAD · Гэрээ Templates`**
-
-### 1.2. Үүсгэгдсэн гэрээнүүдийг хадгалах хавтас
-
-New → Folder → нэр: **`NOMAAD · Гэрээ Үүсгэсэн`**
-
-Энэ хавтасны Folder ID-г тэмдэглэж авна (URL дотор `/folders/XXXX` хэсэг).
+Хэрэглэгчийн Quote Log Sheet дотор Төлөв "ИЛГЭЭСЭН" → **"ГЭРЭЭ"** болж сольсоны дараа n8n автоматаар:
+1. Албан ёсны гэрээний шаблоныг **Google Drive дотор хувилж**
+2. Бүх placeholder-ыг **Quote Log-ийн өгөгдлөөр** солиж
+3. Шинэ Doc-ыг **NOMAAD · Гэрээ Үүсгэсэн** хавтаст хадгалж
+4. Staff-д Doc линктэй email явуулна
 
 ---
 
-## 2. Google Doc Template үүсгэх
+## Алхам 1 — Шаблон Google Doc болгож upload хийх
 
-1. `NOMAAD · Гэрээ Templates` хавтас руу очих
-2. New → **Google Docs** → нэр: **`NOMAAD Гэрээ Template v1`**
-3. `NOMAAD-Contract-Template.md` файлын **бүх агуулгыг** энэ Doc-руу хуулах (Markdown форматыг хадгалахын тулд heading, list-уудыг Doc дотор гар хийнэ — эсвэл https://www.markdowntohtml.com/ ашиглаж HTML-ээр convert хийгээд paste хийнэ)
-4. **Placeholder-ууд `{{}}` хаалттай байх ёстой**:
-   - `{{quote_number}}`
-   - `{{contract_date}}`
-   - `{{company_name}}`
-   - `{{tax_id}}`
-   - `{{contact_name}}`
-   - `{{phone}}`
-   - `{{email}}`
-   - `{{camp_name}}`
-   - `{{tier}}`
-   - `{{guest_count}}`
-   - `{{start_datetime}}`
-   - `{{end_datetime}}`
-   - `{{list_price}}`
-   - `{{discount}}`
-   - `{{final_amount}}`
-   - `{{vat_included}}`
-   - `{{deposit_30}}`
-   - `{{balance_70}}`
-   - `{{meeting_note}}`
-   - `{{tier_inclusions}}`
-   - `{{generated_at}}`
+1. Google Drive нээх → **NOMAAD · Гэрээ Templates** нэртэй хавтас үүсгэх
+2. `n8n/NOMAAD-Contract-Template-v2.docx` файлыг тэр хавтас руу drag-drop
+3. Upload хийгдсэний дараа файлыг **2 удаа** дарж нээгээд → **File → Save as Google Docs**
+4. Үүссэн Google Doc-ийн URL-аас **Doc ID** хуулж авах:
+   - URL: `https://docs.google.com/document/d/XXXXXXXXX/edit`
+   - **Doc ID** = `XXXXXXXXX` (`/d/` болон `/edit` хооронд)
 
-5. Template Doc-ийн **File ID**-г тэмдэглэх (URL-аас `/d/XXXXX/edit` хэсэг)
+⚠️ Upload хийсний дараа placeholder `{{...}}` хэлбэрээр Doc дотор хадгалагдсан байх ёстой. Хэрэв нэг placeholder run-уудад хуваагдсан бол гар бөглөнө.
 
 ---
 
-## 3. Workflow 3-руу гэрээ үүсгэх node-ууд нэмэх
+## Алхам 2 — Гэрээ хадгалах хавтасны Folder ID
 
-Workflow 3 (`NOMAAD Quote · 3. Contract Confirmed`)-руу 5 шинэ node нэмнэ:
-
-### 3.1. Google Drive · Copy template (`Code · Build contract data`-ийн дараа)
-
-- **Operation:** Copy file
-- **File ID:** `{{TEMPLATE_DOC_ID}}` (дээр тэмдэглэсэн)
-- **Name (нэр):** `={{ $('Code · Build contract data').item.json.quote_number }} · {{ $('Code · Build contract data').item.json.company }} · Гэрээ`
-- **Parent folder ID:** `{{CONTRACTS_FOLDER_ID}}` (`Гэрээ Үүсгэсэн` хавтсын ID)
-
-### 3.2. Google Docs · Replace Text
-
-- **Operation:** Update document
-- **Document ID:** Copy node-аас (`={{ $json.id }}`)
-- **Updates:** Replace бүх placeholder тус бүрд (20 ширхэг)
-  - Replace text: `{{quote_number}}` → with: `={{ $('Code · Build contract data').item.json.quote_number }}`
-  - Replace text: `{{company_name}}` → with: `={{ $('Code · Build contract data').item.json.company }}`
-  - ... (бусад placeholder-ууд)
-
-### 3.3. Google Drive · Get share link (нээлттэй харах эрх)
-
-- **Operation:** Share file
-- **File ID:** `={{ $('Google Drive · Copy template').item.json.id }}`
-- **Permission:** Reader
-- **Email/Domain:** anyone (эсвэл зөвхөн `{{ $('Code · Build contract data').item.json.email }}`-д хязгаарлаж болно)
-
-### 3.4. Sheets · Update quote with contract link
-
-- **Operation:** Update row
-- **Document ID:** Quote Log Sheet
-- **Lookup column:** `Үнийн саналын дугаар`
-- **Lookup value:** `={{ $('Code · Build contract data').item.json.quote_number }}`
-- **Update columns:**
-  - `Гэрээ Doc URL`: `={{ $('Google Drive · Copy template').item.json.webViewLink }}`
-
-⚠ Sheet-д **"Гэрээ Doc URL"** гэдэг шинэ багана нэмэх хэрэгтэй.
-
-### 3.5. Gmail · Notify staff with contract link (одоо байгаа Gmail · Notify staff-ийг шинэчлэх)
-
-Subject: `📄 Гэрээ бэлэн: {{ quote_number }} · {{ company }}`
-
-Body (HTML):
-```html
-<p>{{ company }}-н гэрээ автоматаар үүсгэгдсэн байна.</p>
-<p><strong>Шалгаад зочинд илгээнэ үү:</strong></p>
-<p><a href="{{ contract_doc_url }}">📄 Гэрээ нээх</a></p>
-<ul>
-  <li>Дүн: {{ final_amount }}₮</li>
-  <li>Урьдчилгаа: {{ deposit_30 }}₮</li>
-  <li>Огноо: {{ start_datetime }} → {{ end_datetime }}</li>
-</ul>
-<p>Doc-ийг шалгаад зөв бол PDF болгож зочин руу илгээнэ үү.</p>
+`NOMAAD · Гэрээ Үүсгэсэн` хавтас:
 ```
+https://drive.google.com/drive/folders/1Av7YxSOr-ei182NQpcHp5FlsJOSiQIGb
+```
+Folder ID = `1Av7YxSOr-ei182NQpcHp5FlsJOSiQIGb` (workflow дотор урьдчилан тохируулсан).
 
 ---
 
-## 4. Quote Log Sheet-д "Гэрээ Doc URL" багана нэмэх
+## Алхам 3 — Workflow 3 импорт + node config
 
-[Quote Log Sheet](https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit) нээх → толгойд шинэ багана:
+### 3.1. Импорт
+n8n → Workflows → ... → Import from File → `NOMAAD Quote · 3. Contract Confirmed.json` → **Replace existing**.
 
-- Багана нэр: **`Гэрээ Doc URL`**
-- Байршил: сүүлд (`Гэрээ зурсан огноо`-н дараа)
+### 3.2. Drive · Copy template
+- 2 удаа дарж нээх
+- **Credential:** Google Drive OAuth2 холбох
+- **File ID** талбарт **Алхам 1-д авсан шаблон Doc ID** оруулах (REPLACE_WITH_TEMPLATE_DOC_ID-ийн оронд)
 
----
+### 3.3. Docs · Replace placeholders
+- **Credential:** Google Docs OAuth2 холбох
+- 30 placeholder автоматаар бөглөгдсөн байна
 
-## 5. Туршилт
-
-1. Quote Log Sheet-аас аль нэг quote-н Төлөв-ыг `ИЛГЭЭСЭН` → `ГЭРЭЭ` болгох
-2. 1 минут хүлээх
-3. [n8n Executions](https://chimunllc.app.n8n.cloud/insights/total) — амжилттай execution гарах ёстой
-4. **`NOMAAD · Гэрээ Үүсгэсэн`** Drive хавтас нээх → шинэ Doc гарсан байна
-5. Doc-ыг нээж placeholder-ууд **бүгд бөглөгдсөн** эсэхийг шалгах
-6. team@nomaadcamp.com-д email ирэх (Doc линктэй)
-7. Quote Log Sheet-ийн `Гэрээ Doc URL` багана автомат бөглөгдсөн
+### 3.4. Sheets · Update quote status
+- Quote Log Sheet толгойд **`Гэрээ Doc URL`** багана нэмэх (хүсвэл)
 
 ---
 
-## 6. Дараагийн алхам — Ажилтны гар үйлдэл
+## Алхам 4 — Туршилт
 
-Гэрээ автоматаар үүссэний дараа ажилтан:
-
-1. Doc нээж шалгах (placeholder-ууд орсон, формат зөв эсэх)
-2. Шаардлагатай бол гар засвар оруулах (банк, тусгай нөхцөл)
-3. File → Download → **PDF** формат сонгох
-4. PDF-ыг зочинд email-ээр илгээх (эсвэл шууд гар утаснаар, Viber)
-5. Зочин гарын үсэг тавьж буцаасны дараа — Sheet-ийн `Гэрээ зурсан огноо` багана бөглөх
+1. Quote Log дотор аль нэг quote-ын Төлөв-ыг **ИЛГЭЭСЭН → ГЭРЭЭ** солих
+2. 1-2 минут хүлээх
+3. Шалгах:
+   - ✓ `NOMAAD · Гэрээ Үүсгэсэн` хавтаст шинэ Doc гарсан
+   - ✓ Doc дотор placeholder бүгд бөглөгдсөн
+   - ✓ Staff email ирсэн (Doc URL-тэй)
 
 ---
 
-## 7. Дараагийн боломжтой сайжруулалт
+## Гэрээний Placeholder-ууд (30 ширхэг)
 
-- **Auto PDF** — Doc-ыг auto-аар PDF болгож хадгалах
-- **Auto email customer** — Гэрээг шууд зочин руу илгээх (зөвхөн staff review-н дараа)
-- **E-signature** — DocuSign эсвэл Adobe Sign integration
-- **WhatsApp/Viber** notification зочинд
+### Гарчиг + БАТЛАВ блок
+- `{{contract_year}}` / `{{contract_month}}` / `{{contract_day}}` — гэрээ үүсгэсэн огноо
 
-Хэрэв эдгээрийг хиймээр бол хэлээрэй.
+### 1.1 — Захиалагч
+- `{{customer_tax_id}}` — РД
+- `{{company_name}}` — компанийн нэр
+- `{{contact_position}}` — албан тушаал (default "Гүйцэтгэх захирал")
+- `{{contact_name}}` — холбоо барих хүн
+
+### 2.1 — Хугацаа
+- `{{start_year}}` / `{{start_month}}` / `{{start_day}}` / `{{start_time}}`
+- `{{end_year}}` / `{{end_month}}` / `{{end_day}}` / `{{end_time}}`
+
+### 2.2 — Үнэ
+- `{{guest_count}}` — хүний тоо
+- `{{camp_short_name}}` — Grove/Aurora гэх мэт
+- `{{tier}}` — багц
+- `{{per_person_price}}` + `{{per_person_price_words}}` — нэг хүний үнэ
+- `{{addons_subtotal}}` + `{{addons_subtotal_words}}` — нэмэлт төлбөр
+- `{{grand_total}}` + `{{grand_total_words}}` — нийт үнэ
+
+### 2.3 — 2.4 Төлбөр
+- `{{deposit_30}}` + `{{deposit_30_words}}` — 30% урьдчилгаа
+- `{{balance_70}}` + `{{balance_70_words}}` — 70% үлдэгдэл
+
+### 4.4 — Сунгах төлбөр (default 300,000₮)
+- `{{hourly_extension_fee}}` + `{{hourly_extension_fee_words}}`
+
+---
+
+## Хязгаарлалт
+
+- **Хавсралт №1** (хоолны цэс, тоног төхөөрөмж) — placeholder болгоогүй. Ажилтан гар бөглөнө.
+- **БАТЛАВ блок гарын үсэг + цаг** — placeholder болгоогүй.
+- **Тоог үг рүү хувиргах** үндсэн bigram функцэд тулгуурласан.
+
+---
+
+## Дараагийн алхам
+
+1. Doc нээж шалгах
+2. Хавсралт №1 хоолны цэс гар бөглөх
+3. File → Download → **PDF**
+4. Зочин руу email
+5. Гарын үсэг авсаны дараа Quote Log-ийн `Гэрээ зурсан огноо` багана бөглөх
