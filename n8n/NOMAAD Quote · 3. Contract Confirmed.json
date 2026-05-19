@@ -3,44 +3,20 @@
   "nodes": [
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {
-              "mode": "everyMinute"
-            }
-          ]
-        },
-        "documentId": {
-          "__rl": true,
-          "value": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
-          "mode": "list",
-          "cachedResultName": "nomaad_quote_log",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 529201537,
-          "mode": "list",
-          "cachedResultName": "Quote Log",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA/edit#gid=529201537"
-        },
-        "event": "rowUpdate",
+        "httpMethod": "POST",
+        "path": "nomaad-contract-trigger",
+        "responseMode": "lastNode",
         "options": {}
       },
-      "id": "cec43257-01f2-4285-a612-b83905c34968",
-      "name": "Sheets Trigger · On row update",
-      "type": "n8n-nodes-base.googleSheetsTrigger",
-      "typeVersion": 1,
+      "id": "webhook-contract-001",
+      "name": "Webhook · Contract Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
       "position": [
-        4304,
-        3200
+        240,
+        300
       ],
-      "credentials": {
-        "googleSheetsTriggerOAuth2Api": {
-          "id": "GW7H0PAjDKMEZBEj",
-          "name": "Google Sheets Trigger OAuth2 API"
-        }
-      }
+      "webhookId": "nomaad-contract-trigger"
     },
     {
       "parameters": {
@@ -521,17 +497,6 @@
     ]
   },
   "connections": {
-    "Sheets Trigger · On row update": {
-      "main": [
-        [
-          {
-            "node": "IF · Төлөв = ГЭРЭЭ",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "IF · Төлөв = ГЭРЭЭ": {
       "main": [
         [
@@ -597,6 +562,17 @@
         [
           {
             "node": "Gmail · Notify staff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook · Contract Trigger": {
+      "main": [
+        [
+          {
+            "node": "IF · Төлөв = ГЭРЭЭ",
             "type": "main",
             "index": 0
           }
