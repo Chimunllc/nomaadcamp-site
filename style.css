@@ -4109,20 +4109,10 @@ body.home-page video {
 @media (max-width: 760px) {
   body.home-page .nav.is-open .nav-links {
     padding: 1rem 1rem 1.25rem;
-    /* Home page цэс цайвар сэдэвтэй тул dropdown-г бас cream болгоно
-       (өмнө var(--bg) бараан дэвсгэр дээр бараан текст уншигдахгүй байсан) */
-    background: rgba(245, 241, 232, 0.99);
-    border-bottom: 1px solid rgba(31, 42, 35, 0.12);
   }
   body.home-page .nav.is-open .nav-links a {
     width: 100%;
     min-height: 44px;
-    color: #1A1A1A;
-  }
-  body.home-page .nav.is-open .nav-links a:hover,
-  body.home-page .nav.is-open .nav-links a.active {
-    color: #000;
-    background: rgba(31, 42, 35, 0.07);
   }
   body.home-page .hero--corporate .hero-inner {
     max-width: 100%;
@@ -6011,3 +6001,69 @@ body.home-page video {
 .quote-addons__toggle-arrow { transition: transform 0.2s ease; display: inline-block; }
 .quote-addons__toggle.is-open .quote-addons__toggle-arrow { transform: rotate(180deg); }
 .quote-addons__collapse-body { margin-top: 14px; }
+
+/* ============================================================
+   Mobile hamburger menu contrast fix (2026-05)
+   Dark brand-green background + white text (WCAG AA).
+   Applies to both home & inner pages. UI-only.
+   ============================================================ */
+.nav-toggle__close { display: none; }
+
+@media (max-width: 760px) {
+  /* Whole nav bar turns dark brand-green when menu open */
+  .nav.is-open,
+  body.home-page .nav.is-open {
+    background: #2F3E2F !important;
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  /* Dropdown panel */
+  .nav.is-open .nav-links,
+  body.home-page .nav.is-open .nav-links {
+    background: #2F3E2F !important;
+    padding: 20px !important;
+    border-bottom: none !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Menu links — white, larger, comfy tap targets */
+  .nav.is-open .nav-links a,
+  body.home-page .nav.is-open .nav-links a {
+    color: #FFFFFF !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    padding: 16px 6px !important;
+    min-height: 44px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 0 !important;
+  }
+  .nav.is-open .nav-links a:last-child,
+  body.home-page .nav.is-open .nav-links a:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Hover / active feedback — brand accent */
+  .nav.is-open .nav-links a:hover,
+  .nav.is-open .nav-links a:active,
+  .nav.is-open .nav-links a.active,
+  body.home-page .nav.is-open .nav-links a:hover,
+  body.home-page .nav.is-open .nav-links a:active,
+  body.home-page .nav.is-open .nav-links a.active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--accent) !important;
+  }
+
+  /* Logo + toggle icon become white when menu open */
+  .nav.is-open .nav-logo img,
+  body.home-page .nav.is-open .nav-logo img {
+    filter: brightness(0) invert(1) !important;
+  }
+  .nav.is-open .nav-toggle,
+  body.home-page .nav.is-open .nav-toggle {
+    color: #FFFFFF !important;
+  }
+
+  /* Hamburger ↔ X icon swap */
+  .nav.is-open .nav-toggle__open { display: none !important; }
+  .nav.is-open .nav-toggle__close { display: block !important; }
+}
