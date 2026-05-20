@@ -5950,3 +5950,54 @@ body.home-page video {
     font-size: 0.95rem;
   }
 }
+
+/* ============================================================
+   Simplified quote modal (2026-05) — UI-only simplification.
+   n8n payload structure unchanged; fields hidden via CSS only.
+   ============================================================ */
+
+/* Hidden fields (still submitted to n8n with defaults) */
+.quote-form__field:has(#org-tax-id),
+.quote-form__field:has(#end-date),
+.quote-form__field:has(#extra-info) { display: none !important; }
+
+/* Hide locked time displays (auto-filled by datepicker) */
+.quote-time-locked { display: none !important; }
+
+/* Hide savings nudge / tier success / production link blocks */
+#tier-nudge,
+#tier-success,
+#production-link,
+#quote-estimate { display: none !important; }
+
+/* Add-on cards: show name + checkbox only (no prices/details/qty) */
+.quote-addon-card__price,
+.quote-addon-card__detail,
+.quote-addon-card__quantity,
+.quote-addon-card__sub-options { display: none !important; }
+
+/* Original add-ons heading hidden — toggle button replaces it */
+#quote-addons-section .quote-addons__title,
+#quote-addons-section .quote-addons__subtitle { display: none !important; }
+
+/* Collapse toggle button */
+.quote-addons__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--color-border, #d8d2c4);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-text, #2f3e2f);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+.quote-addons__toggle:hover { background: rgba(0,0,0,0.03); }
+.quote-addons__toggle-arrow { transition: transform 0.2s ease; display: inline-block; }
+.quote-addons__toggle.is-open .quote-addons__toggle-arrow { transform: rotate(180deg); }
+.quote-addons__collapse-body { margin-top: 14px; }

@@ -2019,3 +2019,44 @@
     btn.setAttribute('aria-controls', btn.dataset.campTarget);
   });
 })();
+
+/* ============================================================
+   Simplified quote modal — collapse "Нэмэлт үйлчилгээ" (2026-05)
+   UI-only: payload / field names unchanged.
+   ============================================================ */
+(function () {
+  function initAddonsCollapse() {
+    var section = document.getElementById('quote-addons-section');
+    if (!section || section.dataset.collapseInit) return;
+    section.dataset.collapseInit = '1';
+
+    // Бие: add-ons section-ий бүх child-ийг шинэ container руу зөөнө
+    var body = document.createElement('div');
+    body.className = 'quote-addons__collapse-body';
+    body.hidden = true;
+
+    var kids = Array.prototype.slice.call(section.children);
+    kids.forEach(function (k) { body.appendChild(k); });
+
+    // Тээвэр (shuttle) НЭ зөөв — day-program горимд add-ons section DOM-оос
+    // хасагддаг тул payload алдагдахаас сэргийлэв. Тээвэр тусдаа талбар хэвээр.
+
+    // Toggle товч
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'quote-addons__toggle';
+    toggle.innerHTML = '<span class="quote-addons__toggle-arrow">▾</span> Нэмэлт үйлчилгээ (заавал биш)';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.addEventListener('click', function () {
+      body.hidden = !body.hidden;
+      toggle.classList.toggle('is-open', !body.hidden);
+      toggle.setAttribute('aria-expanded', String(!body.hidden));
+    });
+
+    section.appendChild(toggle);
+    section.appendChild(body);
+  }
+
+  if (document.readyState !== 'loading') initAddonsCollapse();
+  else document.addEventListener('DOMContentLoaded', initAddonsCollapse);
+})();
