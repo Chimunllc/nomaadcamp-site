@@ -4109,10 +4109,20 @@ body.home-page video {
 @media (max-width: 760px) {
   body.home-page .nav.is-open .nav-links {
     padding: 1rem 1rem 1.25rem;
+    /* Home page цэс цайвар сэдэвтэй тул dropdown-г бас cream болгоно
+       (өмнө var(--bg) бараан дэвсгэр дээр бараан текст уншигдахгүй байсан) */
+    background: rgba(245, 241, 232, 0.99);
+    border-bottom: 1px solid rgba(31, 42, 35, 0.12);
   }
   body.home-page .nav.is-open .nav-links a {
     width: 100%;
     min-height: 44px;
+    color: #1A1A1A;
+  }
+  body.home-page .nav.is-open .nav-links a:hover,
+  body.home-page .nav.is-open .nav-links a.active {
+    color: #000;
+    background: rgba(31, 42, 35, 0.07);
   }
   body.home-page .hero--corporate .hero-inner {
     max-width: 100%;
