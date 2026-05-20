@@ -2060,3 +2060,47 @@
   if (document.readyState !== 'loading') initAddonsCollapse();
   else document.addEventListener('DOMContentLoaded', initAddonsCollapse);
 })();
+
+/* ============================================================
+   Mobile: collapse package feature lists (2026-05)
+   Show first 5 items, hide rest behind "▾ Бусад N үйлчилгээ".
+   ============================================================ */
+(function () {
+  var VISIBLE = 5;
+  function initPkgCollapse() {
+    var lists = document.querySelectorAll('.pkg-features');
+    Array.prototype.forEach.call(lists, function (ul) {
+      if (ul.dataset.collapseInit) return;
+      var items = Array.prototype.filter.call(ul.children, function (el) {
+        return el.tagName === 'LI';
+      });
+      var extra = items.slice(VISIBLE);
+      if (extra.length < 2) return; // богино жагсаалт — хэрэггүй
+      ul.dataset.collapseInit = '1';
+      ul.classList.add('pkg-features--collapsible');
+
+      extra.forEach(function (li) { li.classList.add('pkg-feature--extra'); });
+      var moreCount = extra.filter(function (li) {
+        return !li.classList.contains('pkg-zone-label');
+      }).length;
+      if (moreCount === 0) moreCount = extra.length;
+
+      var labelMore = '<span class="pkg-features__toggle-arrow">▾</span> Бусад ' + moreCount + ' үйлчилгээ';
+      var labelLess = '<span class="pkg-features__toggle-arrow">▴</span> Хураах';
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pkg-features__toggle';
+      btn.innerHTML = labelMore;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.addEventListener('click', function () {
+        var open = ul.classList.toggle('is-expanded');
+        btn.setAttribute('aria-expanded', String(open));
+        btn.innerHTML = open ? labelLess : labelMore;
+      });
+      ul.parentNode.insertBefore(btn, ul.nextSibling);
+    });
+  }
+  if (document.readyState !== 'loading') initPkgCollapse();
+  else document.addEventListener('DOMContentLoaded', initPkgCollapse);
+})();
