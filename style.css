@@ -6067,3 +6067,37 @@ body.home-page video {
   .nav.is-open .nav-toggle__open { display: none !important; }
   .nav.is-open .nav-toggle__close { display: block !important; }
 }
+
+/* ============================================================
+   Mobile: collapsible package feature lists (2026-05)
+   Desktop = always full. Mobile = first 5 items + toggle.
+   ============================================================ */
+.pkg-features__toggle { display: none; }
+
+@media (max-width: 760px) {
+  .pkg-features--collapsible:not(.is-expanded) .pkg-feature--extra {
+    display: none !important;
+  }
+  .pkg-features__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin: 0.5rem 0 0.25rem;
+    padding: 10px 12px;
+    background: transparent;
+    border: 1px solid rgba(31, 42, 35, 0.18);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary-forest, #2f3e2f);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .pkg-features__toggle:hover,
+  .pkg-features__toggle:active {
+    background: rgba(31, 42, 35, 0.05);
+  }
+}
