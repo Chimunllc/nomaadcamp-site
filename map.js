@@ -67,7 +67,7 @@
   var CAMPS = [
     { id: 'a', name: 'NOMAAD Summit', size: '100–1000 хүн', coords: [107.659422, 47.727926], color: '#B14F1F' },
     { id: 'b', name: 'NOMAAD Meadow', size: '50–300 хүн',   coords: [107.664493, 47.730607], color: '#C8A878' },
-    { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.407861, 47.639083], color: '#4A5E3E' }
+    { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.419076, 47.643347], color: '#4A5E3E' }
   ];
 
   var center = [107.657680, 47.727278];
@@ -100,60 +100,50 @@
       .then(function (geo) {
         if (!geo || !geo.features) return;
 
-        // Identify the dirt-road and main-road features by name.
-        var dirtFeature = geo.features.find(function (f) {
-          return f.properties && /шороон/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
-        });
-        var mainFeature = geo.features.find(function (f) {
+        // Бүх асфальт зам (directions) болон шороон замыг олно — нэгээс олон байж болно.
+        var mainFeatures = geo.features.filter(function (f) {
           return f.properties && /directions/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
         });
+        var dirtFeatures = geo.features.filter(function (f) {
+          return f.properties && /шороон/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
+        });
 
-        if (mainFeature) {
-          map.addSource('nomaad-main-road', { type: 'geojson', data: mainFeature });
+        mainFeatures.forEach(function (feat, i) {
+          var src = 'nomaad-main-road-' + i;
+          map.addSource(src, { type: 'geojson', data: feat });
           map.addLayer({
-            id: 'nomaad-main-road-casing',
-            type: 'line',
-            source: 'nomaad-main-road',
+            id: src + '-casing', type: 'line', source: src,
             layout: { 'line-cap': 'round', 'line-join': 'round' },
             paint: { 'line-color': '#1F2A23', 'line-width': 6 }
           });
           map.addLayer({
-            id: 'nomaad-main-road',
-            type: 'line',
-            source: 'nomaad-main-road',
+            id: src, type: 'line', source: src,
             layout: { 'line-cap': 'round', 'line-join': 'round' },
             paint: { 'line-color': '#F2F1EC', 'line-width': 3 }
           });
-        }
+        });
 
-        if (dirtFeature) {
-          map.addSource('nomaad-dirt-road', { type: 'geojson', data: dirtFeature });
+        dirtFeatures.forEach(function (feat, i) {
+          var src = 'nomaad-dirt-road-' + i;
+          map.addSource(src, { type: 'geojson', data: feat });
           map.addLayer({
-            id: 'nomaad-dirt-road-casing',
-            type: 'line',
-            source: 'nomaad-dirt-road',
+            id: src + '-casing', type: 'line', source: src,
             layout: { 'line-cap': 'round', 'line-join': 'round' },
             paint: { 'line-color': '#1F2A23', 'line-width': 7 }
           });
           map.addLayer({
-            id: 'nomaad-dirt-road',
-            type: 'line',
-            source: 'nomaad-dirt-road',
+            id: src, type: 'line', source: src,
             layout: { 'line-cap': 'round', 'line-join': 'round' },
-            paint: {
-              'line-color': '#FFB347',
-              'line-width': 4,
-              'line-dasharray': [2, 1.5]
-            }
+            paint: { 'line-color': '#FFB347', 'line-width': 4, 'line-dasharray': [2, 1.5] }
           });
-        }
+        });
 
-        // Compute bounds covering camps + main route.
+        // Compute bounds covering camps + бүх зам.
         var bounds = new mapboxgl.LngLatBounds();
         CAMPS.forEach(function (c) { bounds.extend(c.coords); });
-        if (mainFeature) {
-          mainFeature.geometry.coordinates.forEach(function (p) { bounds.extend(p); });
-        }
+        mainFeatures.concat(dirtFeatures).forEach(function (feat) {
+          feat.geometry.coordinates.forEach(function (p) { bounds.extend(p); });
+        });
         // Fit-button shows whole route. Default view stays on the camp cluster.
         fitBtn.addEventListener('click', function () {
           map.fitBounds(bounds, { padding: 60, duration: 900 });
