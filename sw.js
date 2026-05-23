@@ -10,7 +10,7 @@
  * <script>navigator.serviceWorker.register('/sw.js')</script> хэсгийг арилгана.
  */
 
-const CACHE_VERSION = 'nomaad-v2.8.0-ui-refresh';
+const CACHE_VERSION = 'nomaad-v2.9.0-grove-route';
 const STATIC_CACHE  = `nomaad-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `nomaad-runtime-${CACHE_VERSION}`;
 
@@ -67,6 +67,23 @@ self.addEventListener('fetch', (event) => {
 
   // Skip Netlify functions / API endpoints if any
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/.netlify/')) return;
+
+  // ── Data files (route geojson) : network-first (always fresh) ──
+  // Газрын зам зэрэг өгөгдөл кэшэнд гацахаас сэргийлж шинэ татна.
+  if (/\.geo\.json$|route\.geo\.json$|\.geojson$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(RUNTIME_CACHE).then((c) => c.put(req, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
 
   // ── HTML / Navigation: network-first (always fresh) ────────
   const accept = req.headers.get('accept') || '';

@@ -108,8 +108,17 @@
           return f.properties && /шороон/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
         });
 
+        // Зам бүрийг чиглэлээр нь өнгөөр ялгана:
+        //   Эрдэнэ (Summit/Meadow) → цайвар цагаан
+        //   Grove (Сэргэлэн)        → ногоон
+        function isGrove(feat) {
+          return (feat.properties && feat.properties.route === 'grove')
+            || /grove/i.test((feat.properties && feat.properties.name) || '');
+        }
+
         mainFeatures.forEach(function (feat, i) {
           var src = 'nomaad-main-road-' + i;
+          var grove = isGrove(feat);
           map.addSource(src, { type: 'geojson', data: feat });
           map.addLayer({
             id: src + '-casing', type: 'line', source: src,
@@ -119,12 +128,13 @@
           map.addLayer({
             id: src, type: 'line', source: src,
             layout: { 'line-cap': 'round', 'line-join': 'round' },
-            paint: { 'line-color': '#F2F1EC', 'line-width': 3 }
+            paint: { 'line-color': grove ? '#9CC97B' : '#F2F1EC', 'line-width': 3 }
           });
         });
 
         dirtFeatures.forEach(function (feat, i) {
           var src = 'nomaad-dirt-road-' + i;
+          var grove = isGrove(feat);
           map.addSource(src, { type: 'geojson', data: feat });
           map.addLayer({
             id: src + '-casing', type: 'line', source: src,
@@ -134,7 +144,7 @@
           map.addLayer({
             id: src, type: 'line', source: src,
             layout: { 'line-cap': 'round', 'line-join': 'round' },
-            paint: { 'line-color': '#FFB347', 'line-width': 4, 'line-dasharray': [2, 1.5] }
+            paint: { 'line-color': grove ? '#7FB069' : '#FFB347', 'line-width': 4, 'line-dasharray': [2, 1.5] }
           });
         });
 
