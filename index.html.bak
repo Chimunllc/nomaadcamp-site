@@ -206,7 +206,7 @@
     <div class="camp-grid reveal">
       <button class="camp-card" type="button" data-camp-target="camp-a">
         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="NOMAAD Summit" loading="eager" fetchpriority="high" decoding="async" class="defer-img" data-camp-thumb="a">
-        <span class="camp-card-dist">УБ-аас 68 км</span>
+        <span class="camp-card-dist">УБ-аас 80 км</span>
         <div class="camp-card-body">
           <h3>NOMAAD Summit</h3>
           <p>Уулын оройд байрлах, өргөн уужим орчинтой кемп · 100–1000 хүн · Эрдэнэ сум, Төв</p>
@@ -215,7 +215,7 @@
       </button>
       <button class="camp-card" type="button" data-camp-target="camp-b">
         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23EAE3D5'/%3E%3C/svg%3E" alt="NOMAAD Meadow" loading="eager" fetchpriority="high" decoding="async" class="defer-img" data-camp-thumb="b">
-        <span class="camp-card-dist">УБ-аас 68 км</span>
+        <span class="camp-card-dist">УБ-аас 80 км</span>
         <div class="camp-card-body">
           <h3>NOMAAD Meadow</h3>
           <p>Ойн захад байрлах, харууц сайтай нөмөр кемп · 50–300 хүн · Эрдэнэ сум, Төв</p>
@@ -392,7 +392,7 @@
       <article class="camp-detail has-packages" id="camp-b">
         <div class="camp-detail-text">
           <h3>NOMAAD Meadow · 50–300 хүн</h3>
-          <p>Ойн захад байрлах, харууц сайтай нөмөр кемп · Эрдэнэ сум, Төв · УБ-аас 68км</p>
+          <p>Ойн захад байрлах, харууц сайтай нөмөр кемп · Эрдэнэ сум, Төв · УБ-аас 80км</p>
         </div>
         <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
           <div class="pkg-card" role="listitem">
@@ -539,7 +539,7 @@
       <article class="camp-detail has-packages" id="camp-a">
         <div class="camp-detail-text">
           <h3>NOMAAD Summit · 100–1000 хүн</h3>
-          <p>Уулын оройд байрлах, өргөн уужим орчинтой кемп · Эрдэнэ сум, Төв · УБ-аас 68км</p>
+          <p>Уулын оройд байрлах, өргөн уужим орчинтой кемп · Эрдэнэ сум, Төв · УБ-аас 80км</p>
         </div>
         <div class="camp-packages" role="list" aria-label="Үйлчилгээний багцууд">
           <div class="pkg-card" role="listitem">
