@@ -8,13 +8,13 @@
         "responseMode": "lastNode",
         "options": {}
       },
-      "id": "webhook-trigger-nomaad-contract-trigger",
+      "id": "52ef052a-f98c-4728-8a9a-e54752b812fa",
       "name": "Webhook · Төлөв trigger",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        240,
-        300
+        32752,
+        37008
       ],
       "webhookId": "nomaad-contract-trigger"
     },
@@ -42,13 +42,13 @@
         },
         "options": {}
       },
-      "id": "71306bb7-ee45-4b0d-bacd-6b9df5f7dd7a",
+      "id": "7d2e1ddc-8782-4fb6-be27-1d2a4cf6e2ea",
       "name": "IF · Төлөв = ГЭРЭЭ",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        5456,
-        7104
+        32928,
+        36992
       ]
     },
     {
@@ -77,13 +77,13 @@
         },
         "options": {}
       },
-      "id": "82fe23f1-7505-4dbe-8573-a01f6a433818",
+      "id": "94e7b5e9-a718-424c-899a-337a0761007e",
       "name": "Sheets · Find quote row",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        5680,
-        7104
+        33152,
+        36992
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -115,17 +115,17 @@
         },
         "options": {}
       },
-      "id": "sheets-read-items-wf3-001",
+      "id": "4d445784-e72b-4b4e-8adb-bb69357a4aaf",
       "name": "Sheets · Read items",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        900,
-        460
+        33312,
+        37008
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "REPLACE_AFTER_IMPORT",
+          "id": "tZSfYfxkpH5L34wG",
           "name": "Google Sheets OAuth2 API"
         }
       }
@@ -134,13 +134,13 @@
       "parameters": {
         "jsCode": "// =====================================================================\n// NOMAAD Camp · Workflow 3 · Contract Confirmed (Code node, fixed v3)\n// =====================================================================\n// Input:\n//   $input.all()                            → Quote Items (нэг квот = олон items)\n//   $('Sheets · Find quote row').first()    → Quote Log-ийн нэг мөр\n\nconst row = $('Sheets · Find quote row').first().json;\nconst items = $input.all().map(i => i.json);\n\nlet p;\ntry { p = JSON.parse(row[\"Анхны өгөгдөл\"] || \"{}\"); }\ncatch (e) { p = {}; }\n\nconst num = (v, d = 0) => {\n  if (v === undefined || v === null || v === '') return d;\n  const cleaned = String(v).replace(/[₮,$,\\s]/g, '');\n  const n = Number(cleaned);\n  return Number.isFinite(n) ? n : d;\n};\nconst str = (v, d = '') => (v === undefined || v === null) ? d : String(v).trim();\nconst fmt = n => Number(n).toLocaleString('en-US');\n\n// ---- Mongolian number → words (simple cyrillic) ----\nfunction numberToMongolWords(n) {\n  if (!n || n === 0) return 'тэг';\n  const units = ['', 'нэг', 'хоёр', 'гурван', 'дөрвөн', 'таван', 'зургаан', 'долоон', 'найман', 'есөн'];\n  const tens  = ['', 'арван', 'хорин', 'гучин', 'дөчин', 'тавин', 'жаран', 'далан', 'наян', 'ерэн'];\n  const hundreds = ['', 'нэг зуун', 'хоёр зуун', 'гурван зуун', 'дөрвөн зуун', 'таван зуун', 'зургаан зуун', 'долоон зуун', 'найман зуун', 'есөн зуун'];\n\n  function under1000(x) {\n    if (x === 0) return '';\n    const h = Math.floor(x / 100);\n    const t = Math.floor((x % 100) / 10);\n    const u = x % 10;\n    let parts = [];\n    if (h) parts.push(hundreds[h]);\n    if (t) parts.push(tens[t]);\n    if (u) parts.push(units[u]);\n    return parts.join(' ');\n  }\n\n  let result = '';\n  const billions = Math.floor(n / 1000000000);\n  const millions = Math.floor((n % 1000000000) / 1000000);\n  const thousands = Math.floor((n % 1000000) / 1000);\n  const rest = n % 1000;\n\n  if (billions) result += under1000(billions) + ' тэрбум ';\n  if (millions) result += under1000(millions) + ' сая ';\n  if (thousands) result += under1000(thousands) + ' мянган ';\n  if (rest) result += under1000(rest);\n  return result.trim();\n}\n\n// ---- Дата ----\nconst quoteNumber  = str(row[\"Үнийн саналын дугаар\"]);\nconst company      = str(row[\"Компанийн нэр\"]) || str(p.company);\nconst taxId        = str(row[\"Регистрийн дугаар\"]) || str(p.customer_tax_id);\nconst contactName  = str(row[\"Холбоо барих хүн\"]) || str(p.contact_name);\nconst phone        = str(row[\"Утас\"]) || str(p.phone);\nconst email        = str(row[\"И-мэйл\"]) || str(p.email);\nconst campFull     = str(row[\"Кемп\"]) || str(p.camp_name);\nconst tier         = str(row[\"Багц\"]) || str(p.package_tier);\nconst guests       = num(row[\"Хүний тоо\"]) || num(p.guest_count) || 0;\nconst startDt      = row[\"Эхлэх огноо\"] || p.start_datetime || '';\nconst endDt        = row[\"Дуусах огноо\"] || p.end_datetime || '';\n\nconst campShort = campFull.replace(/^NOMAAD\\s+/i, '');\n\n// ---- Дүн тооцоолол (Quote Items-аас бүхэлд нь нийлбэрлэнэ) ----\n// Ажилтан гэрээний дүнг Quote Items таб дотор засдаг (мөр нэмж/хасч, тоо/үнэ өөрчилж).\n// Тиймээс manual \"Эцсийн гэрээний дүн\" багана ашиглахгүй.\nfunction isItemIncluded(it) {\n  const v = String(it[\"Багцад орсон уу?\"] || '').trim();\n  return v === 'Тийм' || v === 'TRUE' || v === 'true' || v === '✓';\n}\n\nlet _tierSubtotal = 0;\nlet _addonsSubtotal = 0;\nlet _shuttleSubtotal = 0;\nfor (const it of items) {\n  const total = num(it[\"Дүн ₮\"]);\n  const cat = String(it[\"Ангилал\"] || '').trim();\n  if (cat === 'Үндсэн багц') _tierSubtotal += total;\n  else if (cat === 'Тээвэр')  _shuttleSubtotal += total;\n  else if (!isItemIncluded(it)) _addonsSubtotal += total;\n}\n\nconst tierSubtotal  = _tierSubtotal;\nconst addonsSubtotal = _addonsSubtotal + _shuttleSubtotal;\nconst finalAmount   = tierSubtotal + _addonsSubtotal + _shuttleSubtotal;\nconst deposit30     = Math.round(finalAmount * 0.30);\nconst balance70     = finalAmount - deposit30;\nconst vatIncluded   = Math.round(finalAmount / 11);\n\nconst perPersonPrice = guests > 0 ? Math.round(tierSubtotal / guests) : 0;\n\n// ---- Огноо задлах ----\nfunction parseDt(s) {\n  if (s === null || s === undefined || s === '') {\n    return { year: '', month: '', day: '', time: '' };\n  }\n  let asNum;\n  if (typeof s === 'number') {\n    asNum = s;\n  } else if (typeof s === 'string' && /^\\d+(\\.\\d+)?$/.test(s.trim())) {\n    asNum = Number(s.trim());\n  }\n  if (Number.isFinite(asNum) && asNum > 25569 && asNum < 80000) {\n    const ms = Math.round((asNum - 25569) * 86400000);\n    const d = new Date(ms);\n    if (!isNaN(d.getTime())) {\n      return {\n        year:  String(d.getUTCFullYear()),\n        month: String(d.getUTCMonth() + 1),\n        day:   String(d.getUTCDate()),\n        time:  String(d.getUTCHours()).padStart(2,'0') + ':' + String(d.getUTCMinutes()).padStart(2,'0')\n      };\n    }\n  }\n  const m = String(s).match(/(\\d{4})-(\\d{2})-(\\d{2})(?:[T ](\\d{2}):(\\d{2}))?/);\n  if (m) {\n    return {\n      year:  m[1],\n      month: String(parseInt(m[2], 10)),\n      day:   String(parseInt(m[3], 10)),\n      time:  (m[4] && m[5]) ? `${m[4]}:${m[5]}` : ''\n    };\n  }\n  const d2 = new Date(s);\n  if (!isNaN(d2.getTime())) {\n    return {\n      year:  String(d2.getFullYear()),\n      month: String(d2.getMonth() + 1),\n      day:   String(d2.getDate()),\n      time:  String(d2.getHours()).padStart(2,'0') + ':' + String(d2.getMinutes()).padStart(2,'0')\n    };\n  }\n  return { year: '', month: '', day: '', time: '' };\n}\nconst startParts = parseDt(startDt);\nconst endParts   = parseDt(endDt);\n\nconst today = new Date();\nconst contractYear  = String(today.getFullYear());\nconst contractMonth = String(today.getMonth() + 1);\nconst contractDay   = String(today.getDate());\n\n// ────────────────────────────────────────────────────────────\n// Хавсралт №1 — items array-аас динамик үүсгэх\n// items: { Ангилал, Зүйл, Тоо, Нэгж, \"Нэгж үнэ ₮\", \"Дүн ₮\", \"Багцад орсон уу?\" }\n// ────────────────────────────────────────────────────────────\nconst isIncluded = isItemIncluded;\n\nconst baseTier   = items.filter(it => it[\"Ангилал\"] === 'Үндсэн багц');\nconst inclusions = items.filter(it => isIncluded(it) && it[\"Ангилал\"] !== 'Үндсэн багц' && it[\"Ангилал\"] !== 'Тээвэр');\nconst paidAddons = items.filter(it => !isIncluded(it) && it[\"Ангилал\"] !== 'Үндсэн багц' && it[\"Ангилал\"] !== 'Тээвэр');\nconst shuttleItems = items.filter(it => it[\"Ангилал\"] === 'Тээвэр');\n\n// Багцад орсон үйлчилгээ — категориор бүлэглэх\nconst groupedIncl = {};\nfor (const it of inclusions) {\n  const cat = it[\"Ангилал\"] || 'Бусад';\n  if (!groupedIncl[cat]) groupedIncl[cat] = [];\n  const name = str(it[\"Зүйл\"]);\n  const qty = num(it[\"Тоо\"]);\n  const unit = str(it[\"Нэгж\"]);\n  let line = '• ' + name;\n  if (qty > 1 && unit) line += ` · ${qty} ${unit}`;\n  else if (qty > 1) line += ` · ${qty}`;\n  groupedIncl[cat].push(line);\n}\nconst inclusionLines = [];\nfor (const cat of Object.keys(groupedIncl)) {\n  inclusionLines.push('— ' + cat + ' —');\n  inclusionLines.push(...groupedIncl[cat]);\n}\nconst appendixInclusions = inclusionLines.length > 0\n  ? inclusionLines.join('\\n')\n  : '(Багцад үндсэн зүйлс орсон)';\n\n// Нэмэлт төлбөртэй үйлчилгээ\nconst addonLines = paidAddons.map(it => {\n  const name = str(it[\"Зүйл\"]);\n  const qty  = num(it[\"Тоо\"]);\n  const unit = str(it[\"Нэгж\"]);\n  const up   = num(it[\"Нэгж үнэ ₮\"]);\n  const tot  = num(it[\"Дүн ₮\"]);\n  if (up > 0 && qty > 0) {\n    return `• ${name} — ${qty} ${unit} × ${fmt(up)}₮ = ${fmt(tot)}₮`;\n  }\n  return `• ${name} — ${fmt(tot)}₮`;\n});\nconst appendixAddons = addonLines.length > 0\n  ? addonLines.join('\\n')\n  : '(Нэмэлт төлбөртэй үйлчилгээ сонгоогүй)';\n\n// Тээвэр\nconst shuttleLines = shuttleItems.map(it => {\n  const name = str(it[\"Зүйл\"]);\n  const qty  = num(it[\"Тоо\"]);\n  const unit = str(it[\"Нэгж\"]);\n  const up   = num(it[\"Нэгж үнэ ₮\"]);\n  const tot  = num(it[\"Дүн ₮\"]);\n  if (up > 0 && qty > 0) {\n    return `• ${name} — ${qty} ${unit} × ${fmt(up)}₮ = ${fmt(tot)}₮`;\n  }\n  return `• ${name}`;\n});\nconst appendixShuttle = shuttleLines.length > 0\n  ? shuttleLines.join('\\n')\n  : '(Тээврийн үйлчилгээ сонгоогүй)';\n\n// ---- Placeholder map ----\nconst placeholders = {\n  contract_year:        contractYear,\n  contract_month:       contractMonth,\n  contract_day:         contractDay,\n\n  customer_tax_id:      taxId,\n  company_name:         company,\n  contact_position:     'Гүйцэтгэх захирал',\n  contact_name:         contactName,\n\n  start_year:           startParts.year,\n  start_month:          startParts.month,\n  start_day:            startParts.day,\n  start_time:           startParts.time,\n  end_year:             endParts.year,\n  end_month:            endParts.month,\n  end_day:              endParts.day,\n  end_time:             endParts.time,\n\n  guest_count:          String(guests),\n  camp_short_name:      campShort,\n  tier:                 tier,\n  per_person_price:     fmt(perPersonPrice),\n  per_person_price_words: numberToMongolWords(perPersonPrice),\n  addons_subtotal:      fmt(addonsSubtotal),\n  addons_subtotal_words: numberToMongolWords(addonsSubtotal),\n  grand_total:          fmt(finalAmount),\n  grand_total_words:    numberToMongolWords(finalAmount),\n\n  deposit_30:           fmt(deposit30),\n  deposit_30_words:     numberToMongolWords(deposit30),\n  balance_70:           fmt(balance70),\n  balance_70_words:     numberToMongolWords(balance70),\n\n  hourly_extension_fee:       '300,000',\n  hourly_extension_fee_words: numberToMongolWords(300000),\n\n  camp_full_name:           campFull,\n  appendix_1_inclusions:    appendixInclusions,\n  appendix_1_addons:        appendixAddons,\n  appendix_1_shuttle:       appendixShuttle,\n  appendix_1_total:         fmt(finalAmount) + '₮'\n};\n\n// ---- Staff email ----\nconst staffEmailSubject = `[Гэрээ] ${quoteNumber} · ${company} · ${fmt(finalAmount)}₮`;\n\nconst staffEmailHtml = `<!DOCTYPE html><html><body style=\"font-family:Helvetica,Arial,sans-serif;background:#F5F1E8;padding:24px;color:#1a1a1a;\">\n<table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" align=\"center\" style=\"background:#fff;border-radius:8px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,0.08);\">\n  <tr><td>\n    <h2 style=\"margin:0 0 8px;font-size:20px;color:#0c2e1f;\">📄 Гэрээ үүсэхэд бэлэн боллоо</h2>\n    <p style=\"margin:0 0 18px;color:#4a4a4a;font-size:14px;\">${company}-н гэрээний draft автоматаар Google Drive дотор үүссэн. Шалгаад зочин руу илгээнэ үү.</p>\n    <table cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:13px;line-height:1.6;border-top:1px solid #e5e0d4;border-bottom:1px solid #e5e0d4;width:100%;\">\n      <tr><td style=\"color:#777;width:140px;\">Дугаар</td><td><b>${quoteNumber}</b></td></tr>\n      <tr><td style=\"color:#777;\">Компани</td><td>${company}${taxId ? ' · РД ' + taxId : ''}</td></tr>\n      <tr><td style=\"color:#777;\">Холбоо</td><td>${contactName}${phone ? ' · ' + phone : ''}${email ? ' · ' + email : ''}</td></tr>\n      <tr><td style=\"color:#777;\">Кемп</td><td>${campFull} · ${tier} · ${guests} хүн</td></tr>\n      <tr><td style=\"color:#777;\">Огноо</td><td>${startParts.year}-${startParts.month}-${startParts.day} ${startParts.time} → ${endParts.year}-${endParts.month}-${endParts.day} ${endParts.time}</td></tr>\n    </table>\n    <table cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:13px;line-height:1.6;margin-top:14px;width:100%;\">\n      <tr><td style=\"color:#777;width:140px;\">Нийт дүн</td><td><b style=\"color:#0c2e1f;\">${fmt(finalAmount)}₮</b></td></tr>\n      <tr><td style=\"color:#777;\">Урьдчилгаа 30%</td><td>${fmt(deposit30)}₮</td></tr>\n      <tr><td style=\"color:#777;\">Үлдэгдэл 70%</td><td>${fmt(balance70)}₮</td></tr>\n      <tr><td style=\"color:#777;\">НӨАТ (10% багтсан)</td><td>${fmt(vatIncluded)}₮</td></tr>\n    </table>\n    <p style=\"margin:22px 0 0;font-size:13px;color:#4a4a4a;\">\n      Drive хавтас: <a href=\"https://drive.google.com/drive/folders/1Av7YxSOr-ei182NQpcHp5FlsJOSiQIGb\" style=\"color:#0c2e1f;\">NOMAAD · Гэрээ Үүсгэсэн</a><br>\n      Үүсгэсэн: ${today.toLocaleString('mn-MN')}\n    </p>\n  </td></tr>\n</table>\n</body></html>`;\n\nreturn {\n  json: {\n    ...placeholders,\n    quote_number: quoteNumber,\n    company: company,\n    contact_name: contactName,\n    email: email,\n    phone: phone,\n    camp_full: campFull,\n    final_amount_num: finalAmount,\n    deposit_30_num: deposit30,\n    balance_70_num: balance70,\n    vat_included_num: vatIncluded,\n    staff_email_subject: staffEmailSubject,\n    staff_email_html: staffEmailHtml,\n    contract_filename: `${quoteNumber} · ${company} · Гэрээ`,\n    generated_at: today.toLocaleString('mn-MN')\n  }\n};"
       },
-      "id": "385d21d1-9e50-4258-ba92-b56393826c0a",
+      "id": "25bf7c1d-1028-4005-80c8-256f6b6fc767",
       "name": "Code · Build contract data",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5904,
-        7104
+        33488,
+        37008
       ]
     },
     {
@@ -154,13 +154,13 @@
           "replyTo": "hello@nomaadcamp.com"
         }
       },
-      "id": "f581308e-b364-4368-ad04-12caecd2edae",
+      "id": "b52c07ba-c17f-486a-a897-e0bb119a892d",
       "name": "Gmail · Notify staff",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        6576,
-        7104
+        34160,
+        37008
       ],
       "webhookId": "8329fd92-aa49-428e-b388-f39b014eb649",
       "credentials": {
@@ -217,13 +217,13 @@
         },
         "options": {}
       },
-      "id": "9d1e6af5-a3e9-44fa-b567-74b389952461",
+      "id": "9d3e0857-820e-4ccf-b36e-bf64184385ea",
       "name": "Sheets · Update quote status",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        6800,
-        7104
+        34384,
+        37008
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -243,13 +243,13 @@
         "name": "={{ $('Code · Build contract data').item.json.contract_filename }}",
         "options": {}
       },
-      "id": "e407c48b-fadd-4a31-9da3-6be6d06f1aed",
+      "id": "b9b524c0-8487-4f1c-8e49-965b49a1d01e",
       "name": "Drive · Copy template",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        6128,
-        7104
+        33712,
+        37008
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -477,13 +477,13 @@
           ]
         }
       },
-      "id": "19ced3a0-df31-4faf-b77d-220223e2148a",
+      "id": "950b85a9-29ef-4425-a028-8310cb0e4a81",
       "name": "Docs · Replace placeholders",
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        6352,
-        7104
+        33936,
+        37008
       ],
       "credentials": {
         "googleDocsOAuth2Api": {
@@ -493,45 +493,6 @@
       }
     }
   ],
-  "pinData": {
-    "Sheets Trigger · Төлөв update": [
-      {
-        "json": {
-          "row_number": 6,
-          "Бүртгэлийн огноо": "2026-05-19T15:50:07.227+08:00",
-          "Үнийн саналын дугаар": "NC-2026-0029",
-          "Компанийн нэр": "turshilt",
-          "Регистрийн дугаар": "",
-          "Холбоо барих хүн": "Munkhuchral Ganbat",
-          "Утас": 88006790,
-          "И-мэйл": "ceo@nomaadcamp.com",
-          "Кемп": "NOMAAD Summit",
-          "Багц": "Үндсэн",
-          "Хүний тоо": 123,
-          "Эхлэх огноо": 46172.5,
-          "Дуусах огноо": 46173.625,
-          "Нийт дүн": 28990000,
-          "Урьдчилгаа 30%": 8697000,
-          "PDF файл": "NC-2026-0029_turshilt.pdf",
-          "Тэмдэглэл": "",
-          "Дугаарлалт": 30,
-          "Төлөв": "ГЭРЭЭ",
-          "Илгээсэн огноо": "",
-          "Нэмэлт үйлчилгээ": "Fruit & snack platter · Хөтөлбөр хамтран боловсруулах",
-          "Тээвэр": "Хоног / 2 талдаа · 3 автобус · 3,600,000₮",
-          "Анхны өгөгдөл": "{\"company\":\"turshilt\",\"customer_tax_id\":\"\",\"contact_name\":\"Munkhuchral Ganbat\",\"phone\":\"88006790\",\"email\":\"ceo@nomaadcamp.com\",\"camp\":\"NOMAAD Summit\",\"camp_name\":\"NOMAAD Summit\",\"tier\":\"Үндсэн\",\"package_tier\":\"Үндсэн\",\"visual_feature\":\"\",\"location\":\"\",\"start_datetime\":\"2026-05-30T12:00\",\"end_datetime\":\"2026-05-31T15:00\",\"event_date\":\"2026-05-30T12:00\",\"duration_label\":\"1 шөнө\",\"guest_count\":\"123\",\"tier_base_price\":\"180000\",\"tier_subtotal\":\"22140000\",\"tier_inclusions_json\":\"[]\",\"addons_json\":\"[{\\\"code\\\":\\\"late_snacks\\\",\\\"name\\\":\\\"Fruit & snack platter\\\",\\\"type\\\":\\\"per-person\\\",\\\"tier_included\\\":false,\\\"quantity\\\":9,\\\"unit_price\\\":250000,\\\"price\\\":2250000},{\\\"code\\\":\\\"program_consulting\\\",\\\"name\\\":\\\"Хөтөлбөр хамтран боловсруулах\\\",\\\"type\\\":\\\"flat\\\",\\\"tier_included\\\":false,\\\"price\\\":1000000}]\",\"addon_count\":\"2\",\"addons_subtotal\":\"3250000\",\"estimated_addon_total\":\"3250000\",\"shuttle_service\":\"Хоног / 2 талдаа, 1,200,000₮\",\"shuttle_service_label\":\"Хоног / 2 талдаа, 1,200,000₮\",\"shuttle_unit_price\":\"1200000\",\"bus_count\":\"3\",\"shuttle_subtotal\":\"3600000\",\"grand_total\":\"28990000\",\"vat_included\":\"2635455\",\"deposit_30\":\"8697000\",\"balance_70\":\"20293000\",\"value_anchor_json\":\"\",\"standalone_equivalent\":\"0\",\"package_savings\":\"0\",\"package_savings_pct\":\"0\",\"notes\":\"\",\"source\":\"nomaadcamp.com\",\"next_counter\":29}",
-          "Уулзалтын огноо": "",
-          "Хямдрал ₮": "",
-          "Уулзалтын тэмдэглэл": "",
-          "Эцсийн гэрээний дүн": 22160000,
-          "Гэрээ зурсан огноо": ""
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ]
-  },
   "connections": {
     "IF · Төлөв = ГЭРЭЭ": {
       "main": [
@@ -622,23 +583,27 @@
       ]
     }
   },
-  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "5aa5502c-c51d-4afb-80e6-0900aedec227",
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "7c325a625299bdce7c411e07485d3fffbeed3847cf9944810a5b59006dbc5928"
-  },
-  "id": "6xudvdZ9AOcmKLkv",
-  "tags": [
-    {
-      "updatedAt": "2026-05-19T00:27:45.245Z",
-      "createdAt": "2026-05-19T00:27:45.245Z",
-      "id": "U3NuAKguDk87uLz4",
-      "name": "M event"
+  "staticData": {
+    "node:Sheets Trigger · On row update": {
+      "documentId": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+      "sheetId": 529201537,
+      "lastRevision": 580,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA&revision=580&exportFormat=xlsx"
+    },
+    "node:Sheets Trigger · Төлөв update": {
+      "documentId": "16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA",
+      "sheetId": 529201537,
+      "lastRevision": 651,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=16pHiShilnG-QdZtc2ciB5JeP_aslZRcqpQqEJvD-0wA&revision=651&exportFormat=xlsx"
     }
-  ]
+  },
+  "pinData": {},
+  "triggerCount": 1,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
 }
