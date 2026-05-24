@@ -24,3 +24,6 @@ lhr-*.html
 # Working files (audit, copy variants, etc.)
 *.xlsx
 .~lock.*#
+
+# Backup files
+*.bak
