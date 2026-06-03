@@ -103,6 +103,18 @@
     }
   }
 
+  // Өдрийн хөтөлбөр (Хагас/Бүтэн өдрийн) горимд зөвхөн Дав–Пүр сонгуулна.
+  // Баасан/Бямба/Ням нь кэмп (шөнийн) слот учир өдрийн хөтөлбөрт тохирохгүй.
+  function isDayProgramMode() {
+    var modal = document.getElementById('quote-modal');
+    return !!modal && modal.dataset.quoteMode === 'day-program';
+  }
+  function disabledForCurrentMode(date) {
+    if (!isDayProgramMode()) return false;
+    var dow = date.getDay();
+    return dow === 5 || dow === 6 || dow === 0; // Баасан, Бямба, Ням
+  }
+
   var commonOptions = {
     locale: mnLocale,
     dateFormat: 'Y-m-d',
@@ -111,6 +123,7 @@
     enableTime: false,
     minDate: 'today',
     maxDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000),
+    disable: [disabledForCurrentMode],
     disableMobile: false
   };
 
@@ -150,4 +163,20 @@
   }
   lazyAttach(startDateInput);
   lazyAttach(endDateInput);
+
+  // Модал горим (camp ↔ day-program) солигдох бүрд календарийг дахин зурж
+  // disable дүрмийг шинэчилнэ. Сонгогдсон огноо disable болсон бол цэвэрлэнэ.
+  var quoteModalEl = document.getElementById('quote-modal');
+  if (quoteModalEl && window.MutationObserver) {
+    new MutationObserver(function () {
+      [startDateInput, endDateInput].forEach(function (input) {
+        var fp = input._flatpickr;
+        if (!fp) return;
+        if (fp.selectedDates[0] && disabledForCurrentMode(fp.selectedDates[0])) {
+          fp.clear();
+        }
+        fp.redraw();
+      });
+    }).observe(quoteModalEl, { attributes: true, attributeFilter: ['data-quote-mode'] });
+  }
 })();
