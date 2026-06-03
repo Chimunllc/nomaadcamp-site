@@ -187,7 +187,9 @@
           "value": {
             "Үнийн саналын дугаар": "={{ $('Sheets · Find row').item.json['Үнийн саналын дугаар'] }}",
             "Төлөв": "ИЛГЭЭСЭН",
-            "Илгээсэн огноо": "={{ $now.toISO() }}"
+            "Илгээсэн огноо": "={{ $now.toISO() }}",
+            "Нийт дүн": "={{ $('Code · Render HTML').item.json.grand_total }}",
+            "Урьдчилгаа 30%": "={{ $('Code · Render HTML').item.json.deposit_30 }}"
           },
           "matchingColumns": [
             "Үнийн саналын дугаар"
