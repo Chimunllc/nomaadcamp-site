@@ -900,6 +900,52 @@
       ]
     };
 
+    // Add-on код → ангилал. Quote Items (WF1 decompose)-ийн CATEGORY_MAP-тай
+    // ижил. "Багцад багтсан үйлчилгээ" жагсаалтыг ангиллаар бүлэглэхэд ашиглана.
+    var ADDON_CATEGORY = {
+      welcome_drink:      'Хоол, ресторан',
+      amenity_kit:        'Ариун цэвэр',
+      sleeping_bag:       'Кемп',
+      coffee_corner:      'Хоол, ресторан',
+      lunch_upgrade:      'Хоол, ресторан',
+      dinner_upgrade:     'Хоол, ресторан',
+      moonbeam_lounge:    'Хоол, ресторан',
+      bartender_service:  'Хоол, ресторан',
+      late_snacks:        'Хоол, ресторан',
+      asar_decor:         'Хоол, ресторан',
+      dj_service:         'Энтертайнмент',
+      led_screen_18m2:    'Энтертайнмент',
+      open_mic:           'Энтертайнмент',
+      extra_lighting:     'Энтертайнмент',
+      program_consulting: 'Энтертайнмент',
+      event_director:     'Энтертайнмент',
+      canvas_art:         'Энтертайнмент',
+      after_movie:        'Энтертайнмент',
+      extra_tents:        'Амралт',
+      team_games:         'Спорт',
+      yoga:               'Спорт',
+      medical_support:    'Ариун цэвэр',
+      security_service:   'Ариун цэвэр'
+    };
+    var ADDON_CAT_ORDER = ['Хоол, ресторан', 'Энтертайнмент', 'Амралт', 'Спорт', 'Ариун цэвэр', 'Кемп'];
+    function addonCatRank(code) {
+      var i = ADDON_CAT_ORDER.indexOf(ADDON_CATEGORY[code]);
+      return i === -1 ? ADDON_CAT_ORDER.length : i;
+    }
+    // Грид доторх add-on картуудыг ангиллаар нь дахин эрэмбэлнэ (stable).
+    function sortGridByCategory(grid) {
+      if (!grid) return;
+      var cards = Array.prototype.slice.call(grid.children);
+      cards.map(function (card, idx) {
+        var cb = card.querySelector('input[name="addons[]"]');
+        return { card: card, rank: cb ? addonCatRank(cb.value) : 999, idx: idx };
+      }).sort(function (a, b) {
+        return a.rank - b.rank || a.idx - b.idx;
+      }).forEach(function (entry) {
+        grid.appendChild(entry.card);
+      });
+    }
+
     // Per-person and flat values used for the "Үнэ цэнийн харьцуулалт"
     // (value anchor) block in the generated PDF quote. Mirrors the prices
     // shown in the optional add-on grid above.
@@ -1169,6 +1215,8 @@
       });
 
       if (tier === 'Премиум' || tier === 'Стандарт') {
+        // Багцад багтсан үйлчилгээг ангиллаар бүлэглэх (ресторан нэг дор гэх мэт)
+        sortGridByCategory(includedGrid);
         var includedTitleEl = document.getElementById('quote-addons-included-title');
         if (includedTitleEl) includedTitleEl.textContent = tier + ' багцад багтсан үйлчилгээ';
         var productionList = document.querySelector('.quote-production-included-list');
