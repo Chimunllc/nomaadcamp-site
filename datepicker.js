@@ -76,23 +76,36 @@
   var endDateInput   = document.getElementById('end-date');
   var startHidden    = document.getElementById('start-datetime');
   var endHidden      = document.getElementById('end-datetime');
-  var startTimeEl    = document.getElementById('start-time-display');
-  var endTimeEl      = document.getElementById('end-time-display');
+  var startTimeEl    = document.getElementById('start-time');   // <input type="time"> (засаж болно)
+  var endTimeEl      = document.getElementById('end-time');
 
   if (!startDateInput || !endDateInput) return;
+
+  // Сонгогдсон огноог хадгална — цаг өөрчлөгдөхөд hidden datetime-г дахин угсарна.
+  var _startDate = null, _endDate = null;
+  function rebuildHidden() {
+    if (_startDate && startHidden) {
+      startHidden.value = (startTimeEl && startTimeEl.value)
+        ? isoDate(_startDate) + 'T' + startTimeEl.value
+        : isoDate(_startDate);
+    }
+    if (_endDate && endHidden) {
+      endHidden.value = (endTimeEl && endTimeEl.value)
+        ? isoDate(_endDate) + 'T' + endTimeEl.value
+        : isoDate(_endDate);
+    }
+  }
 
   function applySlot(pickedDate) {
     var slot = slotFor(pickedDate);
     var sd = slot.startDate || pickedDate;
     var ed = addDays(sd, slot.endDayOffset);
+    _startDate = sd; _endDate = ed;
 
-    var startStr = isoDate(sd) + 'T' + pad(slot.startHour) + ':00';
-    var endStr   = isoDate(ed) + 'T' + pad(slot.endHour)   + ':00';
-
-    if (startHidden) startHidden.value = startStr;
-    if (endHidden)   endHidden.value   = endStr;
-    if (startTimeEl) startTimeEl.textContent = pad(slot.startHour) + ':00';
-    if (endTimeEl)   endTimeEl.textContent   = pad(slot.endHour)   + ':00';
+    // Өдрөөс хамаарсан стандарт цаг — default болгож тавина, хэрэглэгч засаж болно.
+    if (startTimeEl) startTimeEl.value = pad(slot.startHour) + ':00';
+    if (endTimeEl)   endTimeEl.value   = pad(slot.endHour)   + ':00';
+    rebuildHidden();
 
     // Reflect the recomputed dates in the visible inputs (without re-firing this handler).
     if (startDateInput._flatpickr) {
@@ -137,12 +150,15 @@
       onChange: function (sel) {
         if (!sel || !sel[0]) return;
         var d = sel[0];
-        var slot = slotFor(d);
-        var endStr = isoDate(d) + 'T' + pad(slot.endHour) + ':00';
-        if (endHidden) endHidden.value = endStr;
-        if (endTimeEl) endTimeEl.textContent = pad(slot.endHour) + ':00';
+        _endDate = d;
+        // Дуусах цаг хоосон бол өдрийн стандартыг тавина; хэрэглэгч зассан бол хэвээр.
+        if (endTimeEl && !endTimeEl.value) endTimeEl.value = pad(slotFor(d).endHour) + ':00';
+        rebuildHidden();
       }
     }));
+    // Цаг засагдах бүрд hidden datetime-г шинэчилнэ
+    if (startTimeEl) startTimeEl.addEventListener('change', rebuildHidden);
+    if (endTimeEl)   endTimeEl.addEventListener('change', rebuildHidden);
     // Auto-open the picker the user just focused so the very first focus
     // doesn't feel "broken" while the script is downloading.
     if (document.activeElement === startDateInput && startDateInput._flatpickr) {
