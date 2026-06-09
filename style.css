@@ -4428,6 +4428,16 @@ body.home-page video {
   color: #B14F1F;
   font-feature-settings: 'tnum';
 }
+.quote-time-input {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1F2A23;
+  border: 1px solid #C9BFA8;
+  border-radius: var(--radius-sm);
+  background: #fff;
+  padding: 4px 8px;
+}
 @media (max-width: 520px) {
   .quote-date-row {
     flex-direction: column;
