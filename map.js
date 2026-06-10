@@ -67,7 +67,7 @@
   var CAMPS = [
     { id: 'a', name: 'NOMAAD Summit', size: '100–1000 хүн', coords: [107.659422, 47.727926], color: '#B14F1F' },
     { id: 'b', name: 'NOMAAD Meadow', size: '50–300 хүн',   coords: [107.664493, 47.730607], color: '#C8A878' },
-    { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.419076, 47.643347], color: '#4A5E3E' }
+    { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.661500, 47.725500], color: '#4A5E3E' }
   ];
 
   var center = [107.657680, 47.727278];
@@ -108,9 +108,9 @@
           return f.properties && /шороон/i.test(f.properties.name || '') && f.geometry.type === 'LineString';
         });
 
-        // Зам бүрийг чиглэлээр нь өнгөөр ялгана:
-        //   Эрдэнэ (Summit/Meadow) → цайвар цагаан
-        //   Grove (Сэргэлэн)        → ногоон
+        // Бүх кемп (Summit/Meadow/Grove) Эрдэнэ суманд нэг кластерт байрлана.
+        // Зам цайвар цагаанаар харагдана. (isGrove нь хуучин Сэргэлэнгийн
+        // ногоон замд ашиглагдаж байсан — одоо тэр зам байхгүй тул дуудагдахгүй.)
         function isGrove(feat) {
           return (feat.properties && feat.properties.route === 'grove')
             || /grove/i.test((feat.properties && feat.properties.name) || '');
@@ -194,7 +194,7 @@
     loadRoute();
 
     // Бүх 3 кемпийг багтаахаар анхдагч харагдацыг тааруулах
-    // (Grove бусдаас зайтай тул fixed center/zoom-д багтахгүй).
+    // (бүгд Эрдэнэ суманд ойролцоо байрлана).
     var campBounds = new mapboxgl.LngLatBounds();
     CAMPS.forEach(function (c) { campBounds.extend(c.coords); });
     map.fitBounds(campBounds, { padding: 70, maxZoom: 13, duration: 0 });
