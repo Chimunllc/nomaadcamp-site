@@ -1205,6 +1205,21 @@
           var timeConf = card.querySelector('.quote-addon-card__time-config');
           if (timeConf) timeConf.hidden = true;
         } else {
+          // Энэ tier-т багтаагүй үйлчилгээ. Хэрэв энэ нь өмнөх (өндөр) tier-т
+          // автоматаар чеклэгдэж disabled болсон багцын үйлчилгээ байсан бол
+          // чеклэгийг нь арилгана — эс бөгөөс tier бууруулахад (ж: Премиум →
+          // Стандарт) тэр үйлчилгээ чеклэгдсэн хэвээр идэвхжиж, хэрэглэгчийн
+          // сонгосон нэмэлт мэт төлбөртэй гарна. Хэрэглэгчийн өөрөө сонгосон
+          // үйлчилгээ хэзээ ч disabled байдаггүй тул cb.disabled-ээр ялгана.
+          if (cb.disabled && cb.checked) {
+            cb.checked = false;
+            var clearedQtyDiv = card.querySelector('.quote-addon-card__quantity');
+            if (clearedQtyDiv) clearedQtyDiv.hidden = true;
+            var clearedSubOpts = card.querySelector('.quote-addon-card__sub-options');
+            if (clearedSubOpts) clearedSubOpts.hidden = true;
+            var clearedTimeConf = card.querySelector('.quote-addon-card__time-config');
+            if (clearedTimeConf) clearedTimeConf.hidden = true;
+          }
           cb.disabled = false;
           card.classList.remove('quote-addon-card--included');
           var existingBadge = card.querySelector('.quote-addon-card__included-badge');
