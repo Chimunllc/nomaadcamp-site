@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Жишээ Компани · Leadership Offsite 2026, NOMAAD Camp</title>
+<title>LEND SPACE · Бороотой хөтөлбөр · NOMAAD Camp</title>
 <meta name="theme-color" content="#2F3E2F">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,9 +75,9 @@
   }
   .event-title {
     font-family: 'Manrope', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 700;
-    line-height: 1.22;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.18;
     margin: 0 0 0.85rem;
     color: var(--cream);
     letter-spacing: -0.01em;
@@ -91,7 +91,7 @@
 
   @media (min-width: 720px) {
     .event-cover { padding: 5rem 1.5rem 4rem; }
-    .event-title { font-size: 2.2rem; }
+    .event-title { font-size: 2.5rem; }
   }
 
   /* ── Container ───────────────────────────────────── */
@@ -136,7 +136,7 @@
   .agenda { list-style: none; padding: 0; margin: 0; }
   .agenda li {
     display: grid;
-    grid-template-columns: 64px 1fr;
+    grid-template-columns: 76px 1fr;
     gap: 1rem;
     padding: 0.85rem 0;
     border-bottom: 1px solid rgba(31,42,35,0.08);
@@ -144,10 +144,17 @@
   .agenda li:last-child { border-bottom: none; }
   .agenda time {
     font-family: 'Manrope', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--forest);
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+  }
+  .agenda time .end {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.82rem;
   }
   .activity strong {
     display: block;
@@ -193,6 +200,40 @@
   }
   .info-row a { color: var(--accent); text-decoration: none; }
 
+  /* ── Gear / packing list ─────────────────────────── */
+  .gear-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 560px) {
+    .gear-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .gear-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .gear-list li {
+    position: relative;
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    font-size: 0.94rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    border-top: 1px solid rgba(31,42,35,0.06);
+  }
+  .gear-list li:first-child { border-top: none; }
+  .gear-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
   /* ── Footer ──────────────────────────────────────── */
   .event-footer {
     text-align: center;
@@ -231,10 +272,10 @@ src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
 
 <header class="event-cover">
   <div class="event-cover-inner">
-    <p class="event-mark">NOMAAD Camp · Corporate program</p>
-    <h1 class="event-title">Жишээ Компани<br>Leadership Offsite 2026</h1>
+    <p class="event-mark">NOMAAD Camp · Бороотой хөтөлбөр 🌧️</p>
+    <h1 class="event-title">LEND SPACE</h1>
     <p class="event-meta">
-      <strong>2026 оны 6-р сарын 15–16</strong> · NOMAAD Summit Camp
+      <strong>2026 оны 6-р сарын 12–13</strong> · NOMAAD Camp
     </p>
   </div>
 </header>
@@ -243,149 +284,127 @@ src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
 
   <!-- ── 1-р өдөр ─────────────────────────────────── -->
   <section class="day-block">
-    <p class="day-eyebrow">1-р өдөр · Лхагва</p>
-    <h2 class="day-heading">Эхлэл · Стратеги · Уулзалтын орой</h2>
-    <p class="section-title">Хөтөлбөр · 2026-06-15</p>
+    <p class="day-eyebrow">Өдөр 1</p>
+    <h2 class="day-heading">06/12</h2>
+    <p class="section-title">Хөтөлбөр · 06/12</p>
     <ul class="agenda">
       <li>
-        <time>08:30</time>
-        <div class="activity">
-          <strong>Бүртгэл, угтах хүлээн авалт</strong>
-          <span>Welcome drink, Lemon Basil, Iced Tea, Berry, Sparkling</span>
-        </div>
+        <time>07:30<span class="end">08:00</span></time>
+        <div class="activity"><strong>Циркээс хөдлөх</strong></div>
       </li>
       <li>
-        <time>09:30</time>
-        <div class="activity">
-          <strong>Нээлт</strong>
-          <span>CEO мэндчилгээ, жилийн зорилго</span>
-        </div>
+        <time>10:30<span class="end">11:30</span></time>
+        <div class="activity"><strong>Майхандаа маарш</strong></div>
       </li>
       <li>
-        <time>10:30</time>
-        <div class="activity">
-          <strong>Coffee break</strong>
-        </div>
+        <time>11:30<span class="end">12:30</span></time>
+        <div class="activity"><strong>Өдрийн хоол</strong></div>
       </li>
       <li>
-        <time>11:00</time>
-        <div class="activity">
-          <strong>Strategy Session 1</strong>
-          <span>2026 оны бизнесийн чиглэл</span>
-        </div>
+        <time>12:30<span class="end">12:40</span></time>
+        <div class="activity"><strong>Завсарлага</strong></div>
       </li>
       <li>
-        <time>12:30</time>
-        <div class="activity">
-          <strong>Үдийн хоол · буфет</strong>
-        </div>
+        <time>12:40<span class="end">13:20</span></time>
+        <div class="activity"><strong>Нээлт</strong></div>
       </li>
       <li>
-        <time>14:00</time>
-        <div class="activity">
-          <strong>Workshop · break-out groups</strong>
-          <span>4 группэд хуваагдан ажиллана</span>
-        </div>
+        <time>13:20<span class="end">13:30</span></time>
+        <div class="activity"><strong>Завсарлага</strong></div>
       </li>
       <li>
-        <time>16:00</time>
-        <div class="activity">
-          <strong>Coffee break</strong>
-        </div>
+        <time>13:30<span class="end">17:30</span></time>
+        <div class="activity"><strong>Хамтдаа асаая</strong></div>
       </li>
       <li>
-        <time>16:30</time>
-        <div class="activity">
-          <strong>Strategy Session 2</strong>
-          <span>Group findings танилцуулга</span>
-        </div>
+        <time>17:30<span class="end">19:00</span></time>
+        <div class="activity"><strong>Оройн хоол</strong></div>
       </li>
       <li>
-        <time>18:00</time>
-        <div class="activity">
-          <strong>Welcome reception</strong>
-          <span>Moonbeam Lounge, гэрэлтэй коктейль бар</span>
-        </div>
+        <time>19:00<span class="end">21:00</span></time>
+        <div class="activity"><strong>Биесийг гаргуунд, Бүүтэнд уулт</strong></div>
       </li>
       <li>
-        <time>19:30</time>
-        <div class="activity">
-          <strong>Оройн хоол</strong>
-          <span>Уламжлалт монгол ширээ + DJ</span>
-        </div>
+        <time>21:10<span class="end">22:00</span></time>
+        <div class="activity"><strong>Задгай талбайн Зад шоу</strong></div>
       </li>
       <li>
-        <time>22:00</time>
-        <div class="activity">
-          <strong>Бар орой</strong>
-          <span>Moonbeam Lounge, DJ set</span>
-        </div>
+        <time>22:00<span class="end">02:00</span></time>
+        <div class="activity"><strong>Сансар савалт, Сэтгэл шулуудалт</strong></div>
       </li>
     </ul>
   </section>
 
   <!-- ── 2-р өдөр ─────────────────────────────────── -->
   <section class="day-block">
-    <p class="day-eyebrow">2-р өдөр · Пүрэв</p>
-    <h2 class="day-heading">Тойм · Action plan · Хаалт</h2>
-    <p class="section-title">Хөтөлбөр · 2026-06-16</p>
+    <p class="day-eyebrow">Өдөр 2</p>
+    <h2 class="day-heading">06/13</h2>
+    <p class="section-title">Хөтөлбөр · 06/13</p>
     <ul class="agenda">
       <li>
-        <time>07:30</time>
-        <div class="activity">
-          <strong>Өглөөний цай</strong>
-          <span>Coffee &amp; tea corner</span>
-        </div>
+        <time>07:30<span class="end">09:30</span></time>
+        <div class="activity"><strong>Эртэч шувуухайнуудын Элгээ дэвтээх кофе</strong></div>
       </li>
       <li>
-        <time>09:00</time>
-        <div class="activity">
-          <strong>Тойм уулзалт</strong>
-          <span>1-р өдрийн дүгнэлт</span>
-        </div>
+        <time>09:30<span class="end">11:00</span></time>
+        <div class="activity"><strong>Өглөөний цай</strong></div>
       </li>
       <li>
-        <time>10:30</time>
-        <div class="activity">
-          <strong>Coffee break</strong>
-        </div>
+        <time>11:00<span class="end">13:00</span></time>
+        <div class="activity"><strong>Шартаагүй биз! Бүүтэндээ бөөгнөрье</strong></div>
       </li>
       <li>
-        <time>11:00</time>
-        <div class="activity">
-          <strong>Action planning</strong>
-          <span>Q3-Q4 хариуцлага хуваарилах</span>
-        </div>
+        <time>13:00<span class="end">14:40</span></time>
+        <div class="activity"><strong>Өдрийн хоол</strong></div>
       </li>
       <li>
-        <time>12:30</time>
-        <div class="activity">
-          <strong>Хаалтын үдийн хоол</strong>
-        </div>
+        <time>14:40<span class="end">15:40</span></time>
+        <div class="activity"><strong>Багаараа барах уу?</strong></div>
       </li>
       <li>
-        <time>14:00</time>
-        <div class="activity">
-          <strong>УБ руу буцах</strong>
-          <span>Автобус, Сум төв → Erdenet Hotel</span>
-        </div>
+        <time>15:40<span class="end">18:00</span></time>
+        <div class="activity"><strong>ГАЛ-ууд тойролт</strong></div>
+      </li>
+      <li>
+        <time>18:00<span class="end">19:00</span></time>
+        <div class="activity"><strong>Оройн хоол</strong></div>
+      </li>
+      <li>
+        <time>19:00<span class="end">19:20</span></time>
+        <div class="activity"><strong>Оройн тойрог, Хаалт</strong></div>
+      </li>
+      <li>
+        <time>19:20<span class="end">19:40</span></time>
+        <div class="activity"><strong>Буцахдаа бэлдье</strong></div>
+      </li>
+      <li>
+        <time>19:40<span class="end">20:00</span></time>
+        <div class="activity"><strong>Хот руу хөдлөх</strong></div>
       </li>
     </ul>
   </section>
 
-  <!-- ── Practical info ──────────────────────────── -->
+  <!-- ── Бэлтгэл ──────────────────────────────────── -->
   <section class="day-block">
-    <p class="section-title">Үйлчилгээний мэдээлэл</p>
-
+    <p class="section-title">Юу авч явах вэ?</p>
     <div class="info-block">
-      <h3>WiFi</h3>
-      <div class="info-row">
-        <span class="label">Сүлжээ</span>
-        <span class="val">NOMAAD-Guest</span>
-      </div>
-      <div class="info-row">
-        <span class="label">Нууц үг</span>
-        <span class="val">nomaad2026</span>
+      <div class="gear-grid">
+        <div>
+          <h3>Бороотой шүү бро ☔️</h3>
+          <ul class="gear-list">
+            <li>Усны гутал</li>
+            <li>Борооны шүхэр</li>
+            <li>Борооны цув</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Дулаахан яваарай 🧥</h3>
+          <ul class="gear-list">
+            <li>Дулаан хувцас</li>
+            <li>Нэмэлт мишок</li>
+            <li>Зөөврийн цэнэглэгч</li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -398,18 +417,6 @@ src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
       <div class="info-row">
         <span class="label">Эмнэлэг</span>
         <span class="val">Кемпийн төв · 24/7</span>
-      </div>
-    </div>
-
-    <div class="info-block">
-      <h3>Тээвэр</h3>
-      <div class="info-row">
-        <span class="label">Очих</span>
-        <span class="val">Erdenet Hotel · 06:30 (1-р өдөр)</span>
-      </div>
-      <div class="info-row">
-        <span class="label">Буцах</span>
-        <span class="val">Кемпээс УБ · 14:00 (2-р өдөр)</span>
       </div>
     </div>
   </section>
