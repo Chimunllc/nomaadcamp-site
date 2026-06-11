@@ -5,247 +5,69 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>LEND SPACE · Бороотой хөтөлбөр · NOMAAD Camp</title>
-<meta name="theme-color" content="#2F3E2F">
+<meta name="theme-color" content="#1F3A3A">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap">
 
 <style>
-  :root {
-    --bg: #0B0D0B;
-    --text: #F2F1EC;
-    --muted: #9A9C94;
-    --sand: #C8A878;
-    --forest: #2F3E2F;
-    --cream: #F5F1E8;
-    --card: #FFFCF7;
-    --accent: #B14F1F;
-    --text-dark: #1A1A1A;
-  }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
+    background: #15201F;
+    color: #E9EDEC;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-
-  /* ── Hero cover ──────────────────────────────────── */
-  .event-cover {
-    position: relative;
-    background: var(--forest);
-    color: var(--cream);
-    padding: 3.5rem 1.5rem 3rem;
-    text-align: center;
-    overflow: hidden;
-  }
-  .event-cover::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url('/images/hero/gallery-05.jpg') center/cover;
-    opacity: 0.32;
-    z-index: 0;
-  }
-  .event-cover::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(11,13,11,0.4), rgba(47,62,47,0.85));
-    z-index: 0;
-  }
-  .event-cover-inner {
-    position: relative;
-    z-index: 1;
-    max-width: 600px;
+  .wrap {
+    max-width: 720px;
     margin: 0 auto;
+    padding: 1rem 1rem 0;
   }
-  .event-mark {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    color: var(--sand);
-    margin: 0 0 0.85rem;
-    text-transform: uppercase;
-  }
-  .event-title {
-    font-family: 'Manrope', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1.18;
-    margin: 0 0 0.85rem;
-    color: var(--cream);
-    letter-spacing: -0.01em;
-  }
-  .event-meta {
-    font-size: 0.95rem;
-    opacity: 0.86;
-    margin: 0;
-  }
-  .event-meta strong { color: var(--sand); font-weight: 600; }
-
-  @media (min-width: 720px) {
-    .event-cover { padding: 5rem 1.5rem 4rem; }
-    .event-title { font-size: 2.5rem; }
-  }
-
-  /* ── Container ───────────────────────────────────── */
-  .container {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 2.25rem 1.5rem 1rem;
-  }
-
-  /* ── Section heading ─────────────────────────────── */
-  .section-title {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.74rem;
-    letter-spacing: 0.22em;
-    font-weight: 700;
-    color: var(--accent);
-    margin: 0 0 1.1rem;
-    padding-bottom: 0.55rem;
-    border-bottom: 1px solid rgba(177,79,31,0.2);
-    text-transform: uppercase;
-  }
-
-  /* ── Day block ───────────────────────────────────── */
-  .day-block { margin: 0 0 2.5rem; }
-  .day-eyebrow {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin: 0 0 0.35rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-  .day-heading {
-    font-family: 'Manrope', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--forest);
-    margin: 0 0 1.4rem;
-    line-height: 1.3;
-  }
-
-  /* ── Agenda ──────────────────────────────────────── */
-  .agenda { list-style: none; padding: 0; margin: 0; }
-  .agenda li {
-    display: grid;
-    grid-template-columns: 76px 1fr;
-    gap: 1rem;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid rgba(31,42,35,0.08);
-  }
-  .agenda li:last-child { border-bottom: none; }
-  .agenda time {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 700;
-    color: var(--forest);
-    font-size: 0.95rem;
-    line-height: 1.3;
-    display: flex;
-    flex-direction: column;
-  }
-  .agenda time .end {
-    color: var(--muted);
-    font-weight: 500;
-    font-size: 0.82rem;
-  }
-  .activity strong {
+  .poster {
     display: block;
-    color: var(--text-dark);
-    font-weight: 600;
-    margin-bottom: 0.15rem;
-    font-size: 0.96rem;
-  }
-  .activity span {
-    color: var(--muted);
-    font-size: 0.86rem;
-  }
-
-  /* ── Info cards ──────────────────────────────────── */
-  .info-block {
-    background: var(--card);
+    width: 100%;
+    height: auto;
     border-radius: 14px;
-    padding: 1.4rem 1.4rem 1.2rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-    border: 1px solid rgba(31,42,35,0.06);
-    margin: 0 0 1rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45);
   }
-  .info-block h3 {
-    margin: 0 0 0.85rem;
-    font-family: 'Manrope', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--forest);
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1.25rem 1rem 0;
   }
-  .info-row {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 1rem;
-    padding: 0.4rem 0;
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.7rem 1.3rem;
+    border-radius: 999px;
     font-size: 0.92rem;
-    border-top: 1px solid rgba(31,42,35,0.06);
-  }
-  .info-row:first-of-type { border-top: none; padding-top: 0; }
-  .info-row .label { color: var(--muted); }
-  .info-row .val {
     font-weight: 600;
-    color: var(--text-dark);
+    text-decoration: none;
+    transition: opacity .15s ease;
   }
-  .info-row a { color: var(--accent); text-decoration: none; }
-
-  /* ── Gear / packing list ─────────────────────────── */
-  .gear-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .btn:hover { opacity: 0.88; }
+  .btn--primary { background: #E07A2F; color: #fff; }
+  .btn--ghost {
+    background: transparent;
+    color: #E9EDEC;
+    border: 1px solid rgba(233,237,236,0.3);
   }
-  @media (min-width: 560px) {
-    .gear-grid { grid-template-columns: 1fr 1fr; }
-  }
-  .gear-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .gear-list li {
-    position: relative;
-    padding: 0.4rem 0 0.4rem 1.5rem;
-    font-size: 0.94rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    border-top: 1px solid rgba(31,42,35,0.06);
-  }
-  .gear-list li:first-child { border-top: none; }
-  .gear-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.95rem;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
-
-  /* ── Footer ──────────────────────────────────────── */
   .event-footer {
     text-align: center;
-    padding: 2rem 1.5rem 2.5rem;
+    padding: 1.75rem 1.5rem 2.5rem;
     font-size: 0.84rem;
-    color: var(--muted);
-    border-top: 1px solid rgba(31,42,35,0.08);
-    margin-top: 1.5rem;
+    color: rgba(233,237,236,0.6);
   }
-  .event-footer strong { color: var(--forest); font-weight: 700; }
+  .event-footer strong { color: #E9EDEC; font-weight: 700; }
   .event-footer a {
-    color: var(--accent);
+    color: #E8A56B;
     text-decoration: none;
     font-weight: 500;
   }
@@ -270,158 +92,18 @@ src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
 </head>
 <body>
 
-<header class="event-cover">
-  <div class="event-cover-inner">
-    <p class="event-mark">NOMAAD Camp · Бороотой хөтөлбөр 🌧️</p>
-    <h1 class="event-title">LEND SPACE</h1>
-    <p class="event-meta">
-      <strong>2026 оны 6-р сарын 12–13</strong> · NOMAAD Camp
-    </p>
-  </div>
-</header>
+<div class="wrap">
+  <a href="lend-space-program.jpg" target="_blank" rel="noopener" aria-label="Хөтөлбөрийг томоор үзэх">
+    <img class="poster" src="lend-space-program.jpg"
+         width="1414" height="2000"
+         alt="LEND SPACE · Бороотой хөтөлбөр · 06/12–06/13" decoding="async">
+  </a>
+</div>
 
-<main class="container">
-
-  <!-- ── 1-р өдөр ─────────────────────────────────── -->
-  <section class="day-block">
-    <p class="day-eyebrow">Өдөр 1</p>
-    <h2 class="day-heading">06/12</h2>
-    <p class="section-title">Хөтөлбөр · 06/12</p>
-    <ul class="agenda">
-      <li>
-        <time>07:30<span class="end">08:00</span></time>
-        <div class="activity"><strong>Циркээс хөдлөх</strong></div>
-      </li>
-      <li>
-        <time>10:30<span class="end">11:30</span></time>
-        <div class="activity"><strong>Майхандаа маарш</strong></div>
-      </li>
-      <li>
-        <time>11:30<span class="end">12:30</span></time>
-        <div class="activity"><strong>Өдрийн хоол</strong></div>
-      </li>
-      <li>
-        <time>12:30<span class="end">12:40</span></time>
-        <div class="activity"><strong>Завсарлага</strong></div>
-      </li>
-      <li>
-        <time>12:40<span class="end">13:20</span></time>
-        <div class="activity"><strong>Нээлт</strong></div>
-      </li>
-      <li>
-        <time>13:20<span class="end">13:30</span></time>
-        <div class="activity"><strong>Завсарлага</strong></div>
-      </li>
-      <li>
-        <time>13:30<span class="end">17:30</span></time>
-        <div class="activity"><strong>Хамтдаа асаая</strong></div>
-      </li>
-      <li>
-        <time>17:30<span class="end">19:00</span></time>
-        <div class="activity"><strong>Оройн хоол</strong></div>
-      </li>
-      <li>
-        <time>19:00<span class="end">21:00</span></time>
-        <div class="activity"><strong>Биесийг гаргуунд, Бүүтэнд уулт</strong></div>
-      </li>
-      <li>
-        <time>21:10<span class="end">22:00</span></time>
-        <div class="activity"><strong>Задгай талбайн Зад шоу</strong></div>
-      </li>
-      <li>
-        <time>22:00<span class="end">02:00</span></time>
-        <div class="activity"><strong>Сансар савалт, Сэтгэл шулуудалт</strong></div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- ── 2-р өдөр ─────────────────────────────────── -->
-  <section class="day-block">
-    <p class="day-eyebrow">Өдөр 2</p>
-    <h2 class="day-heading">06/13</h2>
-    <p class="section-title">Хөтөлбөр · 06/13</p>
-    <ul class="agenda">
-      <li>
-        <time>07:30<span class="end">09:30</span></time>
-        <div class="activity"><strong>Эртэч шувуухайнуудын Элгээ дэвтээх кофе</strong></div>
-      </li>
-      <li>
-        <time>09:30<span class="end">11:00</span></time>
-        <div class="activity"><strong>Өглөөний цай</strong></div>
-      </li>
-      <li>
-        <time>11:00<span class="end">13:00</span></time>
-        <div class="activity"><strong>Шартаагүй биз! Бүүтэндээ бөөгнөрье</strong></div>
-      </li>
-      <li>
-        <time>13:00<span class="end">14:40</span></time>
-        <div class="activity"><strong>Өдрийн хоол</strong></div>
-      </li>
-      <li>
-        <time>14:40<span class="end">15:40</span></time>
-        <div class="activity"><strong>Багаараа барах уу?</strong></div>
-      </li>
-      <li>
-        <time>15:40<span class="end">18:00</span></time>
-        <div class="activity"><strong>ГАЛ-ууд тойролт</strong></div>
-      </li>
-      <li>
-        <time>18:00<span class="end">19:00</span></time>
-        <div class="activity"><strong>Оройн хоол</strong></div>
-      </li>
-      <li>
-        <time>19:00<span class="end">19:20</span></time>
-        <div class="activity"><strong>Оройн тойрог, Хаалт</strong></div>
-      </li>
-      <li>
-        <time>19:20<span class="end">19:40</span></time>
-        <div class="activity"><strong>Буцахдаа бэлдье</strong></div>
-      </li>
-      <li>
-        <time>19:40<span class="end">20:00</span></time>
-        <div class="activity"><strong>Хот руу хөдлөх</strong></div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- ── Бэлтгэл ──────────────────────────────────── -->
-  <section class="day-block">
-    <p class="section-title">Юу авч явах вэ?</p>
-    <div class="info-block">
-      <div class="gear-grid">
-        <div>
-          <h3>Бороотой шүү бро ☔️</h3>
-          <ul class="gear-list">
-            <li>Усны гутал</li>
-            <li>Борооны шүхэр</li>
-            <li>Борооны цув</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Дулаахан яваарай 🧥</h3>
-          <ul class="gear-list">
-            <li>Дулаан хувцас</li>
-            <li>Нэмэлт мишок</li>
-            <li>Зөөврийн цэнэглэгч</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-block">
-      <h3>Холбоо барих</h3>
-      <div class="info-row">
-        <span class="label">Менежер</span>
-        <span class="val"><a href="tel:+97699179417">+976 · 9917-9417</a></span>
-      </div>
-      <div class="info-row">
-        <span class="label">Эмнэлэг</span>
-        <span class="val">Кемпийн төв · 24/7</span>
-      </div>
-    </div>
-  </section>
-
-</main>
+<div class="actions">
+  <a class="btn btn--primary" href="lend-space-program.jpg" download>⤓ Зураг татах</a>
+  <a class="btn btn--ghost" href="tel:+97699179417">☎ Холбоо барих</a>
+</div>
 
 <footer class="event-footer">
   Хариуцагч <strong>NOMAAD Camp</strong> · ЧИМУН ХХК<br>
