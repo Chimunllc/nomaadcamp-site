@@ -5981,8 +5981,7 @@ body.home-page video {
 #production-link,
 #quote-estimate { display: none !important; }
 
-/* Add-on cards: show name + checkbox only (no prices/details/qty) */
-.quote-addon-card__price,
+/* Add-on cards: show name + price + checkbox (details/qty collapsed) */
 .quote-addon-card__detail,
 .quote-addon-card__quantity,
 .quote-addon-card__sub-options { display: none !important; }
