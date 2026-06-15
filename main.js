@@ -883,14 +883,14 @@
     var TIER_INCLUSIONS = {
       'Үндсэн': [],
       'Стандарт': [
-        'welcome_drink', 'sleeping_bag', 'coffee_corner',
+        'welcome_drink', 'sleeping_bag',
         'lunch_upgrade', 'dinner_upgrade',
-        'moonbeam_lounge', 'bartender_service'
+        'bartender_service'
       ],
       'Премиум': [
-        'welcome_drink', 'sleeping_bag', 'coffee_corner',
+        'welcome_drink', 'sleeping_bag',
         'lunch_upgrade', 'dinner_upgrade',
-        'moonbeam_lounge', 'bartender_service',
+        'bartender_service',
         'dj_service',
         'led_screen_18m2', 'late_snacks',
         'open_mic', 'asar_decor',
@@ -906,10 +906,8 @@
       welcome_drink:      'Хоол, ресторан',
       amenity_kit:        'Ариун цэвэр',
       sleeping_bag:       'Кемп',
-      coffee_corner:      'Хоол, ресторан',
       lunch_upgrade:      'Хоол, ресторан',
       dinner_upgrade:     'Хоол, ресторан',
-      moonbeam_lounge:    'Хоол, ресторан',
       bartender_service:  'Хоол, ресторан',
       late_snacks:        'Хоол, ресторан',
       asar_decor:         'Хоол, ресторан',
@@ -952,12 +950,10 @@
     var ADDON_STANDALONE_PRICE = {
       welcome_drink:      { type: 'pp',   value: 5000    },
       sleeping_bag:       { type: 'pp',   value: 15000   },
-      coffee_corner:      { type: 'flat', value: 0       },
       lunch_upgrade:      { type: 'pp',   value: 12000   },
       dinner_upgrade:     { type: 'pp',   value: 12000   },
       amenity_kit:        { type: 'pp',   value: 5000    },
       late_snacks:        { type: 'pp',   value: 16667   },
-      moonbeam_lounge:    { type: 'flat', value: 500000  },
       dj_service:         { type: 'flat', value: 1000000 },
       after_movie:        { type: 'flat', value: 1000000 },
       led_screen_18m2:    { type: 'flat', value: 1728000 },
@@ -979,10 +975,8 @@
     var INCLUSION_LABEL = {
       welcome_drink:      'Welcome drink',
       sleeping_bag:       'Sleeping bag',
-      coffee_corner:      'Sunrise Coffee Corner',
       lunch_upgrade:      'Өдрийн буфет',
       dinner_upgrade:     'Оройн буфет',
-      moonbeam_lounge:    'Moonbeam Lounge',
       bartender_service:  'Bartender үйлчилгээ (3 цаг)',
       amenity_kit:        'Зочдын ариун цэврийн багц',
       dj_service:         'DJ үйлчилгээ',
