@@ -1123,6 +1123,7 @@
         if (!card) return;
         var isIncluded = includedItems.indexOf(cb.value) !== -1;
         if (isIncluded) {
+          card.style.display = '';
           cb.checked = true;
           cb.disabled = true;
           card.classList.add('quote-addon-card--included');
@@ -1193,6 +1194,9 @@
           if (existingBadge) existingBadge.remove();
           var existingQtyInput = card.querySelector('.quote-addon-card__qty-input');
           if (existingQtyInput) existingQtyInput.disabled = false;
+          // Багцад багтдаг (inclusion-only) үйлчилгээ нь à la carte нэмэлтээр
+          // сонгогдох ёсгүй. Энэ tier-т багтаагүй (ж: Үндсэн) бол картыг нуунэ.
+          if (card.hasAttribute('data-inclusion-only')) card.style.display = 'none';
         }
       });
 
