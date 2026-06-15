@@ -66,8 +66,8 @@
 
   var CAMPS = [
     { id: 'a', name: 'NOMAAD Summit', size: '100–1000 хүн', coords: [107.659422, 47.727926], color: '#B14F1F' },
-    { id: 'b', name: 'NOMAAD Meadow', size: '50–300 хүн',   coords: [107.664493, 47.730607], color: '#C8A878' },
-    { id: 'c', name: 'NOMAAD Grove',  size: '20–200 хүн',   coords: [107.661500, 47.725500], color: '#4A5E3E' }
+    { id: 'b', name: 'NOMAAD Meadow', size: '30–300 хүн',   coords: [107.664493, 47.730607], color: '#C8A878' },
+    { id: 'c', name: 'NOMAAD Grove',  size: '30–200 хүн',   coords: [107.661500, 47.725500], color: '#4A5E3E' }
   ];
 
   var center = [107.657680, 47.727278];
