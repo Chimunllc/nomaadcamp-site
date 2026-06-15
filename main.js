@@ -886,17 +886,6 @@
         'welcome_drink', 'sleeping_bag',
         'lunch_upgrade', 'dinner_upgrade',
         'bartender_service'
-      ],
-      'Премиум': [
-        'welcome_drink', 'sleeping_bag',
-        'lunch_upgrade', 'dinner_upgrade',
-        'bartender_service',
-        'dj_service',
-        'led_screen_18m2', 'late_snacks',
-        'open_mic', 'asar_decor',
-        'extra_tents', 'extra_lighting', 'team_games',
-        'program_consulting', 'event_director',
-        'medical_support', 'security_service'
       ]
     };
 
@@ -999,7 +988,6 @@
     var TIER_BASE_PRICE = {
       'Үндсэн':       180000,
       'Стандарт':     220000,
-      'Премиум':      280000,
       'Хагас өдрийн': 100000,
       'Бүтэн өдрийн': 150000
     };
