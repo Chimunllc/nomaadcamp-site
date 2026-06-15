@@ -10,7 +10,7 @@
  * <script>navigator.serviceWorker.register('/sw.js')</script> хэсгийг арилгана.
  */
 
-const CACHE_VERSION = 'nomaad-v2.19.0-beer-yoga';
+const CACHE_VERSION = 'nomaad-v2.20.0-event-director-3.5m-remove-consulting';
 const STATIC_CACHE  = `nomaad-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `nomaad-runtime-${CACHE_VERSION}`;
 
