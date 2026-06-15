@@ -955,7 +955,7 @@
       event_director:     { type: 'flat', value: 1800000 },
       medical_support:    { type: 'flat', value: 1200000 },
       security_service:   { type: 'flat', value: 1500000 },
-      yoga:               { type: 'flat', value: 1300000 },
+      yoga:               { type: 'flat', value: 1500000 },
       canvas_art:         { type: 'flat', value: 1500000 }
     };
 
@@ -981,7 +981,7 @@
       event_director:     'Арга хэмжээний хөтөлбөр удирдах',
       medical_support:    'Эмнэлгийн тусламж + тусламжийн асар',
       security_service:   'Хамгаалалтын алба',
-      yoga:               'Иог багц',
+      yoga:               'Beer yoga',
       canvas_art:         'Канвас арт'
     };
 
