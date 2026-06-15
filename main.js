@@ -648,8 +648,8 @@
 
     var CAMP_CAPACITY = {
       'NOMAAD Summit':  { min: 100,  max: 1000 },
-      'NOMAAD Meadow':  { min: 50,   max: 300  },
-      'NOMAAD Grove':   { min: 20,   max: 200  },
+      'NOMAAD Meadow':  { min: 30,   max: 300  },
+      'NOMAAD Grove':   { min: 30,   max: 200  },
       'Нүүдлийн кемп':  { min: 10,   max: 1000 }
     };
 
