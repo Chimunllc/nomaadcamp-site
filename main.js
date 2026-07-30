@@ -543,6 +543,7 @@
     var campSelect     = document.getElementById('field-camp');
     var tierSelect     = document.getElementById('field-tier');
     var orgInput       = document.getElementById('org-name');
+    var taxInput       = document.getElementById('org-tax-id');
     var contactInput   = document.getElementById('contact-name');
     var phoneInput     = document.getElementById('phone');
     var emailInput     = document.getElementById('email');
@@ -559,6 +560,7 @@
     var modalTitleEl   = document.getElementById('quote-modal-title');
 
     var errOrg      = document.getElementById('err-org');
+    var errTax      = document.getElementById('err-tax');
     var errContact  = document.getElementById('err-contact');
     var errPhone    = document.getElementById('err-phone');
     var errEmail    = document.getElementById('err-email');
@@ -637,6 +639,7 @@
 
     function clearAllErrors() {
       clearFieldError(errOrg,      orgInput);
+      clearFieldError(errTax,      taxInput);
       clearFieldError(errContact,  contactInput);
       clearFieldError(errPhone,    phoneInput);
       clearFieldError(errEmail,    emailInput);
@@ -846,6 +849,7 @@
     // Clear inline errors on user input
     var clearOnChange = [
       [orgInput,      errOrg,      orgInput],
+      [taxInput,      errTax,      taxInput],
       [contactInput,  errContact,  contactInput],
       [phoneInput,    errPhone,    phoneInput],
       [emailInput,    errEmail,    emailInput],
@@ -1805,6 +1809,13 @@
       }
 
       if (!org)     markError(errOrg,     orgInput,      'Байгууллагын нэр оруулна уу.');
+
+      if (!taxId) {
+        markError(errTax, taxInput, 'Регистрийн дугаар оруулна уу.');
+      } else if (!/^\d{7,10}$/.test(taxId.replace(/\s/g, ''))) {
+        markError(errTax, taxInput, 'Регистрийн дугаар 7–10 оронтой тоо байх ёстой.');
+      }
+
       if (!contact) markError(errContact, contactInput,  'Холбоо барих хүний нэр оруулна уу.');
 
       if (!phone) {
@@ -1817,7 +1828,9 @@
         }
       }
 
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (!email) {
+        markError(errEmail, emailInput, 'Имэйл хаяг оруулна уу.');
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         markError(errEmail, emailInput, 'Имэйл хаяг буруу байна.');
       }
 
