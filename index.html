@@ -971,8 +971,9 @@ src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
           <span class="quote-field-error" id="err-org" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="org-tax-id">Регистрийн дугаар <small class="quote-form__optional">(заавал биш)</small></label>
-          <input id="org-tax-id" name="customer_tax_id" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" placeholder="Жишээ: 5012345">
+          <label for="org-tax-id">Регистрийн дугаар <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <input id="org-tax-id" name="customer_tax_id" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" placeholder="Жишээ: 5012345" required>
+          <span class="quote-field-error" id="err-tax" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
           <label for="contact-name">Холбоо барих хүний нэр <span class="quote-form__required" aria-hidden="true">*</span></label>
@@ -985,8 +986,8 @@ src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
           <span class="quote-field-error" id="err-phone" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
-          <label for="email">Имэйл</label>
-          <input id="email" name="email" type="email" autocomplete="email">
+          <label for="email">Имэйл <span class="quote-form__required" aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
           <span class="quote-field-error" id="err-email" role="alert" hidden></span>
         </div>
         <div class="quote-form__field">
