@@ -5968,7 +5968,8 @@ body.home-page video {
    ============================================================ */
 
 /* Hidden fields (still submitted to n8n with defaults) */
-.quote-form__field:has(#org-tax-id),
+/* org-tax-id (РД) — заавал болгосон тул ИЛ болгов (2026-08); эс бөгөөс нуугдсан
+   заавал талбар илгээхийг чимээгүй блоклоно. */
 .quote-form__field:has(#end-date),
 .quote-form__field:has(#extra-info) { display: none !important; }
 
