@@ -1812,8 +1812,11 @@
 
       if (!taxId) {
         markError(errTax, taxInput, 'Регистрийн дугаар оруулна уу.');
-      } else if (!/^\d{7,10}$/.test(taxId.replace(/\s/g, ''))) {
-        markError(errTax, taxInput, 'Регистрийн дугаар 7–10 оронтой тоо байх ёстой.');
+      } else {
+        var taxClean = taxId.replace(/[\s-]/g, '');
+        // Байгууллага: 7–10 оронтой тоо. Хувь хүн: 2 үсэг + 8 орон (ж: УБ90123456).
+        var taxOk = /^\d{7,10}$/.test(taxClean) || /^[А-ЯЁӨҮа-яёөү]{2}\d{8}$/.test(taxClean);
+        if (!taxOk) markError(errTax, taxInput, 'Регистрийн дугаараа зөв оруулна уу (ж: 6614337 эсвэл УБ90123456).');
       }
 
       if (!contact) markError(errContact, contactInput,  'Холбоо барих хүний нэр оруулна уу.');
