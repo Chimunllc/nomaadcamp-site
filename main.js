@@ -57,7 +57,7 @@
   // Shows placeholder state if gallery is empty.
   function initCampDetailGalleries(camps) {
     if (!camps) return;
-    var campAltText = { a: 'A кемп', b: 'B кемп', c: 'C кемп', mobile: 'Нүүдлийн кемп' };
+    var campAltText = { a: 'A кемп', b: 'B кемп', c: 'C кемп' };
 
     document.querySelectorAll('[data-camp-gallery]').forEach(function (gallery) {
       var key = gallery.getAttribute('data-camp-gallery');
@@ -650,10 +650,9 @@
     }
 
     var CAMP_CAPACITY = {
-      'NOMAAD Summit':  { min: 100,  max: 1000 },
-      'NOMAAD Meadow':  { min: 30,   max: 300  },
-      'NOMAAD Grove':   { min: 30,   max: 200  },
-      'Нүүдлийн кемп':  { min: 10,   max: 1000 }
+      'NOMAAD Summit':  { min: 50,   max: 1000 },
+      'NOMAAD Meadow':  { min: 50,   max: 1000 },
+      'NOMAAD Grove':   { min: 50,   max: 1000 }
     };
 
     var DAY_PROGRAM_OPTIONS = ['Хагас өдрийн хөтөлбөр', 'Бүтэн өдрийн хөтөлбөр'];
@@ -867,8 +866,8 @@
 
     // ── PRICE ESTIMATE ─────────────────────────────────────────
     var PRICE_TABLE = {
-      'Үндсэн': { 'NOMAAD Summit': 180000, 'NOMAAD Meadow': 180000, 'NOMAAD Grove': 180000, 'Нүүдлийн кемп': 180000 },
-      'Стандарт': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000, 'Нүүдлийн кемп': 220000 }
+      'Үндсэн': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000 },
+      'Стандарт': { 'NOMAAD Summit': 220000, 'NOMAAD Meadow': 220000, 'NOMAAD Grove': 220000 }
     };
     var DAY_PROGRAM_PRICE_TABLE = {
       'Хагас өдрийн хөтөлбөр': 100000,
