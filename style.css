@@ -6142,3 +6142,7 @@ body.home-page video {
   font-size: 0.78rem;
   line-height: 1;
 }
+
+/* Огноо сонгогчийн "захиалагдсан өдрүүд" тайлбар */
+.quote-date-hint{display:block;margin-top:6px;font-size:12px;line-height:1.4;color:#8a8778;}
+.flatpickr-day.flatpickr-disabled,.flatpickr-day.flatpickr-disabled:hover{color:#cfc9ba;text-decoration:line-through;opacity:.55;}
