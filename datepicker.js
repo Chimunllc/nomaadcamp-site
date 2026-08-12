@@ -214,10 +214,10 @@
   function initPickers() {
     if (typeof flatpickr === 'undefined') return;
     if (startDateInput._flatpickr || endDateInput._flatpickr) return;
-    // Start — байнга харагдах (inline) сар харагдац; захиалагдсан өдөр "Захиалгатай".
+    // Start — "Огноо сонгох" дээр дарахад нээгдэх попап; захиалагдсан өдөр "Захиалгатай".
     flatpickr(startDateInput, Object.assign({}, commonOptions, {
-      inline: true,
       onDayCreate: onDayCreate,
+      onOpen: function () { refreshCalendar(); },
       onChange: function (sel) { if (sel && sel[0]) applySlot(sel[0]); }
     }));
     // End — нуугдмал (checkout авто тооцогдоно); зөвхөн утга хадгална.
