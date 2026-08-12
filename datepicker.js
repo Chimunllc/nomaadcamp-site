@@ -128,6 +128,67 @@
     return dow === 5 || dow === 6 || dow === 0; // Баасан, Бямба, Ням
   }
 
+  // ── Боломжтой (сул) өдрүүд ─────────────────────────────────────────
+  // Аппын nomaad-orders webhook-оос баталгаажсан захиалгыг татаж, тухайн
+  // сонгосон кемп дээр захиалагдсан огноог сонгуулахгүй (саарал) болгоно.
+  // Зөвхөн БАТАЛГААЖСАН (урьдчилгаа/төлбөр/гэрээ/дууссан) захиалга блоклоно —
+  // цуцалсан ба зөвхөн үнийн санал (төлбөргүй) блоклохгүй.
+  var NOMAAD_ORDERS_URL = 'https://n8n.nomaadcamp.com/webhook/nomaad-orders?key=1YP4RCfL_DMiBhDfkCkX6AesQHd5p2lZ';
+  var blockedByCamp = null;      // { summit: {'YYYY-MM-DD':1}, meadow:{}, grove:{} }
+  var bookingsLoading = null;
+
+  function campKey(name) {
+    var c = String(name || '').toLowerCase();
+    if (c.indexOf('summit') >= 0) return 'summit';
+    if (c.indexOf('meadow') >= 0) return 'meadow';
+    if (c.indexOf('grove')  >= 0) return 'grove';
+    return null; // өдрийн хөтөлбөр / бусад — камп биш
+  }
+  function currentCampKey() {
+    var el = document.getElementById('field-camp');
+    return el ? campKey(el.value) : null;
+  }
+  function bookingConfirmed(o) {
+    var s = String(o.status || '').toLowerCase();
+    if (s.indexOf('больсон') >= 0 || s.indexOf('цуцл') >= 0) return false;      // цуцалсан
+    if (Number(o.income_advance) > 0 || Number(o.income_amount) > 0) return true; // урьдчилгаа/төлбөр
+    if (String(o.contract_date || '').trim()) return true;                        // гэрээтэй
+    if (s.indexOf('дуусс') >= 0 || s.indexOf('гүйцэтгэс') >= 0) return true;      // дууссан
+    return false;
+  }
+  function eachDateISO(startStr, endStr, cb) {
+    var s = new Date(String(startStr || '').slice(0, 10) + 'T00:00:00');
+    if (isNaN(s.getTime())) return;
+    var e = new Date(String(endStr || startStr || '').slice(0, 10) + 'T00:00:00');
+    if (isNaN(e.getTime()) || e < s) e = new Date(s);
+    for (var d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) cb(isoDate(d));
+  }
+  function loadNomaadBookings() {
+    if (bookingsLoading) return bookingsLoading;
+    bookingsLoading = fetch(NOMAAD_ORDERS_URL, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : { orders: [] }; })
+      .then(function (data) {
+        var orders = (data && data.orders) || (Array.isArray(data) ? data : []);
+        var map = { summit: {}, meadow: {}, grove: {} };
+        orders.forEach(function (o) {
+          var k = campKey(o.camp);
+          if (!k || !bookingConfirmed(o)) return;
+          eachDateISO(o.date_start, o.date_end, function (iso) { map[k][iso] = 1; });
+        });
+        blockedByCamp = map;
+        return map;
+      })
+      .catch(function () { blockedByCamp = { summit: {}, meadow: {}, grove: {} }; return blockedByCamp; });
+    return bookingsLoading;
+  }
+  function isDateBooked(date) {
+    if (!blockedByCamp) return false;
+    var k = currentCampKey();
+    if (!k) return false;
+    var set = blockedByCamp[k];
+    return !!(set && set[isoDate(date)]);
+  }
+
   var commonOptions = {
     locale: mnLocale,
     dateFormat: 'Y-m-d',
@@ -136,17 +197,30 @@
     enableTime: false,
     minDate: 'today',
     maxDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000),
-    disable: [disabledForCurrentMode],
+    disable: [disabledForCurrentMode, isDateBooked],
     disableMobile: false
   };
+
+  // Календарь нээгдэх бүрд: захиалгыг татаж, тухайн кемпийн захиалагдсан
+  // огноог саарал болгож дахин зурна. Сонгосон огноо захиалагдсан бол цэвэрлэнэ.
+  function onPickerOpen(sel, str, inst) {
+    var hint = document.getElementById('start-date-hint');
+    if (hint) hint.hidden = !currentCampKey();
+    loadNomaadBookings().then(function () {
+      if (inst.selectedDates[0] && isDateBooked(inst.selectedDates[0])) inst.clear();
+      inst.redraw();
+    });
+  }
 
   function initPickers() {
     if (typeof flatpickr === 'undefined') return;
     if (startDateInput._flatpickr || endDateInput._flatpickr) return;
     flatpickr(startDateInput, Object.assign({}, commonOptions, {
+      onOpen: onPickerOpen,
       onChange: function (sel) { if (sel && sel[0]) applySlot(sel[0]); }
     }));
     flatpickr(endDateInput, Object.assign({}, commonOptions, {
+      onOpen: onPickerOpen,
       onChange: function (sel) {
         if (!sel || !sel[0]) return;
         var d = sel[0];
@@ -156,6 +230,10 @@
         rebuildHidden();
       }
     }));
+    // Захиалгыг урьдчилан татаж, бэлэн болмогц календарийг дахин зурна.
+    loadNomaadBookings().then(function () {
+      [startDateInput, endDateInput].forEach(function (i) { if (i._flatpickr) i._flatpickr.redraw(); });
+    });
     // Цаг засагдах бүрд hidden datetime-г шинэчилнэ
     if (startTimeEl) startTimeEl.addEventListener('change', rebuildHidden);
     if (endTimeEl)   endTimeEl.addEventListener('change', rebuildHidden);
