@@ -194,75 +194,72 @@
     disableMobile: false
   };
 
-  // Календарь нээгдэх бүрд: захиалгыг татаж, тухайн кемпийн захиалагдсан
-  // огноог саарал болгож дахин зурна. Сонгосон огноо захиалагдсан бол цэвэрлэнэ.
-  function onPickerOpen(sel, str, inst) {
-    var hint = document.getElementById('start-date-hint');
-    if (hint) hint.hidden = !currentCampKey();
-    loadNomaadBookings().then(function () {
-      if (inst.selectedDates[0] && isDateBooked(inst.selectedDates[0])) {
-        inst.clear();
-        var sum = document.getElementById('slot-summary');
-        if (sum && inst.input === startDateInput) sum.hidden = true;
-      }
-      inst.redraw();
-    });
+  // Захиалагдсан өдөрт "Захиалгатай" тэмдэг нэмнэ (зөвхөн start календарь).
+  function onDayCreate(dObj, dStr, fp, dayElem) {
+    if (fp.input !== startDateInput) return;
+    var prev = dayElem.querySelector('.fp-booked');
+    if (prev) prev.remove();
+    dayElem.classList.remove('is-booked');
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    // Зөвхөн өнөөдрөөс хойшхи захиалагдсан өдөрт "Захиалгатай" (өнгөрсөнд биш).
+    if (dayElem.dateObj && dayElem.dateObj >= today && isDateBooked(dayElem.dateObj)) {
+      dayElem.classList.add('is-booked');
+      var lbl = document.createElement('span');
+      lbl.className = 'fp-booked';
+      lbl.textContent = 'Захиалгатай';
+      dayElem.appendChild(lbl);
+    }
   }
 
   function initPickers() {
     if (typeof flatpickr === 'undefined') return;
     if (startDateInput._flatpickr || endDateInput._flatpickr) return;
+    // Start — байнга харагдах (inline) сар харагдац; захиалагдсан өдөр "Захиалгатай".
     flatpickr(startDateInput, Object.assign({}, commonOptions, {
-      onOpen: onPickerOpen,
+      inline: true,
+      onDayCreate: onDayCreate,
       onChange: function (sel) { if (sel && sel[0]) applySlot(sel[0]); }
     }));
+    // End — нуугдмал (checkout авто тооцогдоно); зөвхөн утга хадгална.
     flatpickr(endDateInput, Object.assign({}, commonOptions, {
-      onOpen: onPickerOpen,
       onChange: function (sel) {
         if (!sel || !sel[0]) return;
-        var d = sel[0];
-        _endDate = d;
-        // Дуусах цаг хоосон бол өдрийн стандартыг тавина; хэрэглэгч зассан бол хэвээр.
-        if (endTimeEl && !endTimeEl.value) endTimeEl.value = pad(slotFor(d).endHour) + ':00';
+        _endDate = sel[0];
+        if (endTimeEl && !endTimeEl.value) endTimeEl.value = pad(slotFor(sel[0]).endHour) + ':00';
         rebuildHidden();
       }
     }));
-    // Захиалгыг урьдчилан татаж, бэлэн болмогц календарийг дахин зурна.
-    loadNomaadBookings().then(function () {
-      [startDateInput, endDateInput].forEach(function (i) { if (i._flatpickr) i._flatpickr.redraw(); });
-    });
-    // Цаг засагдах бүрд hidden datetime-г шинэчилнэ
     if (startTimeEl) startTimeEl.addEventListener('change', rebuildHidden);
     if (endTimeEl)   endTimeEl.addEventListener('change', rebuildHidden);
-    // Auto-open the picker the user just focused so the very first focus
-    // doesn't feel "broken" while the script is downloading.
-    if (document.activeElement === startDateInput && startDateInput._flatpickr) {
-      startDateInput._flatpickr.open();
-    } else if (document.activeElement === endDateInput && endDateInput._flatpickr) {
-      endDateInput._flatpickr.open();
-    }
   }
 
-  function lazyAttach(input) {
-    var trigger = function () {
-      input.removeEventListener('focus', trigger);
-      input.removeEventListener('click', trigger);
-      loadFlatpickr().then(initPickers);
-    };
-    input.addEventListener('focus', trigger);
-    input.addEventListener('click', trigger);
+  // Модал нээгдэх / кемп солигдох бүрд: захиалга татаж, тухайн кемпийн
+  // захиалагдсан өдрийг "Захиалгатай" болгож дахин зурна.
+  function refreshCalendar() {
+    var hint = document.getElementById('start-date-hint');
+    if (hint) hint.hidden = !currentCampKey();
+    loadNomaadBookings().then(function () {
+      var fp = startDateInput._flatpickr;
+      if (!fp) return;
+      if (fp.selectedDates[0] && isDateBooked(fp.selectedDates[0])) {
+        fp.clear();
+        var sum = document.getElementById('slot-summary'); if (sum) sum.hidden = true;
+      }
+      fp.redraw();
+    });
   }
-  lazyAttach(startDateInput);
-  lazyAttach(endDateInput);
 
-  // Модал горим (camp ↔ day-program) солигдох бүрд календарийг дахин зурж
-  // disable дүрмийг шинэчилнэ. Сонгогдсон огноо disable болсон бол цэвэрлэнэ.
+  function onModalOpen() {
+    loadFlatpickr().then(function () { initPickers(); refreshCalendar(); });
+  }
+
   var quoteModalEl = document.getElementById('quote-modal');
   if (quoteModalEl && window.MutationObserver) {
+    // data-quote-mode тохируулагдах = модал нээгдсэн/кемп солигдсон.
     new MutationObserver(function () {
-      [startDateInput, endDateInput].forEach(function (input) {
-        if (input._flatpickr) input._flatpickr.redraw();
-      });
+      if (quoteModalEl.dataset.quoteMode) onModalOpen();
     }).observe(quoteModalEl, { attributes: true, attributeFilter: ['data-quote-mode'] });
   }
+  // Модал аль хэдийн нээлттэй тохиолдолд шууд.
+  if (quoteModalEl && quoteModalEl.dataset.quoteMode) onModalOpen();
 })();
