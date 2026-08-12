@@ -6149,3 +6149,34 @@ body.home-page video {
 
 /* Сонгосон огнооны check-in/check-out цагийн тайлбар */
 .quote-slot-summary{display:block;margin-top:7px;font-size:13px;font-weight:600;color:#2F3E2F;background:#EEE7D6;border:1px solid #E1D8C2;border-radius:8px;padding:7px 11px;letter-spacing:.01em;}
+
+/* ── Quote модал доторх inline календарь (захиалгатай өдрийг харуулна) ── */
+.quote-date-row{flex-wrap:wrap;}
+.quote-form__field .flatpickr-calendar.inline{
+  flex:0 0 100%; width:100%!important; max-width:100%; margin-top:8px;
+  box-shadow:none; border:1px solid #E1D8C2; border-radius:12px; background:#FBF8F1;
+}
+.quote-form__field .flatpickr-calendar.inline .flatpickr-rContainer,
+.quote-form__field .flatpickr-calendar.inline .flatpickr-days,
+.quote-form__field .flatpickr-calendar.inline .dayContainer{
+  width:100%!important; max-width:100%!important; min-width:0!important;
+}
+.quote-form__field .flatpickr-calendar.inline .flatpickr-day{
+  max-width:none; width:14.28%; height:auto; min-height:44px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  line-height:1.05; border-radius:8px; padding:4px 0; margin:0;
+}
+/* Захиалгатай өдөр — улаавтар, зураасгүй, "Захиалгатай" шошготой */
+.quote-form__field .flatpickr-calendar.inline .flatpickr-day.is-booked,
+.quote-form__field .flatpickr-calendar.inline .flatpickr-day.is-booked:hover{
+  background:#F5DAD0; color:#9A3B16; border-color:transparent;
+  text-decoration:none; opacity:1; cursor:not-allowed;
+}
+.quote-form__field .flatpickr-calendar.inline .flatpickr-day .fp-booked{
+  display:block; font-size:8px; font-weight:700; line-height:1; margin-top:2px;
+  letter-spacing:-.03em; color:#B14F1F; white-space:nowrap;
+}
+/* Өнгөрсөн/боломжгүй (захиалгагүй) өдөр — зүгээр саарал */
+.quote-form__field .flatpickr-calendar.inline .flatpickr-day.flatpickr-disabled:not(.is-booked){
+  color:#cfc9ba; text-decoration:none; opacity:.6;
+}
