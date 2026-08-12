@@ -6146,3 +6146,6 @@ body.home-page video {
 /* Огноо сонгогчийн "захиалагдсан өдрүүд" тайлбар */
 .quote-date-hint{display:block;margin-top:6px;font-size:12px;line-height:1.4;color:#8a8778;}
 .flatpickr-day.flatpickr-disabled,.flatpickr-day.flatpickr-disabled:hover{color:#cfc9ba;text-decoration:line-through;opacity:.55;}
+
+/* Сонгосон огнооны check-in/check-out цагийн тайлбар */
+.quote-slot-summary{display:block;margin-top:7px;font-size:13px;font-weight:600;color:#2F3E2F;background:#EEE7D6;border:1px solid #E1D8C2;border-radius:8px;padding:7px 11px;letter-spacing:.01em;}

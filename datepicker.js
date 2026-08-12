@@ -96,6 +96,21 @@
     }
   }
 
+  // Сонгосон огнооны авто check-in/check-out цагийг үйлчлүүлэгчид харуулна.
+  // (Цагийн талбарууд нуугдсан, өдрөөс хамаарч авто тохирдог тул зөвхөн мэдээлэл.)
+  function renderSlotSummary(sd, ed, slot) {
+    var el = document.getElementById('slot-summary');
+    if (!el) return;
+    var wd = mnLocale.weekdays.longhand;
+    var st = (startTimeEl && startTimeEl.value) || (pad(slot.startHour) + ':00');
+    var en = (endTimeEl && endTimeEl.value) || (pad(slot.endHour) + ':00');
+    var body = (slot.endDayOffset === 0)
+      ? wd[sd.getDay()] + ' ' + st + '–' + en
+      : wd[sd.getDay()] + ' ' + st + ' → ' + wd[ed.getDay()] + ' ' + en;
+    el.textContent = '⏰ ' + body + ' · ' + slot.label;
+    el.hidden = false;
+  }
+
   function applySlot(pickedDate) {
     var slot = slotFor(pickedDate);
     var sd = slot.startDate || pickedDate;
@@ -106,6 +121,7 @@
     if (startTimeEl) startTimeEl.value = pad(slot.startHour) + ':00';
     if (endTimeEl)   endTimeEl.value   = pad(slot.endHour)   + ':00';
     rebuildHidden();
+    renderSlotSummary(sd, ed, slot);
 
     // Reflect the recomputed dates in the visible inputs (without re-firing this handler).
     if (startDateInput._flatpickr) {
@@ -207,7 +223,11 @@
     var hint = document.getElementById('start-date-hint');
     if (hint) hint.hidden = !currentCampKey();
     loadNomaadBookings().then(function () {
-      if (inst.selectedDates[0] && isDateBooked(inst.selectedDates[0])) inst.clear();
+      if (inst.selectedDates[0] && isDateBooked(inst.selectedDates[0])) {
+        inst.clear();
+        var sum = document.getElementById('slot-summary');
+        if (sum && inst.input === startDateInput) sum.hidden = true;
+      }
       inst.redraw();
     });
   }
@@ -268,6 +288,8 @@
         if (!fp) return;
         if (fp.selectedDates[0] && disabledForCurrentMode(fp.selectedDates[0])) {
           fp.clear();
+          var sum = document.getElementById('slot-summary');
+          if (sum && input === startDateInput) sum.hidden = true;
         }
         fp.redraw();
       });
