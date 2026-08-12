@@ -6152,7 +6152,7 @@ body.home-page video {
 
 /* ── Quote модал: огноо сонгогчийн попап календарь (дарахад нээгдэнэ, захиалгатай өдрийг харуулна) ── */
 .flatpickr-calendar{
-  box-shadow:0 8px 26px rgba(38,48,31,.14); border:1px solid #E4DCC9;
+  width:329px!important; box-shadow:0 8px 26px rgba(38,48,31,.14); border:1px solid #E4DCC9;
   border-radius:14px; background:#FCFAF4; overflow:hidden; margin-top:4px;
 }
 .flatpickr-calendar .flatpickr-months{padding:4px 0;}
