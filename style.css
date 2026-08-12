@@ -6152,31 +6152,46 @@ body.home-page video {
 
 /* ── Quote модал доторх inline календарь (захиалгатай өдрийг харуулна) ── */
 .quote-date-row{flex-wrap:wrap;}
-.quote-form__field .flatpickr-calendar.inline{
-  flex:0 0 100%; width:100%!important; max-width:100%; margin-top:8px;
-  box-shadow:none; border:1px solid #E1D8C2; border-radius:12px; background:#FBF8F1;
+.quote-form__field--full .flatpickr-calendar.inline{
+  flex:0 0 100%; width:100%!important; max-width:100%; margin:10px 0 0;
+  box-shadow:0 6px 22px rgba(38,48,31,.10); border:1px solid #E4DCC9;
+  border-radius:16px; background:#FCFAF4; overflow:hidden; padding-bottom:6px;
 }
-.quote-form__field .flatpickr-calendar.inline .flatpickr-rContainer,
-.quote-form__field .flatpickr-calendar.inline .flatpickr-days,
-.quote-form__field .flatpickr-calendar.inline .dayContainer{
-  width:100%!important; max-width:100%!important; min-width:0!important;
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-months{padding:4px 0;}
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-weekdays{height:28px; margin-top:2px;}
+.quote-form__field--full .flatpickr-calendar.inline span.flatpickr-weekday{color:#9a9788; font-weight:600; font-size:12px;}
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-rContainer,
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-days,
+.quote-form__field--full .flatpickr-calendar.inline .dayContainer{
+  width:100%!important; max-width:100%!important; min-width:0!important; height:auto!important;
 }
-.quote-form__field .flatpickr-calendar.inline .flatpickr-day{
-  max-width:none; width:14.28%; height:auto; min-height:44px;
+.quote-form__field--full .flatpickr-calendar.inline .dayContainer{padding:5px; align-content:flex-start;}
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day{
+  width:14.2857%!important; max-width:14.2857%!important; box-sizing:border-box;
+  height:46px!important; min-height:0; margin:0!important;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  line-height:1.05; border-radius:8px; padding:4px 0; margin:0;
+  border:3px solid transparent!important; border-radius:12px; background-clip:padding-box;
+  font-weight:500; color:#2f3e2f;
 }
-/* Захиалгатай өдөр — улаавтар, зураасгүй, "Захиалгатай" шошготой */
-.quote-form__field .flatpickr-calendar.inline .flatpickr-day.is-booked,
-.quote-form__field .flatpickr-calendar.inline .flatpickr-day.is-booked:hover{
-  background:#F5DAD0; color:#9A3B16; border-color:transparent;
-  text-decoration:none; opacity:1; cursor:not-allowed;
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day:not(.flatpickr-disabled):not(.is-booked):hover{
+  background:#E7EDDD; color:#26301f;
 }
-.quote-form__field .flatpickr-calendar.inline .flatpickr-day .fp-booked{
-  display:block; font-size:8px; font-weight:700; line-height:1; margin-top:2px;
-  letter-spacing:-.03em; color:#B14F1F; white-space:nowrap;
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.selected{
+  background:#2f3e2f!important; color:#fff!important;
+}
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.today:not(.selected){
+  color:#b14f1f; font-weight:700; box-shadow:inset 0 0 0 1.5px #d8b48c;
+}
+/* Захиалгатай өдөр — coral нүд, зураасгүй, "Захиалгатай" шошготой */
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.is-booked,
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.is-booked:hover{
+  background:#F0D4C7!important; color:#9A3B16!important; cursor:not-allowed; opacity:1; text-decoration:none;
+}
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day .fp-booked{
+  display:block; font-size:8px; font-weight:700; line-height:1; margin-top:3px;
+  color:#B14F1F; letter-spacing:-.02em; white-space:nowrap;
 }
 /* Өнгөрсөн/боломжгүй (захиалгагүй) өдөр — зүгээр саарал */
-.quote-form__field .flatpickr-calendar.inline .flatpickr-day.flatpickr-disabled:not(.is-booked){
-  color:#cfc9ba; text-decoration:none; opacity:.6;
+.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.flatpickr-disabled:not(.is-booked){
+  color:#cbc5b5; background:transparent; text-decoration:none; opacity:1;
 }
