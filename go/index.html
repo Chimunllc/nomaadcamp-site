@@ -4,110 +4,132 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Шилжиж байна... · NOMAAD Camp</title>
+<meta name="theme-color" content="#2F3E2F">
+<title>Game of 5 Kingdom 2026 · Хөтөлбөр</title>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     /go REDIRECT ,  QR код хаашаа шилжих вэ?
+     /go  ·  QR-аар нээгддэг арга хэмжээний хөтөлбөр
 
-     Энэ файл нь nomaadcamp.com/go линкийг ямар нэг хаягруу
-     автоматаар шилжүүлдэг. Аяган дээрх QR код энэ хаягийг
-     уншуулдаг.
+     Энэ хуудас нь аяган/QR дээрх nomaadcamp.com/go линкээр нээгдэнэ.
+     Өмнө нь энэ линк Google Apps Script руу шилжүүлдэг байсан —
+     тэр код git түүхэнд (өмнөх commit) үлдсэн, хэрэгтэй бол буцааж болно.
 
-     ┌─────────────────────────────────────────────────────────────┐
-     │  ЗОРИЛТЫГ ӨӨРЧЛӨХ:                                          │
-     │                                                             │
-     │  Доорх <script> доторх ZORILT мөрийг солиод                 │
-     │  GitHub Desktop-аас push хийнэ үү. 2 минутын дараа          │
-     │  nomaadcamp.com/go нь шинэ хаяг руу шилжинэ.                │
-     └─────────────────────────────────────────────────────────────┘
-
-     Жишээ зорилт:
-       "/"                          → Нүүр хуудас (default)
-       "/#camps"                    → Кемпүүд хэсэгт скролл
-       "/#contact"                  → Холбоо барих руу
-       "/#next-stage"               → 2026 шинэчлэлийн хэсэг
-       "https://wa.me/97699179417"  → WhatsApp шууд харилцаа
-       "https://m.me/nomaadcamp"    → Facebook Messenger
-       "https://forms.gle/abc123"   → Google Forms асуулт
-       "https://calendar.google.com/..." → Календарь захиалга
+     Хөтөлбөр өөрчлөгдвөл доорх <li> мөрүүдийг засаад push хийнэ үү.
      ═══════════════════════════════════════════════════════════════════ -->
 
-<script>
-  // 🎯 Дараах мөрийг л солих хэрэгтэй ↓
-  var ZORILT = "https://script.google.com/macros/s/AKfycbyTcYN7DWFCnVhDltA6Kq809gJJaUCx9vLDtgupdrFOdszHPA2xcqLTay5iSN80kjZy/exec";
-
-  // (доорх кодыг бүү хөдөлгө)
-  try { window.location.replace(ZORILT); }
-  catch (e) { window.location.href = ZORILT; }
-</script>
-
-<!-- JavaScript унтарсан хөтөчид зориулсан fallback -->
-<meta http-equiv="refresh" content="0; url=/">
-
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: #0B0D0B;
-    color: #F2F1EC;
-    font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  :root{
+    --bg:#F4EFE4; --card:#FBF8F1; --ink:#26301F; --muted:#6C7360;
+    --line:#E4DCC9; --accent:#B14F1F; --green:#2F3E2F;
   }
-  .loading {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem;
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#181B14; --card:#20261B; --ink:#EDE7D6; --muted:#9BA089;
+           --line:#333A29; --accent:#E0894F; --green:#C9D4B4; }
   }
-  .loading-mark {
-    font-family: 'Manrope', 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    color: #C8A878;
-    margin-bottom: 0.85rem;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5; padding:22px 16px 60px; -webkit-font-smoothing:antialiased;
   }
-  .loading-title {
-    font-size: 1.05rem;
-    font-weight: 500;
-    margin: 0 0 0.5rem;
+  .wrap{max-width:560px;margin:0 auto}
+
+  header{text-align:center;padding:8px 0 22px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:26px;line-height:1.15;margin:8px 0 6px;letter-spacing:-.01em;color:var(--green)}
+  .meta{font-size:14px;color:var(--muted)}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .section-title{
+    display:flex;align-items:center;gap:10px;
+    margin:26px 0 10px;font-size:13px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
   }
-  .loading-sub {
-    font-size: 0.88rem;
-    opacity: 0.55;
-    margin: 0;
+  .section-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  ul{list-style:none}
+  .item{
+    display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);
   }
-  .loading-sub a {
-    color: #C8A878;
-    text-decoration: none;
+  .item:last-child{border-bottom:none}
+  .time{
+    flex:0 0 92px;font-variant-numeric:tabular-nums;font-size:13px;
+    font-weight:600;color:var(--green);padding-top:1px;white-space:nowrap;
   }
-  .loading-sub a:hover { text-decoration: underline; }
+  .body .act{font-size:15px;font-weight:600;color:var(--ink)}
+  .body .note{font-size:13px;color:var(--muted);margin-top:2px}
+
+  footer{margin-top:34px;text-align:center;font-size:12px;color:var(--muted)}
+  footer .brand{font-weight:700;letter-spacing:.16em;color:var(--green)}
 </style>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2554315438346659');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2554315438346659&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 </head>
 <body>
-<div class="loading">
-  <span class="loading-mark">NOMAAD CAMP</span>
-  <p class="loading-title">Шилжиж байна...</p>
-  <p class="loading-sub">Хэрэв удаан хүлээж байвал <a href="/">нүүр хуудас руу очно уу</a></p>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Chill Out · Nomaad</div>
+    <h1>Game of 5 Kingdom<br>2026</h1>
+    <p class="meta"><b>2026.08.12</b> · Nomaad Travel</p>
+  </header>
+
+  <div class="section-title">Эхлэл</div>
+  <ul>
+    <li class="item"><div class="time">08:00–08:30</div><div class="body"><div class="act">Цугларалт</div><div class="note">Соёл велнесс төвийн урд талбайд цуглана</div></div></li>
+    <li class="item"><div class="time">08:30–08:45</div><div class="body"><div class="act">Автобус хөдлөх</div><div class="note">11:00 гэхэд амралтын газар очсон байна</div></div></li>
+    <li class="item"><div class="time">11:00–12:00</div><div class="body"><div class="act">Бэлтгэл ажил · Booth бэлдэх</div><div class="note">Зочид хувцасаа сольж, комиссын гишүүд бэлэн байдлыг хангана</div></div></li>
+  </ul>
+
+  <div class="section-title">Нээлтийн ёслол</div>
+  <ul>
+    <li class="item"><div class="time">12:00–12:05</div><div class="body"><div class="act">Нээлтийн ёслол</div><div class="note">Хөтлөгч албан ёсоор нээж, ТУЗ дарга Г.Мөнхмандах үг хэлнэ</div></div></li>
+    <li class="item"><div class="time">12:05–12:30</div><div class="body"><div class="act">Багуудын асрыг танилцуулна</div><div class="note">Комиссын гишүүд үнэлгээ хийж, багууд нэгнийхээ асартай танилцана</div></div></li>
+    <li class="item"><div class="time">12:30–12:40</div><div class="body"><div class="act">Дурсгалын зураг</div><div class="note">Нийт ажилчид зураг авахуулна</div></div></li>
+  </ul>
+
+  <div class="section-title">Өдрийн хоол</div>
+  <ul>
+    <li class="item"><div class="time">12:50–13:50</div><div class="body"><div class="act">Өдрийн хоол</div><div class="note">Амралтын газраас санал болгосон буфет хоол</div></div></li>
+  </ul>
+
+  <div class="section-title">Төв талбайн тэмцээн</div>
+  <ul>
+    <li class="item"><div class="time">14:00–14:45</div><div class="body"><div class="act">Хүч чадал</div><div class="note">Багаас эр 5, эм 3 — нийт 8 хүн. Өмнөх тэмцээнд түрүүлсэн баг хинт авна</div></div></li>
+    <li class="item"><div class="time">14:55–15:55</div><div class="body"><div class="act">Мэргэн ухаан</div><div class="note">Багаас 5 хүн. Комиссын бэлдсэн буухиа тэмцээн</div></div></li>
+    <li class="item"><div class="time">16:00–17:00</div><div class="body"><div class="act">Хурд хүч</div><div class="note">Багаас 6 хүн, бүгд зэрэг оролцоно. Сүүлийн 2 баг өөр тэмцээнээр өрсөлдөнө</div></div></li>
+    <li class="item"><div class="time">17:00–18:00</div><div class="body"><div class="act">Эв нэгдэл</div><div class="note">Багийн бүх гишүүд оролцох тэмцээн</div></div></li>
+  </ul>
+
+  <div class="section-title">Оройн хоол</div>
+  <ul>
+    <li class="item"><div class="time">18:00–18:50</div><div class="body"><div class="act">Оройн хоол</div><div class="note">Амралтын газраас санал болгосон буфет хоол</div></div></li>
+    <li class="item"><div class="time">18:50–19:00</div><div class="body"><div class="act">Завсарлага</div></div></li>
+  </ul>
+
+  <div class="section-title">Open Mic Mongolia</div>
+  <ul>
+    <li class="item"><div class="time">19:00–19:45</div><div class="body"><div class="act">Асаруудаар явах</div><div class="note">Удирдлагууд багуудын асруудаар орно</div></div></li>
+    <li class="item"><div class="time">19:45–20:00</div><div class="body"><div class="act">Шагнал гардуулна</div><div class="note">Өдрийн нийлбэр оноог танилцуулж, Хаан титэм гардуулна</div></div></li>
+  </ul>
+
+  <div class="section-title">Үдшийн арга хэмжээ</div>
+  <ul>
+    <li class="item"><div class="time">20:00–21:40</div><div class="body"><div class="act">Open Mic</div></div></li>
+    <li class="item"><div class="time">21:40–23:30</div><div class="body"><div class="act">DJ set</div></div></li>
+    <li class="item"><div class="time">23:00–00:00</div><div class="body"><div class="act">Галын наадам</div></div></li>
+  </ul>
+
+  <div class="section-title">Өглөө · маргааш</div>
+  <ul>
+    <li class="item"><div class="time">08:00–08:45</div><div class="body"><div class="act">Өглөөний цай</div><div class="note">Амралтын газраас санал болгосон буфет хоол</div></div></li>
+    <li class="item"><div class="time">08:45–09:00</div><div class="body"><div class="act">Буцах ажиллагаа</div><div class="note">Эхний ээлж түрүүлж буцна</div></div></li>
+  </ul>
+
+  <footer>
+    <div class="brand">NOMAAD</div>
+    <div style="margin-top:4px">Game of 5 Kingdom 2026 · дотоод арга хэмжээ</div>
+  </footer>
+
 </div>
 </body>
 </html>
