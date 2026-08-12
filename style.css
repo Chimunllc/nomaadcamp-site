@@ -6150,48 +6150,44 @@ body.home-page video {
 /* Сонгосон огнооны check-in/check-out цагийн тайлбар */
 .quote-slot-summary{display:block;margin-top:7px;font-size:13px;font-weight:600;color:#2F3E2F;background:#EEE7D6;border:1px solid #E1D8C2;border-radius:8px;padding:7px 11px;letter-spacing:.01em;}
 
-/* ── Quote модал доторх inline календарь (захиалгатай өдрийг харуулна) ── */
-.quote-date-row{flex-wrap:wrap;}
-.quote-form__field--full .flatpickr-calendar.inline{
-  flex:0 0 100%; width:100%!important; max-width:100%; margin:10px 0 0;
-  box-shadow:0 6px 22px rgba(38,48,31,.10); border:1px solid #E4DCC9;
-  border-radius:16px; background:#FCFAF4; overflow:hidden; padding-bottom:6px;
+/* ── Quote модал: огноо сонгогчийн попап календарь (дарахад нээгдэнэ, захиалгатай өдрийг харуулна) ── */
+.quote-form__field--full .flatpickr-calendar{
+  box-shadow:0 8px 26px rgba(38,48,31,.14); border:1px solid #E4DCC9;
+  border-radius:14px; background:#FCFAF4; overflow:hidden; margin-top:4px;
 }
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-months{padding:4px 0;}
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-weekdays{height:28px; margin-top:2px;}
-.quote-form__field--full .flatpickr-calendar.inline span.flatpickr-weekday{color:#9a9788; font-weight:600; font-size:12px;}
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-rContainer,
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-days,
-.quote-form__field--full .flatpickr-calendar.inline .dayContainer{
-  width:100%!important; max-width:100%!important; min-width:0!important; height:auto!important;
+.quote-form__field--full .flatpickr-calendar .flatpickr-months{padding:4px 0;}
+.quote-form__field--full .flatpickr-calendar .flatpickr-weekdays{height:26px; margin-top:2px;}
+.quote-form__field--full .flatpickr-calendar span.flatpickr-weekday{color:#9a9788; font-weight:600; font-size:12px;}
+.quote-form__field--full .flatpickr-calendar .flatpickr-rContainer,
+.quote-form__field--full .flatpickr-calendar .flatpickr-days{width:329px!important; max-width:329px!important;}
+.quote-form__field--full .flatpickr-calendar .dayContainer{
+  width:329px!important; min-width:329px!important; max-width:329px!important; padding:6px 0;
 }
-.quote-form__field--full .flatpickr-calendar.inline .dayContainer{padding:5px; align-content:flex-start;}
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day{
-  width:14.2857%!important; max-width:14.2857%!important; box-sizing:border-box;
-  height:46px!important; min-height:0; margin:0!important;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+.quote-form__field--full .flatpickr-calendar .flatpickr-day{
+  width:47px!important; max-width:47px!important; height:46px!important; min-height:0; line-height:1; margin:0!important;
+  box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center;
   border:3px solid transparent!important; border-radius:12px; background-clip:padding-box;
   font-weight:500; color:#2f3e2f;
 }
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day:not(.flatpickr-disabled):not(.is-booked):hover{
+.quote-form__field--full .flatpickr-calendar .flatpickr-day:not(.flatpickr-disabled):not(.is-booked):hover{
   background:#E7EDDD; color:#26301f;
 }
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.selected{
+.quote-form__field--full .flatpickr-calendar .flatpickr-day.selected{
   background:#2f3e2f!important; color:#fff!important;
 }
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.today:not(.selected){
+.quote-form__field--full .flatpickr-calendar .flatpickr-day.today:not(.selected){
   color:#b14f1f; font-weight:700; box-shadow:inset 0 0 0 1.5px #d8b48c;
 }
 /* Захиалгатай өдөр — coral нүд, зураасгүй, "Захиалгатай" шошготой */
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.is-booked,
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.is-booked:hover{
+.quote-form__field--full .flatpickr-calendar .flatpickr-day.is-booked,
+.quote-form__field--full .flatpickr-calendar .flatpickr-day.is-booked:hover{
   background:#F0D4C7!important; color:#9A3B16!important; cursor:not-allowed; opacity:1; text-decoration:none;
 }
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day .fp-booked{
+.quote-form__field--full .flatpickr-calendar .flatpickr-day .fp-booked{
   display:block; font-size:8px; font-weight:700; line-height:1; margin-top:3px;
   color:#B14F1F; letter-spacing:-.02em; white-space:nowrap;
 }
 /* Өнгөрсөн/боломжгүй (захиалгагүй) өдөр — зүгээр саарал */
-.quote-form__field--full .flatpickr-calendar.inline .flatpickr-day.flatpickr-disabled:not(.is-booked){
+.quote-form__field--full .flatpickr-calendar .flatpickr-day.flatpickr-disabled:not(.is-booked){
   color:#cbc5b5; background:transparent; text-decoration:none; opacity:1;
 }
