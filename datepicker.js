@@ -1,9 +1,6 @@
 // NOMAAD Camp, date pickers with locked check-in/check-out times.
-// User picks only the date; the time is auto-set based on day of week:
-//   Mon–Thu  →  10:00 → 18:00 (өдрийн хөтөлбөр)
-//   Friday   →  Fri 09:00 → Sat 11:00 (кэмп · 1 шөнө)
-//   Saturday →  Sat 12:00 → Sun 15:00 (кэмп · 1 шөнө)
-//   Sunday   →  Sat 12:00 → Sun 15:00 (Sat slot-той хослоно)
+// User picks only the date; бүх өдөр адилхан слот:
+//   check-in 09:00 → маргааш check-out 10:00 (кэмп · 1 шөнө)
 //
 // flatpickr (~30KB JS + ~5KB CSS) is loaded LAZILY on first focus of either
 // date input. This keeps initial mobile load fast for users who never open
@@ -60,16 +57,8 @@
   // Returns the booking slot for the given date.
   // { startHour, endHour, endDayOffset, label }
   function slotFor(date) {
-    var dow = date.getDay();
-    if (dow >= 1 && dow <= 4) {
-      return { startHour: 10, endHour: 18, endDayOffset: 0, label: 'Өдрийн хөтөлбөр' };
-    }
-    if (dow === 5) {
-      return { startHour: 9,  endHour: 11, endDayOffset: 1, label: 'Кэмп · 1 шөнө' };
-    }
-    // dow === 6 (Saturday) or dow === 0 (Sunday), fold Sunday into Saturday slot.
-    var startDate = (dow === 0) ? addDays(date, -1) : date;
-    return { startHour: 12, endHour: 15, endDayOffset: 1, label: 'Кэмп · 1 шөнө', startDate: startDate };
+    // Бүх өдөр адилхан: нэвтрэх 09:00 → маргааш гарах 10:00 (кэмп · 1 шөнө).
+    return { startHour: 9, endHour: 10, endDayOffset: 1, label: 'Кэмп · 1 шөнө' };
   }
 
   var startDateInput = document.getElementById('start-date');
@@ -130,18 +119,6 @@
     if (endDateInput._flatpickr) {
       endDateInput._flatpickr.setDate(ed, false);
     }
-  }
-
-  // Өдрийн хөтөлбөр (Хагас/Бүтэн өдрийн) горимд зөвхөн Дав–Пүр сонгуулна.
-  // Баасан/Бямба/Ням нь кэмп (шөнийн) слот учир өдрийн хөтөлбөрт тохирохгүй.
-  function isDayProgramMode() {
-    var modal = document.getElementById('quote-modal');
-    return !!modal && modal.dataset.quoteMode === 'day-program';
-  }
-  function disabledForCurrentMode(date) {
-    if (!isDayProgramMode()) return false;
-    var dow = date.getDay();
-    return dow === 5 || dow === 6 || dow === 0; // Баасан, Бямба, Ням
   }
 
   // ── Боломжтой (сул) өдрүүд ─────────────────────────────────────────
@@ -213,7 +190,7 @@
     enableTime: false,
     minDate: 'today',
     maxDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000),
-    disable: [disabledForCurrentMode, isDateBooked],
+    disable: [isDateBooked],
     disableMobile: false
   };
 
@@ -284,14 +261,7 @@
   if (quoteModalEl && window.MutationObserver) {
     new MutationObserver(function () {
       [startDateInput, endDateInput].forEach(function (input) {
-        var fp = input._flatpickr;
-        if (!fp) return;
-        if (fp.selectedDates[0] && disabledForCurrentMode(fp.selectedDates[0])) {
-          fp.clear();
-          var sum = document.getElementById('slot-summary');
-          if (sum && input === startDateInput) sum.hidden = true;
-        }
-        fp.redraw();
+        if (input._flatpickr) input._flatpickr.redraw();
       });
     }).observe(quoteModalEl, { attributes: true, attributeFilter: ['data-quote-mode'] });
   }
