@@ -651,8 +651,8 @@
 
     var CAMP_CAPACITY = {
       'NOMAAD Summit':  { min: 50,   max: 1000 },
-      'NOMAAD Meadow':  { min: 50,   max: 1000 },
-      'NOMAAD Grove':   { min: 50,   max: 1000 }
+      'NOMAAD Meadow':  { min: 50,   max: 300  },
+      'NOMAAD Grove':   { min: 50,   max: 300  }
     };
 
     var DAY_PROGRAM_OPTIONS = ['Хагас өдрийн хөтөлбөр', 'Бүтэн өдрийн хөтөлбөр'];
