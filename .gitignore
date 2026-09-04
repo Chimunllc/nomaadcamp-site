@@ -27,3 +27,11 @@ lhr-*.html
 
 # Backup files
 *.bak
+
+# Дотоод баримт — нийтийн сайтын repo-д ХЭЗЭЭ Ч бүү оруул.
+# GitHub Pages нь repo-гийн БҮХ файлыг нийтэд server хийдэг (кодоос эш татагдаагүй ч).
+n8n/
+*.docx
+stamp.png
+*Гэрчилгээ*
+apps-script*.gs
